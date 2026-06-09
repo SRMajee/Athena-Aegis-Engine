@@ -102,6 +102,14 @@ class GrpcLiveEngineService final : public ::otrader::EngineService::Service {
                                        const ::otrader::Empty* request,
                                        ::otrader::StrategyHoldingsResponse* response) override;
 
+    ::grpc::Status StartBacktest(::grpc::ServerContext* context,
+                                 const ::otrader::StreamRequest* request,
+                                 ::grpc::ServerWriter<::otrader::EngineStateUpdate>* writer) override;
+
+    ::grpc::Status SendCommand(::grpc::ServerContext* context,
+                               ::grpc::ServerReader<::otrader::CommandRequest>* reader,
+                               ::otrader::CommandAck* response) override;
+
   private:
     MainEngine* main_engine_; // Non-owning; lifecycle by entry_live_grpc
 };

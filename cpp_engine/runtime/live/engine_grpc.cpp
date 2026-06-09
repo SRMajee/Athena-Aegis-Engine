@@ -3,6 +3,7 @@
 #include "../../strategy/strategy_registry.hpp"
 #include "../../strategy/template.hpp"
 #include "../../utilities/event.hpp"
+#include "../backtest/engine_backtest.hpp"
 #include "engine_db_pg.hpp"
 
 #include <cstdlib>
@@ -526,6 +527,144 @@ auto GrpcLiveEngineService::GetStrategyHoldings(::grpc::ServerContext* /*context
     } catch (const std::exception& e) {
         return ::grpc::Status(::grpc::StatusCode::INTERNAL, e.what());
     }
+}
+
+auto GrpcLiveEngineService::StartBacktest(
+    ::grpc::ServerContext* context,
+    const ::otrader::StreamRequest* request,
+    ::grpc::ServerWriter<::otrader::EngineStateUpdate>* writer) -> ::grpc::Status {
+
+    if ((request == nullptr) || (writer == nullptr)) {
+        return ::grpc::Status(::grpc::StatusCode::INVALID_ARGUMENT, "request or writer is null");
+    }
+
+    const auto& strategy_pb = request->strategy();
+    backtest::BacktestEngine engine;
+
+    try {
+        engine.configure_execution(strategy_pb.fee_rate(), strategy_pb.slippage_bps());
+        if (engine.main_engine() != nullptr) {
+            engine.main_engine()->set_log_level(engines::DISABLED);
+        }
+
+        engine.register_timestep_callback([&](int /*timestep*/, backtest::Timestamp ts) {
+            if (context->IsCancelled()) {
+                return;
+            }
+
+            ::otrader::EngineStateUpdate update;
+            update.set_job_id(request->job_id());
+
+            auto epoch_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(
+                ts.time_since_epoch()
+            ).count();
+            update.set_tick_timestamp_ns(epoch_ns);
+
+            double spot_price = 0.0;
+            double implied_vol = 0.0;
+
+            auto* me = engine.main_engine();
+            if (me != nullptr) {
+                if (me->option_strategy_engine() != nullptr) {
+                    auto* holding = me->option_strategy_engine()->get_strategy_holding();
+                    if (holding != nullptr) {
+                        const double pnl = holding->summary.pnl;
+                        update.set_pnl(pnl);
+                        update.set_cumulative_pnl(pnl);
+
+                        auto* greeks = update.mutable_greeks();
+                        greeks->set_delta(holding->summary.delta);
+                        greeks->set_gamma(holding->summary.gamma);
+                        greeks->set_theta(holding->summary.theta);
+                        greeks->set_vega(holding->summary.vega);
+                        greeks->set_rho(0.0);
+                    }
+
+                    auto* strategy = me->option_strategy_engine()->get_strategy();
+                    if (strategy != nullptr) {
+                        auto* portfolio = me->get_portfolio(strategy->portfolio_name());
+                        if (portfolio != nullptr) {
+                            if (portfolio->underlying != nullptr) {
+                                spot_price = portfolio->underlying->mid_price;
+                            }
+                            if (!portfolio->chains.empty()) {
+                                auto it = portfolio->chains.begin();
+                                if ((it != portfolio->chains.end()) && (it->second != nullptr)) {
+                                    auto atm_iv = it->second->get_atm_iv();
+                                    if (atm_iv.has_value()) {
+                                        implied_vol = atm_iv.value();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            update.set_spot_price(spot_price);
+            update.set_implied_vol(implied_vol);
+
+            // Scaffold repeated ModelResult (scaffolding for future ML models)
+            for (int i = 0; i < request->model_ids_size(); ++i) {
+                auto* mr = update.add_model_results();
+                mr->set_model_id(request->model_ids(i));
+                mr->set_hedge_ratio(0.0);
+                mr->set_pnl(0.0);
+                mr->set_cumulative_pnl(0.0);
+                mr->set_inference_latency_ns(0);
+            }
+
+            // Circular tail risk stats (var/cvar)
+            auto* cvar = update.mutable_cvar();
+            cvar->set_var_95(0.0);
+            cvar->set_cvar_95(0.0);
+            cvar->set_var_99(0.0);
+            cvar->set_cvar_99(0.0);
+
+            writer->Write(update);
+        });
+
+        engine.load_backtest_data(strategy_pb.parquet_path());
+
+        auto settings = parse_setting_json(strategy_pb.strategy_setting());
+        engine.add_strategy(strategy_pb.strategy_name(), settings);
+
+        if (engine.main_engine() != nullptr) {
+            auto* de = engine.main_engine()->get_data_engine();
+            if (de != nullptr) {
+                de->set_risk_free_rate(strategy_pb.risk_free_rate());
+                de->set_iv_price_mode(strategy_pb.iv_price_mode());
+            }
+        }
+
+        engine.run();
+        return ::grpc::Status::OK;
+    } catch (const std::exception& e) {
+        return ::grpc::Status(::grpc::StatusCode::INTERNAL, e.what());
+    } catch (...) {
+        return ::grpc::Status(::grpc::StatusCode::INTERNAL, "unknown C++ backtest error");
+    }
+}
+
+auto GrpcLiveEngineService::SendCommand(
+    ::grpc::ServerContext* /*context*/,
+    ::grpc::ServerReader<::otrader::CommandRequest>* reader,
+    ::otrader::CommandAck* response) -> ::grpc::Status {
+
+    if ((reader == nullptr) || (response == nullptr)) {
+        return ::grpc::Status(::grpc::StatusCode::INVALID_ARGUMENT, "reader or response is null");
+    }
+
+    ::otrader::CommandRequest cmd;
+    std::string last_cmd_id;
+    while (reader->Read(&cmd)) {
+        last_cmd_id = cmd.command_id();
+        // Placeholder scaffolding for dynamic commands (pause, resume, stop, model swap)
+    }
+
+    response->set_command_id(last_cmd_id);
+    response->set_success(true);
+    return ::grpc::Status::OK;
 }
 
 } // namespace engines
