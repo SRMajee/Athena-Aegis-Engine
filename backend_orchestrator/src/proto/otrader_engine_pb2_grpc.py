@@ -3,9 +3,9 @@
 import grpc
 import warnings
 
-from src.proto import otrader_engine_pb2 as otrader__engine__pb2
+import otrader_engine_pb2 as otrader__engine__pb2
 
-GRPC_GENERATED_VERSION = '1.78.1'
+GRPC_GENERATED_VERSION = '1.81.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -25,11 +25,16 @@ if _version_not_supported:
     )
 
 
-class EngineServiceStub(object):
-    """Live engine control / query service."""
+class EngineServiceStub:
+    """Live engine control / query service.
+    """
 
     def __init__(self, channel):
-        """Args: channel: grpc.Channel."""
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
         self.GetStatus = channel.unary_unary(
                 '/otrader.EngineService/GetStatus',
                 request_serializer=otrader__engine__pb2.Empty.SerializeToString,
@@ -140,13 +145,25 @@ class EngineServiceStub(object):
                 request_serializer=otrader__engine__pb2.Empty.SerializeToString,
                 response_deserializer=otrader__engine__pb2.StrategyHoldingsResponse.FromString,
                 _registered_method=True)
+        self.StartBacktest = channel.unary_stream(
+                '/otrader.EngineService/StartBacktest',
+                request_serializer=otrader__engine__pb2.StreamRequest.SerializeToString,
+                response_deserializer=otrader__engine__pb2.EngineStateUpdate.FromString,
+                _registered_method=True)
+        self.SendCommand = channel.stream_unary(
+                '/otrader.EngineService/SendCommand',
+                request_serializer=otrader__engine__pb2.CommandRequest.SerializeToString,
+                response_deserializer=otrader__engine__pb2.CommandAck.FromString,
+                _registered_method=True)
 
 
-class EngineServiceServicer(object):
-    """Live engine control / query service."""
+class EngineServiceServicer:
+    """Live engine control / query service.
+    """
 
     def GetStatus(self, request, context):
-        """General status."""
+        """General status
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -158,7 +175,8 @@ class EngineServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def ConnectGateway(self, request, context):
-        """Live control."""
+        """Live control
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -182,7 +200,8 @@ class EngineServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def StartStrategy(self, request, context):
-        """Strategy control."""
+        """Strategy control
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -194,7 +213,8 @@ class EngineServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def StreamLogs(self, request, context):
-        """Event streams (logs / strategy updates)."""
+        """Event streams (logs / strategy updates)
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -206,7 +226,7 @@ class EngineServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def GetOrdersAndTrades(self, request, context):
-        """Main: orders/trades, portfolio list.
+        """Main: orders/trades, portfolio list
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -219,7 +239,8 @@ class EngineServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def ListStrategyClasses(self, request, context):
-        """Strategy: class list, portfolio meta, removed, defaults."""
+        """Strategy: class list, portfolio meta, removed strategies, defaults
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -243,7 +264,8 @@ class EngineServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def AddStrategy(self, request, context):
-        """Strategy lifecycle."""
+        """Strategy lifecycle
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -267,13 +289,28 @@ class EngineServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def DeleteStrategy(self, request, context):
-        """C++: same as RemoveStrategy."""
+        """C++: same as RemoveStrategy
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetStrategyHoldings(self, request, context):
-        """Strategy holdings."""
+        """Strategy holdings
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def StartBacktest(self, request, context):
+        """Backtesting & Model Execution Control Plane
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SendCommand(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -391,6 +428,16 @@ def add_EngineServiceServicer_to_server(servicer, server):
                     request_deserializer=otrader__engine__pb2.Empty.FromString,
                     response_serializer=otrader__engine__pb2.StrategyHoldingsResponse.SerializeToString,
             ),
+            'StartBacktest': grpc.unary_stream_rpc_method_handler(
+                    servicer.StartBacktest,
+                    request_deserializer=otrader__engine__pb2.StreamRequest.FromString,
+                    response_serializer=otrader__engine__pb2.EngineStateUpdate.SerializeToString,
+            ),
+            'SendCommand': grpc.stream_unary_rpc_method_handler(
+                    servicer.SendCommand,
+                    request_deserializer=otrader__engine__pb2.CommandRequest.FromString,
+                    response_serializer=otrader__engine__pb2.CommandAck.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'otrader.EngineService', rpc_method_handlers)
@@ -399,8 +446,9 @@ def add_EngineServiceServicer_to_server(servicer, server):
 
 
  # This class is part of an EXPERIMENTAL API.
-class EngineService(object):
-    """Live engine control / query service."""
+class EngineService:
+    """Live engine control / query service.
+    """
 
     @staticmethod
     def GetStatus(request,
@@ -986,6 +1034,60 @@ class EngineService(object):
             '/otrader.EngineService/GetStrategyHoldings',
             otrader__engine__pb2.Empty.SerializeToString,
             otrader__engine__pb2.StrategyHoldingsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def StartBacktest(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            '/otrader.EngineService/StartBacktest',
+            otrader__engine__pb2.StreamRequest.SerializeToString,
+            otrader__engine__pb2.EngineStateUpdate.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def SendCommand(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_unary(
+            request_iterator,
+            target,
+            '/otrader.EngineService/SendCommand',
+            otrader__engine__pb2.CommandRequest.SerializeToString,
+            otrader__engine__pb2.CommandAck.FromString,
             options,
             channel_credentials,
             insecure,

@@ -168,6 +168,72 @@ message StrategyHoldingMsg {
   PortfolioSummaryMsg summary = 4;
 }
 
+message StrategyConfig {
+  string parquet_path = 1;
+  string strategy_name = 2;
+  double fee_rate = 3;
+  double slippage_bps = 4;
+  double risk_free_rate = 5;
+  string iv_price_mode = 6;
+  string strategy_setting = 7; // JSON string for parameters
+  string start_date = 8;
+  string end_date = 9;
+}
+
+message StreamRequest {
+  string job_id = 1;
+  string correlation_id = 2;
+  repeated string model_ids = 3;
+  StrategyConfig strategy = 4;
+}
+
+message GreeksPayload {
+  double delta = 1;
+  double gamma = 2;
+  double theta = 3;
+  double vega = 4;
+  double rho = 5;
+}
+
+message CVaRPayload {
+  double var_95 = 1;
+  double cvar_95 = 2;
+  double var_99 = 3;
+  double cvar_99 = 4;
+}
+
+message ModelResult {
+  string model_id = 1;
+  double hedge_ratio = 2;
+  double pnl = 3;
+  double cumulative_pnl = 4;
+  int64 inference_latency_ns = 5;
+}
+
+message EngineStateUpdate {
+  string job_id = 1;
+  int64 tick_timestamp_ns = 2;
+  double spot_price = 3;
+  double implied_vol = 4;
+  GreeksPayload greeks = 5;
+  repeated ModelResult model_results = 6;
+  CVaRPayload cvar = 7;
+  double pnl = 8;
+  double cumulative_pnl = 9;
+}
+
+message CommandRequest {
+  string command_id = 1;
+  string action = 2; // pause, resume, stop, model_swap
+  string payload_json = 3;
+}
+
+message CommandAck {
+  string command_id = 1;
+  bool success = 2;
+  string error_message = 3;
+}
+
 // Live engine control / query service.
 service EngineService {
   // General status
@@ -207,5 +273,10 @@ service EngineService {
 
   // Strategy holdings
   rpc GetStrategyHoldings(Empty) returns (StrategyHoldingsResponse);
+
+  // Backtesting & Model Execution Control Plane
+  rpc StartBacktest(StreamRequest) returns (stream EngineStateUpdate);
+  rpc SendCommand(stream CommandRequest) returns (CommandAck);
 }
+
 
