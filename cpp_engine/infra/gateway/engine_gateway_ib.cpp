@@ -31,6 +31,8 @@
 
 namespace engines {
 
+using OrderId = int;
+
 // IB Contract <-> platform symbol
 
 static auto contract_to_formatted_symbol(const Contract& c) -> std::string {

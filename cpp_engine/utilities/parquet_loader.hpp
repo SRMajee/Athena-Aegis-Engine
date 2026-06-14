@@ -66,6 +66,12 @@ inline auto ArrowTsToChrono(int64_t value, arrow::TimeUnit::type unit) -> Timest
     return Timestamp{d};
 }
 
+inline auto ArrowInt64ToChrono(int64_t value) -> Timestamp {
+    using namespace std::chrono;
+    auto d = duration_cast<std::chrono::system_clock::duration>(nanoseconds(value));
+    return Timestamp{d};
+}
+
 inline auto ColumnChunk0(const arrow::Table* table, int col) -> const arrow::Array* {
     auto c = table->column(col);
     return c->num_chunks() > 0 ? c->chunk(0).get() : nullptr;
@@ -105,13 +111,36 @@ class ArrowParquetLoader {
             return;
         }
         const arrow::Array* ts_arr = detail::ColumnChunk0(table_.get(), time_col_index_);
-        if ((ts_arr == nullptr) || ts_arr->type_id() != arrow::Type::TIMESTAMP) {
+        if (ts_arr == nullptr) {
+            return;
+        }
+        bool is_timestamp = (ts_arr->type_id() == arrow::Type::TIMESTAMP);
+        bool is_int64 = (ts_arr->type_id() == arrow::Type::INT64);
+        if (!is_timestamp && !is_int64) {
             return;
         }
 
-        const auto* ts = static_cast<const arrow::TimestampArray*>(ts_arr);
-        auto ts_type = std::static_pointer_cast<arrow::TimestampType>(ts_arr->type());
-        auto unit = ts_type->unit();
+        auto get_ts_chrono = [&](int64_t idx) -> Timestamp {
+            if (is_timestamp) {
+                const auto* ts = static_cast<const arrow::TimestampArray*>(ts_arr);
+                auto ts_type = std::static_pointer_cast<arrow::TimestampType>(ts_arr->type());
+                return detail::ArrowTsToChrono(ts->Value(idx), ts_type->unit());
+            } else {
+                const auto* ts = static_cast<const arrow::Int64Array*>(ts_arr);
+                return detail::ArrowInt64ToChrono(ts->Value(idx));
+            }
+        };
+
+        auto get_ts_val = [&](int64_t idx) -> int64_t {
+            if (is_timestamp) {
+                const auto* ts = static_cast<const arrow::TimestampArray*>(ts_arr);
+                return ts->Value(idx);
+            } else {
+                const auto* ts = static_cast<const arrow::Int64Array*>(ts_arr);
+                return ts->Value(idx);
+            }
+        };
+
         const int64_t n = table_->num_rows();
         int col_sym = table_->schema()->GetFieldIndex("symbol");
         int col_bid = table_->schema()->GetFieldIndex("bid_px");
@@ -142,7 +171,7 @@ class ArrowParquetLoader {
 
         bool non_decreasing = true;
         for (int64_t i = 1; i < n; ++i) {
-            if (ts->Value(i) < ts->Value(i - 1)) {
+            if (get_ts_val(i) < get_ts_val(i - 1)) {
                 non_decreasing = false;
                 break;
             }
@@ -151,13 +180,13 @@ class ArrowParquetLoader {
         if (non_decreasing) {
             int64_t i = 0;
             while (i < n) {
-                const int64_t t_val = ts->Value(i);
+                const int64_t t_val = get_ts_val(i);
                 int64_t j = i + 1;
-                while (j < n && ts->Value(j) == t_val) {
+                while (j < n && get_ts_val(j) == t_val) {
                     ++j;
                 }
 
-                frame.timestamp = detail::ArrowTsToChrono(t_val, unit);
+                frame.timestamp = get_ts_chrono(i);
                 frame.num_rows = j - i;
                 frame.start_row = i;
                 frame.row_indices.clear();
@@ -172,7 +201,7 @@ class ArrowParquetLoader {
         std::unordered_map<int64_t, std::vector<int64_t>> groups;
         groups.reserve(static_cast<size_t>(n / 4));
         for (int64_t i = 0; i < n; ++i) {
-            groups[ts->Value(i)].push_back(i);
+            groups[get_ts_val(i)].push_back(i);
         }
 
         std::vector<int64_t> sorted_ts;
@@ -181,7 +210,7 @@ class ArrowParquetLoader {
         std::ranges::sort(sorted_ts);
 
         for (int64_t t_val : sorted_ts) {
-            frame.timestamp = detail::ArrowTsToChrono(t_val, unit);
+            frame.timestamp = detail::ArrowInt64ToChrono(t_val);
             frame.row_indices = groups[t_val];
             frame.num_rows = static_cast<int64_t>(frame.row_indices.size());
             frame.start_row = 0;

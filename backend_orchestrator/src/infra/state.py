@@ -31,7 +31,7 @@ class LiveEngineState:
     max_logs: int = 500
 
     #: Log stream queue
-    log_queue: Queue[str] = Queue()
+    log_queue: Any = None
 
     #: Strategy updates
     strategy_updates: list[dict] = []
@@ -56,6 +56,7 @@ class WebsocketState:
 
     log_clients: Set[WebSocket] = set()
     strategy_clients: Set[WebSocket] = set()
+    job_subscribers: Dict[str, Set[WebSocket]] = {}
 
 
 class AppState:

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from typing import Any, Dict, List, Optional
 
 from fastapi import HTTPException
@@ -7,7 +8,7 @@ from fastapi import HTTPException
 from src.infra.db import DBError, fetch_contracts_summary, fetch_orders_trades_raw
 
 
-def get_orders_trades_from_db(
+async def get_orders_trades_from_db(
     strategy: Optional[str],
     record_type: Optional[str],
     limit: int,
@@ -20,7 +21,7 @@ def get_orders_trades_from_db(
             raise HTTPException(status_code=400, detail="record_type must be Order or Trade")
 
     try:
-        strategies, rows = fetch_orders_trades_raw(strategy=strategy, limit=limit)
+        strategies, rows = await asyncio.to_thread(fetch_orders_trades_raw, strategy, limit)
     except DBError as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
@@ -57,10 +58,9 @@ def get_orders_trades_from_db(
     return {"strategies": strategies, "records": records}
 
 
-def get_contracts_overview_from_db() -> Dict[str, Any]:
+async def get_contracts_overview_from_db() -> Dict[str, Any]:
     """Contracts overview (equity + options); DBError → HTTPException."""
     try:
-        return fetch_contracts_summary()
+        return await asyncio.to_thread(fetch_contracts_summary)
     except DBError as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
-

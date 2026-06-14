@@ -42,7 +42,7 @@ export default function SidebarNav() {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await fetch('http://localhost:8080/api/system/status');
+        const res = await fetch('http://127.0.0.1:8080/api/system/status');
         if (res.ok) {
           const data = (await res.json()) as SystemStatusResponse;
           setLiveStatus(data.live);
@@ -59,7 +59,7 @@ export default function SidebarNav() {
       }
 
       try {
-        const mdRes = await fetch('http://localhost:8080/api/market/status');
+        const mdRes = await fetch('http://127.0.0.1:8080/api/market/status');
         if (mdRes.ok) {
           const mdData = (await mdRes.json()) as MarketStatus;
           setMarketStatus(mdData);

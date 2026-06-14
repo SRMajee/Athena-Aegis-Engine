@@ -11,38 +11,38 @@ router = APIRouter()
 
 
 @router.post("/api/gateway/connect")
-def connect_gateway() -> dict:
-    return MainService.connect_gateway()
+async def connect_gateway() -> dict:
+    return await MainService.connect_gateway()
 
 
 @router.post("/api/gateway/disconnect")
-def disconnect_gateway() -> dict:
-    return MainService.disconnect_gateway()
+async def disconnect_gateway() -> dict:
+    return await MainService.disconnect_gateway()
 
 
 @router.get("/api/gateway/status")
-def get_gateway_status() -> dict:
-    return MainService.get_gateway_status()
+async def get_gateway_status() -> dict:
+    return await MainService.get_gateway_status()
 
 
 @router.get("/api/market/status")
-def get_market_status() -> dict:
-    return MainService.get_market_status()
+async def get_market_status() -> dict:
+    return await MainService.get_market_status()
 
 
 @router.post("/api/market/start")
-def start_market() -> dict:
-    return MainService.start_market_data()
+async def start_market() -> dict:
+    return await MainService.start_market_data()
 
 
 @router.post("/api/market/stop")
-def stop_market() -> dict:
-    return MainService.stop_market_data()
+async def stop_market() -> dict:
+    return await MainService.stop_market_data()
 
 
 @router.get("/api/strategies")
-def list_strategies() -> dict:
-    return StrategyService.list_strategies()
+async def list_strategies() -> dict:
+    return await StrategyService.list_strategies()
 
 
 @router.get("/api/strategies/updates")
@@ -56,74 +56,74 @@ def clear_strategy_updates() -> dict:
 
 
 @router.get("/api/strategies/meta/strategy-classes")
-def get_strategy_classes() -> dict:
-    return StrategyService.get_strategy_classes()
+async def get_strategy_classes() -> dict:
+    return await StrategyService.get_strategy_classes()
 
 
 @router.get("/api/strategies/meta/settings")
-def get_strategy_class_settings(strategy_class: str = Query(..., alias="class")) -> dict:
+async def get_strategy_class_settings(strategy_class: str = Query(..., alias="class")) -> dict:
     """Default settings for strategy class (strategy_config.json)."""
-    return StrategyService.get_strategy_class_defaults(strategy_class)
+    return await StrategyService.get_strategy_class_defaults(strategy_class)
 
 
 @router.get("/api/strategies/meta/portfolios")
-def get_portfolios() -> dict:
-    return StrategyService.get_portfolios_meta()
+async def get_portfolios() -> dict:
+    return await StrategyService.get_portfolios_meta()
 
 
 @router.get("/api/strategies/meta/removed-strategies")
-def get_removed_strategies() -> dict:
-    return StrategyService.get_removed_strategies()
+async def get_removed_strategies() -> dict:
+    return await StrategyService.get_removed_strategies()
 
 
 @router.post("/api/strategies")
-def add_strategy(req: AddStrategyRequest) -> dict:
-    return StrategyService.add_strategy(req)
+async def add_strategy(req: AddStrategyRequest) -> dict:
+    return await StrategyService.add_strategy(req)
 
 
 @router.post("/api/strategies/restore")
-def restore_strategy(req: RestoreStrategyRequest) -> dict:
-    return StrategyService.restore_strategy(req)
+async def restore_strategy(req: RestoreStrategyRequest) -> dict:
+    return await StrategyService.restore_strategy(req)
 
 
 @router.post("/api/strategies/{strategy_name}/init")
-def init_strategy(strategy_name: str) -> dict:
-    return StrategyService.init_strategy(strategy_name)
+async def init_strategy(strategy_name: str) -> dict:
+    return await StrategyService.init_strategy(strategy_name)
 
 
 @router.post("/api/strategies/{strategy_name}/start")
-def start_strategy(strategy_name: str) -> dict:
-    return StrategyService.start_strategy(strategy_name)
+async def start_strategy(strategy_name: str) -> dict:
+    return await StrategyService.start_strategy(strategy_name)
 
 
 @router.post("/api/strategies/{strategy_name}/stop")
-def stop_strategy(strategy_name: str) -> dict:
-    return StrategyService.stop_strategy(strategy_name)
+async def stop_strategy(strategy_name: str) -> dict:
+    return await StrategyService.stop_strategy(strategy_name)
 
 
 @router.delete("/api/strategies/{strategy_name}/remove")
-def remove_strategy(strategy_name: str) -> dict:
-    return StrategyService.remove_strategy(strategy_name)
+async def remove_strategy(strategy_name: str) -> dict:
+    return await StrategyService.remove_strategy(strategy_name)
 
 
 @router.delete("/api/strategies/{strategy_name}/delete")
-def delete_strategy(strategy_name: str) -> dict:
-    return StrategyService.delete_strategy(strategy_name)
+async def delete_strategy(strategy_name: str) -> dict:
+    return await StrategyService.delete_strategy(strategy_name)
 
 
 @router.get("/api/strategies/holdings")
-def get_strategy_holdings() -> dict:
-    return StrategyService.get_strategy_holdings()
+async def get_strategy_holdings() -> dict:
+    return await StrategyService.get_strategy_holdings()
 
 
 @router.get("/api/orders-trades")
-def get_orders_and_trades() -> dict:
-    return MainService.get_orders_and_trades()
+async def get_orders_and_trades() -> dict:
+    return await MainService.get_orders_and_trades()
 
 
 @router.get("/api/data/portfolios")
-def get_portfolio_names() -> dict:
-    return MainService.get_portfolio_names()
+async def get_portfolio_names() -> dict:
+    return await MainService.get_portfolio_names()
 
 
 @router.get("/logs")
@@ -140,4 +140,3 @@ def get_logs_api() -> dict:
 def clear_logs() -> dict:
     """Clear log buffer (e.g. Clear button)."""
     return MainService.clear_logs()
-

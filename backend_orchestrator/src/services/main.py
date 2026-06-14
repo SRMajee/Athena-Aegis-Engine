@@ -19,22 +19,22 @@ class MainService:
         return client
 
     @staticmethod
-    def connect_gateway() -> dict:
+    async def connect_gateway() -> dict:
         client = MainService._get_client_or_400()
-        return client.connect_gateway()
+        return await client.connect_gateway()
 
     @staticmethod
-    def disconnect_gateway() -> dict:
+    async def disconnect_gateway() -> dict:
         client = MainService._get_client_or_400()
-        return client.disconnect_gateway()
+        return await client.disconnect_gateway()
 
     @staticmethod
-    def get_gateway_status() -> dict:
+    async def get_gateway_status() -> dict:
         client: EngineClient | None = AppState.live.live_client
         if client is None:
             return {"status": "stopped", "connected": False}
         try:
-            status = client.get_status()
+            status = await client.get_status()
             # detail e.g. "engine: running; ib: on; md: off"
             detail = status.get("detail") or ""
             ib_on = "ib: on" in detail
@@ -47,12 +47,12 @@ class MainService:
             return {"status": "error", "connected": False, "detail": str(e)}
 
     @staticmethod
-    def get_market_status() -> dict:
+    async def get_market_status() -> dict:
         client: EngineClient | None = AppState.live.live_client
         if client is None:
             return {"status": "stopped", "connected": False}
         try:
-            status = client.get_status()
+            status = await client.get_status()
             detail = status.get("detail") or ""
             md_on = "md: on" in detail
             return {
@@ -64,24 +64,24 @@ class MainService:
             return {"status": "error", "connected": False, "detail": str(e)}
 
     @staticmethod
-    def start_market_data() -> dict:
+    async def start_market_data() -> dict:
         client = MainService._get_client_or_400()
-        return client.start_market_data()
+        return await client.start_market_data()
 
     @staticmethod
-    def stop_market_data() -> dict:
+    async def stop_market_data() -> dict:
         client = MainService._get_client_or_400()
-        return client.stop_market_data()
+        return await client.stop_market_data()
 
     @staticmethod
-    def get_orders_and_trades() -> dict:
+    async def get_orders_and_trades() -> dict:
         client = MainService._get_client_or_400()
-        return client.get_orders_and_trades()
+        return await client.get_orders_and_trades()
 
     @staticmethod
-    def get_portfolio_names() -> dict:
+    async def get_portfolio_names() -> dict:
         client = MainService._get_client_or_400()
-        names = client.get_portfolio_names()
+        names = await client.get_portfolio_names()
         return {"portfolios": names}
 
     @staticmethod
@@ -109,4 +109,3 @@ class MainService:
             return dt.strftime("%m/%d/%Y %H:%M:%S")
         except Exception:
             return timestamp_str
-

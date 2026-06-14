@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List
 
-from fastapi import APIRouter, Body, Query
+from fastapi import APIRouter, Body, Query, status
 
 from src.utils.files import backtest_duration, inspect_parquet_to_dict, list_files, list_strategies
 from src.services.backtest import BacktestService
@@ -41,16 +41,15 @@ def api_backtest_duration() -> Dict[str, Any]:
     return backtest_duration()
 
 
-@router.post("/api/run_backtest")
-def api_run_backtest(
+@router.post("/api/run_backtest", status_code=status.HTTP_202_ACCEPTED)
+async def api_run_backtest(
     request: Dict[str, Any] = Body(...),
-):
-    """Run backtest (blocking); return results + metrics."""
-    return BacktestService.run_backtest(request)
+) -> Dict[str, Any]:
+    """Run backtest (non-blocking); enqueues task and returns job ID."""
+    return await BacktestService.run_backtest(request)
 
 
 @router.post("/api/backtest/cancel")
-def api_backtest_cancel() -> Dict[str, Any]:
+async def api_backtest_cancel() -> Dict[str, Any]:
     """Cancel running C++ backtest (if any)."""
-    return BacktestService.cancel_backtest()
-
+    return await BacktestService.cancel_backtest()

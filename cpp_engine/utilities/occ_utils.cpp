@@ -18,13 +18,17 @@ using namespace utilities;
 
 auto parse_occ_symbol(const std::string& symbol)
     -> std::tuple<std::optional<Timestamp>, std::optional<double>, std::optional<OptionType>> {
-    if (symbol.size() < 15U) {
+    std::string occ_part = symbol;
+    if (symbol.size() >= 21U) {
+        occ_part = symbol.substr(symbol.size() - 15U);
+    }
+    if (occ_part.size() < 15U) {
         return {std::nullopt, std::nullopt, std::nullopt};
     }
     try {
-        int yy = std::stoi(symbol.substr(0, 2));
-        int mm = std::stoi(symbol.substr(2, 2));
-        int dd = std::stoi(symbol.substr(4, 2));
+        int yy = std::stoi(occ_part.substr(0, 2));
+        int mm = std::stoi(occ_part.substr(2, 2));
+        int dd = std::stoi(occ_part.substr(4, 2));
         int year = (yy < 80) ? (2000 + yy) : (1900 + yy);
         // Expiry 16:00 ET = 21:00 UTC; build UTC tm and convert to time_t without touching TZ
         std::tm tm_utc{};
@@ -46,11 +50,11 @@ auto parse_occ_symbol(const std::string& symbol)
         }
         Timestamp expiry = std::chrono::system_clock::from_time_t(t);
 
-        char cp = static_cast<char>(std::toupper(static_cast<unsigned char>(symbol[6])));
+        char cp = static_cast<char>(std::toupper(static_cast<unsigned char>(occ_part[6])));
         if (cp != 'C' && cp != 'P') {
             return {std::nullopt, std::nullopt, std::nullopt};
         }
-        double strike = std::stoi(symbol.substr(7, 8)) / 1000.0;
+        double strike = std::stoi(occ_part.substr(7, 8)) / 1000.0;
         OptionType opt_type = (cp == 'C') ? OptionType::CALL : OptionType::PUT;
         return {expiry, strike, opt_type};
     } catch (...) {

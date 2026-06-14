@@ -4,1129 +4,1526 @@
 #include "otrader_engine.pb.h"
 
 #include <algorithm>
-
-#include <google/protobuf/io/coded_stream.h>
-#include <google/protobuf/extension_set.h>
-#include <google/protobuf/wire_format_lite.h>
-#include <google/protobuf/descriptor.h>
-#include <google/protobuf/generated_message_reflection.h>
-#include <google/protobuf/reflection_ops.h>
-#include <google/protobuf/wire_format.h>
+#include "google/protobuf/io/coded_stream.h"
+#include "google/protobuf/extension_set.h"
+#include "google/protobuf/wire_format_lite.h"
+#include "google/protobuf/descriptor.h"
+#include "google/protobuf/generated_message_reflection.h"
+#include "google/protobuf/reflection_ops.h"
+#include "google/protobuf/wire_format.h"
+#include "google/protobuf/generated_message_tctable_impl.h"
 // @@protoc_insertion_point(includes)
-#include <google/protobuf/port_def.inc>
 
+// Must be included last.
+#include "google/protobuf/port_def.inc"
 PROTOBUF_PRAGMA_INIT_SEG
-
-namespace _pb = ::PROTOBUF_NAMESPACE_ID;
-namespace _pbi = _pb::internal;
-
+namespace _pb = ::google::protobuf;
+namespace _pbi = ::google::protobuf::internal;
+namespace _fl = ::google::protobuf::internal::field_layout;
 namespace otrader {
-PROTOBUF_CONSTEXPR Empty::Empty(
-    ::_pbi::ConstantInitialized){}
+      template <typename>
+PROTOBUF_CONSTEXPR Empty::Empty(::_pbi::ConstantInitialized) {}
 struct EmptyDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR EmptyDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR EmptyDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~EmptyDefaultTypeInternal() {}
   union {
     Empty _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EmptyDefaultTypeInternal _Empty_default_instance_;
-PROTOBUF_CONSTEXPR EngineStatus::EngineStatus(
-    ::_pbi::ConstantInitialized)
-  : detail_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , running_(false)
-  , connected_(false){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EmptyDefaultTypeInternal _Empty_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR EngineStatus::EngineStatus(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.detail_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.running_)*/ false,
+      /*decltype(_impl_.connected_)*/ false,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct EngineStatusDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR EngineStatusDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR EngineStatusDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~EngineStatusDefaultTypeInternal() {}
   union {
     EngineStatus _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EngineStatusDefaultTypeInternal _EngineStatus_default_instance_;
-PROTOBUF_CONSTEXPR StrategySummary::StrategySummary(
-    ::_pbi::ConstantInitialized)
-  : strategy_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , class_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , portfolio_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , status_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EngineStatusDefaultTypeInternal _EngineStatus_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR StrategySummary::StrategySummary(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.strategy_name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.class_name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.portfolio_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.status_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct StrategySummaryDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StrategySummaryDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR StrategySummaryDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StrategySummaryDefaultTypeInternal() {}
   union {
     StrategySummary _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategySummaryDefaultTypeInternal _StrategySummary_default_instance_;
-PROTOBUF_CONSTEXPR LogLine::LogLine(
-    ::_pbi::ConstantInitialized)
-  : line_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategySummaryDefaultTypeInternal _StrategySummary_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR LogLine::LogLine(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.line_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct LogLineDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR LogLineDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR LogLineDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~LogLineDefaultTypeInternal() {}
   union {
     LogLine _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 LogLineDefaultTypeInternal _LogLine_default_instance_;
-PROTOBUF_CONSTEXPR StrategyUpdate::StrategyUpdate(
-    ::_pbi::ConstantInitialized)
-  : strategy_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , class_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , portfolio_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , json_payload_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 LogLineDefaultTypeInternal _LogLine_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR StrategyUpdate::StrategyUpdate(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.strategy_name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.class_name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.portfolio_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.json_payload_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct StrategyUpdateDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StrategyUpdateDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR StrategyUpdateDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StrategyUpdateDefaultTypeInternal() {}
   union {
     StrategyUpdate _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyUpdateDefaultTypeInternal _StrategyUpdate_default_instance_;
-PROTOBUF_CONSTEXPR StrategyNameRequest::StrategyNameRequest(
-    ::_pbi::ConstantInitialized)
-  : strategy_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyUpdateDefaultTypeInternal _StrategyUpdate_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR StrategyNameRequest::StrategyNameRequest(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.strategy_name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct StrategyNameRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StrategyNameRequestDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR StrategyNameRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StrategyNameRequestDefaultTypeInternal() {}
   union {
     StrategyNameRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyNameRequestDefaultTypeInternal _StrategyNameRequest_default_instance_;
-PROTOBUF_CONSTEXPR AddStrategyRequest::AddStrategyRequest(
-    ::_pbi::ConstantInitialized)
-  : strategy_class_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , portfolio_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , setting_json_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyNameRequestDefaultTypeInternal _StrategyNameRequest_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR AddStrategyRequest::AddStrategyRequest(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.strategy_class_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.portfolio_name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.setting_json_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct AddStrategyRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR AddStrategyRequestDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR AddStrategyRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~AddStrategyRequestDefaultTypeInternal() {}
   union {
     AddStrategyRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddStrategyRequestDefaultTypeInternal _AddStrategyRequest_default_instance_;
-PROTOBUF_CONSTEXPR OrderRecord::OrderRecord(
-    ::_pbi::ConstantInitialized)
-  : timestamp_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , strategy_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , orderid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , symbol_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , exchange_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , trading_class_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , type_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , direction_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , status_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , datetime_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , reference_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , legs_info_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , price_(0)
-  , volume_(0)
-  , traded_(0)
-  , is_combo_(false){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddStrategyRequestDefaultTypeInternal _AddStrategyRequest_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR OrderRecord::OrderRecord(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.timestamp_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.strategy_name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.orderid_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.symbol_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.exchange_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.trading_class_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.type_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.direction_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.status_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.datetime_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.reference_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.legs_info_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.price_)*/ 0,
+      /*decltype(_impl_.volume_)*/ 0,
+      /*decltype(_impl_.traded_)*/ 0,
+      /*decltype(_impl_.is_combo_)*/ false,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct OrderRecordDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR OrderRecordDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR OrderRecordDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~OrderRecordDefaultTypeInternal() {}
   union {
     OrderRecord _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OrderRecordDefaultTypeInternal _OrderRecord_default_instance_;
-PROTOBUF_CONSTEXPR TradeRecord::TradeRecord(
-    ::_pbi::ConstantInitialized)
-  : timestamp_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , strategy_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , tradeid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , symbol_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , exchange_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , orderid_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , direction_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , datetime_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , price_(0)
-  , volume_(0){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OrderRecordDefaultTypeInternal _OrderRecord_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR TradeRecord::TradeRecord(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.timestamp_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.strategy_name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.tradeid_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.symbol_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.exchange_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.orderid_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.direction_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.datetime_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.price_)*/ 0,
+      /*decltype(_impl_.volume_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct TradeRecordDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR TradeRecordDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR TradeRecordDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~TradeRecordDefaultTypeInternal() {}
   union {
     TradeRecord _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TradeRecordDefaultTypeInternal _TradeRecord_default_instance_;
-PROTOBUF_CONSTEXPR OrdersAndTradesResponse::OrdersAndTradesResponse(
-    ::_pbi::ConstantInitialized)
-  : orders_()
-  , trades_(){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TradeRecordDefaultTypeInternal _TradeRecord_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR OrdersAndTradesResponse::OrdersAndTradesResponse(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.orders_)*/ {},
+      /*decltype(_impl_.trades_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct OrdersAndTradesResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR OrdersAndTradesResponseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR OrdersAndTradesResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~OrdersAndTradesResponseDefaultTypeInternal() {}
   union {
     OrdersAndTradesResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OrdersAndTradesResponseDefaultTypeInternal _OrdersAndTradesResponse_default_instance_;
-PROTOBUF_CONSTEXPR ListPortfoliosResponse::ListPortfoliosResponse(
-    ::_pbi::ConstantInitialized)
-  : portfolios_(){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OrdersAndTradesResponseDefaultTypeInternal _OrdersAndTradesResponse_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR ListPortfoliosResponse::ListPortfoliosResponse(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.portfolios_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct ListPortfoliosResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ListPortfoliosResponseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR ListPortfoliosResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~ListPortfoliosResponseDefaultTypeInternal() {}
   union {
     ListPortfoliosResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ListPortfoliosResponseDefaultTypeInternal _ListPortfoliosResponse_default_instance_;
-PROTOBUF_CONSTEXPR ListStrategyClassesResponse::ListStrategyClassesResponse(
-    ::_pbi::ConstantInitialized)
-  : classes_(){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ListPortfoliosResponseDefaultTypeInternal _ListPortfoliosResponse_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR ListStrategyClassesResponse::ListStrategyClassesResponse(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.classes_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct ListStrategyClassesResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ListStrategyClassesResponseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR ListStrategyClassesResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~ListStrategyClassesResponseDefaultTypeInternal() {}
   union {
     ListStrategyClassesResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ListStrategyClassesResponseDefaultTypeInternal _ListStrategyClassesResponse_default_instance_;
-PROTOBUF_CONSTEXPR GetStrategyClassDefaultsRequest::GetStrategyClassDefaultsRequest(
-    ::_pbi::ConstantInitialized)
-  : strategy_class_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ListStrategyClassesResponseDefaultTypeInternal _ListStrategyClassesResponse_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR GetStrategyClassDefaultsRequest::GetStrategyClassDefaultsRequest(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.strategy_class_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct GetStrategyClassDefaultsRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR GetStrategyClassDefaultsRequestDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR GetStrategyClassDefaultsRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~GetStrategyClassDefaultsRequestDefaultTypeInternal() {}
   union {
     GetStrategyClassDefaultsRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetStrategyClassDefaultsRequestDefaultTypeInternal _GetStrategyClassDefaultsRequest_default_instance_;
-PROTOBUF_CONSTEXPR GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse(
-    ::_pbi::ConstantInitialized){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetStrategyClassDefaultsRequestDefaultTypeInternal _GetStrategyClassDefaultsRequest_default_instance_;
+      template <typename>
+PROTOBUF_CONSTEXPR GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse(::_pbi::ConstantInitialized) {}
 struct GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUseDefaultTypeInternal() {}
   union {
     GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUseDefaultTypeInternal _GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse_default_instance_;
-PROTOBUF_CONSTEXPR GetStrategyClassDefaultsResponse::GetStrategyClassDefaultsResponse(
-    ::_pbi::ConstantInitialized)
-  : settings_(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUseDefaultTypeInternal _GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR GetStrategyClassDefaultsResponse::GetStrategyClassDefaultsResponse(::_pbi::ConstantInitialized)
+    : _impl_{
+      /* decltype(_impl_.settings_) */ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct GetStrategyClassDefaultsResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR GetStrategyClassDefaultsResponseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR GetStrategyClassDefaultsResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~GetStrategyClassDefaultsResponseDefaultTypeInternal() {}
   union {
     GetStrategyClassDefaultsResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetStrategyClassDefaultsResponseDefaultTypeInternal _GetStrategyClassDefaultsResponse_default_instance_;
-PROTOBUF_CONSTEXPR AddStrategyResponse::AddStrategyResponse(
-    ::_pbi::ConstantInitialized)
-  : strategy_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetStrategyClassDefaultsResponseDefaultTypeInternal _GetStrategyClassDefaultsResponse_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR AddStrategyResponse::AddStrategyResponse(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.strategy_name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct AddStrategyResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR AddStrategyResponseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR AddStrategyResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~AddStrategyResponseDefaultTypeInternal() {}
   union {
     AddStrategyResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddStrategyResponseDefaultTypeInternal _AddStrategyResponse_default_instance_;
-PROTOBUF_CONSTEXPR RemoveStrategyResponse::RemoveStrategyResponse(
-    ::_pbi::ConstantInitialized)
-  : removed_(false){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddStrategyResponseDefaultTypeInternal _AddStrategyResponse_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR RemoveStrategyResponse::RemoveStrategyResponse(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.removed_)*/ false,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct RemoveStrategyResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RemoveStrategyResponseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR RemoveStrategyResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~RemoveStrategyResponseDefaultTypeInternal() {}
   union {
     RemoveStrategyResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RemoveStrategyResponseDefaultTypeInternal _RemoveStrategyResponse_default_instance_;
-PROTOBUF_CONSTEXPR DeleteStrategyResponse::DeleteStrategyResponse(
-    ::_pbi::ConstantInitialized)
-  : deleted_(false){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RemoveStrategyResponseDefaultTypeInternal _RemoveStrategyResponse_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR DeleteStrategyResponse::DeleteStrategyResponse(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.deleted_)*/ false,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct DeleteStrategyResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR DeleteStrategyResponseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR DeleteStrategyResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~DeleteStrategyResponseDefaultTypeInternal() {}
   union {
     DeleteStrategyResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DeleteStrategyResponseDefaultTypeInternal _DeleteStrategyResponse_default_instance_;
-PROTOBUF_CONSTEXPR GetRemovedStrategiesResponse::GetRemovedStrategiesResponse(
-    ::_pbi::ConstantInitialized)
-  : removed_strategies_(){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DeleteStrategyResponseDefaultTypeInternal _DeleteStrategyResponse_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR GetRemovedStrategiesResponse::GetRemovedStrategiesResponse(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.removed_strategies_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct GetRemovedStrategiesResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR GetRemovedStrategiesResponseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR GetRemovedStrategiesResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~GetRemovedStrategiesResponseDefaultTypeInternal() {}
   union {
     GetRemovedStrategiesResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetRemovedStrategiesResponseDefaultTypeInternal _GetRemovedStrategiesResponse_default_instance_;
-PROTOBUF_CONSTEXPR StrategyHoldingsResponse_HoldingsEntry_DoNotUse::StrategyHoldingsResponse_HoldingsEntry_DoNotUse(
-    ::_pbi::ConstantInitialized){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetRemovedStrategiesResponseDefaultTypeInternal _GetRemovedStrategiesResponse_default_instance_;
+      template <typename>
+PROTOBUF_CONSTEXPR StrategyHoldingsResponse_HoldingsEntry_DoNotUse::StrategyHoldingsResponse_HoldingsEntry_DoNotUse(::_pbi::ConstantInitialized) {}
 struct StrategyHoldingsResponse_HoldingsEntry_DoNotUseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StrategyHoldingsResponse_HoldingsEntry_DoNotUseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR StrategyHoldingsResponse_HoldingsEntry_DoNotUseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StrategyHoldingsResponse_HoldingsEntry_DoNotUseDefaultTypeInternal() {}
   union {
     StrategyHoldingsResponse_HoldingsEntry_DoNotUse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyHoldingsResponse_HoldingsEntry_DoNotUseDefaultTypeInternal _StrategyHoldingsResponse_HoldingsEntry_DoNotUse_default_instance_;
-PROTOBUF_CONSTEXPR StrategyHoldingsResponse::StrategyHoldingsResponse(
-    ::_pbi::ConstantInitialized)
-  : holdings_(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyHoldingsResponse_HoldingsEntry_DoNotUseDefaultTypeInternal _StrategyHoldingsResponse_HoldingsEntry_DoNotUse_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR StrategyHoldingsResponse::StrategyHoldingsResponse(::_pbi::ConstantInitialized)
+    : _impl_{
+      /* decltype(_impl_.holdings_) */ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct StrategyHoldingsResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StrategyHoldingsResponseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR StrategyHoldingsResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StrategyHoldingsResponseDefaultTypeInternal() {}
   union {
     StrategyHoldingsResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyHoldingsResponseDefaultTypeInternal _StrategyHoldingsResponse_default_instance_;
-PROTOBUF_CONSTEXPR BasePositionMsg::BasePositionMsg(
-    ::_pbi::ConstantInitialized)
-  : symbol_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , avg_cost_(0)
-  , cost_value_(0)
-  , realized_pnl_(0)
-  , mid_price_(0)
-  , delta_(0)
-  , gamma_(0)
-  , theta_(0)
-  , vega_(0)
-  , quantity_(0){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyHoldingsResponseDefaultTypeInternal _StrategyHoldingsResponse_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR BasePositionMsg::BasePositionMsg(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.symbol_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.avg_cost_)*/ 0,
+      /*decltype(_impl_.cost_value_)*/ 0,
+      /*decltype(_impl_.realized_pnl_)*/ 0,
+      /*decltype(_impl_.mid_price_)*/ 0,
+      /*decltype(_impl_.delta_)*/ 0,
+      /*decltype(_impl_.gamma_)*/ 0,
+      /*decltype(_impl_.theta_)*/ 0,
+      /*decltype(_impl_.vega_)*/ 0,
+      /*decltype(_impl_.quantity_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct BasePositionMsgDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR BasePositionMsgDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR BasePositionMsgDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~BasePositionMsgDefaultTypeInternal() {}
   union {
     BasePositionMsg _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BasePositionMsgDefaultTypeInternal _BasePositionMsg_default_instance_;
-PROTOBUF_CONSTEXPR OptionPositionMsg::OptionPositionMsg(
-    ::_pbi::ConstantInitialized)
-  : legs_()
-  , symbol_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , combo_type_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , avg_cost_(0)
-  , cost_value_(0)
-  , realized_pnl_(0)
-  , mid_price_(0)
-  , delta_(0)
-  , gamma_(0)
-  , theta_(0)
-  , vega_(0)
-  , quantity_(0){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BasePositionMsgDefaultTypeInternal _BasePositionMsg_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR OptionPositionMsg::OptionPositionMsg(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.legs_)*/ {},
+      /*decltype(_impl_.symbol_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.combo_type_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.avg_cost_)*/ 0,
+      /*decltype(_impl_.cost_value_)*/ 0,
+      /*decltype(_impl_.realized_pnl_)*/ 0,
+      /*decltype(_impl_.mid_price_)*/ 0,
+      /*decltype(_impl_.delta_)*/ 0,
+      /*decltype(_impl_.gamma_)*/ 0,
+      /*decltype(_impl_.theta_)*/ 0,
+      /*decltype(_impl_.vega_)*/ 0,
+      /*decltype(_impl_.quantity_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct OptionPositionMsgDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR OptionPositionMsgDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR OptionPositionMsgDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~OptionPositionMsgDefaultTypeInternal() {}
   union {
     OptionPositionMsg _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OptionPositionMsgDefaultTypeInternal _OptionPositionMsg_default_instance_;
-PROTOBUF_CONSTEXPR PortfolioSummaryMsg::PortfolioSummaryMsg(
-    ::_pbi::ConstantInitialized)
-  : total_cost_(0)
-  , current_value_(0)
-  , unrealized_pnl_(0)
-  , realized_pnl_(0)
-  , pnl_(0)
-  , delta_(0)
-  , gamma_(0)
-  , theta_(0)
-  , vega_(0){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OptionPositionMsgDefaultTypeInternal _OptionPositionMsg_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR PortfolioSummaryMsg::PortfolioSummaryMsg(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.total_cost_)*/ 0,
+      /*decltype(_impl_.current_value_)*/ 0,
+      /*decltype(_impl_.unrealized_pnl_)*/ 0,
+      /*decltype(_impl_.realized_pnl_)*/ 0,
+      /*decltype(_impl_.pnl_)*/ 0,
+      /*decltype(_impl_.delta_)*/ 0,
+      /*decltype(_impl_.gamma_)*/ 0,
+      /*decltype(_impl_.theta_)*/ 0,
+      /*decltype(_impl_.vega_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct PortfolioSummaryMsgDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PortfolioSummaryMsgDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR PortfolioSummaryMsgDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~PortfolioSummaryMsgDefaultTypeInternal() {}
   union {
     PortfolioSummaryMsg _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PortfolioSummaryMsgDefaultTypeInternal _PortfolioSummaryMsg_default_instance_;
-PROTOBUF_CONSTEXPR StrategyHoldingMsg_OptionsEntry_DoNotUse::StrategyHoldingMsg_OptionsEntry_DoNotUse(
-    ::_pbi::ConstantInitialized){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PortfolioSummaryMsgDefaultTypeInternal _PortfolioSummaryMsg_default_instance_;
+      template <typename>
+PROTOBUF_CONSTEXPR StrategyHoldingMsg_OptionsEntry_DoNotUse::StrategyHoldingMsg_OptionsEntry_DoNotUse(::_pbi::ConstantInitialized) {}
 struct StrategyHoldingMsg_OptionsEntry_DoNotUseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StrategyHoldingMsg_OptionsEntry_DoNotUseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR StrategyHoldingMsg_OptionsEntry_DoNotUseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StrategyHoldingMsg_OptionsEntry_DoNotUseDefaultTypeInternal() {}
   union {
     StrategyHoldingMsg_OptionsEntry_DoNotUse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyHoldingMsg_OptionsEntry_DoNotUseDefaultTypeInternal _StrategyHoldingMsg_OptionsEntry_DoNotUse_default_instance_;
-PROTOBUF_CONSTEXPR StrategyHoldingMsg::StrategyHoldingMsg(
-    ::_pbi::ConstantInitialized)
-  : options_(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{})
-  , underlying_(nullptr)
-  , summary_(nullptr){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyHoldingMsg_OptionsEntry_DoNotUseDefaultTypeInternal _StrategyHoldingMsg_OptionsEntry_DoNotUse_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR StrategyHoldingMsg::StrategyHoldingMsg(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /* decltype(_impl_.options_) */ {},
+      /*decltype(_impl_.underlying_)*/ nullptr,
+      /*decltype(_impl_.summary_)*/ nullptr,
+    } {}
 struct StrategyHoldingMsgDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StrategyHoldingMsgDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR StrategyHoldingMsgDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StrategyHoldingMsgDefaultTypeInternal() {}
   union {
     StrategyHoldingMsg _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyHoldingMsgDefaultTypeInternal _StrategyHoldingMsg_default_instance_;
-PROTOBUF_CONSTEXPR StrategyConfig::StrategyConfig(
-    ::_pbi::ConstantInitialized)
-  : parquet_path_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , strategy_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , iv_price_mode_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , strategy_setting_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , start_date_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , end_date_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , fee_rate_(0)
-  , slippage_bps_(0)
-  , risk_free_rate_(0){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyHoldingMsgDefaultTypeInternal _StrategyHoldingMsg_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR StrategyConfig::StrategyConfig(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.parquet_path_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.strategy_name_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.iv_price_mode_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.strategy_setting_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.start_date_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.end_date_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.fee_rate_)*/ 0,
+      /*decltype(_impl_.slippage_bps_)*/ 0,
+      /*decltype(_impl_.risk_free_rate_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct StrategyConfigDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StrategyConfigDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR StrategyConfigDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StrategyConfigDefaultTypeInternal() {}
   union {
     StrategyConfig _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyConfigDefaultTypeInternal _StrategyConfig_default_instance_;
-PROTOBUF_CONSTEXPR StreamRequest::StreamRequest(
-    ::_pbi::ConstantInitialized)
-  : model_ids_()
-  , job_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , correlation_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , strategy_(nullptr){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StrategyConfigDefaultTypeInternal _StrategyConfig_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR StreamRequest::StreamRequest(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.model_ids_)*/ {},
+      /*decltype(_impl_.job_id_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.correlation_id_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.strategy_)*/ nullptr,
+    } {}
 struct StreamRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StreamRequestDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR StreamRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StreamRequestDefaultTypeInternal() {}
   union {
     StreamRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StreamRequestDefaultTypeInternal _StreamRequest_default_instance_;
-PROTOBUF_CONSTEXPR GreeksPayload::GreeksPayload(
-    ::_pbi::ConstantInitialized)
-  : delta_(0)
-  , gamma_(0)
-  , theta_(0)
-  , vega_(0)
-  , rho_(0){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StreamRequestDefaultTypeInternal _StreamRequest_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR GreeksPayload::GreeksPayload(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.delta_)*/ 0,
+      /*decltype(_impl_.gamma_)*/ 0,
+      /*decltype(_impl_.theta_)*/ 0,
+      /*decltype(_impl_.vega_)*/ 0,
+      /*decltype(_impl_.rho_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct GreeksPayloadDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR GreeksPayloadDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR GreeksPayloadDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~GreeksPayloadDefaultTypeInternal() {}
   union {
     GreeksPayload _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GreeksPayloadDefaultTypeInternal _GreeksPayload_default_instance_;
-PROTOBUF_CONSTEXPR CVaRPayload::CVaRPayload(
-    ::_pbi::ConstantInitialized)
-  : var_95_(0)
-  , cvar_95_(0)
-  , var_99_(0)
-  , cvar_99_(0){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GreeksPayloadDefaultTypeInternal _GreeksPayload_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR CVaRPayload::CVaRPayload(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.var_95_)*/ 0,
+      /*decltype(_impl_.cvar_95_)*/ 0,
+      /*decltype(_impl_.var_99_)*/ 0,
+      /*decltype(_impl_.cvar_99_)*/ 0,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct CVaRPayloadDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR CVaRPayloadDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR CVaRPayloadDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~CVaRPayloadDefaultTypeInternal() {}
   union {
     CVaRPayload _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CVaRPayloadDefaultTypeInternal _CVaRPayload_default_instance_;
-PROTOBUF_CONSTEXPR ModelResult::ModelResult(
-    ::_pbi::ConstantInitialized)
-  : model_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , hedge_ratio_(0)
-  , pnl_(0)
-  , cumulative_pnl_(0)
-  , inference_latency_ns_(int64_t{0}){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CVaRPayloadDefaultTypeInternal _CVaRPayload_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR ModelResult::ModelResult(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.model_id_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.hedge_ratio_)*/ 0,
+      /*decltype(_impl_.pnl_)*/ 0,
+      /*decltype(_impl_.cumulative_pnl_)*/ 0,
+      /*decltype(_impl_.inference_latency_ns_)*/ ::int64_t{0},
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct ModelResultDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ModelResultDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR ModelResultDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~ModelResultDefaultTypeInternal() {}
   union {
     ModelResult _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ModelResultDefaultTypeInternal _ModelResult_default_instance_;
-PROTOBUF_CONSTEXPR EngineStateUpdate::EngineStateUpdate(
-    ::_pbi::ConstantInitialized)
-  : model_results_()
-  , job_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , greeks_(nullptr)
-  , cvar_(nullptr)
-  , tick_timestamp_ns_(int64_t{0})
-  , spot_price_(0)
-  , implied_vol_(0)
-  , pnl_(0)
-  , cumulative_pnl_(0){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ModelResultDefaultTypeInternal _ModelResult_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR EngineStateUpdate::EngineStateUpdate(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_._has_bits_)*/ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /*decltype(_impl_.model_results_)*/ {},
+      /*decltype(_impl_.job_id_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.greeks_)*/ nullptr,
+      /*decltype(_impl_.cvar_)*/ nullptr,
+      /*decltype(_impl_.tick_timestamp_ns_)*/ ::int64_t{0},
+      /*decltype(_impl_.spot_price_)*/ 0,
+      /*decltype(_impl_.implied_vol_)*/ 0,
+      /*decltype(_impl_.pnl_)*/ 0,
+      /*decltype(_impl_.cumulative_pnl_)*/ 0,
+    } {}
 struct EngineStateUpdateDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR EngineStateUpdateDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR EngineStateUpdateDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~EngineStateUpdateDefaultTypeInternal() {}
   union {
     EngineStateUpdate _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EngineStateUpdateDefaultTypeInternal _EngineStateUpdate_default_instance_;
-PROTOBUF_CONSTEXPR CommandRequest::CommandRequest(
-    ::_pbi::ConstantInitialized)
-  : command_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , action_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , payload_json_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EngineStateUpdateDefaultTypeInternal _EngineStateUpdate_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR CommandRequest::CommandRequest(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.command_id_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.action_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.payload_json_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct CommandRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR CommandRequestDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR CommandRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~CommandRequestDefaultTypeInternal() {}
   union {
     CommandRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CommandRequestDefaultTypeInternal _CommandRequest_default_instance_;
-PROTOBUF_CONSTEXPR CommandAck::CommandAck(
-    ::_pbi::ConstantInitialized)
-  : command_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , error_message_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , success_(false){}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CommandRequestDefaultTypeInternal _CommandRequest_default_instance_;
+        template <typename>
+PROTOBUF_CONSTEXPR CommandAck::CommandAck(::_pbi::ConstantInitialized)
+    : _impl_{
+      /*decltype(_impl_.command_id_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.error_message_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.success_)*/ false,
+      /*decltype(_impl_._cached_size_)*/ {},
+    } {}
 struct CommandAckDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR CommandAckDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR CommandAckDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~CommandAckDefaultTypeInternal() {}
   union {
     CommandAck _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CommandAckDefaultTypeInternal _CommandAck_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CommandAckDefaultTypeInternal _CommandAck_default_instance_;
 }  // namespace otrader
 static ::_pb::Metadata file_level_metadata_otrader_5fengine_2eproto[34];
-static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_otrader_5fengine_2eproto = nullptr;
-static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_otrader_5fengine_2eproto = nullptr;
-
-const uint32_t TableStruct_otrader_5fengine_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::Empty, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStatus, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStatus, running_),
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStatus, connected_),
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStatus, detail_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategySummary, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategySummary, strategy_name_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategySummary, class_name_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategySummary, portfolio_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategySummary, status_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::LogLine, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::LogLine, line_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyUpdate, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyUpdate, strategy_name_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyUpdate, class_name_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyUpdate, portfolio_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyUpdate, json_payload_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyNameRequest, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyNameRequest, strategy_name_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyRequest, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyRequest, strategy_class_),
-  PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyRequest, portfolio_name_),
-  PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyRequest, setting_json_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, timestamp_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, strategy_name_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, orderid_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, symbol_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, exchange_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, trading_class_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, type_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, direction_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, price_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, volume_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, traded_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, status_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, datetime_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, reference_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, is_combo_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, legs_info_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, timestamp_),
-  PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, strategy_name_),
-  PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, tradeid_),
-  PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, symbol_),
-  PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, exchange_),
-  PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, orderid_),
-  PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, direction_),
-  PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, price_),
-  PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, volume_),
-  PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, datetime_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::OrdersAndTradesResponse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::OrdersAndTradesResponse, orders_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OrdersAndTradesResponse, trades_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::ListPortfoliosResponse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::ListPortfoliosResponse, portfolios_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::ListStrategyClassesResponse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::ListStrategyClassesResponse, classes_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsRequest, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsRequest, strategy_class_),
-  PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse, key_),
-  PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse, value_),
-  0,
-  1,
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse, settings_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyResponse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyResponse, strategy_name_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::RemoveStrategyResponse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::RemoveStrategyResponse, removed_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::DeleteStrategyResponse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::DeleteStrategyResponse, deleted_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::GetRemovedStrategiesResponse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::GetRemovedStrategiesResponse, removed_strategies_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse, key_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse, value_),
-  0,
-  1,
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse, holdings_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, symbol_),
-  PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, quantity_),
-  PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, avg_cost_),
-  PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, cost_value_),
-  PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, realized_pnl_),
-  PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, mid_price_),
-  PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, delta_),
-  PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, gamma_),
-  PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, theta_),
-  PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, vega_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, symbol_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, quantity_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, avg_cost_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, cost_value_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, realized_pnl_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, mid_price_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, delta_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, gamma_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, theta_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, vega_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, combo_type_),
-  PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, legs_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, total_cost_),
-  PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, current_value_),
-  PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, unrealized_pnl_),
-  PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, realized_pnl_),
-  PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, pnl_),
-  PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, delta_),
-  PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, gamma_),
-  PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, theta_),
-  PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, vega_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse, key_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse, value_),
-  0,
-  1,
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg, underlying_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg, options_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg, summary_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, parquet_path_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, strategy_name_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, fee_rate_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, slippage_bps_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, risk_free_rate_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, iv_price_mode_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, strategy_setting_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, start_date_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, end_date_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::StreamRequest, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::StreamRequest, job_id_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StreamRequest, correlation_id_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StreamRequest, model_ids_),
-  PROTOBUF_FIELD_OFFSET(::otrader::StreamRequest, strategy_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, delta_),
-  PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, gamma_),
-  PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, theta_),
-  PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, vega_),
-  PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, rho_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::CVaRPayload, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::CVaRPayload, var_95_),
-  PROTOBUF_FIELD_OFFSET(::otrader::CVaRPayload, cvar_95_),
-  PROTOBUF_FIELD_OFFSET(::otrader::CVaRPayload, var_99_),
-  PROTOBUF_FIELD_OFFSET(::otrader::CVaRPayload, cvar_99_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, model_id_),
-  PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, hedge_ratio_),
-  PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, pnl_),
-  PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, cumulative_pnl_),
-  PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, inference_latency_ns_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, job_id_),
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, tick_timestamp_ns_),
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, spot_price_),
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, implied_vol_),
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, greeks_),
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, model_results_),
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, cvar_),
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, pnl_),
-  PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, cumulative_pnl_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::CommandRequest, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::CommandRequest, command_id_),
-  PROTOBUF_FIELD_OFFSET(::otrader::CommandRequest, action_),
-  PROTOBUF_FIELD_OFFSET(::otrader::CommandRequest, payload_json_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::otrader::CommandAck, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::otrader::CommandAck, command_id_),
-  PROTOBUF_FIELD_OFFSET(::otrader::CommandAck, success_),
-  PROTOBUF_FIELD_OFFSET(::otrader::CommandAck, error_message_),
+static constexpr const ::_pb::EnumDescriptor**
+    file_level_enum_descriptors_otrader_5fengine_2eproto = nullptr;
+static constexpr const ::_pb::ServiceDescriptor**
+    file_level_service_descriptors_otrader_5fengine_2eproto = nullptr;
+const ::uint32_t TableStruct_otrader_5fengine_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
+    protodesc_cold) = {
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::Empty, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStatus, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStatus, _impl_.running_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStatus, _impl_.connected_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStatus, _impl_.detail_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategySummary, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategySummary, _impl_.strategy_name_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategySummary, _impl_.class_name_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategySummary, _impl_.portfolio_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategySummary, _impl_.status_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::LogLine, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::LogLine, _impl_.line_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyUpdate, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyUpdate, _impl_.strategy_name_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyUpdate, _impl_.class_name_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyUpdate, _impl_.portfolio_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyUpdate, _impl_.json_payload_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyNameRequest, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyNameRequest, _impl_.strategy_name_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyRequest, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyRequest, _impl_.strategy_class_),
+    PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyRequest, _impl_.portfolio_name_),
+    PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyRequest, _impl_.setting_json_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.timestamp_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.strategy_name_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.orderid_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.symbol_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.exchange_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.trading_class_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.type_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.direction_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.price_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.volume_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.traded_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.status_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.datetime_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.reference_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.is_combo_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrderRecord, _impl_.legs_info_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _impl_.timestamp_),
+    PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _impl_.strategy_name_),
+    PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _impl_.tradeid_),
+    PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _impl_.symbol_),
+    PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _impl_.exchange_),
+    PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _impl_.orderid_),
+    PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _impl_.direction_),
+    PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _impl_.price_),
+    PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _impl_.volume_),
+    PROTOBUF_FIELD_OFFSET(::otrader::TradeRecord, _impl_.datetime_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::OrdersAndTradesResponse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::OrdersAndTradesResponse, _impl_.orders_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OrdersAndTradesResponse, _impl_.trades_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::ListPortfoliosResponse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::ListPortfoliosResponse, _impl_.portfolios_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::ListStrategyClassesResponse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::ListStrategyClassesResponse, _impl_.classes_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsRequest, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsRequest, _impl_.strategy_class_),
+    PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse, _has_bits_),
+    PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse, key_),
+    PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse, value_),
+    0,
+    1,
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::GetStrategyClassDefaultsResponse, _impl_.settings_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyResponse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::AddStrategyResponse, _impl_.strategy_name_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::RemoveStrategyResponse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::RemoveStrategyResponse, _impl_.removed_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::DeleteStrategyResponse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::DeleteStrategyResponse, _impl_.deleted_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::GetRemovedStrategiesResponse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::GetRemovedStrategiesResponse, _impl_.removed_strategies_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse, _has_bits_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse, key_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse, value_),
+    0,
+    1,
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingsResponse, _impl_.holdings_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _impl_.symbol_),
+    PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _impl_.quantity_),
+    PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _impl_.avg_cost_),
+    PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _impl_.cost_value_),
+    PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _impl_.realized_pnl_),
+    PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _impl_.mid_price_),
+    PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _impl_.delta_),
+    PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _impl_.gamma_),
+    PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _impl_.theta_),
+    PROTOBUF_FIELD_OFFSET(::otrader::BasePositionMsg, _impl_.vega_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.symbol_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.quantity_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.avg_cost_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.cost_value_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.realized_pnl_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.mid_price_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.delta_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.gamma_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.theta_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.vega_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.combo_type_),
+    PROTOBUF_FIELD_OFFSET(::otrader::OptionPositionMsg, _impl_.legs_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, _impl_.total_cost_),
+    PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, _impl_.current_value_),
+    PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, _impl_.unrealized_pnl_),
+    PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, _impl_.realized_pnl_),
+    PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, _impl_.pnl_),
+    PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, _impl_.delta_),
+    PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, _impl_.gamma_),
+    PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, _impl_.theta_),
+    PROTOBUF_FIELD_OFFSET(::otrader::PortfolioSummaryMsg, _impl_.vega_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse, _has_bits_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse, key_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse, value_),
+    0,
+    1,
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg, _impl_.underlying_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg, _impl_.options_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyHoldingMsg, _impl_.summary_),
+    0,
+    ~0u,
+    1,
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, _impl_.parquet_path_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, _impl_.strategy_name_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, _impl_.fee_rate_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, _impl_.slippage_bps_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, _impl_.risk_free_rate_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, _impl_.iv_price_mode_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, _impl_.strategy_setting_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, _impl_.start_date_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StrategyConfig, _impl_.end_date_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StreamRequest, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StreamRequest, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::StreamRequest, _impl_.job_id_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StreamRequest, _impl_.correlation_id_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StreamRequest, _impl_.model_ids_),
+    PROTOBUF_FIELD_OFFSET(::otrader::StreamRequest, _impl_.strategy_),
+    ~0u,
+    ~0u,
+    ~0u,
+    0,
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, _impl_.delta_),
+    PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, _impl_.gamma_),
+    PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, _impl_.theta_),
+    PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, _impl_.vega_),
+    PROTOBUF_FIELD_OFFSET(::otrader::GreeksPayload, _impl_.rho_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::CVaRPayload, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::CVaRPayload, _impl_.var_95_),
+    PROTOBUF_FIELD_OFFSET(::otrader::CVaRPayload, _impl_.cvar_95_),
+    PROTOBUF_FIELD_OFFSET(::otrader::CVaRPayload, _impl_.var_99_),
+    PROTOBUF_FIELD_OFFSET(::otrader::CVaRPayload, _impl_.cvar_99_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, _impl_.model_id_),
+    PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, _impl_.hedge_ratio_),
+    PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, _impl_.pnl_),
+    PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, _impl_.cumulative_pnl_),
+    PROTOBUF_FIELD_OFFSET(::otrader::ModelResult, _impl_.inference_latency_ns_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _impl_.job_id_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _impl_.tick_timestamp_ns_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _impl_.spot_price_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _impl_.implied_vol_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _impl_.greeks_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _impl_.model_results_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _impl_.cvar_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _impl_.pnl_),
+    PROTOBUF_FIELD_OFFSET(::otrader::EngineStateUpdate, _impl_.cumulative_pnl_),
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,
+    0,
+    ~0u,
+    1,
+    ~0u,
+    ~0u,
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::CommandRequest, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::CommandRequest, _impl_.command_id_),
+    PROTOBUF_FIELD_OFFSET(::otrader::CommandRequest, _impl_.action_),
+    PROTOBUF_FIELD_OFFSET(::otrader::CommandRequest, _impl_.payload_json_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::otrader::CommandAck, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::otrader::CommandAck, _impl_.command_id_),
+    PROTOBUF_FIELD_OFFSET(::otrader::CommandAck, _impl_.success_),
+    PROTOBUF_FIELD_OFFSET(::otrader::CommandAck, _impl_.error_message_),
 };
-static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, -1, sizeof(::otrader::Empty)},
-  { 6, -1, -1, sizeof(::otrader::EngineStatus)},
-  { 15, -1, -1, sizeof(::otrader::StrategySummary)},
-  { 25, -1, -1, sizeof(::otrader::LogLine)},
-  { 32, -1, -1, sizeof(::otrader::StrategyUpdate)},
-  { 42, -1, -1, sizeof(::otrader::StrategyNameRequest)},
-  { 49, -1, -1, sizeof(::otrader::AddStrategyRequest)},
-  { 58, -1, -1, sizeof(::otrader::OrderRecord)},
-  { 80, -1, -1, sizeof(::otrader::TradeRecord)},
-  { 96, -1, -1, sizeof(::otrader::OrdersAndTradesResponse)},
-  { 104, -1, -1, sizeof(::otrader::ListPortfoliosResponse)},
-  { 111, -1, -1, sizeof(::otrader::ListStrategyClassesResponse)},
-  { 118, -1, -1, sizeof(::otrader::GetStrategyClassDefaultsRequest)},
-  { 125, 133, -1, sizeof(::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse)},
-  { 135, -1, -1, sizeof(::otrader::GetStrategyClassDefaultsResponse)},
-  { 142, -1, -1, sizeof(::otrader::AddStrategyResponse)},
-  { 149, -1, -1, sizeof(::otrader::RemoveStrategyResponse)},
-  { 156, -1, -1, sizeof(::otrader::DeleteStrategyResponse)},
-  { 163, -1, -1, sizeof(::otrader::GetRemovedStrategiesResponse)},
-  { 170, 178, -1, sizeof(::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse)},
-  { 180, -1, -1, sizeof(::otrader::StrategyHoldingsResponse)},
-  { 187, -1, -1, sizeof(::otrader::BasePositionMsg)},
-  { 203, -1, -1, sizeof(::otrader::OptionPositionMsg)},
-  { 221, -1, -1, sizeof(::otrader::PortfolioSummaryMsg)},
-  { 236, 244, -1, sizeof(::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse)},
-  { 246, -1, -1, sizeof(::otrader::StrategyHoldingMsg)},
-  { 255, -1, -1, sizeof(::otrader::StrategyConfig)},
-  { 270, -1, -1, sizeof(::otrader::StreamRequest)},
-  { 280, -1, -1, sizeof(::otrader::GreeksPayload)},
-  { 291, -1, -1, sizeof(::otrader::CVaRPayload)},
-  { 301, -1, -1, sizeof(::otrader::ModelResult)},
-  { 312, -1, -1, sizeof(::otrader::EngineStateUpdate)},
-  { 327, -1, -1, sizeof(::otrader::CommandRequest)},
-  { 336, -1, -1, sizeof(::otrader::CommandAck)},
+
+static const ::_pbi::MigrationSchema
+    schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+        {0, -1, -1, sizeof(::otrader::Empty)},
+        {8, -1, -1, sizeof(::otrader::EngineStatus)},
+        {19, -1, -1, sizeof(::otrader::StrategySummary)},
+        {31, -1, -1, sizeof(::otrader::LogLine)},
+        {40, -1, -1, sizeof(::otrader::StrategyUpdate)},
+        {52, -1, -1, sizeof(::otrader::StrategyNameRequest)},
+        {61, -1, -1, sizeof(::otrader::AddStrategyRequest)},
+        {72, -1, -1, sizeof(::otrader::OrderRecord)},
+        {96, -1, -1, sizeof(::otrader::TradeRecord)},
+        {114, -1, -1, sizeof(::otrader::OrdersAndTradesResponse)},
+        {124, -1, -1, sizeof(::otrader::ListPortfoliosResponse)},
+        {133, -1, -1, sizeof(::otrader::ListStrategyClassesResponse)},
+        {142, -1, -1, sizeof(::otrader::GetStrategyClassDefaultsRequest)},
+        {151, 161, -1, sizeof(::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse)},
+        {163, -1, -1, sizeof(::otrader::GetStrategyClassDefaultsResponse)},
+        {172, -1, -1, sizeof(::otrader::AddStrategyResponse)},
+        {181, -1, -1, sizeof(::otrader::RemoveStrategyResponse)},
+        {190, -1, -1, sizeof(::otrader::DeleteStrategyResponse)},
+        {199, -1, -1, sizeof(::otrader::GetRemovedStrategiesResponse)},
+        {208, 218, -1, sizeof(::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse)},
+        {220, -1, -1, sizeof(::otrader::StrategyHoldingsResponse)},
+        {229, -1, -1, sizeof(::otrader::BasePositionMsg)},
+        {247, -1, -1, sizeof(::otrader::OptionPositionMsg)},
+        {267, -1, -1, sizeof(::otrader::PortfolioSummaryMsg)},
+        {284, 294, -1, sizeof(::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse)},
+        {296, 307, -1, sizeof(::otrader::StrategyHoldingMsg)},
+        {310, -1, -1, sizeof(::otrader::StrategyConfig)},
+        {327, 339, -1, sizeof(::otrader::StreamRequest)},
+        {343, -1, -1, sizeof(::otrader::GreeksPayload)},
+        {356, -1, -1, sizeof(::otrader::CVaRPayload)},
+        {368, -1, -1, sizeof(::otrader::ModelResult)},
+        {381, 398, -1, sizeof(::otrader::EngineStateUpdate)},
+        {407, -1, -1, sizeof(::otrader::CommandRequest)},
+        {418, -1, -1, sizeof(::otrader::CommandAck)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
-  &::otrader::_Empty_default_instance_._instance,
-  &::otrader::_EngineStatus_default_instance_._instance,
-  &::otrader::_StrategySummary_default_instance_._instance,
-  &::otrader::_LogLine_default_instance_._instance,
-  &::otrader::_StrategyUpdate_default_instance_._instance,
-  &::otrader::_StrategyNameRequest_default_instance_._instance,
-  &::otrader::_AddStrategyRequest_default_instance_._instance,
-  &::otrader::_OrderRecord_default_instance_._instance,
-  &::otrader::_TradeRecord_default_instance_._instance,
-  &::otrader::_OrdersAndTradesResponse_default_instance_._instance,
-  &::otrader::_ListPortfoliosResponse_default_instance_._instance,
-  &::otrader::_ListStrategyClassesResponse_default_instance_._instance,
-  &::otrader::_GetStrategyClassDefaultsRequest_default_instance_._instance,
-  &::otrader::_GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse_default_instance_._instance,
-  &::otrader::_GetStrategyClassDefaultsResponse_default_instance_._instance,
-  &::otrader::_AddStrategyResponse_default_instance_._instance,
-  &::otrader::_RemoveStrategyResponse_default_instance_._instance,
-  &::otrader::_DeleteStrategyResponse_default_instance_._instance,
-  &::otrader::_GetRemovedStrategiesResponse_default_instance_._instance,
-  &::otrader::_StrategyHoldingsResponse_HoldingsEntry_DoNotUse_default_instance_._instance,
-  &::otrader::_StrategyHoldingsResponse_default_instance_._instance,
-  &::otrader::_BasePositionMsg_default_instance_._instance,
-  &::otrader::_OptionPositionMsg_default_instance_._instance,
-  &::otrader::_PortfolioSummaryMsg_default_instance_._instance,
-  &::otrader::_StrategyHoldingMsg_OptionsEntry_DoNotUse_default_instance_._instance,
-  &::otrader::_StrategyHoldingMsg_default_instance_._instance,
-  &::otrader::_StrategyConfig_default_instance_._instance,
-  &::otrader::_StreamRequest_default_instance_._instance,
-  &::otrader::_GreeksPayload_default_instance_._instance,
-  &::otrader::_CVaRPayload_default_instance_._instance,
-  &::otrader::_ModelResult_default_instance_._instance,
-  &::otrader::_EngineStateUpdate_default_instance_._instance,
-  &::otrader::_CommandRequest_default_instance_._instance,
-  &::otrader::_CommandAck_default_instance_._instance,
+    &::otrader::_Empty_default_instance_._instance,
+    &::otrader::_EngineStatus_default_instance_._instance,
+    &::otrader::_StrategySummary_default_instance_._instance,
+    &::otrader::_LogLine_default_instance_._instance,
+    &::otrader::_StrategyUpdate_default_instance_._instance,
+    &::otrader::_StrategyNameRequest_default_instance_._instance,
+    &::otrader::_AddStrategyRequest_default_instance_._instance,
+    &::otrader::_OrderRecord_default_instance_._instance,
+    &::otrader::_TradeRecord_default_instance_._instance,
+    &::otrader::_OrdersAndTradesResponse_default_instance_._instance,
+    &::otrader::_ListPortfoliosResponse_default_instance_._instance,
+    &::otrader::_ListStrategyClassesResponse_default_instance_._instance,
+    &::otrader::_GetStrategyClassDefaultsRequest_default_instance_._instance,
+    &::otrader::_GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse_default_instance_._instance,
+    &::otrader::_GetStrategyClassDefaultsResponse_default_instance_._instance,
+    &::otrader::_AddStrategyResponse_default_instance_._instance,
+    &::otrader::_RemoveStrategyResponse_default_instance_._instance,
+    &::otrader::_DeleteStrategyResponse_default_instance_._instance,
+    &::otrader::_GetRemovedStrategiesResponse_default_instance_._instance,
+    &::otrader::_StrategyHoldingsResponse_HoldingsEntry_DoNotUse_default_instance_._instance,
+    &::otrader::_StrategyHoldingsResponse_default_instance_._instance,
+    &::otrader::_BasePositionMsg_default_instance_._instance,
+    &::otrader::_OptionPositionMsg_default_instance_._instance,
+    &::otrader::_PortfolioSummaryMsg_default_instance_._instance,
+    &::otrader::_StrategyHoldingMsg_OptionsEntry_DoNotUse_default_instance_._instance,
+    &::otrader::_StrategyHoldingMsg_default_instance_._instance,
+    &::otrader::_StrategyConfig_default_instance_._instance,
+    &::otrader::_StreamRequest_default_instance_._instance,
+    &::otrader::_GreeksPayload_default_instance_._instance,
+    &::otrader::_CVaRPayload_default_instance_._instance,
+    &::otrader::_ModelResult_default_instance_._instance,
+    &::otrader::_EngineStateUpdate_default_instance_._instance,
+    &::otrader::_CommandRequest_default_instance_._instance,
+    &::otrader::_CommandAck_default_instance_._instance,
 };
-
-const char descriptor_table_protodef_otrader_5fengine_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\024otrader_engine.proto\022\007otrader\"\007\n\005Empty"
-  "\"B\n\014EngineStatus\022\017\n\007running\030\001 \001(\010\022\021\n\tcon"
-  "nected\030\002 \001(\010\022\016\n\006detail\030\003 \001(\t\"_\n\017Strategy"
-  "Summary\022\025\n\rstrategy_name\030\001 \001(\t\022\022\n\nclass_"
-  "name\030\002 \001(\t\022\021\n\tportfolio\030\003 \001(\t\022\016\n\006status\030"
-  "\004 \001(\t\"\027\n\007LogLine\022\014\n\004line\030\001 \001(\t\"d\n\016Strate"
-  "gyUpdate\022\025\n\rstrategy_name\030\001 \001(\t\022\022\n\nclass"
-  "_name\030\002 \001(\t\022\021\n\tportfolio\030\003 \001(\t\022\024\n\014json_p"
-  "ayload\030\004 \001(\t\",\n\023StrategyNameRequest\022\025\n\rs"
-  "trategy_name\030\001 \001(\t\"Z\n\022AddStrategyRequest"
-  "\022\026\n\016strategy_class\030\001 \001(\t\022\026\n\016portfolio_na"
-  "me\030\002 \001(\t\022\024\n\014setting_json\030\003 \001(\t\"\253\002\n\013Order"
-  "Record\022\021\n\ttimestamp\030\001 \001(\t\022\025\n\rstrategy_na"
-  "me\030\002 \001(\t\022\017\n\007orderid\030\003 \001(\t\022\016\n\006symbol\030\004 \001("
-  "\t\022\020\n\010exchange\030\005 \001(\t\022\025\n\rtrading_class\030\006 \001"
-  "(\t\022\014\n\004type\030\007 \001(\t\022\021\n\tdirection\030\010 \001(\t\022\r\n\005p"
-  "rice\030\t \001(\001\022\016\n\006volume\030\n \001(\001\022\016\n\006traded\030\013 \001"
-  "(\001\022\016\n\006status\030\014 \001(\t\022\020\n\010datetime\030\r \001(\t\022\021\n\t"
-  "reference\030\016 \001(\t\022\020\n\010is_combo\030\017 \001(\010\022\021\n\tleg"
-  "s_info\030\020 \001(\t\"\277\001\n\013TradeRecord\022\021\n\ttimestam"
-  "p\030\001 \001(\t\022\025\n\rstrategy_name\030\002 \001(\t\022\017\n\007tradei"
-  "d\030\003 \001(\t\022\016\n\006symbol\030\004 \001(\t\022\020\n\010exchange\030\005 \001("
-  "\t\022\017\n\007orderid\030\006 \001(\t\022\021\n\tdirection\030\007 \001(\t\022\r\n"
-  "\005price\030\010 \001(\001\022\016\n\006volume\030\t \001(\001\022\020\n\010datetime"
-  "\030\n \001(\t\"e\n\027OrdersAndTradesResponse\022$\n\006ord"
-  "ers\030\001 \003(\0132\024.otrader.OrderRecord\022$\n\006trade"
-  "s\030\002 \003(\0132\024.otrader.TradeRecord\",\n\026ListPor"
-  "tfoliosResponse\022\022\n\nportfolios\030\001 \003(\t\".\n\033L"
-  "istStrategyClassesResponse\022\017\n\007classes\030\001 "
-  "\003(\t\"9\n\037GetStrategyClassDefaultsRequest\022\026"
-  "\n\016strategy_class\030\001 \001(\t\"\236\001\n GetStrategyCl"
-  "assDefaultsResponse\022I\n\010settings\030\001 \003(\01327."
-  "otrader.GetStrategyClassDefaultsResponse"
-  ".SettingsEntry\032/\n\rSettingsEntry\022\013\n\003key\030\001"
-  " \001(\t\022\r\n\005value\030\002 \001(\001:\0028\001\",\n\023AddStrategyRe"
-  "sponse\022\025\n\rstrategy_name\030\001 \001(\t\")\n\026RemoveS"
-  "trategyResponse\022\017\n\007removed\030\001 \001(\010\")\n\026Dele"
-  "teStrategyResponse\022\017\n\007deleted\030\001 \001(\010\":\n\034G"
-  "etRemovedStrategiesResponse\022\032\n\022removed_s"
-  "trategies\030\001 \003(\t\"\216\001\n\030StrategyHoldingsResp"
-  "onse\022A\n\010holdings\030\001 \003(\0132/.otrader.Strateg"
-  "yHoldingsResponse.HoldingsEntry\032/\n\rHoldi"
-  "ngsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001"
-  "\"\275\001\n\017BasePositionMsg\022\016\n\006symbol\030\001 \001(\t\022\020\n\010"
-  "quantity\030\002 \001(\005\022\020\n\010avg_cost\030\003 \001(\001\022\022\n\ncost"
-  "_value\030\004 \001(\001\022\024\n\014realized_pnl\030\005 \001(\001\022\021\n\tmi"
-  "d_price\030\006 \001(\001\022\r\n\005delta\030\007 \001(\001\022\r\n\005gamma\030\010 "
-  "\001(\001\022\r\n\005theta\030\t \001(\001\022\014\n\004vega\030\n \001(\001\"\373\001\n\021Opt"
-  "ionPositionMsg\022\016\n\006symbol\030\001 \001(\t\022\020\n\010quanti"
-  "ty\030\002 \001(\005\022\020\n\010avg_cost\030\003 \001(\001\022\022\n\ncost_value"
-  "\030\004 \001(\001\022\024\n\014realized_pnl\030\005 \001(\001\022\021\n\tmid_pric"
-  "e\030\006 \001(\001\022\r\n\005delta\030\007 \001(\001\022\r\n\005gamma\030\010 \001(\001\022\r\n"
-  "\005theta\030\t \001(\001\022\014\n\004vega\030\n \001(\001\022\022\n\ncombo_type"
-  "\030\013 \001(\t\022&\n\004legs\030\014 \003(\0132\030.otrader.BasePosit"
-  "ionMsg\"\266\001\n\023PortfolioSummaryMsg\022\022\n\ntotal_"
-  "cost\030\001 \001(\001\022\025\n\rcurrent_value\030\002 \001(\001\022\026\n\016unr"
-  "ealized_pnl\030\003 \001(\001\022\024\n\014realized_pnl\030\004 \001(\001\022"
-  "\013\n\003pnl\030\005 \001(\001\022\r\n\005delta\030\006 \001(\001\022\r\n\005gamma\030\007 \001"
-  "(\001\022\r\n\005theta\030\010 \001(\001\022\014\n\004vega\030\t \001(\001\"\370\001\n\022Stra"
-  "tegyHoldingMsg\022,\n\nunderlying\030\001 \001(\0132\030.otr"
-  "ader.BasePositionMsg\0229\n\007options\030\002 \003(\0132(."
-  "otrader.StrategyHoldingMsg.OptionsEntry\022"
-  "-\n\007summary\030\004 \001(\0132\034.otrader.PortfolioSumm"
-  "aryMsg\032J\n\014OptionsEntry\022\013\n\003key\030\001 \001(\t\022)\n\005v"
-  "alue\030\002 \001(\0132\032.otrader.OptionPositionMsg:\002"
-  "8\001\"\324\001\n\016StrategyConfig\022\024\n\014parquet_path\030\001 "
-  "\001(\t\022\025\n\rstrategy_name\030\002 \001(\t\022\020\n\010fee_rate\030\003"
-  " \001(\001\022\024\n\014slippage_bps\030\004 \001(\001\022\026\n\016risk_free_"
-  "rate\030\005 \001(\001\022\025\n\riv_price_mode\030\006 \001(\t\022\030\n\020str"
-  "ategy_setting\030\007 \001(\t\022\022\n\nstart_date\030\010 \001(\t\022"
-  "\020\n\010end_date\030\t \001(\t\"u\n\rStreamRequest\022\016\n\006jo"
-  "b_id\030\001 \001(\t\022\026\n\016correlation_id\030\002 \001(\t\022\021\n\tmo"
-  "del_ids\030\003 \003(\t\022)\n\010strategy\030\004 \001(\0132\027.otrade"
-  "r.StrategyConfig\"W\n\rGreeksPayload\022\r\n\005del"
-  "ta\030\001 \001(\001\022\r\n\005gamma\030\002 \001(\001\022\r\n\005theta\030\003 \001(\001\022\014"
-  "\n\004vega\030\004 \001(\001\022\013\n\003rho\030\005 \001(\001\"O\n\013CVaRPayload"
-  "\022\016\n\006var_95\030\001 \001(\001\022\017\n\007cvar_95\030\002 \001(\001\022\016\n\006var"
-  "_99\030\003 \001(\001\022\017\n\007cvar_99\030\004 \001(\001\"w\n\013ModelResul"
-  "t\022\020\n\010model_id\030\001 \001(\t\022\023\n\013hedge_ratio\030\002 \001(\001"
-  "\022\013\n\003pnl\030\003 \001(\001\022\026\n\016cumulative_pnl\030\004 \001(\001\022\034\n"
-  "\024inference_latency_ns\030\005 \001(\003\"\205\002\n\021EngineSt"
-  "ateUpdate\022\016\n\006job_id\030\001 \001(\t\022\031\n\021tick_timest"
-  "amp_ns\030\002 \001(\003\022\022\n\nspot_price\030\003 \001(\001\022\023\n\013impl"
-  "ied_vol\030\004 \001(\001\022&\n\006greeks\030\005 \001(\0132\026.otrader."
-  "GreeksPayload\022+\n\rmodel_results\030\006 \003(\0132\024.o"
-  "trader.ModelResult\022\"\n\004cvar\030\007 \001(\0132\024.otrad"
-  "er.CVaRPayload\022\013\n\003pnl\030\010 \001(\001\022\026\n\016cumulativ"
-  "e_pnl\030\t \001(\001\"J\n\016CommandRequest\022\022\n\ncommand"
-  "_id\030\001 \001(\t\022\016\n\006action\030\002 \001(\t\022\024\n\014payload_jso"
-  "n\030\003 \001(\t\"H\n\nCommandAck\022\022\n\ncommand_id\030\001 \001("
-  "\t\022\017\n\007success\030\002 \001(\010\022\025\n\rerror_message\030\003 \001("
-  "\t2\331\014\n\rEngineService\0222\n\tGetStatus\022\016.otrad"
-  "er.Empty\032\025.otrader.EngineStatus\022<\n\016ListS"
-  "trategies\022\016.otrader.Empty\032\030.otrader.Stra"
-  "tegySummary0\001\0220\n\016ConnectGateway\022\016.otrade"
-  "r.Empty\032\016.otrader.Empty\0223\n\021DisconnectGat"
-  "eway\022\016.otrader.Empty\032\016.otrader.Empty\0221\n\017"
-  "StartMarketData\022\016.otrader.Empty\032\016.otrade"
-  "r.Empty\0220\n\016StopMarketData\022\016.otrader.Empt"
-  "y\032\016.otrader.Empty\022=\n\rStartStrategy\022\034.otr"
-  "ader.StrategyNameRequest\032\016.otrader.Empty"
-  "\022<\n\014StopStrategy\022\034.otrader.StrategyNameR"
-  "equest\032\016.otrader.Empty\0220\n\nStreamLogs\022\016.o"
-  "trader.Empty\032\020.otrader.LogLine0\001\022B\n\025Stre"
-  "amStrategyUpdates\022\016.otrader.Empty\032\027.otra"
-  "der.StrategyUpdate0\001\022F\n\022GetOrdersAndTrad"
-  "es\022\016.otrader.Empty\032 .otrader.OrdersAndTr"
-  "adesResponse\022A\n\016ListPortfolios\022\016.otrader"
-  ".Empty\032\037.otrader.ListPortfoliosResponse\022"
-  "K\n\023ListStrategyClasses\022\016.otrader.Empty\032$"
-  ".otrader.ListStrategyClassesResponse\022o\n\030"
-  "GetStrategyClassDefaults\022(.otrader.GetSt"
-  "rategyClassDefaultsRequest\032).otrader.Get"
-  "StrategyClassDefaultsResponse\022D\n\021GetPort"
-  "foliosMeta\022\016.otrader.Empty\032\037.otrader.Lis"
-  "tPortfoliosResponse\022M\n\024GetRemovedStrateg"
-  "ies\022\016.otrader.Empty\032%.otrader.GetRemoved"
-  "StrategiesResponse\022H\n\013AddStrategy\022\033.otra"
-  "der.AddStrategyRequest\032\034.otrader.AddStra"
-  "tegyResponse\022\?\n\017RestoreStrategy\022\034.otrade"
-  "r.StrategyNameRequest\032\016.otrader.Empty\022<\n"
-  "\014InitStrategy\022\034.otrader.StrategyNameRequ"
-  "est\032\016.otrader.Empty\022O\n\016RemoveStrategy\022\034."
-  "otrader.StrategyNameRequest\032\037.otrader.Re"
-  "moveStrategyResponse\022O\n\016DeleteStrategy\022\034"
-  ".otrader.StrategyNameRequest\032\037.otrader.D"
-  "eleteStrategyResponse\022H\n\023GetStrategyHold"
-  "ings\022\016.otrader.Empty\032!.otrader.StrategyH"
-  "oldingsResponse\022E\n\rStartBacktest\022\026.otrad"
-  "er.StreamRequest\032\032.otrader.EngineStateUp"
-  "date0\001\022=\n\013SendCommand\022\027.otrader.CommandR"
-  "equest\032\023.otrader.CommandAck(\001b\006proto3"
-  ;
-static ::_pbi::once_flag descriptor_table_otrader_5fengine_2eproto_once;
+const char descriptor_table_protodef_otrader_5fengine_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+    "\n\024otrader_engine.proto\022\007otrader\"\007\n\005Empty"
+    "\"B\n\014EngineStatus\022\017\n\007running\030\001 \001(\010\022\021\n\tcon"
+    "nected\030\002 \001(\010\022\016\n\006detail\030\003 \001(\t\"_\n\017Strategy"
+    "Summary\022\025\n\rstrategy_name\030\001 \001(\t\022\022\n\nclass_"
+    "name\030\002 \001(\t\022\021\n\tportfolio\030\003 \001(\t\022\016\n\006status\030"
+    "\004 \001(\t\"\027\n\007LogLine\022\014\n\004line\030\001 \001(\t\"d\n\016Strate"
+    "gyUpdate\022\025\n\rstrategy_name\030\001 \001(\t\022\022\n\nclass"
+    "_name\030\002 \001(\t\022\021\n\tportfolio\030\003 \001(\t\022\024\n\014json_p"
+    "ayload\030\004 \001(\t\",\n\023StrategyNameRequest\022\025\n\rs"
+    "trategy_name\030\001 \001(\t\"Z\n\022AddStrategyRequest"
+    "\022\026\n\016strategy_class\030\001 \001(\t\022\026\n\016portfolio_na"
+    "me\030\002 \001(\t\022\024\n\014setting_json\030\003 \001(\t\"\253\002\n\013Order"
+    "Record\022\021\n\ttimestamp\030\001 \001(\t\022\025\n\rstrategy_na"
+    "me\030\002 \001(\t\022\017\n\007orderid\030\003 \001(\t\022\016\n\006symbol\030\004 \001("
+    "\t\022\020\n\010exchange\030\005 \001(\t\022\025\n\rtrading_class\030\006 \001"
+    "(\t\022\014\n\004type\030\007 \001(\t\022\021\n\tdirection\030\010 \001(\t\022\r\n\005p"
+    "rice\030\t \001(\001\022\016\n\006volume\030\n \001(\001\022\016\n\006traded\030\013 \001"
+    "(\001\022\016\n\006status\030\014 \001(\t\022\020\n\010datetime\030\r \001(\t\022\021\n\t"
+    "reference\030\016 \001(\t\022\020\n\010is_combo\030\017 \001(\010\022\021\n\tleg"
+    "s_info\030\020 \001(\t\"\277\001\n\013TradeRecord\022\021\n\ttimestam"
+    "p\030\001 \001(\t\022\025\n\rstrategy_name\030\002 \001(\t\022\017\n\007tradei"
+    "d\030\003 \001(\t\022\016\n\006symbol\030\004 \001(\t\022\020\n\010exchange\030\005 \001("
+    "\t\022\017\n\007orderid\030\006 \001(\t\022\021\n\tdirection\030\007 \001(\t\022\r\n"
+    "\005price\030\010 \001(\001\022\016\n\006volume\030\t \001(\001\022\020\n\010datetime"
+    "\030\n \001(\t\"e\n\027OrdersAndTradesResponse\022$\n\006ord"
+    "ers\030\001 \003(\0132\024.otrader.OrderRecord\022$\n\006trade"
+    "s\030\002 \003(\0132\024.otrader.TradeRecord\",\n\026ListPor"
+    "tfoliosResponse\022\022\n\nportfolios\030\001 \003(\t\".\n\033L"
+    "istStrategyClassesResponse\022\017\n\007classes\030\001 "
+    "\003(\t\"9\n\037GetStrategyClassDefaultsRequest\022\026"
+    "\n\016strategy_class\030\001 \001(\t\"\236\001\n GetStrategyCl"
+    "assDefaultsResponse\022I\n\010settings\030\001 \003(\01327."
+    "otrader.GetStrategyClassDefaultsResponse"
+    ".SettingsEntry\032/\n\rSettingsEntry\022\013\n\003key\030\001"
+    " \001(\t\022\r\n\005value\030\002 \001(\001:\0028\001\",\n\023AddStrategyRe"
+    "sponse\022\025\n\rstrategy_name\030\001 \001(\t\")\n\026RemoveS"
+    "trategyResponse\022\017\n\007removed\030\001 \001(\010\")\n\026Dele"
+    "teStrategyResponse\022\017\n\007deleted\030\001 \001(\010\":\n\034G"
+    "etRemovedStrategiesResponse\022\032\n\022removed_s"
+    "trategies\030\001 \003(\t\"\216\001\n\030StrategyHoldingsResp"
+    "onse\022A\n\010holdings\030\001 \003(\0132/.otrader.Strateg"
+    "yHoldingsResponse.HoldingsEntry\032/\n\rHoldi"
+    "ngsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001"
+    "\"\275\001\n\017BasePositionMsg\022\016\n\006symbol\030\001 \001(\t\022\020\n\010"
+    "quantity\030\002 \001(\005\022\020\n\010avg_cost\030\003 \001(\001\022\022\n\ncost"
+    "_value\030\004 \001(\001\022\024\n\014realized_pnl\030\005 \001(\001\022\021\n\tmi"
+    "d_price\030\006 \001(\001\022\r\n\005delta\030\007 \001(\001\022\r\n\005gamma\030\010 "
+    "\001(\001\022\r\n\005theta\030\t \001(\001\022\014\n\004vega\030\n \001(\001\"\373\001\n\021Opt"
+    "ionPositionMsg\022\016\n\006symbol\030\001 \001(\t\022\020\n\010quanti"
+    "ty\030\002 \001(\005\022\020\n\010avg_cost\030\003 \001(\001\022\022\n\ncost_value"
+    "\030\004 \001(\001\022\024\n\014realized_pnl\030\005 \001(\001\022\021\n\tmid_pric"
+    "e\030\006 \001(\001\022\r\n\005delta\030\007 \001(\001\022\r\n\005gamma\030\010 \001(\001\022\r\n"
+    "\005theta\030\t \001(\001\022\014\n\004vega\030\n \001(\001\022\022\n\ncombo_type"
+    "\030\013 \001(\t\022&\n\004legs\030\014 \003(\0132\030.otrader.BasePosit"
+    "ionMsg\"\266\001\n\023PortfolioSummaryMsg\022\022\n\ntotal_"
+    "cost\030\001 \001(\001\022\025\n\rcurrent_value\030\002 \001(\001\022\026\n\016unr"
+    "ealized_pnl\030\003 \001(\001\022\024\n\014realized_pnl\030\004 \001(\001\022"
+    "\013\n\003pnl\030\005 \001(\001\022\r\n\005delta\030\006 \001(\001\022\r\n\005gamma\030\007 \001"
+    "(\001\022\r\n\005theta\030\010 \001(\001\022\014\n\004vega\030\t \001(\001\"\370\001\n\022Stra"
+    "tegyHoldingMsg\022,\n\nunderlying\030\001 \001(\0132\030.otr"
+    "ader.BasePositionMsg\0229\n\007options\030\002 \003(\0132(."
+    "otrader.StrategyHoldingMsg.OptionsEntry\022"
+    "-\n\007summary\030\004 \001(\0132\034.otrader.PortfolioSumm"
+    "aryMsg\032J\n\014OptionsEntry\022\013\n\003key\030\001 \001(\t\022)\n\005v"
+    "alue\030\002 \001(\0132\032.otrader.OptionPositionMsg:\002"
+    "8\001\"\324\001\n\016StrategyConfig\022\024\n\014parquet_path\030\001 "
+    "\001(\t\022\025\n\rstrategy_name\030\002 \001(\t\022\020\n\010fee_rate\030\003"
+    " \001(\001\022\024\n\014slippage_bps\030\004 \001(\001\022\026\n\016risk_free_"
+    "rate\030\005 \001(\001\022\025\n\riv_price_mode\030\006 \001(\t\022\030\n\020str"
+    "ategy_setting\030\007 \001(\t\022\022\n\nstart_date\030\010 \001(\t\022"
+    "\020\n\010end_date\030\t \001(\t\"u\n\rStreamRequest\022\016\n\006jo"
+    "b_id\030\001 \001(\t\022\026\n\016correlation_id\030\002 \001(\t\022\021\n\tmo"
+    "del_ids\030\003 \003(\t\022)\n\010strategy\030\004 \001(\0132\027.otrade"
+    "r.StrategyConfig\"W\n\rGreeksPayload\022\r\n\005del"
+    "ta\030\001 \001(\001\022\r\n\005gamma\030\002 \001(\001\022\r\n\005theta\030\003 \001(\001\022\014"
+    "\n\004vega\030\004 \001(\001\022\013\n\003rho\030\005 \001(\001\"O\n\013CVaRPayload"
+    "\022\016\n\006var_95\030\001 \001(\001\022\017\n\007cvar_95\030\002 \001(\001\022\016\n\006var"
+    "_99\030\003 \001(\001\022\017\n\007cvar_99\030\004 \001(\001\"w\n\013ModelResul"
+    "t\022\020\n\010model_id\030\001 \001(\t\022\023\n\013hedge_ratio\030\002 \001(\001"
+    "\022\013\n\003pnl\030\003 \001(\001\022\026\n\016cumulative_pnl\030\004 \001(\001\022\034\n"
+    "\024inference_latency_ns\030\005 \001(\003\"\205\002\n\021EngineSt"
+    "ateUpdate\022\016\n\006job_id\030\001 \001(\t\022\031\n\021tick_timest"
+    "amp_ns\030\002 \001(\003\022\022\n\nspot_price\030\003 \001(\001\022\023\n\013impl"
+    "ied_vol\030\004 \001(\001\022&\n\006greeks\030\005 \001(\0132\026.otrader."
+    "GreeksPayload\022+\n\rmodel_results\030\006 \003(\0132\024.o"
+    "trader.ModelResult\022\"\n\004cvar\030\007 \001(\0132\024.otrad"
+    "er.CVaRPayload\022\013\n\003pnl\030\010 \001(\001\022\026\n\016cumulativ"
+    "e_pnl\030\t \001(\001\"J\n\016CommandRequest\022\022\n\ncommand"
+    "_id\030\001 \001(\t\022\016\n\006action\030\002 \001(\t\022\024\n\014payload_jso"
+    "n\030\003 \001(\t\"H\n\nCommandAck\022\022\n\ncommand_id\030\001 \001("
+    "\t\022\017\n\007success\030\002 \001(\010\022\025\n\rerror_message\030\003 \001("
+    "\t2\331\014\n\rEngineService\0222\n\tGetStatus\022\016.otrad"
+    "er.Empty\032\025.otrader.EngineStatus\022<\n\016ListS"
+    "trategies\022\016.otrader.Empty\032\030.otrader.Stra"
+    "tegySummary0\001\0220\n\016ConnectGateway\022\016.otrade"
+    "r.Empty\032\016.otrader.Empty\0223\n\021DisconnectGat"
+    "eway\022\016.otrader.Empty\032\016.otrader.Empty\0221\n\017"
+    "StartMarketData\022\016.otrader.Empty\032\016.otrade"
+    "r.Empty\0220\n\016StopMarketData\022\016.otrader.Empt"
+    "y\032\016.otrader.Empty\022=\n\rStartStrategy\022\034.otr"
+    "ader.StrategyNameRequest\032\016.otrader.Empty"
+    "\022<\n\014StopStrategy\022\034.otrader.StrategyNameR"
+    "equest\032\016.otrader.Empty\0220\n\nStreamLogs\022\016.o"
+    "trader.Empty\032\020.otrader.LogLine0\001\022B\n\025Stre"
+    "amStrategyUpdates\022\016.otrader.Empty\032\027.otra"
+    "der.StrategyUpdate0\001\022F\n\022GetOrdersAndTrad"
+    "es\022\016.otrader.Empty\032 .otrader.OrdersAndTr"
+    "adesResponse\022A\n\016ListPortfolios\022\016.otrader"
+    ".Empty\032\037.otrader.ListPortfoliosResponse\022"
+    "K\n\023ListStrategyClasses\022\016.otrader.Empty\032$"
+    ".otrader.ListStrategyClassesResponse\022o\n\030"
+    "GetStrategyClassDefaults\022(.otrader.GetSt"
+    "rategyClassDefaultsRequest\032).otrader.Get"
+    "StrategyClassDefaultsResponse\022D\n\021GetPort"
+    "foliosMeta\022\016.otrader.Empty\032\037.otrader.Lis"
+    "tPortfoliosResponse\022M\n\024GetRemovedStrateg"
+    "ies\022\016.otrader.Empty\032%.otrader.GetRemoved"
+    "StrategiesResponse\022H\n\013AddStrategy\022\033.otra"
+    "der.AddStrategyRequest\032\034.otrader.AddStra"
+    "tegyResponse\022\?\n\017RestoreStrategy\022\034.otrade"
+    "r.StrategyNameRequest\032\016.otrader.Empty\022<\n"
+    "\014InitStrategy\022\034.otrader.StrategyNameRequ"
+    "est\032\016.otrader.Empty\022O\n\016RemoveStrategy\022\034."
+    "otrader.StrategyNameRequest\032\037.otrader.Re"
+    "moveStrategyResponse\022O\n\016DeleteStrategy\022\034"
+    ".otrader.StrategyNameRequest\032\037.otrader.D"
+    "eleteStrategyResponse\022H\n\023GetStrategyHold"
+    "ings\022\016.otrader.Empty\032!.otrader.StrategyH"
+    "oldingsResponse\022E\n\rStartBacktest\022\026.otrad"
+    "er.StreamRequest\032\032.otrader.EngineStateUp"
+    "date0\001\022=\n\013SendCommand\022\027.otrader.CommandR"
+    "equest\032\023.otrader.CommandAck(\001b\006proto3"
+};
+static ::absl::once_flag descriptor_table_otrader_5fengine_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_otrader_5fengine_2eproto = {
-    false, false, 5277, descriptor_table_protodef_otrader_5fengine_2eproto,
+    false,
+    false,
+    5277,
+    descriptor_table_protodef_otrader_5fengine_2eproto,
     "otrader_engine.proto",
-    &descriptor_table_otrader_5fengine_2eproto_once, nullptr, 0, 34,
-    schemas, file_default_instances, TableStruct_otrader_5fengine_2eproto::offsets,
-    file_level_metadata_otrader_5fengine_2eproto, file_level_enum_descriptors_otrader_5fengine_2eproto,
+    &descriptor_table_otrader_5fengine_2eproto_once,
+    nullptr,
+    0,
+    34,
+    schemas,
+    file_default_instances,
+    TableStruct_otrader_5fengine_2eproto::offsets,
+    file_level_metadata_otrader_5fengine_2eproto,
+    file_level_enum_descriptors_otrader_5fengine_2eproto,
     file_level_service_descriptors_otrader_5fengine_2eproto,
 };
+
+// This function exists to be marked as weak.
+// It can significantly speed up compilation by breaking up LLVM's SCC
+// in the .pb.cc translation units. Large translation units see a
+// reduction of more than 35% of walltime for optimized builds. Without
+// the weak attribute all the messages in the file, including all the
+// vtables and everything they use become part of the same SCC through
+// a cycle like:
+// GetMetadata -> descriptor table -> default instances ->
+//   vtables -> GetMetadata
+// By adding a weak function here we break the connection from the
+// individual vtables back into the descriptor table.
 PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_otrader_5fengine_2eproto_getter() {
   return &descriptor_table_otrader_5fengine_2eproto;
 }
-
 // Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_otrader_5fengine_2eproto(&descriptor_table_otrader_5fengine_2eproto);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2
+static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_otrader_5fengine_2eproto(&descriptor_table_otrader_5fengine_2eproto);
 namespace otrader {
-
 // ===================================================================
 
 class Empty::_Internal {
  public:
 };
 
-Empty::Empty(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena, is_message_owned) {
+Empty::Empty(::google::protobuf::Arena* arena)
+    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
   // @@protoc_insertion_point(arena_constructor:otrader.Empty)
 }
-Empty::Empty(const Empty& from)
-  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+Empty::Empty(const Empty& from) : ::google::protobuf::internal::ZeroFieldsBase() {
+  Empty* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
   // @@protoc_insertion_point(copy_constructor:otrader.Empty)
 }
 
 
 
 
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Empty::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+const ::google::protobuf::Message::ClassData Empty::_class_data_ = {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl,
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl,
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Empty::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData*Empty::GetClassData() const { return &_class_data_; }
 
 
 
@@ -1134,231 +1531,228 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Empty::GetClassData() const { 
 
 
 
-::PROTOBUF_NAMESPACE_ID::Metadata Empty::GetMetadata() const {
+::google::protobuf::Metadata Empty::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[0]);
 }
-
 // ===================================================================
 
 class EngineStatus::_Internal {
  public:
 };
 
-EngineStatus::EngineStatus(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+EngineStatus::EngineStatus(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.EngineStatus)
 }
-EngineStatus::EngineStatus(const EngineStatus& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  detail_.InitDefault();
+EngineStatus::EngineStatus(const EngineStatus& from) : ::google::protobuf::Message() {
+  EngineStatus* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.detail_){},
+      decltype(_impl_.running_){},
+      decltype(_impl_.connected_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.detail_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    detail_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.detail_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_detail().empty()) {
-    detail_.Set(from._internal_detail(), 
-      GetArenaForAllocation());
+    _this->_impl_.detail_.Set(from._internal_detail(), _this->GetArenaForAllocation());
   }
-  ::memcpy(&running_, &from.running_,
-    static_cast<size_t>(reinterpret_cast<char*>(&connected_) -
-    reinterpret_cast<char*>(&running_)) + sizeof(connected_));
+  ::memcpy(&_impl_.running_, &from._impl_.running_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.connected_) -
+    reinterpret_cast<char*>(&_impl_.running_)) + sizeof(_impl_.connected_));
+
   // @@protoc_insertion_point(copy_constructor:otrader.EngineStatus)
 }
-
-inline void EngineStatus::SharedCtor() {
-detail_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  detail_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&running_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&connected_) -
-    reinterpret_cast<char*>(&running_)) + sizeof(connected_));
+inline void EngineStatus::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.detail_){},
+      decltype(_impl_.running_){false},
+      decltype(_impl_.connected_){false},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.detail_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.detail_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 EngineStatus::~EngineStatus() {
   // @@protoc_insertion_point(destructor:otrader.EngineStatus)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void EngineStatus::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  detail_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.detail_.Destroy();
 }
-
 void EngineStatus::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void EngineStatus::Clear() {
+PROTOBUF_NOINLINE void EngineStatus::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.EngineStatus)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  detail_.ClearToEmpty();
-  ::memset(&running_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&connected_) -
-      reinterpret_cast<char*>(&running_)) + sizeof(connected_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.detail_.ClearToEmpty();
+  ::memset(&_impl_.running_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.connected_) -
+      reinterpret_cast<char*>(&_impl_.running_)) + sizeof(_impl_.connected_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* EngineStatus::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // bool running = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          running_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // bool connected = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          connected_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // string detail = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_detail();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.EngineStatus.detail"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* EngineStatus::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* EngineStatus::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 35, 2> EngineStatus::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_EngineStatus_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // bool running = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(EngineStatus, _impl_.running_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(EngineStatus, _impl_.running_)}},
+    // bool connected = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(EngineStatus, _impl_.connected_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(EngineStatus, _impl_.connected_)}},
+    // string detail = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(EngineStatus, _impl_.detail_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // bool running = 1;
+    {PROTOBUF_FIELD_OFFSET(EngineStatus, _impl_.running_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
+    // bool connected = 2;
+    {PROTOBUF_FIELD_OFFSET(EngineStatus, _impl_.connected_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
+    // string detail = 3;
+    {PROTOBUF_FIELD_OFFSET(EngineStatus, _impl_.detail_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\24\0\0\6\0\0\0\0"
+    "otrader.EngineStatus"
+    "detail"
+  }},
+};
+
+::uint8_t* EngineStatus::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.EngineStatus)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // bool running = 1;
   if (this->_internal_running() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_running(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        1, this->_internal_running(), target);
   }
 
   // bool connected = 2;
   if (this->_internal_connected() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(2, this->_internal_connected(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        2, this->_internal_connected(), target);
   }
 
   // string detail = 3;
   if (!this->_internal_detail().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_detail().data(), static_cast<int>(this->_internal_detail().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.EngineStatus.detail");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_detail(), target);
+    const std::string& _s = this->_internal_detail();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.EngineStatus.detail");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.EngineStatus)
   return target;
 }
 
-size_t EngineStatus::ByteSizeLong() const {
+::size_t EngineStatus::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.EngineStatus)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string detail = 3;
   if (!this->_internal_detail().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_detail());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_detail());
   }
 
   // bool running = 1;
   if (this->_internal_running() != 0) {
-    total_size += 1 + 1;
+    total_size += 2;
   }
 
   // bool connected = 2;
   if (this->_internal_connected() != 0) {
-    total_size += 1 + 1;
+    total_size += 2;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData EngineStatus::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData EngineStatus::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     EngineStatus::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*EngineStatus::GetClassData() const { return &_class_data_; }
-
-void EngineStatus::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<EngineStatus *>(to)->MergeFrom(
-      static_cast<const EngineStatus &>(from));
-}
+const ::google::protobuf::Message::ClassData*EngineStatus::GetClassData() const { return &_class_data_; }
 
 
-void EngineStatus::MergeFrom(const EngineStatus& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.EngineStatus)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void EngineStatus::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<EngineStatus*>(&to_msg);
+  auto& from = static_cast<const EngineStatus&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.EngineStatus)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_detail().empty()) {
-    _internal_set_detail(from._internal_detail());
+    _this->_internal_set_detail(from._internal_detail());
   }
   if (from._internal_running() != 0) {
-    _internal_set_running(from._internal_running());
+    _this->_internal_set_running(from._internal_running());
   }
   if (from._internal_connected() != 0) {
-    _internal_set_connected(from._internal_connected());
+    _this->_internal_set_connected(from._internal_connected());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void EngineStatus::CopyFrom(const EngineStatus& from) {
@@ -1368,7 +1762,7 @@ void EngineStatus::CopyFrom(const EngineStatus& from) {
   MergeFrom(from);
 }
 
-bool EngineStatus::IsInitialized() const {
+PROTOBUF_NOINLINE bool EngineStatus::IsInitialized() const {
   return true;
 }
 
@@ -1377,321 +1771,302 @@ void EngineStatus::InternalSwap(EngineStatus* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &detail_, lhs_arena,
-      &other->detail_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(EngineStatus, connected_)
-      + sizeof(EngineStatus::connected_)
-      - PROTOBUF_FIELD_OFFSET(EngineStatus, running_)>(
-          reinterpret_cast<char*>(&running_),
-          reinterpret_cast<char*>(&other->running_));
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.detail_, lhs_arena,
+                                       &other->_impl_.detail_, rhs_arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(EngineStatus, _impl_.connected_)
+      + sizeof(EngineStatus::_impl_.connected_)
+      - PROTOBUF_FIELD_OFFSET(EngineStatus, _impl_.running_)>(
+          reinterpret_cast<char*>(&_impl_.running_),
+          reinterpret_cast<char*>(&other->_impl_.running_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata EngineStatus::GetMetadata() const {
+::google::protobuf::Metadata EngineStatus::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[1]);
 }
-
 // ===================================================================
 
 class StrategySummary::_Internal {
  public:
 };
 
-StrategySummary::StrategySummary(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+StrategySummary::StrategySummary(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.StrategySummary)
 }
-StrategySummary::StrategySummary(const StrategySummary& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  strategy_name_.InitDefault();
+StrategySummary::StrategySummary(const StrategySummary& from) : ::google::protobuf::Message() {
+  StrategySummary* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_name_){},
+      decltype(_impl_.class_name_){},
+      decltype(_impl_.portfolio_){},
+      decltype(_impl_.status_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.strategy_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    strategy_name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_strategy_name().empty()) {
-    strategy_name_.Set(from._internal_strategy_name(), 
-      GetArenaForAllocation());
+    _this->_impl_.strategy_name_.Set(from._internal_strategy_name(), _this->GetArenaForAllocation());
   }
-  class_name_.InitDefault();
+  _impl_.class_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    class_name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.class_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_class_name().empty()) {
-    class_name_.Set(from._internal_class_name(), 
-      GetArenaForAllocation());
+    _this->_impl_.class_name_.Set(from._internal_class_name(), _this->GetArenaForAllocation());
   }
-  portfolio_.InitDefault();
+  _impl_.portfolio_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    portfolio_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.portfolio_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_portfolio().empty()) {
-    portfolio_.Set(from._internal_portfolio(), 
-      GetArenaForAllocation());
+    _this->_impl_.portfolio_.Set(from._internal_portfolio(), _this->GetArenaForAllocation());
   }
-  status_.InitDefault();
+  _impl_.status_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    status_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.status_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_status().empty()) {
-    status_.Set(from._internal_status(), 
-      GetArenaForAllocation());
+    _this->_impl_.status_.Set(from._internal_status(), _this->GetArenaForAllocation());
   }
+
   // @@protoc_insertion_point(copy_constructor:otrader.StrategySummary)
 }
-
-inline void StrategySummary::SharedCtor() {
-strategy_name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  strategy_name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-class_name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  class_name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-portfolio_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  portfolio_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-status_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  status_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void StrategySummary::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_name_){},
+      decltype(_impl_.class_name_){},
+      decltype(_impl_.portfolio_){},
+      decltype(_impl_.status_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.strategy_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.class_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.class_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.portfolio_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.portfolio_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.status_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.status_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 StrategySummary::~StrategySummary() {
   // @@protoc_insertion_point(destructor:otrader.StrategySummary)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void StrategySummary::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  strategy_name_.Destroy();
-  class_name_.Destroy();
-  portfolio_.Destroy();
-  status_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.strategy_name_.Destroy();
+  _impl_.class_name_.Destroy();
+  _impl_.portfolio_.Destroy();
+  _impl_.status_.Destroy();
 }
-
 void StrategySummary::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void StrategySummary::Clear() {
+PROTOBUF_NOINLINE void StrategySummary::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.StrategySummary)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  strategy_name_.ClearToEmpty();
-  class_name_.ClearToEmpty();
-  portfolio_.ClearToEmpty();
-  status_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.strategy_name_.ClearToEmpty();
+  _impl_.class_name_.ClearToEmpty();
+  _impl_.portfolio_.ClearToEmpty();
+  _impl_.status_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* StrategySummary::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string strategy_name = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_strategy_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategySummary.strategy_name"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string class_name = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_class_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategySummary.class_name"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string portfolio = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_portfolio();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategySummary.portfolio"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string status = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          auto str = _internal_mutable_status();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategySummary.status"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* StrategySummary::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* StrategySummary::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 4, 0, 70, 2> StrategySummary::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    4, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967280,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    4,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_StrategySummary_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string status = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 63, 0, PROTOBUF_FIELD_OFFSET(StrategySummary, _impl_.status_)}},
+    // string strategy_name = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StrategySummary, _impl_.strategy_name_)}},
+    // string class_name = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(StrategySummary, _impl_.class_name_)}},
+    // string portfolio = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(StrategySummary, _impl_.portfolio_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string strategy_name = 1;
+    {PROTOBUF_FIELD_OFFSET(StrategySummary, _impl_.strategy_name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string class_name = 2;
+    {PROTOBUF_FIELD_OFFSET(StrategySummary, _impl_.class_name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string portfolio = 3;
+    {PROTOBUF_FIELD_OFFSET(StrategySummary, _impl_.portfolio_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string status = 4;
+    {PROTOBUF_FIELD_OFFSET(StrategySummary, _impl_.status_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\27\15\12\11\6\0\0\0"
+    "otrader.StrategySummary"
+    "strategy_name"
+    "class_name"
+    "portfolio"
+    "status"
+  }},
+};
+
+::uint8_t* StrategySummary::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.StrategySummary)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string strategy_name = 1;
   if (!this->_internal_strategy_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_strategy_name().data(), static_cast<int>(this->_internal_strategy_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategySummary.strategy_name");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_strategy_name(), target);
+    const std::string& _s = this->_internal_strategy_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategySummary.strategy_name");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // string class_name = 2;
   if (!this->_internal_class_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_class_name().data(), static_cast<int>(this->_internal_class_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategySummary.class_name");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_class_name(), target);
+    const std::string& _s = this->_internal_class_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategySummary.class_name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // string portfolio = 3;
   if (!this->_internal_portfolio().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_portfolio().data(), static_cast<int>(this->_internal_portfolio().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategySummary.portfolio");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_portfolio(), target);
+    const std::string& _s = this->_internal_portfolio();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategySummary.portfolio");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
   }
 
   // string status = 4;
   if (!this->_internal_status().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_status().data(), static_cast<int>(this->_internal_status().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategySummary.status");
-    target = stream->WriteStringMaybeAliased(
-        4, this->_internal_status(), target);
+    const std::string& _s = this->_internal_status();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategySummary.status");
+    target = stream->WriteStringMaybeAliased(4, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.StrategySummary)
   return target;
 }
 
-size_t StrategySummary::ByteSizeLong() const {
+::size_t StrategySummary::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.StrategySummary)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string strategy_name = 1;
   if (!this->_internal_strategy_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_strategy_name());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_strategy_name());
   }
 
   // string class_name = 2;
   if (!this->_internal_class_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_class_name());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_class_name());
   }
 
   // string portfolio = 3;
   if (!this->_internal_portfolio().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_portfolio());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_portfolio());
   }
 
   // string status = 4;
   if (!this->_internal_status().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_status());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_status());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StrategySummary::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData StrategySummary::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     StrategySummary::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StrategySummary::GetClassData() const { return &_class_data_; }
-
-void StrategySummary::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<StrategySummary *>(to)->MergeFrom(
-      static_cast<const StrategySummary &>(from));
-}
+const ::google::protobuf::Message::ClassData*StrategySummary::GetClassData() const { return &_class_data_; }
 
 
-void StrategySummary::MergeFrom(const StrategySummary& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategySummary)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void StrategySummary::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<StrategySummary*>(&to_msg);
+  auto& from = static_cast<const StrategySummary&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategySummary)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_strategy_name().empty()) {
-    _internal_set_strategy_name(from._internal_strategy_name());
+    _this->_internal_set_strategy_name(from._internal_strategy_name());
   }
   if (!from._internal_class_name().empty()) {
-    _internal_set_class_name(from._internal_class_name());
+    _this->_internal_set_class_name(from._internal_class_name());
   }
   if (!from._internal_portfolio().empty()) {
-    _internal_set_portfolio(from._internal_portfolio());
+    _this->_internal_set_portfolio(from._internal_portfolio());
   }
   if (!from._internal_status().empty()) {
-    _internal_set_status(from._internal_status());
+    _this->_internal_set_status(from._internal_status());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void StrategySummary::CopyFrom(const StrategySummary& from) {
@@ -1701,7 +2076,7 @@ void StrategySummary::CopyFrom(const StrategySummary& from) {
   MergeFrom(from);
 }
 
-bool StrategySummary::IsInitialized() const {
+PROTOBUF_NOINLINE bool StrategySummary::IsInitialized() const {
   return true;
 }
 
@@ -1710,195 +2085,185 @@ void StrategySummary::InternalSwap(StrategySummary* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &strategy_name_, lhs_arena,
-      &other->strategy_name_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &class_name_, lhs_arena,
-      &other->class_name_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &portfolio_, lhs_arena,
-      &other->portfolio_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &status_, lhs_arena,
-      &other->status_, rhs_arena
-  );
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.strategy_name_, lhs_arena,
+                                       &other->_impl_.strategy_name_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.class_name_, lhs_arena,
+                                       &other->_impl_.class_name_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.portfolio_, lhs_arena,
+                                       &other->_impl_.portfolio_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.status_, lhs_arena,
+                                       &other->_impl_.status_, rhs_arena);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata StrategySummary::GetMetadata() const {
+::google::protobuf::Metadata StrategySummary::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[2]);
 }
-
 // ===================================================================
 
 class LogLine::_Internal {
  public:
 };
 
-LogLine::LogLine(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+LogLine::LogLine(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.LogLine)
 }
-LogLine::LogLine(const LogLine& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  line_.InitDefault();
+LogLine::LogLine(const LogLine& from) : ::google::protobuf::Message() {
+  LogLine* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.line_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.line_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    line_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.line_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_line().empty()) {
-    line_.Set(from._internal_line(), 
-      GetArenaForAllocation());
+    _this->_impl_.line_.Set(from._internal_line(), _this->GetArenaForAllocation());
   }
+
   // @@protoc_insertion_point(copy_constructor:otrader.LogLine)
 }
-
-inline void LogLine::SharedCtor() {
-line_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  line_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void LogLine::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.line_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.line_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.line_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 LogLine::~LogLine() {
   // @@protoc_insertion_point(destructor:otrader.LogLine)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void LogLine::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  line_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.line_.Destroy();
 }
-
 void LogLine::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void LogLine::Clear() {
+PROTOBUF_NOINLINE void LogLine::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.LogLine)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  line_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.line_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* LogLine::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string line = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_line();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.LogLine.line"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* LogLine::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* LogLine::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 28, 2> LogLine::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_LogLine_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string line = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(LogLine, _impl_.line_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string line = 1;
+    {PROTOBUF_FIELD_OFFSET(LogLine, _impl_.line_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\17\4\0\0\0\0\0\0"
+    "otrader.LogLine"
+    "line"
+  }},
+};
+
+::uint8_t* LogLine::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.LogLine)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string line = 1;
   if (!this->_internal_line().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_line().data(), static_cast<int>(this->_internal_line().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.LogLine.line");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_line(), target);
+    const std::string& _s = this->_internal_line();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.LogLine.line");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.LogLine)
   return target;
 }
 
-size_t LogLine::ByteSizeLong() const {
+::size_t LogLine::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.LogLine)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string line = 1;
   if (!this->_internal_line().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_line());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_line());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData LogLine::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData LogLine::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     LogLine::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*LogLine::GetClassData() const { return &_class_data_; }
-
-void LogLine::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<LogLine *>(to)->MergeFrom(
-      static_cast<const LogLine &>(from));
-}
+const ::google::protobuf::Message::ClassData*LogLine::GetClassData() const { return &_class_data_; }
 
 
-void LogLine::MergeFrom(const LogLine& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.LogLine)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void LogLine::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<LogLine*>(&to_msg);
+  auto& from = static_cast<const LogLine&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.LogLine)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_line().empty()) {
-    _internal_set_line(from._internal_line());
+    _this->_internal_set_line(from._internal_line());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void LogLine::CopyFrom(const LogLine& from) {
@@ -1908,7 +2273,7 @@ void LogLine::CopyFrom(const LogLine& from) {
   MergeFrom(from);
 }
 
-bool LogLine::IsInitialized() const {
+PROTOBUF_NOINLINE bool LogLine::IsInitialized() const {
   return true;
 }
 
@@ -1917,315 +2282,296 @@ void LogLine::InternalSwap(LogLine* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &line_, lhs_arena,
-      &other->line_, rhs_arena
-  );
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.line_, lhs_arena,
+                                       &other->_impl_.line_, rhs_arena);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata LogLine::GetMetadata() const {
+::google::protobuf::Metadata LogLine::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[3]);
 }
-
 // ===================================================================
 
 class StrategyUpdate::_Internal {
  public:
 };
 
-StrategyUpdate::StrategyUpdate(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+StrategyUpdate::StrategyUpdate(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.StrategyUpdate)
 }
-StrategyUpdate::StrategyUpdate(const StrategyUpdate& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  strategy_name_.InitDefault();
+StrategyUpdate::StrategyUpdate(const StrategyUpdate& from) : ::google::protobuf::Message() {
+  StrategyUpdate* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_name_){},
+      decltype(_impl_.class_name_){},
+      decltype(_impl_.portfolio_){},
+      decltype(_impl_.json_payload_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.strategy_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    strategy_name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_strategy_name().empty()) {
-    strategy_name_.Set(from._internal_strategy_name(), 
-      GetArenaForAllocation());
+    _this->_impl_.strategy_name_.Set(from._internal_strategy_name(), _this->GetArenaForAllocation());
   }
-  class_name_.InitDefault();
+  _impl_.class_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    class_name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.class_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_class_name().empty()) {
-    class_name_.Set(from._internal_class_name(), 
-      GetArenaForAllocation());
+    _this->_impl_.class_name_.Set(from._internal_class_name(), _this->GetArenaForAllocation());
   }
-  portfolio_.InitDefault();
+  _impl_.portfolio_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    portfolio_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.portfolio_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_portfolio().empty()) {
-    portfolio_.Set(from._internal_portfolio(), 
-      GetArenaForAllocation());
+    _this->_impl_.portfolio_.Set(from._internal_portfolio(), _this->GetArenaForAllocation());
   }
-  json_payload_.InitDefault();
+  _impl_.json_payload_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    json_payload_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.json_payload_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_json_payload().empty()) {
-    json_payload_.Set(from._internal_json_payload(), 
-      GetArenaForAllocation());
+    _this->_impl_.json_payload_.Set(from._internal_json_payload(), _this->GetArenaForAllocation());
   }
+
   // @@protoc_insertion_point(copy_constructor:otrader.StrategyUpdate)
 }
-
-inline void StrategyUpdate::SharedCtor() {
-strategy_name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  strategy_name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-class_name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  class_name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-portfolio_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  portfolio_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-json_payload_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  json_payload_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void StrategyUpdate::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_name_){},
+      decltype(_impl_.class_name_){},
+      decltype(_impl_.portfolio_){},
+      decltype(_impl_.json_payload_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.strategy_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.class_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.class_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.portfolio_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.portfolio_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.json_payload_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.json_payload_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 StrategyUpdate::~StrategyUpdate() {
   // @@protoc_insertion_point(destructor:otrader.StrategyUpdate)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void StrategyUpdate::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  strategy_name_.Destroy();
-  class_name_.Destroy();
-  portfolio_.Destroy();
-  json_payload_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.strategy_name_.Destroy();
+  _impl_.class_name_.Destroy();
+  _impl_.portfolio_.Destroy();
+  _impl_.json_payload_.Destroy();
 }
-
 void StrategyUpdate::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void StrategyUpdate::Clear() {
+PROTOBUF_NOINLINE void StrategyUpdate::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.StrategyUpdate)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  strategy_name_.ClearToEmpty();
-  class_name_.ClearToEmpty();
-  portfolio_.ClearToEmpty();
-  json_payload_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.strategy_name_.ClearToEmpty();
+  _impl_.class_name_.ClearToEmpty();
+  _impl_.portfolio_.ClearToEmpty();
+  _impl_.json_payload_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* StrategyUpdate::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string strategy_name = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_strategy_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategyUpdate.strategy_name"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string class_name = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_class_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategyUpdate.class_name"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string portfolio = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_portfolio();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategyUpdate.portfolio"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string json_payload = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          auto str = _internal_mutable_json_payload();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategyUpdate.json_payload"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* StrategyUpdate::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* StrategyUpdate::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 4, 0, 75, 2> StrategyUpdate::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    4, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967280,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    4,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_StrategyUpdate_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string json_payload = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyUpdate, _impl_.json_payload_)}},
+    // string strategy_name = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyUpdate, _impl_.strategy_name_)}},
+    // string class_name = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyUpdate, _impl_.class_name_)}},
+    // string portfolio = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyUpdate, _impl_.portfolio_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string strategy_name = 1;
+    {PROTOBUF_FIELD_OFFSET(StrategyUpdate, _impl_.strategy_name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string class_name = 2;
+    {PROTOBUF_FIELD_OFFSET(StrategyUpdate, _impl_.class_name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string portfolio = 3;
+    {PROTOBUF_FIELD_OFFSET(StrategyUpdate, _impl_.portfolio_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string json_payload = 4;
+    {PROTOBUF_FIELD_OFFSET(StrategyUpdate, _impl_.json_payload_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\26\15\12\11\14\0\0\0"
+    "otrader.StrategyUpdate"
+    "strategy_name"
+    "class_name"
+    "portfolio"
+    "json_payload"
+  }},
+};
+
+::uint8_t* StrategyUpdate::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.StrategyUpdate)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string strategy_name = 1;
   if (!this->_internal_strategy_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_strategy_name().data(), static_cast<int>(this->_internal_strategy_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategyUpdate.strategy_name");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_strategy_name(), target);
+    const std::string& _s = this->_internal_strategy_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyUpdate.strategy_name");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // string class_name = 2;
   if (!this->_internal_class_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_class_name().data(), static_cast<int>(this->_internal_class_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategyUpdate.class_name");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_class_name(), target);
+    const std::string& _s = this->_internal_class_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyUpdate.class_name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // string portfolio = 3;
   if (!this->_internal_portfolio().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_portfolio().data(), static_cast<int>(this->_internal_portfolio().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategyUpdate.portfolio");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_portfolio(), target);
+    const std::string& _s = this->_internal_portfolio();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyUpdate.portfolio");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
   }
 
   // string json_payload = 4;
   if (!this->_internal_json_payload().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_json_payload().data(), static_cast<int>(this->_internal_json_payload().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategyUpdate.json_payload");
-    target = stream->WriteStringMaybeAliased(
-        4, this->_internal_json_payload(), target);
+    const std::string& _s = this->_internal_json_payload();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyUpdate.json_payload");
+    target = stream->WriteStringMaybeAliased(4, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.StrategyUpdate)
   return target;
 }
 
-size_t StrategyUpdate::ByteSizeLong() const {
+::size_t StrategyUpdate::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.StrategyUpdate)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string strategy_name = 1;
   if (!this->_internal_strategy_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_strategy_name());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_strategy_name());
   }
 
   // string class_name = 2;
   if (!this->_internal_class_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_class_name());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_class_name());
   }
 
   // string portfolio = 3;
   if (!this->_internal_portfolio().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_portfolio());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_portfolio());
   }
 
   // string json_payload = 4;
   if (!this->_internal_json_payload().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_json_payload());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_json_payload());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StrategyUpdate::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData StrategyUpdate::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     StrategyUpdate::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StrategyUpdate::GetClassData() const { return &_class_data_; }
-
-void StrategyUpdate::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<StrategyUpdate *>(to)->MergeFrom(
-      static_cast<const StrategyUpdate &>(from));
-}
+const ::google::protobuf::Message::ClassData*StrategyUpdate::GetClassData() const { return &_class_data_; }
 
 
-void StrategyUpdate::MergeFrom(const StrategyUpdate& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategyUpdate)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void StrategyUpdate::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<StrategyUpdate*>(&to_msg);
+  auto& from = static_cast<const StrategyUpdate&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategyUpdate)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_strategy_name().empty()) {
-    _internal_set_strategy_name(from._internal_strategy_name());
+    _this->_internal_set_strategy_name(from._internal_strategy_name());
   }
   if (!from._internal_class_name().empty()) {
-    _internal_set_class_name(from._internal_class_name());
+    _this->_internal_set_class_name(from._internal_class_name());
   }
   if (!from._internal_portfolio().empty()) {
-    _internal_set_portfolio(from._internal_portfolio());
+    _this->_internal_set_portfolio(from._internal_portfolio());
   }
   if (!from._internal_json_payload().empty()) {
-    _internal_set_json_payload(from._internal_json_payload());
+    _this->_internal_set_json_payload(from._internal_json_payload());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void StrategyUpdate::CopyFrom(const StrategyUpdate& from) {
@@ -2235,7 +2581,7 @@ void StrategyUpdate::CopyFrom(const StrategyUpdate& from) {
   MergeFrom(from);
 }
 
-bool StrategyUpdate::IsInitialized() const {
+PROTOBUF_NOINLINE bool StrategyUpdate::IsInitialized() const {
   return true;
 }
 
@@ -2244,195 +2590,185 @@ void StrategyUpdate::InternalSwap(StrategyUpdate* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &strategy_name_, lhs_arena,
-      &other->strategy_name_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &class_name_, lhs_arena,
-      &other->class_name_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &portfolio_, lhs_arena,
-      &other->portfolio_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &json_payload_, lhs_arena,
-      &other->json_payload_, rhs_arena
-  );
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.strategy_name_, lhs_arena,
+                                       &other->_impl_.strategy_name_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.class_name_, lhs_arena,
+                                       &other->_impl_.class_name_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.portfolio_, lhs_arena,
+                                       &other->_impl_.portfolio_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.json_payload_, lhs_arena,
+                                       &other->_impl_.json_payload_, rhs_arena);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata StrategyUpdate::GetMetadata() const {
+::google::protobuf::Metadata StrategyUpdate::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[4]);
 }
-
 // ===================================================================
 
 class StrategyNameRequest::_Internal {
  public:
 };
 
-StrategyNameRequest::StrategyNameRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+StrategyNameRequest::StrategyNameRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.StrategyNameRequest)
 }
-StrategyNameRequest::StrategyNameRequest(const StrategyNameRequest& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  strategy_name_.InitDefault();
+StrategyNameRequest::StrategyNameRequest(const StrategyNameRequest& from) : ::google::protobuf::Message() {
+  StrategyNameRequest* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_name_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.strategy_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    strategy_name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_strategy_name().empty()) {
-    strategy_name_.Set(from._internal_strategy_name(), 
-      GetArenaForAllocation());
+    _this->_impl_.strategy_name_.Set(from._internal_strategy_name(), _this->GetArenaForAllocation());
   }
+
   // @@protoc_insertion_point(copy_constructor:otrader.StrategyNameRequest)
 }
-
-inline void StrategyNameRequest::SharedCtor() {
-strategy_name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  strategy_name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void StrategyNameRequest::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_name_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.strategy_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 StrategyNameRequest::~StrategyNameRequest() {
   // @@protoc_insertion_point(destructor:otrader.StrategyNameRequest)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void StrategyNameRequest::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  strategy_name_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.strategy_name_.Destroy();
 }
-
 void StrategyNameRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void StrategyNameRequest::Clear() {
+PROTOBUF_NOINLINE void StrategyNameRequest::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.StrategyNameRequest)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  strategy_name_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.strategy_name_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* StrategyNameRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string strategy_name = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_strategy_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategyNameRequest.strategy_name"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* StrategyNameRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* StrategyNameRequest::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 49, 2> StrategyNameRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_StrategyNameRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string strategy_name = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyNameRequest, _impl_.strategy_name_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string strategy_name = 1;
+    {PROTOBUF_FIELD_OFFSET(StrategyNameRequest, _impl_.strategy_name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\33\15\0\0\0\0\0\0"
+    "otrader.StrategyNameRequest"
+    "strategy_name"
+  }},
+};
+
+::uint8_t* StrategyNameRequest::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.StrategyNameRequest)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string strategy_name = 1;
   if (!this->_internal_strategy_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_strategy_name().data(), static_cast<int>(this->_internal_strategy_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategyNameRequest.strategy_name");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_strategy_name(), target);
+    const std::string& _s = this->_internal_strategy_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyNameRequest.strategy_name");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.StrategyNameRequest)
   return target;
 }
 
-size_t StrategyNameRequest::ByteSizeLong() const {
+::size_t StrategyNameRequest::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.StrategyNameRequest)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string strategy_name = 1;
   if (!this->_internal_strategy_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_strategy_name());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_strategy_name());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StrategyNameRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData StrategyNameRequest::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     StrategyNameRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StrategyNameRequest::GetClassData() const { return &_class_data_; }
-
-void StrategyNameRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<StrategyNameRequest *>(to)->MergeFrom(
-      static_cast<const StrategyNameRequest &>(from));
-}
+const ::google::protobuf::Message::ClassData*StrategyNameRequest::GetClassData() const { return &_class_data_; }
 
 
-void StrategyNameRequest::MergeFrom(const StrategyNameRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategyNameRequest)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void StrategyNameRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<StrategyNameRequest*>(&to_msg);
+  auto& from = static_cast<const StrategyNameRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategyNameRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_strategy_name().empty()) {
-    _internal_set_strategy_name(from._internal_strategy_name());
+    _this->_internal_set_strategy_name(from._internal_strategy_name());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void StrategyNameRequest::CopyFrom(const StrategyNameRequest& from) {
@@ -2442,7 +2778,7 @@ void StrategyNameRequest::CopyFrom(const StrategyNameRequest& from) {
   MergeFrom(from);
 }
 
-bool StrategyNameRequest::IsInitialized() const {
+PROTOBUF_NOINLINE bool StrategyNameRequest::IsInitialized() const {
   return true;
 }
 
@@ -2451,271 +2787,258 @@ void StrategyNameRequest::InternalSwap(StrategyNameRequest* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &strategy_name_, lhs_arena,
-      &other->strategy_name_, rhs_arena
-  );
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.strategy_name_, lhs_arena,
+                                       &other->_impl_.strategy_name_, rhs_arena);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata StrategyNameRequest::GetMetadata() const {
+::google::protobuf::Metadata StrategyNameRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[5]);
 }
-
 // ===================================================================
 
 class AddStrategyRequest::_Internal {
  public:
 };
 
-AddStrategyRequest::AddStrategyRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+AddStrategyRequest::AddStrategyRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.AddStrategyRequest)
 }
-AddStrategyRequest::AddStrategyRequest(const AddStrategyRequest& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  strategy_class_.InitDefault();
+AddStrategyRequest::AddStrategyRequest(const AddStrategyRequest& from) : ::google::protobuf::Message() {
+  AddStrategyRequest* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_class_){},
+      decltype(_impl_.portfolio_name_){},
+      decltype(_impl_.setting_json_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.strategy_class_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    strategy_class_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_class_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_strategy_class().empty()) {
-    strategy_class_.Set(from._internal_strategy_class(), 
-      GetArenaForAllocation());
+    _this->_impl_.strategy_class_.Set(from._internal_strategy_class(), _this->GetArenaForAllocation());
   }
-  portfolio_name_.InitDefault();
+  _impl_.portfolio_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    portfolio_name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.portfolio_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_portfolio_name().empty()) {
-    portfolio_name_.Set(from._internal_portfolio_name(), 
-      GetArenaForAllocation());
+    _this->_impl_.portfolio_name_.Set(from._internal_portfolio_name(), _this->GetArenaForAllocation());
   }
-  setting_json_.InitDefault();
+  _impl_.setting_json_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    setting_json_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.setting_json_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_setting_json().empty()) {
-    setting_json_.Set(from._internal_setting_json(), 
-      GetArenaForAllocation());
+    _this->_impl_.setting_json_.Set(from._internal_setting_json(), _this->GetArenaForAllocation());
   }
+
   // @@protoc_insertion_point(copy_constructor:otrader.AddStrategyRequest)
 }
-
-inline void AddStrategyRequest::SharedCtor() {
-strategy_class_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  strategy_class_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-portfolio_name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  portfolio_name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-setting_json_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  setting_json_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void AddStrategyRequest::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_class_){},
+      decltype(_impl_.portfolio_name_){},
+      decltype(_impl_.setting_json_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.strategy_class_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_class_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.portfolio_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.portfolio_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.setting_json_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.setting_json_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 AddStrategyRequest::~AddStrategyRequest() {
   // @@protoc_insertion_point(destructor:otrader.AddStrategyRequest)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void AddStrategyRequest::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  strategy_class_.Destroy();
-  portfolio_name_.Destroy();
-  setting_json_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.strategy_class_.Destroy();
+  _impl_.portfolio_name_.Destroy();
+  _impl_.setting_json_.Destroy();
 }
-
 void AddStrategyRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void AddStrategyRequest::Clear() {
+PROTOBUF_NOINLINE void AddStrategyRequest::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.AddStrategyRequest)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  strategy_class_.ClearToEmpty();
-  portfolio_name_.ClearToEmpty();
-  setting_json_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.strategy_class_.ClearToEmpty();
+  _impl_.portfolio_name_.ClearToEmpty();
+  _impl_.setting_json_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* AddStrategyRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string strategy_class = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_strategy_class();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.AddStrategyRequest.strategy_class"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string portfolio_name = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_portfolio_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.AddStrategyRequest.portfolio_name"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string setting_json = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_setting_json();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.AddStrategyRequest.setting_json"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* AddStrategyRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* AddStrategyRequest::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 75, 2> AddStrategyRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_AddStrategyRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string strategy_class = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(AddStrategyRequest, _impl_.strategy_class_)}},
+    // string portfolio_name = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(AddStrategyRequest, _impl_.portfolio_name_)}},
+    // string setting_json = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(AddStrategyRequest, _impl_.setting_json_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string strategy_class = 1;
+    {PROTOBUF_FIELD_OFFSET(AddStrategyRequest, _impl_.strategy_class_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string portfolio_name = 2;
+    {PROTOBUF_FIELD_OFFSET(AddStrategyRequest, _impl_.portfolio_name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string setting_json = 3;
+    {PROTOBUF_FIELD_OFFSET(AddStrategyRequest, _impl_.setting_json_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\32\16\16\14\0\0\0\0"
+    "otrader.AddStrategyRequest"
+    "strategy_class"
+    "portfolio_name"
+    "setting_json"
+  }},
+};
+
+::uint8_t* AddStrategyRequest::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.AddStrategyRequest)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string strategy_class = 1;
   if (!this->_internal_strategy_class().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_strategy_class().data(), static_cast<int>(this->_internal_strategy_class().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.AddStrategyRequest.strategy_class");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_strategy_class(), target);
+    const std::string& _s = this->_internal_strategy_class();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.AddStrategyRequest.strategy_class");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // string portfolio_name = 2;
   if (!this->_internal_portfolio_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_portfolio_name().data(), static_cast<int>(this->_internal_portfolio_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.AddStrategyRequest.portfolio_name");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_portfolio_name(), target);
+    const std::string& _s = this->_internal_portfolio_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.AddStrategyRequest.portfolio_name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // string setting_json = 3;
   if (!this->_internal_setting_json().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_setting_json().data(), static_cast<int>(this->_internal_setting_json().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.AddStrategyRequest.setting_json");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_setting_json(), target);
+    const std::string& _s = this->_internal_setting_json();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.AddStrategyRequest.setting_json");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.AddStrategyRequest)
   return target;
 }
 
-size_t AddStrategyRequest::ByteSizeLong() const {
+::size_t AddStrategyRequest::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.AddStrategyRequest)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string strategy_class = 1;
   if (!this->_internal_strategy_class().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_strategy_class());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_strategy_class());
   }
 
   // string portfolio_name = 2;
   if (!this->_internal_portfolio_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_portfolio_name());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_portfolio_name());
   }
 
   // string setting_json = 3;
   if (!this->_internal_setting_json().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_setting_json());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_setting_json());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData AddStrategyRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData AddStrategyRequest::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     AddStrategyRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AddStrategyRequest::GetClassData() const { return &_class_data_; }
-
-void AddStrategyRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<AddStrategyRequest *>(to)->MergeFrom(
-      static_cast<const AddStrategyRequest &>(from));
-}
+const ::google::protobuf::Message::ClassData*AddStrategyRequest::GetClassData() const { return &_class_data_; }
 
 
-void AddStrategyRequest::MergeFrom(const AddStrategyRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.AddStrategyRequest)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void AddStrategyRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<AddStrategyRequest*>(&to_msg);
+  auto& from = static_cast<const AddStrategyRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.AddStrategyRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_strategy_class().empty()) {
-    _internal_set_strategy_class(from._internal_strategy_class());
+    _this->_internal_set_strategy_class(from._internal_strategy_class());
   }
   if (!from._internal_portfolio_name().empty()) {
-    _internal_set_portfolio_name(from._internal_portfolio_name());
+    _this->_internal_set_portfolio_name(from._internal_portfolio_name());
   }
   if (!from._internal_setting_json().empty()) {
-    _internal_set_setting_json(from._internal_setting_json());
+    _this->_internal_set_setting_json(from._internal_setting_json());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void AddStrategyRequest::CopyFrom(const AddStrategyRequest& from) {
@@ -2725,7 +3048,7 @@ void AddStrategyRequest::CopyFrom(const AddStrategyRequest& from) {
   MergeFrom(from);
 }
 
-bool AddStrategyRequest::IsInitialized() const {
+PROTOBUF_NOINLINE bool AddStrategyRequest::IsInitialized() const {
   return true;
 }
 
@@ -2734,809 +3057,755 @@ void AddStrategyRequest::InternalSwap(AddStrategyRequest* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &strategy_class_, lhs_arena,
-      &other->strategy_class_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &portfolio_name_, lhs_arena,
-      &other->portfolio_name_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &setting_json_, lhs_arena,
-      &other->setting_json_, rhs_arena
-  );
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.strategy_class_, lhs_arena,
+                                       &other->_impl_.strategy_class_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.portfolio_name_, lhs_arena,
+                                       &other->_impl_.portfolio_name_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.setting_json_, lhs_arena,
+                                       &other->_impl_.setting_json_, rhs_arena);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata AddStrategyRequest::GetMetadata() const {
+::google::protobuf::Metadata AddStrategyRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[6]);
 }
-
 // ===================================================================
 
 class OrderRecord::_Internal {
  public:
 };
 
-OrderRecord::OrderRecord(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+OrderRecord::OrderRecord(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.OrderRecord)
 }
-OrderRecord::OrderRecord(const OrderRecord& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  timestamp_.InitDefault();
+OrderRecord::OrderRecord(const OrderRecord& from) : ::google::protobuf::Message() {
+  OrderRecord* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.timestamp_){},
+      decltype(_impl_.strategy_name_){},
+      decltype(_impl_.orderid_){},
+      decltype(_impl_.symbol_){},
+      decltype(_impl_.exchange_){},
+      decltype(_impl_.trading_class_){},
+      decltype(_impl_.type_){},
+      decltype(_impl_.direction_){},
+      decltype(_impl_.status_){},
+      decltype(_impl_.datetime_){},
+      decltype(_impl_.reference_){},
+      decltype(_impl_.legs_info_){},
+      decltype(_impl_.price_){},
+      decltype(_impl_.volume_){},
+      decltype(_impl_.traded_){},
+      decltype(_impl_.is_combo_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.timestamp_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    timestamp_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.timestamp_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_timestamp().empty()) {
-    timestamp_.Set(from._internal_timestamp(), 
-      GetArenaForAllocation());
+    _this->_impl_.timestamp_.Set(from._internal_timestamp(), _this->GetArenaForAllocation());
   }
-  strategy_name_.InitDefault();
+  _impl_.strategy_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    strategy_name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_strategy_name().empty()) {
-    strategy_name_.Set(from._internal_strategy_name(), 
-      GetArenaForAllocation());
+    _this->_impl_.strategy_name_.Set(from._internal_strategy_name(), _this->GetArenaForAllocation());
   }
-  orderid_.InitDefault();
+  _impl_.orderid_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    orderid_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.orderid_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_orderid().empty()) {
-    orderid_.Set(from._internal_orderid(), 
-      GetArenaForAllocation());
+    _this->_impl_.orderid_.Set(from._internal_orderid(), _this->GetArenaForAllocation());
   }
-  symbol_.InitDefault();
+  _impl_.symbol_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    symbol_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.symbol_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_symbol().empty()) {
-    symbol_.Set(from._internal_symbol(), 
-      GetArenaForAllocation());
+    _this->_impl_.symbol_.Set(from._internal_symbol(), _this->GetArenaForAllocation());
   }
-  exchange_.InitDefault();
+  _impl_.exchange_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    exchange_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.exchange_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_exchange().empty()) {
-    exchange_.Set(from._internal_exchange(), 
-      GetArenaForAllocation());
+    _this->_impl_.exchange_.Set(from._internal_exchange(), _this->GetArenaForAllocation());
   }
-  trading_class_.InitDefault();
+  _impl_.trading_class_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    trading_class_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.trading_class_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_trading_class().empty()) {
-    trading_class_.Set(from._internal_trading_class(), 
-      GetArenaForAllocation());
+    _this->_impl_.trading_class_.Set(from._internal_trading_class(), _this->GetArenaForAllocation());
   }
-  type_.InitDefault();
+  _impl_.type_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    type_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.type_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_type().empty()) {
-    type_.Set(from._internal_type(), 
-      GetArenaForAllocation());
+    _this->_impl_.type_.Set(from._internal_type(), _this->GetArenaForAllocation());
   }
-  direction_.InitDefault();
+  _impl_.direction_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    direction_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.direction_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_direction().empty()) {
-    direction_.Set(from._internal_direction(), 
-      GetArenaForAllocation());
+    _this->_impl_.direction_.Set(from._internal_direction(), _this->GetArenaForAllocation());
   }
-  status_.InitDefault();
+  _impl_.status_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    status_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.status_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_status().empty()) {
-    status_.Set(from._internal_status(), 
-      GetArenaForAllocation());
+    _this->_impl_.status_.Set(from._internal_status(), _this->GetArenaForAllocation());
   }
-  datetime_.InitDefault();
+  _impl_.datetime_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    datetime_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.datetime_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_datetime().empty()) {
-    datetime_.Set(from._internal_datetime(), 
-      GetArenaForAllocation());
+    _this->_impl_.datetime_.Set(from._internal_datetime(), _this->GetArenaForAllocation());
   }
-  reference_.InitDefault();
+  _impl_.reference_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    reference_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.reference_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_reference().empty()) {
-    reference_.Set(from._internal_reference(), 
-      GetArenaForAllocation());
+    _this->_impl_.reference_.Set(from._internal_reference(), _this->GetArenaForAllocation());
   }
-  legs_info_.InitDefault();
+  _impl_.legs_info_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    legs_info_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.legs_info_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_legs_info().empty()) {
-    legs_info_.Set(from._internal_legs_info(), 
-      GetArenaForAllocation());
+    _this->_impl_.legs_info_.Set(from._internal_legs_info(), _this->GetArenaForAllocation());
   }
-  ::memcpy(&price_, &from.price_,
-    static_cast<size_t>(reinterpret_cast<char*>(&is_combo_) -
-    reinterpret_cast<char*>(&price_)) + sizeof(is_combo_));
+  ::memcpy(&_impl_.price_, &from._impl_.price_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.is_combo_) -
+    reinterpret_cast<char*>(&_impl_.price_)) + sizeof(_impl_.is_combo_));
+
   // @@protoc_insertion_point(copy_constructor:otrader.OrderRecord)
 }
-
-inline void OrderRecord::SharedCtor() {
-timestamp_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  timestamp_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-strategy_name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  strategy_name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-orderid_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  orderid_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-symbol_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  symbol_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-exchange_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  exchange_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-trading_class_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  trading_class_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-type_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  type_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-direction_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  direction_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-status_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  status_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-datetime_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  datetime_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-reference_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  reference_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-legs_info_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  legs_info_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&price_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&is_combo_) -
-    reinterpret_cast<char*>(&price_)) + sizeof(is_combo_));
+inline void OrderRecord::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.timestamp_){},
+      decltype(_impl_.strategy_name_){},
+      decltype(_impl_.orderid_){},
+      decltype(_impl_.symbol_){},
+      decltype(_impl_.exchange_){},
+      decltype(_impl_.trading_class_){},
+      decltype(_impl_.type_){},
+      decltype(_impl_.direction_){},
+      decltype(_impl_.status_){},
+      decltype(_impl_.datetime_){},
+      decltype(_impl_.reference_){},
+      decltype(_impl_.legs_info_){},
+      decltype(_impl_.price_){0},
+      decltype(_impl_.volume_){0},
+      decltype(_impl_.traded_){0},
+      decltype(_impl_.is_combo_){false},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.timestamp_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.timestamp_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.strategy_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.orderid_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.orderid_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.symbol_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.symbol_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.exchange_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.exchange_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.trading_class_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.trading_class_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.type_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.type_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.direction_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.direction_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.status_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.status_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.datetime_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.datetime_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.reference_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.reference_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.legs_info_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.legs_info_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 OrderRecord::~OrderRecord() {
   // @@protoc_insertion_point(destructor:otrader.OrderRecord)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void OrderRecord::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  timestamp_.Destroy();
-  strategy_name_.Destroy();
-  orderid_.Destroy();
-  symbol_.Destroy();
-  exchange_.Destroy();
-  trading_class_.Destroy();
-  type_.Destroy();
-  direction_.Destroy();
-  status_.Destroy();
-  datetime_.Destroy();
-  reference_.Destroy();
-  legs_info_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.timestamp_.Destroy();
+  _impl_.strategy_name_.Destroy();
+  _impl_.orderid_.Destroy();
+  _impl_.symbol_.Destroy();
+  _impl_.exchange_.Destroy();
+  _impl_.trading_class_.Destroy();
+  _impl_.type_.Destroy();
+  _impl_.direction_.Destroy();
+  _impl_.status_.Destroy();
+  _impl_.datetime_.Destroy();
+  _impl_.reference_.Destroy();
+  _impl_.legs_info_.Destroy();
 }
-
 void OrderRecord::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void OrderRecord::Clear() {
+PROTOBUF_NOINLINE void OrderRecord::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.OrderRecord)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  timestamp_.ClearToEmpty();
-  strategy_name_.ClearToEmpty();
-  orderid_.ClearToEmpty();
-  symbol_.ClearToEmpty();
-  exchange_.ClearToEmpty();
-  trading_class_.ClearToEmpty();
-  type_.ClearToEmpty();
-  direction_.ClearToEmpty();
-  status_.ClearToEmpty();
-  datetime_.ClearToEmpty();
-  reference_.ClearToEmpty();
-  legs_info_.ClearToEmpty();
-  ::memset(&price_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&is_combo_) -
-      reinterpret_cast<char*>(&price_)) + sizeof(is_combo_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.timestamp_.ClearToEmpty();
+  _impl_.strategy_name_.ClearToEmpty();
+  _impl_.orderid_.ClearToEmpty();
+  _impl_.symbol_.ClearToEmpty();
+  _impl_.exchange_.ClearToEmpty();
+  _impl_.trading_class_.ClearToEmpty();
+  _impl_.type_.ClearToEmpty();
+  _impl_.direction_.ClearToEmpty();
+  _impl_.status_.ClearToEmpty();
+  _impl_.datetime_.ClearToEmpty();
+  _impl_.reference_.ClearToEmpty();
+  _impl_.legs_info_.ClearToEmpty();
+  ::memset(&_impl_.price_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.is_combo_) -
+      reinterpret_cast<char*>(&_impl_.price_)) + sizeof(_impl_.is_combo_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* OrderRecord::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string timestamp = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_timestamp();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.timestamp"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string strategy_name = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_strategy_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.strategy_name"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string orderid = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_orderid();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.orderid"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string symbol = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          auto str = _internal_mutable_symbol();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.symbol"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string exchange = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
-          auto str = _internal_mutable_exchange();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.exchange"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string trading_class = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
-          auto str = _internal_mutable_trading_class();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.trading_class"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string type = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
-          auto str = _internal_mutable_type();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.type"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string direction = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 66)) {
-          auto str = _internal_mutable_direction();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.direction"));
-        } else
-          goto handle_unusual;
-        continue;
-      // double price = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 73)) {
-          price_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double volume = 10;
-      case 10:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 81)) {
-          volume_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double traded = 11;
-      case 11:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 89)) {
-          traded_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // string status = 12;
-      case 12:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 98)) {
-          auto str = _internal_mutable_status();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.status"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string datetime = 13;
-      case 13:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 106)) {
-          auto str = _internal_mutable_datetime();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.datetime"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string reference = 14;
-      case 14:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 114)) {
-          auto str = _internal_mutable_reference();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.reference"));
-        } else
-          goto handle_unusual;
-        continue;
-      // bool is_combo = 15;
-      case 15:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 120)) {
-          is_combo_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // string legs_info = 16;
-      case 16:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 130)) {
-          auto str = _internal_mutable_legs_info();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OrderRecord.legs_info"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* OrderRecord::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* OrderRecord::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<4, 16, 0, 145, 2> OrderRecord::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    16, 120,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294901760,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    16,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_OrderRecord_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string legs_info = 16;
+    {::_pbi::TcParser::FastUS2,
+     {386, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.legs_info_)}},
+    // string timestamp = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.timestamp_)}},
+    // string strategy_name = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.strategy_name_)}},
+    // string orderid = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.orderid_)}},
+    // string symbol = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.symbol_)}},
+    // string exchange = 5;
+    {::_pbi::TcParser::FastUS1,
+     {42, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.exchange_)}},
+    // string trading_class = 6;
+    {::_pbi::TcParser::FastUS1,
+     {50, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.trading_class_)}},
+    // string type = 7;
+    {::_pbi::TcParser::FastUS1,
+     {58, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.type_)}},
+    // string direction = 8;
+    {::_pbi::TcParser::FastUS1,
+     {66, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.direction_)}},
+    // double price = 9;
+    {::_pbi::TcParser::FastF64S1,
+     {73, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.price_)}},
+    // double volume = 10;
+    {::_pbi::TcParser::FastF64S1,
+     {81, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.volume_)}},
+    // double traded = 11;
+    {::_pbi::TcParser::FastF64S1,
+     {89, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.traded_)}},
+    // string status = 12;
+    {::_pbi::TcParser::FastUS1,
+     {98, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.status_)}},
+    // string datetime = 13;
+    {::_pbi::TcParser::FastUS1,
+     {106, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.datetime_)}},
+    // string reference = 14;
+    {::_pbi::TcParser::FastUS1,
+     {114, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.reference_)}},
+    // bool is_combo = 15;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(OrderRecord, _impl_.is_combo_), 63>(),
+     {120, 63, 0, PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.is_combo_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string timestamp = 1;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.timestamp_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string strategy_name = 2;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.strategy_name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string orderid = 3;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.orderid_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string symbol = 4;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.symbol_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string exchange = 5;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.exchange_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string trading_class = 6;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.trading_class_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string type = 7;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.type_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string direction = 8;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.direction_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // double price = 9;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.price_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double volume = 10;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.volume_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double traded = 11;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.traded_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // string status = 12;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.status_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string datetime = 13;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.datetime_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string reference = 14;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.reference_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // bool is_combo = 15;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.is_combo_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
+    // string legs_info = 16;
+    {PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.legs_info_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\23\11\15\7\6\10\15\4\11\0\0\0\6\10\11\0\11\0\0\0\0\0\0\0"
+    "otrader.OrderRecord"
+    "timestamp"
+    "strategy_name"
+    "orderid"
+    "symbol"
+    "exchange"
+    "trading_class"
+    "type"
+    "direction"
+    "status"
+    "datetime"
+    "reference"
+    "legs_info"
+  }},
+};
+
+::uint8_t* OrderRecord::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.OrderRecord)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string timestamp = 1;
   if (!this->_internal_timestamp().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_timestamp().data(), static_cast<int>(this->_internal_timestamp().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.timestamp");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_timestamp(), target);
+    const std::string& _s = this->_internal_timestamp();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.timestamp");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // string strategy_name = 2;
   if (!this->_internal_strategy_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_strategy_name().data(), static_cast<int>(this->_internal_strategy_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.strategy_name");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_strategy_name(), target);
+    const std::string& _s = this->_internal_strategy_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.strategy_name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // string orderid = 3;
   if (!this->_internal_orderid().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_orderid().data(), static_cast<int>(this->_internal_orderid().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.orderid");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_orderid(), target);
+    const std::string& _s = this->_internal_orderid();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.orderid");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
   }
 
   // string symbol = 4;
   if (!this->_internal_symbol().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_symbol().data(), static_cast<int>(this->_internal_symbol().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.symbol");
-    target = stream->WriteStringMaybeAliased(
-        4, this->_internal_symbol(), target);
+    const std::string& _s = this->_internal_symbol();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.symbol");
+    target = stream->WriteStringMaybeAliased(4, _s, target);
   }
 
   // string exchange = 5;
   if (!this->_internal_exchange().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_exchange().data(), static_cast<int>(this->_internal_exchange().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.exchange");
-    target = stream->WriteStringMaybeAliased(
-        5, this->_internal_exchange(), target);
+    const std::string& _s = this->_internal_exchange();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.exchange");
+    target = stream->WriteStringMaybeAliased(5, _s, target);
   }
 
   // string trading_class = 6;
   if (!this->_internal_trading_class().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_trading_class().data(), static_cast<int>(this->_internal_trading_class().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.trading_class");
-    target = stream->WriteStringMaybeAliased(
-        6, this->_internal_trading_class(), target);
+    const std::string& _s = this->_internal_trading_class();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.trading_class");
+    target = stream->WriteStringMaybeAliased(6, _s, target);
   }
 
   // string type = 7;
   if (!this->_internal_type().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_type().data(), static_cast<int>(this->_internal_type().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.type");
-    target = stream->WriteStringMaybeAliased(
-        7, this->_internal_type(), target);
+    const std::string& _s = this->_internal_type();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.type");
+    target = stream->WriteStringMaybeAliased(7, _s, target);
   }
 
   // string direction = 8;
   if (!this->_internal_direction().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_direction().data(), static_cast<int>(this->_internal_direction().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.direction");
-    target = stream->WriteStringMaybeAliased(
-        8, this->_internal_direction(), target);
+    const std::string& _s = this->_internal_direction();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.direction");
+    target = stream->WriteStringMaybeAliased(8, _s, target);
   }
 
   // double price = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_price = this->_internal_price();
-  uint64_t raw_price;
+  ::uint64_t raw_price;
   memcpy(&raw_price, &tmp_price, sizeof(tmp_price));
   if (raw_price != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(9, this->_internal_price(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        9, this->_internal_price(), target);
   }
 
   // double volume = 10;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_volume = this->_internal_volume();
-  uint64_t raw_volume;
+  ::uint64_t raw_volume;
   memcpy(&raw_volume, &tmp_volume, sizeof(tmp_volume));
   if (raw_volume != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(10, this->_internal_volume(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        10, this->_internal_volume(), target);
   }
 
   // double traded = 11;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_traded = this->_internal_traded();
-  uint64_t raw_traded;
+  ::uint64_t raw_traded;
   memcpy(&raw_traded, &tmp_traded, sizeof(tmp_traded));
   if (raw_traded != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(11, this->_internal_traded(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        11, this->_internal_traded(), target);
   }
 
   // string status = 12;
   if (!this->_internal_status().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_status().data(), static_cast<int>(this->_internal_status().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.status");
-    target = stream->WriteStringMaybeAliased(
-        12, this->_internal_status(), target);
+    const std::string& _s = this->_internal_status();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.status");
+    target = stream->WriteStringMaybeAliased(12, _s, target);
   }
 
   // string datetime = 13;
   if (!this->_internal_datetime().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_datetime().data(), static_cast<int>(this->_internal_datetime().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.datetime");
-    target = stream->WriteStringMaybeAliased(
-        13, this->_internal_datetime(), target);
+    const std::string& _s = this->_internal_datetime();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.datetime");
+    target = stream->WriteStringMaybeAliased(13, _s, target);
   }
 
   // string reference = 14;
   if (!this->_internal_reference().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_reference().data(), static_cast<int>(this->_internal_reference().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.reference");
-    target = stream->WriteStringMaybeAliased(
-        14, this->_internal_reference(), target);
+    const std::string& _s = this->_internal_reference();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.reference");
+    target = stream->WriteStringMaybeAliased(14, _s, target);
   }
 
   // bool is_combo = 15;
   if (this->_internal_is_combo() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(15, this->_internal_is_combo(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        15, this->_internal_is_combo(), target);
   }
 
   // string legs_info = 16;
   if (!this->_internal_legs_info().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_legs_info().data(), static_cast<int>(this->_internal_legs_info().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OrderRecord.legs_info");
-    target = stream->WriteStringMaybeAliased(
-        16, this->_internal_legs_info(), target);
+    const std::string& _s = this->_internal_legs_info();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OrderRecord.legs_info");
+    target = stream->WriteStringMaybeAliased(16, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.OrderRecord)
   return target;
 }
 
-size_t OrderRecord::ByteSizeLong() const {
+::size_t OrderRecord::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.OrderRecord)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string timestamp = 1;
   if (!this->_internal_timestamp().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_timestamp());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_timestamp());
   }
 
   // string strategy_name = 2;
   if (!this->_internal_strategy_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_strategy_name());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_strategy_name());
   }
 
   // string orderid = 3;
   if (!this->_internal_orderid().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_orderid());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_orderid());
   }
 
   // string symbol = 4;
   if (!this->_internal_symbol().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_symbol());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_symbol());
   }
 
   // string exchange = 5;
   if (!this->_internal_exchange().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_exchange());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_exchange());
   }
 
   // string trading_class = 6;
   if (!this->_internal_trading_class().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_trading_class());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_trading_class());
   }
 
   // string type = 7;
   if (!this->_internal_type().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_type());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_type());
   }
 
   // string direction = 8;
   if (!this->_internal_direction().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_direction());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_direction());
   }
 
   // string status = 12;
   if (!this->_internal_status().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_status());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_status());
   }
 
   // string datetime = 13;
   if (!this->_internal_datetime().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_datetime());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_datetime());
   }
 
   // string reference = 14;
   if (!this->_internal_reference().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_reference());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_reference());
   }
 
   // string legs_info = 16;
   if (!this->_internal_legs_info().empty()) {
-    total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_legs_info());
+    total_size += 2 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_legs_info());
   }
 
   // double price = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_price = this->_internal_price();
-  uint64_t raw_price;
+  ::uint64_t raw_price;
   memcpy(&raw_price, &tmp_price, sizeof(tmp_price));
   if (raw_price != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double volume = 10;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_volume = this->_internal_volume();
-  uint64_t raw_volume;
+  ::uint64_t raw_volume;
   memcpy(&raw_volume, &tmp_volume, sizeof(tmp_volume));
   if (raw_volume != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double traded = 11;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_traded = this->_internal_traded();
-  uint64_t raw_traded;
+  ::uint64_t raw_traded;
   memcpy(&raw_traded, &tmp_traded, sizeof(tmp_traded));
   if (raw_traded != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // bool is_combo = 15;
   if (this->_internal_is_combo() != 0) {
-    total_size += 1 + 1;
+    total_size += 2;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData OrderRecord::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData OrderRecord::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     OrderRecord::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*OrderRecord::GetClassData() const { return &_class_data_; }
-
-void OrderRecord::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<OrderRecord *>(to)->MergeFrom(
-      static_cast<const OrderRecord &>(from));
-}
+const ::google::protobuf::Message::ClassData*OrderRecord::GetClassData() const { return &_class_data_; }
 
 
-void OrderRecord::MergeFrom(const OrderRecord& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.OrderRecord)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void OrderRecord::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<OrderRecord*>(&to_msg);
+  auto& from = static_cast<const OrderRecord&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.OrderRecord)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_timestamp().empty()) {
-    _internal_set_timestamp(from._internal_timestamp());
+    _this->_internal_set_timestamp(from._internal_timestamp());
   }
   if (!from._internal_strategy_name().empty()) {
-    _internal_set_strategy_name(from._internal_strategy_name());
+    _this->_internal_set_strategy_name(from._internal_strategy_name());
   }
   if (!from._internal_orderid().empty()) {
-    _internal_set_orderid(from._internal_orderid());
+    _this->_internal_set_orderid(from._internal_orderid());
   }
   if (!from._internal_symbol().empty()) {
-    _internal_set_symbol(from._internal_symbol());
+    _this->_internal_set_symbol(from._internal_symbol());
   }
   if (!from._internal_exchange().empty()) {
-    _internal_set_exchange(from._internal_exchange());
+    _this->_internal_set_exchange(from._internal_exchange());
   }
   if (!from._internal_trading_class().empty()) {
-    _internal_set_trading_class(from._internal_trading_class());
+    _this->_internal_set_trading_class(from._internal_trading_class());
   }
   if (!from._internal_type().empty()) {
-    _internal_set_type(from._internal_type());
+    _this->_internal_set_type(from._internal_type());
   }
   if (!from._internal_direction().empty()) {
-    _internal_set_direction(from._internal_direction());
+    _this->_internal_set_direction(from._internal_direction());
   }
   if (!from._internal_status().empty()) {
-    _internal_set_status(from._internal_status());
+    _this->_internal_set_status(from._internal_status());
   }
   if (!from._internal_datetime().empty()) {
-    _internal_set_datetime(from._internal_datetime());
+    _this->_internal_set_datetime(from._internal_datetime());
   }
   if (!from._internal_reference().empty()) {
-    _internal_set_reference(from._internal_reference());
+    _this->_internal_set_reference(from._internal_reference());
   }
   if (!from._internal_legs_info().empty()) {
-    _internal_set_legs_info(from._internal_legs_info());
+    _this->_internal_set_legs_info(from._internal_legs_info());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_price = from._internal_price();
-  uint64_t raw_price;
+  ::uint64_t raw_price;
   memcpy(&raw_price, &tmp_price, sizeof(tmp_price));
   if (raw_price != 0) {
-    _internal_set_price(from._internal_price());
+    _this->_internal_set_price(from._internal_price());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_volume = from._internal_volume();
-  uint64_t raw_volume;
+  ::uint64_t raw_volume;
   memcpy(&raw_volume, &tmp_volume, sizeof(tmp_volume));
   if (raw_volume != 0) {
-    _internal_set_volume(from._internal_volume());
+    _this->_internal_set_volume(from._internal_volume());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_traded = from._internal_traded();
-  uint64_t raw_traded;
+  ::uint64_t raw_traded;
   memcpy(&raw_traded, &tmp_traded, sizeof(tmp_traded));
   if (raw_traded != 0) {
-    _internal_set_traded(from._internal_traded());
+    _this->_internal_set_traded(from._internal_traded());
   }
   if (from._internal_is_combo() != 0) {
-    _internal_set_is_combo(from._internal_is_combo());
+    _this->_internal_set_is_combo(from._internal_is_combo());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void OrderRecord::CopyFrom(const OrderRecord& from) {
@@ -3546,7 +3815,7 @@ void OrderRecord::CopyFrom(const OrderRecord& from) {
   MergeFrom(from);
 }
 
-bool OrderRecord::IsInitialized() const {
+PROTOBUF_NOINLINE bool OrderRecord::IsInitialized() const {
   return true;
 }
 
@@ -3555,619 +3824,568 @@ void OrderRecord::InternalSwap(OrderRecord* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &timestamp_, lhs_arena,
-      &other->timestamp_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &strategy_name_, lhs_arena,
-      &other->strategy_name_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &orderid_, lhs_arena,
-      &other->orderid_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &symbol_, lhs_arena,
-      &other->symbol_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &exchange_, lhs_arena,
-      &other->exchange_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &trading_class_, lhs_arena,
-      &other->trading_class_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &type_, lhs_arena,
-      &other->type_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &direction_, lhs_arena,
-      &other->direction_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &status_, lhs_arena,
-      &other->status_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &datetime_, lhs_arena,
-      &other->datetime_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &reference_, lhs_arena,
-      &other->reference_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &legs_info_, lhs_arena,
-      &other->legs_info_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(OrderRecord, is_combo_)
-      + sizeof(OrderRecord::is_combo_)
-      - PROTOBUF_FIELD_OFFSET(OrderRecord, price_)>(
-          reinterpret_cast<char*>(&price_),
-          reinterpret_cast<char*>(&other->price_));
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.timestamp_, lhs_arena,
+                                       &other->_impl_.timestamp_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.strategy_name_, lhs_arena,
+                                       &other->_impl_.strategy_name_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.orderid_, lhs_arena,
+                                       &other->_impl_.orderid_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.symbol_, lhs_arena,
+                                       &other->_impl_.symbol_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.exchange_, lhs_arena,
+                                       &other->_impl_.exchange_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.trading_class_, lhs_arena,
+                                       &other->_impl_.trading_class_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.type_, lhs_arena,
+                                       &other->_impl_.type_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.direction_, lhs_arena,
+                                       &other->_impl_.direction_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.status_, lhs_arena,
+                                       &other->_impl_.status_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.datetime_, lhs_arena,
+                                       &other->_impl_.datetime_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.reference_, lhs_arena,
+                                       &other->_impl_.reference_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.legs_info_, lhs_arena,
+                                       &other->_impl_.legs_info_, rhs_arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.is_combo_)
+      + sizeof(OrderRecord::_impl_.is_combo_)
+      - PROTOBUF_FIELD_OFFSET(OrderRecord, _impl_.price_)>(
+          reinterpret_cast<char*>(&_impl_.price_),
+          reinterpret_cast<char*>(&other->_impl_.price_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata OrderRecord::GetMetadata() const {
+::google::protobuf::Metadata OrderRecord::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[7]);
 }
-
 // ===================================================================
 
 class TradeRecord::_Internal {
  public:
 };
 
-TradeRecord::TradeRecord(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+TradeRecord::TradeRecord(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.TradeRecord)
 }
-TradeRecord::TradeRecord(const TradeRecord& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  timestamp_.InitDefault();
+TradeRecord::TradeRecord(const TradeRecord& from) : ::google::protobuf::Message() {
+  TradeRecord* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.timestamp_){},
+      decltype(_impl_.strategy_name_){},
+      decltype(_impl_.tradeid_){},
+      decltype(_impl_.symbol_){},
+      decltype(_impl_.exchange_){},
+      decltype(_impl_.orderid_){},
+      decltype(_impl_.direction_){},
+      decltype(_impl_.datetime_){},
+      decltype(_impl_.price_){},
+      decltype(_impl_.volume_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.timestamp_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    timestamp_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.timestamp_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_timestamp().empty()) {
-    timestamp_.Set(from._internal_timestamp(), 
-      GetArenaForAllocation());
+    _this->_impl_.timestamp_.Set(from._internal_timestamp(), _this->GetArenaForAllocation());
   }
-  strategy_name_.InitDefault();
+  _impl_.strategy_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    strategy_name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_strategy_name().empty()) {
-    strategy_name_.Set(from._internal_strategy_name(), 
-      GetArenaForAllocation());
+    _this->_impl_.strategy_name_.Set(from._internal_strategy_name(), _this->GetArenaForAllocation());
   }
-  tradeid_.InitDefault();
+  _impl_.tradeid_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    tradeid_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.tradeid_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_tradeid().empty()) {
-    tradeid_.Set(from._internal_tradeid(), 
-      GetArenaForAllocation());
+    _this->_impl_.tradeid_.Set(from._internal_tradeid(), _this->GetArenaForAllocation());
   }
-  symbol_.InitDefault();
+  _impl_.symbol_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    symbol_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.symbol_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_symbol().empty()) {
-    symbol_.Set(from._internal_symbol(), 
-      GetArenaForAllocation());
+    _this->_impl_.symbol_.Set(from._internal_symbol(), _this->GetArenaForAllocation());
   }
-  exchange_.InitDefault();
+  _impl_.exchange_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    exchange_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.exchange_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_exchange().empty()) {
-    exchange_.Set(from._internal_exchange(), 
-      GetArenaForAllocation());
+    _this->_impl_.exchange_.Set(from._internal_exchange(), _this->GetArenaForAllocation());
   }
-  orderid_.InitDefault();
+  _impl_.orderid_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    orderid_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.orderid_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_orderid().empty()) {
-    orderid_.Set(from._internal_orderid(), 
-      GetArenaForAllocation());
+    _this->_impl_.orderid_.Set(from._internal_orderid(), _this->GetArenaForAllocation());
   }
-  direction_.InitDefault();
+  _impl_.direction_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    direction_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.direction_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_direction().empty()) {
-    direction_.Set(from._internal_direction(), 
-      GetArenaForAllocation());
+    _this->_impl_.direction_.Set(from._internal_direction(), _this->GetArenaForAllocation());
   }
-  datetime_.InitDefault();
+  _impl_.datetime_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    datetime_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.datetime_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_datetime().empty()) {
-    datetime_.Set(from._internal_datetime(), 
-      GetArenaForAllocation());
+    _this->_impl_.datetime_.Set(from._internal_datetime(), _this->GetArenaForAllocation());
   }
-  ::memcpy(&price_, &from.price_,
-    static_cast<size_t>(reinterpret_cast<char*>(&volume_) -
-    reinterpret_cast<char*>(&price_)) + sizeof(volume_));
+  ::memcpy(&_impl_.price_, &from._impl_.price_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.volume_) -
+    reinterpret_cast<char*>(&_impl_.price_)) + sizeof(_impl_.volume_));
+
   // @@protoc_insertion_point(copy_constructor:otrader.TradeRecord)
 }
-
-inline void TradeRecord::SharedCtor() {
-timestamp_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  timestamp_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-strategy_name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  strategy_name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-tradeid_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  tradeid_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-symbol_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  symbol_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-exchange_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  exchange_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-orderid_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  orderid_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-direction_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  direction_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-datetime_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  datetime_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&price_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&volume_) -
-    reinterpret_cast<char*>(&price_)) + sizeof(volume_));
+inline void TradeRecord::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.timestamp_){},
+      decltype(_impl_.strategy_name_){},
+      decltype(_impl_.tradeid_){},
+      decltype(_impl_.symbol_){},
+      decltype(_impl_.exchange_){},
+      decltype(_impl_.orderid_){},
+      decltype(_impl_.direction_){},
+      decltype(_impl_.datetime_){},
+      decltype(_impl_.price_){0},
+      decltype(_impl_.volume_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.timestamp_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.timestamp_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.strategy_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.tradeid_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.tradeid_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.symbol_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.symbol_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.exchange_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.exchange_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.orderid_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.orderid_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.direction_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.direction_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.datetime_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.datetime_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 TradeRecord::~TradeRecord() {
   // @@protoc_insertion_point(destructor:otrader.TradeRecord)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void TradeRecord::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  timestamp_.Destroy();
-  strategy_name_.Destroy();
-  tradeid_.Destroy();
-  symbol_.Destroy();
-  exchange_.Destroy();
-  orderid_.Destroy();
-  direction_.Destroy();
-  datetime_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.timestamp_.Destroy();
+  _impl_.strategy_name_.Destroy();
+  _impl_.tradeid_.Destroy();
+  _impl_.symbol_.Destroy();
+  _impl_.exchange_.Destroy();
+  _impl_.orderid_.Destroy();
+  _impl_.direction_.Destroy();
+  _impl_.datetime_.Destroy();
 }
-
 void TradeRecord::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void TradeRecord::Clear() {
+PROTOBUF_NOINLINE void TradeRecord::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.TradeRecord)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  timestamp_.ClearToEmpty();
-  strategy_name_.ClearToEmpty();
-  tradeid_.ClearToEmpty();
-  symbol_.ClearToEmpty();
-  exchange_.ClearToEmpty();
-  orderid_.ClearToEmpty();
-  direction_.ClearToEmpty();
-  datetime_.ClearToEmpty();
-  ::memset(&price_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&volume_) -
-      reinterpret_cast<char*>(&price_)) + sizeof(volume_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.timestamp_.ClearToEmpty();
+  _impl_.strategy_name_.ClearToEmpty();
+  _impl_.tradeid_.ClearToEmpty();
+  _impl_.symbol_.ClearToEmpty();
+  _impl_.exchange_.ClearToEmpty();
+  _impl_.orderid_.ClearToEmpty();
+  _impl_.direction_.ClearToEmpty();
+  _impl_.datetime_.ClearToEmpty();
+  ::memset(&_impl_.price_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.volume_) -
+      reinterpret_cast<char*>(&_impl_.price_)) + sizeof(_impl_.volume_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* TradeRecord::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string timestamp = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_timestamp();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.TradeRecord.timestamp"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string strategy_name = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_strategy_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.TradeRecord.strategy_name"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string tradeid = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_tradeid();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.TradeRecord.tradeid"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string symbol = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          auto str = _internal_mutable_symbol();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.TradeRecord.symbol"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string exchange = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
-          auto str = _internal_mutable_exchange();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.TradeRecord.exchange"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string orderid = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
-          auto str = _internal_mutable_orderid();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.TradeRecord.orderid"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string direction = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
-          auto str = _internal_mutable_direction();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.TradeRecord.direction"));
-        } else
-          goto handle_unusual;
-        continue;
-      // double price = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 65)) {
-          price_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double volume = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 73)) {
-          volume_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // string datetime = 10;
-      case 10:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 82)) {
-          auto str = _internal_mutable_datetime();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.TradeRecord.datetime"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* TradeRecord::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* TradeRecord::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<4, 10, 0, 103, 2> TradeRecord::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    10, 120,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294966272,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    10,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_TradeRecord_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string timestamp = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.timestamp_)}},
+    // string strategy_name = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.strategy_name_)}},
+    // string tradeid = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.tradeid_)}},
+    // string symbol = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 63, 0, PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.symbol_)}},
+    // string exchange = 5;
+    {::_pbi::TcParser::FastUS1,
+     {42, 63, 0, PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.exchange_)}},
+    // string orderid = 6;
+    {::_pbi::TcParser::FastUS1,
+     {50, 63, 0, PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.orderid_)}},
+    // string direction = 7;
+    {::_pbi::TcParser::FastUS1,
+     {58, 63, 0, PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.direction_)}},
+    // double price = 8;
+    {::_pbi::TcParser::FastF64S1,
+     {65, 63, 0, PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.price_)}},
+    // double volume = 9;
+    {::_pbi::TcParser::FastF64S1,
+     {73, 63, 0, PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.volume_)}},
+    // string datetime = 10;
+    {::_pbi::TcParser::FastUS1,
+     {82, 63, 0, PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.datetime_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string timestamp = 1;
+    {PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.timestamp_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string strategy_name = 2;
+    {PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.strategy_name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string tradeid = 3;
+    {PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.tradeid_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string symbol = 4;
+    {PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.symbol_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string exchange = 5;
+    {PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.exchange_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string orderid = 6;
+    {PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.orderid_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string direction = 7;
+    {PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.direction_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // double price = 8;
+    {PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.price_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double volume = 9;
+    {PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.volume_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // string datetime = 10;
+    {PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.datetime_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\23\11\15\7\6\10\7\11\0\0\10\0\0\0\0\0"
+    "otrader.TradeRecord"
+    "timestamp"
+    "strategy_name"
+    "tradeid"
+    "symbol"
+    "exchange"
+    "orderid"
+    "direction"
+    "datetime"
+  }},
+};
+
+::uint8_t* TradeRecord::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.TradeRecord)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string timestamp = 1;
   if (!this->_internal_timestamp().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_timestamp().data(), static_cast<int>(this->_internal_timestamp().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.TradeRecord.timestamp");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_timestamp(), target);
+    const std::string& _s = this->_internal_timestamp();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.TradeRecord.timestamp");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // string strategy_name = 2;
   if (!this->_internal_strategy_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_strategy_name().data(), static_cast<int>(this->_internal_strategy_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.TradeRecord.strategy_name");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_strategy_name(), target);
+    const std::string& _s = this->_internal_strategy_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.TradeRecord.strategy_name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // string tradeid = 3;
   if (!this->_internal_tradeid().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_tradeid().data(), static_cast<int>(this->_internal_tradeid().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.TradeRecord.tradeid");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_tradeid(), target);
+    const std::string& _s = this->_internal_tradeid();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.TradeRecord.tradeid");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
   }
 
   // string symbol = 4;
   if (!this->_internal_symbol().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_symbol().data(), static_cast<int>(this->_internal_symbol().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.TradeRecord.symbol");
-    target = stream->WriteStringMaybeAliased(
-        4, this->_internal_symbol(), target);
+    const std::string& _s = this->_internal_symbol();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.TradeRecord.symbol");
+    target = stream->WriteStringMaybeAliased(4, _s, target);
   }
 
   // string exchange = 5;
   if (!this->_internal_exchange().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_exchange().data(), static_cast<int>(this->_internal_exchange().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.TradeRecord.exchange");
-    target = stream->WriteStringMaybeAliased(
-        5, this->_internal_exchange(), target);
+    const std::string& _s = this->_internal_exchange();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.TradeRecord.exchange");
+    target = stream->WriteStringMaybeAliased(5, _s, target);
   }
 
   // string orderid = 6;
   if (!this->_internal_orderid().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_orderid().data(), static_cast<int>(this->_internal_orderid().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.TradeRecord.orderid");
-    target = stream->WriteStringMaybeAliased(
-        6, this->_internal_orderid(), target);
+    const std::string& _s = this->_internal_orderid();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.TradeRecord.orderid");
+    target = stream->WriteStringMaybeAliased(6, _s, target);
   }
 
   // string direction = 7;
   if (!this->_internal_direction().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_direction().data(), static_cast<int>(this->_internal_direction().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.TradeRecord.direction");
-    target = stream->WriteStringMaybeAliased(
-        7, this->_internal_direction(), target);
+    const std::string& _s = this->_internal_direction();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.TradeRecord.direction");
+    target = stream->WriteStringMaybeAliased(7, _s, target);
   }
 
   // double price = 8;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_price = this->_internal_price();
-  uint64_t raw_price;
+  ::uint64_t raw_price;
   memcpy(&raw_price, &tmp_price, sizeof(tmp_price));
   if (raw_price != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(8, this->_internal_price(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        8, this->_internal_price(), target);
   }
 
   // double volume = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_volume = this->_internal_volume();
-  uint64_t raw_volume;
+  ::uint64_t raw_volume;
   memcpy(&raw_volume, &tmp_volume, sizeof(tmp_volume));
   if (raw_volume != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(9, this->_internal_volume(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        9, this->_internal_volume(), target);
   }
 
   // string datetime = 10;
   if (!this->_internal_datetime().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_datetime().data(), static_cast<int>(this->_internal_datetime().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.TradeRecord.datetime");
-    target = stream->WriteStringMaybeAliased(
-        10, this->_internal_datetime(), target);
+    const std::string& _s = this->_internal_datetime();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.TradeRecord.datetime");
+    target = stream->WriteStringMaybeAliased(10, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.TradeRecord)
   return target;
 }
 
-size_t TradeRecord::ByteSizeLong() const {
+::size_t TradeRecord::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.TradeRecord)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string timestamp = 1;
   if (!this->_internal_timestamp().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_timestamp());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_timestamp());
   }
 
   // string strategy_name = 2;
   if (!this->_internal_strategy_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_strategy_name());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_strategy_name());
   }
 
   // string tradeid = 3;
   if (!this->_internal_tradeid().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_tradeid());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_tradeid());
   }
 
   // string symbol = 4;
   if (!this->_internal_symbol().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_symbol());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_symbol());
   }
 
   // string exchange = 5;
   if (!this->_internal_exchange().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_exchange());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_exchange());
   }
 
   // string orderid = 6;
   if (!this->_internal_orderid().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_orderid());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_orderid());
   }
 
   // string direction = 7;
   if (!this->_internal_direction().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_direction());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_direction());
   }
 
   // string datetime = 10;
   if (!this->_internal_datetime().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_datetime());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_datetime());
   }
 
   // double price = 8;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_price = this->_internal_price();
-  uint64_t raw_price;
+  ::uint64_t raw_price;
   memcpy(&raw_price, &tmp_price, sizeof(tmp_price));
   if (raw_price != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double volume = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_volume = this->_internal_volume();
-  uint64_t raw_volume;
+  ::uint64_t raw_volume;
   memcpy(&raw_volume, &tmp_volume, sizeof(tmp_volume));
   if (raw_volume != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData TradeRecord::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData TradeRecord::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     TradeRecord::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*TradeRecord::GetClassData() const { return &_class_data_; }
-
-void TradeRecord::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<TradeRecord *>(to)->MergeFrom(
-      static_cast<const TradeRecord &>(from));
-}
+const ::google::protobuf::Message::ClassData*TradeRecord::GetClassData() const { return &_class_data_; }
 
 
-void TradeRecord::MergeFrom(const TradeRecord& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.TradeRecord)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void TradeRecord::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<TradeRecord*>(&to_msg);
+  auto& from = static_cast<const TradeRecord&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.TradeRecord)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_timestamp().empty()) {
-    _internal_set_timestamp(from._internal_timestamp());
+    _this->_internal_set_timestamp(from._internal_timestamp());
   }
   if (!from._internal_strategy_name().empty()) {
-    _internal_set_strategy_name(from._internal_strategy_name());
+    _this->_internal_set_strategy_name(from._internal_strategy_name());
   }
   if (!from._internal_tradeid().empty()) {
-    _internal_set_tradeid(from._internal_tradeid());
+    _this->_internal_set_tradeid(from._internal_tradeid());
   }
   if (!from._internal_symbol().empty()) {
-    _internal_set_symbol(from._internal_symbol());
+    _this->_internal_set_symbol(from._internal_symbol());
   }
   if (!from._internal_exchange().empty()) {
-    _internal_set_exchange(from._internal_exchange());
+    _this->_internal_set_exchange(from._internal_exchange());
   }
   if (!from._internal_orderid().empty()) {
-    _internal_set_orderid(from._internal_orderid());
+    _this->_internal_set_orderid(from._internal_orderid());
   }
   if (!from._internal_direction().empty()) {
-    _internal_set_direction(from._internal_direction());
+    _this->_internal_set_direction(from._internal_direction());
   }
   if (!from._internal_datetime().empty()) {
-    _internal_set_datetime(from._internal_datetime());
+    _this->_internal_set_datetime(from._internal_datetime());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_price = from._internal_price();
-  uint64_t raw_price;
+  ::uint64_t raw_price;
   memcpy(&raw_price, &tmp_price, sizeof(tmp_price));
   if (raw_price != 0) {
-    _internal_set_price(from._internal_price());
+    _this->_internal_set_price(from._internal_price());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_volume = from._internal_volume();
-  uint64_t raw_volume;
+  ::uint64_t raw_volume;
   memcpy(&raw_volume, &tmp_volume, sizeof(tmp_volume));
   if (raw_volume != 0) {
-    _internal_set_volume(from._internal_volume());
+    _this->_internal_set_volume(from._internal_volume());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void TradeRecord::CopyFrom(const TradeRecord& from) {
@@ -4177,7 +4395,7 @@ void TradeRecord::CopyFrom(const TradeRecord& from) {
   MergeFrom(from);
 }
 
-bool TradeRecord::IsInitialized() const {
+PROTOBUF_NOINLINE bool TradeRecord::IsInitialized() const {
   return true;
 }
 
@@ -4186,237 +4404,209 @@ void TradeRecord::InternalSwap(TradeRecord* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &timestamp_, lhs_arena,
-      &other->timestamp_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &strategy_name_, lhs_arena,
-      &other->strategy_name_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &tradeid_, lhs_arena,
-      &other->tradeid_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &symbol_, lhs_arena,
-      &other->symbol_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &exchange_, lhs_arena,
-      &other->exchange_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &orderid_, lhs_arena,
-      &other->orderid_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &direction_, lhs_arena,
-      &other->direction_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &datetime_, lhs_arena,
-      &other->datetime_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(TradeRecord, volume_)
-      + sizeof(TradeRecord::volume_)
-      - PROTOBUF_FIELD_OFFSET(TradeRecord, price_)>(
-          reinterpret_cast<char*>(&price_),
-          reinterpret_cast<char*>(&other->price_));
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.timestamp_, lhs_arena,
+                                       &other->_impl_.timestamp_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.strategy_name_, lhs_arena,
+                                       &other->_impl_.strategy_name_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.tradeid_, lhs_arena,
+                                       &other->_impl_.tradeid_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.symbol_, lhs_arena,
+                                       &other->_impl_.symbol_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.exchange_, lhs_arena,
+                                       &other->_impl_.exchange_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.orderid_, lhs_arena,
+                                       &other->_impl_.orderid_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.direction_, lhs_arena,
+                                       &other->_impl_.direction_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.datetime_, lhs_arena,
+                                       &other->_impl_.datetime_, rhs_arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.volume_)
+      + sizeof(TradeRecord::_impl_.volume_)
+      - PROTOBUF_FIELD_OFFSET(TradeRecord, _impl_.price_)>(
+          reinterpret_cast<char*>(&_impl_.price_),
+          reinterpret_cast<char*>(&other->_impl_.price_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata TradeRecord::GetMetadata() const {
+::google::protobuf::Metadata TradeRecord::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[8]);
 }
-
 // ===================================================================
 
 class OrdersAndTradesResponse::_Internal {
  public:
 };
 
-OrdersAndTradesResponse::OrdersAndTradesResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  orders_(arena),
-  trades_(arena) {
-  SharedCtor();
+OrdersAndTradesResponse::OrdersAndTradesResponse(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.OrdersAndTradesResponse)
 }
-OrdersAndTradesResponse::OrdersAndTradesResponse(const OrdersAndTradesResponse& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      orders_(from.orders_),
-      trades_(from.trades_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+OrdersAndTradesResponse::OrdersAndTradesResponse(const OrdersAndTradesResponse& from) : ::google::protobuf::Message() {
+  OrdersAndTradesResponse* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.orders_){from._impl_.orders_},
+      decltype(_impl_.trades_){from._impl_.trades_},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
   // @@protoc_insertion_point(copy_constructor:otrader.OrdersAndTradesResponse)
 }
-
-inline void OrdersAndTradesResponse::SharedCtor() {
+inline void OrdersAndTradesResponse::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.orders_){arena},
+      decltype(_impl_.trades_){arena},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
 }
-
 OrdersAndTradesResponse::~OrdersAndTradesResponse() {
   // @@protoc_insertion_point(destructor:otrader.OrdersAndTradesResponse)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void OrdersAndTradesResponse::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.orders_.~RepeatedPtrField();
+  _impl_.trades_.~RepeatedPtrField();
 }
-
 void OrdersAndTradesResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void OrdersAndTradesResponse::Clear() {
+PROTOBUF_NOINLINE void OrdersAndTradesResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.OrdersAndTradesResponse)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  orders_.Clear();
-  trades_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_mutable_orders()->Clear();
+  _internal_mutable_trades()->Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* OrdersAndTradesResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // repeated .otrader.OrderRecord orders = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_orders(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      // repeated .otrader.TradeRecord trades = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_trades(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* OrdersAndTradesResponse::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* OrdersAndTradesResponse::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 2, 0, 2> OrdersAndTradesResponse::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    2,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_OrdersAndTradesResponse_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // repeated .otrader.TradeRecord trades = 2;
+    {::_pbi::TcParser::FastMtR1,
+     {18, 63, 1, PROTOBUF_FIELD_OFFSET(OrdersAndTradesResponse, _impl_.trades_)}},
+    // repeated .otrader.OrderRecord orders = 1;
+    {::_pbi::TcParser::FastMtR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(OrdersAndTradesResponse, _impl_.orders_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated .otrader.OrderRecord orders = 1;
+    {PROTOBUF_FIELD_OFFSET(OrdersAndTradesResponse, _impl_.orders_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // repeated .otrader.TradeRecord trades = 2;
+    {PROTOBUF_FIELD_OFFSET(OrdersAndTradesResponse, _impl_.trades_), 0, 1,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::otrader::OrderRecord>()},
+    {::_pbi::TcParser::GetTable<::otrader::TradeRecord>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* OrdersAndTradesResponse::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.OrdersAndTradesResponse)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // repeated .otrader.OrderRecord orders = 1;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_orders_size()); i < n; i++) {
-    const auto& repfield = this->_internal_orders(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+    const auto& repfield = this->_internal_orders().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
         InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   // repeated .otrader.TradeRecord trades = 2;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_trades_size()); i < n; i++) {
-    const auto& repfield = this->_internal_trades(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+    const auto& repfield = this->_internal_trades().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
         InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.OrdersAndTradesResponse)
   return target;
 }
 
-size_t OrdersAndTradesResponse::ByteSizeLong() const {
+::size_t OrdersAndTradesResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.OrdersAndTradesResponse)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // repeated .otrader.OrderRecord orders = 1;
   total_size += 1UL * this->_internal_orders_size();
-  for (const auto& msg : this->orders_) {
+  for (const auto& msg : this->_internal_orders()) {
     total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
   }
-
   // repeated .otrader.TradeRecord trades = 2;
   total_size += 1UL * this->_internal_trades_size();
-  for (const auto& msg : this->trades_) {
+  for (const auto& msg : this->_internal_trades()) {
     total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
   }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData OrdersAndTradesResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData OrdersAndTradesResponse::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     OrdersAndTradesResponse::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*OrdersAndTradesResponse::GetClassData() const { return &_class_data_; }
-
-void OrdersAndTradesResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<OrdersAndTradesResponse *>(to)->MergeFrom(
-      static_cast<const OrdersAndTradesResponse &>(from));
-}
+const ::google::protobuf::Message::ClassData*OrdersAndTradesResponse::GetClassData() const { return &_class_data_; }
 
 
-void OrdersAndTradesResponse::MergeFrom(const OrdersAndTradesResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.OrdersAndTradesResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void OrdersAndTradesResponse::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<OrdersAndTradesResponse*>(&to_msg);
+  auto& from = static_cast<const OrdersAndTradesResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.OrdersAndTradesResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  orders_.MergeFrom(from.orders_);
-  trades_.MergeFrom(from.trades_);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_mutable_orders()->MergeFrom(from._internal_orders());
+  _this->_internal_mutable_trades()->MergeFrom(from._internal_trades());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void OrdersAndTradesResponse::CopyFrom(const OrdersAndTradesResponse& from) {
@@ -4426,181 +4616,173 @@ void OrdersAndTradesResponse::CopyFrom(const OrdersAndTradesResponse& from) {
   MergeFrom(from);
 }
 
-bool OrdersAndTradesResponse::IsInitialized() const {
+PROTOBUF_NOINLINE bool OrdersAndTradesResponse::IsInitialized() const {
   return true;
 }
 
 void OrdersAndTradesResponse::InternalSwap(OrdersAndTradesResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  orders_.InternalSwap(&other->orders_);
-  trades_.InternalSwap(&other->trades_);
+  _impl_.orders_.InternalSwap(&other->_impl_.orders_);
+  _impl_.trades_.InternalSwap(&other->_impl_.trades_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata OrdersAndTradesResponse::GetMetadata() const {
+::google::protobuf::Metadata OrdersAndTradesResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[9]);
 }
-
 // ===================================================================
 
 class ListPortfoliosResponse::_Internal {
  public:
 };
 
-ListPortfoliosResponse::ListPortfoliosResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  portfolios_(arena) {
-  SharedCtor();
+ListPortfoliosResponse::ListPortfoliosResponse(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.ListPortfoliosResponse)
 }
-ListPortfoliosResponse::ListPortfoliosResponse(const ListPortfoliosResponse& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      portfolios_(from.portfolios_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+ListPortfoliosResponse::ListPortfoliosResponse(const ListPortfoliosResponse& from) : ::google::protobuf::Message() {
+  ListPortfoliosResponse* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.portfolios_){from._impl_.portfolios_},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
   // @@protoc_insertion_point(copy_constructor:otrader.ListPortfoliosResponse)
 }
-
-inline void ListPortfoliosResponse::SharedCtor() {
+inline void ListPortfoliosResponse::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.portfolios_){arena},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
 }
-
 ListPortfoliosResponse::~ListPortfoliosResponse() {
   // @@protoc_insertion_point(destructor:otrader.ListPortfoliosResponse)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void ListPortfoliosResponse::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _internal_mutable_portfolios()->~RepeatedPtrField();
 }
-
 void ListPortfoliosResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void ListPortfoliosResponse::Clear() {
+PROTOBUF_NOINLINE void ListPortfoliosResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.ListPortfoliosResponse)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  portfolios_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_mutable_portfolios()->Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* ListPortfoliosResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // repeated string portfolios = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_portfolios();
-            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(ptr);
-            CHK_(::_pbi::VerifyUTF8(str, "otrader.ListPortfoliosResponse.portfolios"));
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* ListPortfoliosResponse::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* ListPortfoliosResponse::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 49, 2> ListPortfoliosResponse::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_ListPortfoliosResponse_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // repeated string portfolios = 1;
+    {::_pbi::TcParser::FastUR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(ListPortfoliosResponse, _impl_.portfolios_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated string portfolios = 1;
+    {PROTOBUF_FIELD_OFFSET(ListPortfoliosResponse, _impl_.portfolios_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kUtf8String | ::_fl::kRepSString)},
+  }},
+  // no aux_entries
+  {{
+    "\36\12\0\0\0\0\0\0"
+    "otrader.ListPortfoliosResponse"
+    "portfolios"
+  }},
+};
+
+::uint8_t* ListPortfoliosResponse::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.ListPortfoliosResponse)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // repeated string portfolios = 1;
-  for (int i = 0, n = this->_internal_portfolios_size(); i < n; i++) {
-    const auto& s = this->_internal_portfolios(i);
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      s.data(), static_cast<int>(s.length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.ListPortfoliosResponse.portfolios");
+  for (int i = 0, n = this->_internal_portfolios_size(); i < n; ++i) {
+    const auto& s = this->_internal_portfolios().Get(i);
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.ListPortfoliosResponse.portfolios");
     target = stream->WriteString(1, s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.ListPortfoliosResponse)
   return target;
 }
 
-size_t ListPortfoliosResponse::ByteSizeLong() const {
+::size_t ListPortfoliosResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.ListPortfoliosResponse)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // repeated string portfolios = 1;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(portfolios_.size());
-  for (int i = 0, n = portfolios_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-      portfolios_.Get(i));
+  total_size += 1 * ::google::protobuf::internal::FromIntSize(_internal_portfolios().size());
+  for (int i = 0, n = _internal_portfolios().size(); i < n; ++i) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+        _internal_portfolios().Get(i));
   }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ListPortfoliosResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData ListPortfoliosResponse::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     ListPortfoliosResponse::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ListPortfoliosResponse::GetClassData() const { return &_class_data_; }
-
-void ListPortfoliosResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<ListPortfoliosResponse *>(to)->MergeFrom(
-      static_cast<const ListPortfoliosResponse &>(from));
-}
+const ::google::protobuf::Message::ClassData*ListPortfoliosResponse::GetClassData() const { return &_class_data_; }
 
 
-void ListPortfoliosResponse::MergeFrom(const ListPortfoliosResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.ListPortfoliosResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void ListPortfoliosResponse::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<ListPortfoliosResponse*>(&to_msg);
+  auto& from = static_cast<const ListPortfoliosResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.ListPortfoliosResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  portfolios_.MergeFrom(from.portfolios_);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_mutable_portfolios()->MergeFrom(from._internal_portfolios());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void ListPortfoliosResponse::CopyFrom(const ListPortfoliosResponse& from) {
@@ -4610,180 +4792,172 @@ void ListPortfoliosResponse::CopyFrom(const ListPortfoliosResponse& from) {
   MergeFrom(from);
 }
 
-bool ListPortfoliosResponse::IsInitialized() const {
+PROTOBUF_NOINLINE bool ListPortfoliosResponse::IsInitialized() const {
   return true;
 }
 
 void ListPortfoliosResponse::InternalSwap(ListPortfoliosResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  portfolios_.InternalSwap(&other->portfolios_);
+  _impl_.portfolios_.InternalSwap(&other->_impl_.portfolios_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata ListPortfoliosResponse::GetMetadata() const {
+::google::protobuf::Metadata ListPortfoliosResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[10]);
 }
-
 // ===================================================================
 
 class ListStrategyClassesResponse::_Internal {
  public:
 };
 
-ListStrategyClassesResponse::ListStrategyClassesResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  classes_(arena) {
-  SharedCtor();
+ListStrategyClassesResponse::ListStrategyClassesResponse(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.ListStrategyClassesResponse)
 }
-ListStrategyClassesResponse::ListStrategyClassesResponse(const ListStrategyClassesResponse& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      classes_(from.classes_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+ListStrategyClassesResponse::ListStrategyClassesResponse(const ListStrategyClassesResponse& from) : ::google::protobuf::Message() {
+  ListStrategyClassesResponse* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.classes_){from._impl_.classes_},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
   // @@protoc_insertion_point(copy_constructor:otrader.ListStrategyClassesResponse)
 }
-
-inline void ListStrategyClassesResponse::SharedCtor() {
+inline void ListStrategyClassesResponse::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.classes_){arena},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
 }
-
 ListStrategyClassesResponse::~ListStrategyClassesResponse() {
   // @@protoc_insertion_point(destructor:otrader.ListStrategyClassesResponse)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void ListStrategyClassesResponse::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _internal_mutable_classes()->~RepeatedPtrField();
 }
-
 void ListStrategyClassesResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void ListStrategyClassesResponse::Clear() {
+PROTOBUF_NOINLINE void ListStrategyClassesResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.ListStrategyClassesResponse)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  classes_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_mutable_classes()->Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* ListStrategyClassesResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // repeated string classes = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_classes();
-            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(ptr);
-            CHK_(::_pbi::VerifyUTF8(str, "otrader.ListStrategyClassesResponse.classes"));
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* ListStrategyClassesResponse::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* ListStrategyClassesResponse::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 51, 2> ListStrategyClassesResponse::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_ListStrategyClassesResponse_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // repeated string classes = 1;
+    {::_pbi::TcParser::FastUR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(ListStrategyClassesResponse, _impl_.classes_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated string classes = 1;
+    {PROTOBUF_FIELD_OFFSET(ListStrategyClassesResponse, _impl_.classes_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kUtf8String | ::_fl::kRepSString)},
+  }},
+  // no aux_entries
+  {{
+    "\43\7\0\0\0\0\0\0"
+    "otrader.ListStrategyClassesResponse"
+    "classes"
+  }},
+};
+
+::uint8_t* ListStrategyClassesResponse::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.ListStrategyClassesResponse)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // repeated string classes = 1;
-  for (int i = 0, n = this->_internal_classes_size(); i < n; i++) {
-    const auto& s = this->_internal_classes(i);
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      s.data(), static_cast<int>(s.length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.ListStrategyClassesResponse.classes");
+  for (int i = 0, n = this->_internal_classes_size(); i < n; ++i) {
+    const auto& s = this->_internal_classes().Get(i);
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.ListStrategyClassesResponse.classes");
     target = stream->WriteString(1, s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.ListStrategyClassesResponse)
   return target;
 }
 
-size_t ListStrategyClassesResponse::ByteSizeLong() const {
+::size_t ListStrategyClassesResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.ListStrategyClassesResponse)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // repeated string classes = 1;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(classes_.size());
-  for (int i = 0, n = classes_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-      classes_.Get(i));
+  total_size += 1 * ::google::protobuf::internal::FromIntSize(_internal_classes().size());
+  for (int i = 0, n = _internal_classes().size(); i < n; ++i) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+        _internal_classes().Get(i));
   }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ListStrategyClassesResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData ListStrategyClassesResponse::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     ListStrategyClassesResponse::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ListStrategyClassesResponse::GetClassData() const { return &_class_data_; }
-
-void ListStrategyClassesResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<ListStrategyClassesResponse *>(to)->MergeFrom(
-      static_cast<const ListStrategyClassesResponse &>(from));
-}
+const ::google::protobuf::Message::ClassData*ListStrategyClassesResponse::GetClassData() const { return &_class_data_; }
 
 
-void ListStrategyClassesResponse::MergeFrom(const ListStrategyClassesResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.ListStrategyClassesResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void ListStrategyClassesResponse::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<ListStrategyClassesResponse*>(&to_msg);
+  auto& from = static_cast<const ListStrategyClassesResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.ListStrategyClassesResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  classes_.MergeFrom(from.classes_);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_mutable_classes()->MergeFrom(from._internal_classes());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void ListStrategyClassesResponse::CopyFrom(const ListStrategyClassesResponse& from) {
@@ -4793,187 +4967,185 @@ void ListStrategyClassesResponse::CopyFrom(const ListStrategyClassesResponse& fr
   MergeFrom(from);
 }
 
-bool ListStrategyClassesResponse::IsInitialized() const {
+PROTOBUF_NOINLINE bool ListStrategyClassesResponse::IsInitialized() const {
   return true;
 }
 
 void ListStrategyClassesResponse::InternalSwap(ListStrategyClassesResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  classes_.InternalSwap(&other->classes_);
+  _impl_.classes_.InternalSwap(&other->_impl_.classes_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata ListStrategyClassesResponse::GetMetadata() const {
+::google::protobuf::Metadata ListStrategyClassesResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[11]);
 }
-
 // ===================================================================
 
 class GetStrategyClassDefaultsRequest::_Internal {
  public:
 };
 
-GetStrategyClassDefaultsRequest::GetStrategyClassDefaultsRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+GetStrategyClassDefaultsRequest::GetStrategyClassDefaultsRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.GetStrategyClassDefaultsRequest)
 }
-GetStrategyClassDefaultsRequest::GetStrategyClassDefaultsRequest(const GetStrategyClassDefaultsRequest& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  strategy_class_.InitDefault();
+GetStrategyClassDefaultsRequest::GetStrategyClassDefaultsRequest(const GetStrategyClassDefaultsRequest& from) : ::google::protobuf::Message() {
+  GetStrategyClassDefaultsRequest* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_class_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.strategy_class_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    strategy_class_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_class_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_strategy_class().empty()) {
-    strategy_class_.Set(from._internal_strategy_class(), 
-      GetArenaForAllocation());
+    _this->_impl_.strategy_class_.Set(from._internal_strategy_class(), _this->GetArenaForAllocation());
   }
+
   // @@protoc_insertion_point(copy_constructor:otrader.GetStrategyClassDefaultsRequest)
 }
-
-inline void GetStrategyClassDefaultsRequest::SharedCtor() {
-strategy_class_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  strategy_class_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void GetStrategyClassDefaultsRequest::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_class_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.strategy_class_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_class_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 GetStrategyClassDefaultsRequest::~GetStrategyClassDefaultsRequest() {
   // @@protoc_insertion_point(destructor:otrader.GetStrategyClassDefaultsRequest)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void GetStrategyClassDefaultsRequest::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  strategy_class_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.strategy_class_.Destroy();
 }
-
 void GetStrategyClassDefaultsRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void GetStrategyClassDefaultsRequest::Clear() {
+PROTOBUF_NOINLINE void GetStrategyClassDefaultsRequest::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.GetStrategyClassDefaultsRequest)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  strategy_class_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.strategy_class_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* GetStrategyClassDefaultsRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string strategy_class = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_strategy_class();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.GetStrategyClassDefaultsRequest.strategy_class"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* GetStrategyClassDefaultsRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* GetStrategyClassDefaultsRequest::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 62, 2> GetStrategyClassDefaultsRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_GetStrategyClassDefaultsRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string strategy_class = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(GetStrategyClassDefaultsRequest, _impl_.strategy_class_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string strategy_class = 1;
+    {PROTOBUF_FIELD_OFFSET(GetStrategyClassDefaultsRequest, _impl_.strategy_class_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\47\16\0\0\0\0\0\0"
+    "otrader.GetStrategyClassDefaultsRequest"
+    "strategy_class"
+  }},
+};
+
+::uint8_t* GetStrategyClassDefaultsRequest::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.GetStrategyClassDefaultsRequest)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string strategy_class = 1;
   if (!this->_internal_strategy_class().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_strategy_class().data(), static_cast<int>(this->_internal_strategy_class().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.GetStrategyClassDefaultsRequest.strategy_class");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_strategy_class(), target);
+    const std::string& _s = this->_internal_strategy_class();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.GetStrategyClassDefaultsRequest.strategy_class");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.GetStrategyClassDefaultsRequest)
   return target;
 }
 
-size_t GetStrategyClassDefaultsRequest::ByteSizeLong() const {
+::size_t GetStrategyClassDefaultsRequest::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.GetStrategyClassDefaultsRequest)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string strategy_class = 1;
   if (!this->_internal_strategy_class().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_strategy_class());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_strategy_class());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GetStrategyClassDefaultsRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData GetStrategyClassDefaultsRequest::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     GetStrategyClassDefaultsRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetStrategyClassDefaultsRequest::GetClassData() const { return &_class_data_; }
-
-void GetStrategyClassDefaultsRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<GetStrategyClassDefaultsRequest *>(to)->MergeFrom(
-      static_cast<const GetStrategyClassDefaultsRequest &>(from));
-}
+const ::google::protobuf::Message::ClassData*GetStrategyClassDefaultsRequest::GetClassData() const { return &_class_data_; }
 
 
-void GetStrategyClassDefaultsRequest::MergeFrom(const GetStrategyClassDefaultsRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.GetStrategyClassDefaultsRequest)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void GetStrategyClassDefaultsRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetStrategyClassDefaultsRequest*>(&to_msg);
+  auto& from = static_cast<const GetStrategyClassDefaultsRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.GetStrategyClassDefaultsRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_strategy_class().empty()) {
-    _internal_set_strategy_class(from._internal_strategy_class());
+    _this->_internal_set_strategy_class(from._internal_strategy_class());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void GetStrategyClassDefaultsRequest::CopyFrom(const GetStrategyClassDefaultsRequest& from) {
@@ -4983,7 +5155,7 @@ void GetStrategyClassDefaultsRequest::CopyFrom(const GetStrategyClassDefaultsReq
   MergeFrom(from);
 }
 
-bool GetStrategyClassDefaultsRequest::IsInitialized() const {
+PROTOBUF_NOINLINE bool GetStrategyClassDefaultsRequest::IsInitialized() const {
   return true;
 }
 
@@ -4992,214 +5164,194 @@ void GetStrategyClassDefaultsRequest::InternalSwap(GetStrategyClassDefaultsReque
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &strategy_class_, lhs_arena,
-      &other->strategy_class_, rhs_arena
-  );
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.strategy_class_, lhs_arena,
+                                       &other->_impl_.strategy_class_, rhs_arena);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata GetStrategyClassDefaultsRequest::GetMetadata() const {
+::google::protobuf::Metadata GetStrategyClassDefaultsRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[12]);
 }
-
 // ===================================================================
 
 GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse() {}
-GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse(::google::protobuf::Arena* arena)
     : SuperType(arena) {}
 void GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse::MergeFrom(const GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse& other) {
   MergeFromInternal(other);
 }
-::PROTOBUF_NAMESPACE_ID::Metadata GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse::GetMetadata() const {
+::google::protobuf::Metadata GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[13]);
 }
-
 // ===================================================================
 
 class GetStrategyClassDefaultsResponse::_Internal {
  public:
 };
 
-GetStrategyClassDefaultsResponse::GetStrategyClassDefaultsResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  settings_(arena) {
-  SharedCtor();
-  if (arena != nullptr && !is_message_owned) {
-    arena->OwnCustomDestructor(this, &GetStrategyClassDefaultsResponse::ArenaDtor);
-  }
+GetStrategyClassDefaultsResponse::GetStrategyClassDefaultsResponse(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.GetStrategyClassDefaultsResponse)
 }
-GetStrategyClassDefaultsResponse::GetStrategyClassDefaultsResponse(const GetStrategyClassDefaultsResponse& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  settings_.MergeFrom(from.settings_);
+GetStrategyClassDefaultsResponse::GetStrategyClassDefaultsResponse(const GetStrategyClassDefaultsResponse& from) : ::google::protobuf::Message() {
+  GetStrategyClassDefaultsResponse* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      /* decltype(_impl_.settings_) */ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _this->_impl_.settings_.MergeFrom(from._impl_.settings_);
+
   // @@protoc_insertion_point(copy_constructor:otrader.GetStrategyClassDefaultsResponse)
 }
-
-inline void GetStrategyClassDefaultsResponse::SharedCtor() {
+inline void GetStrategyClassDefaultsResponse::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      /* decltype(_impl_.settings_) */ {::google::protobuf::internal::ArenaInitialized(), arena},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
 }
-
 GetStrategyClassDefaultsResponse::~GetStrategyClassDefaultsResponse() {
   // @@protoc_insertion_point(destructor:otrader.GetStrategyClassDefaultsResponse)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    ArenaDtor(this);
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void GetStrategyClassDefaultsResponse::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  settings_.Destruct();
-}
-
-void GetStrategyClassDefaultsResponse::ArenaDtor(void* object) {
-  GetStrategyClassDefaultsResponse* _this = reinterpret_cast< GetStrategyClassDefaultsResponse* >(object);
-  _this->settings_.Destruct();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.settings_.~MapField();
 }
 void GetStrategyClassDefaultsResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void GetStrategyClassDefaultsResponse::Clear() {
+PROTOBUF_NOINLINE void GetStrategyClassDefaultsResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.GetStrategyClassDefaultsResponse)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  settings_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.settings_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* GetStrategyClassDefaultsResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // map<string, double> settings = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(&settings_, ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* GetStrategyClassDefaultsResponse::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* GetStrategyClassDefaultsResponse::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 57, 2> GetStrategyClassDefaultsResponse::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_GetStrategyClassDefaultsResponse_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // map<string, double> settings = 1;
+    {PROTOBUF_FIELD_OFFSET(GetStrategyClassDefaultsResponse, _impl_.settings_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMap)},
+  }}, {{
+    {::_pbi::TcParser::GetMapAuxInfo<decltype(GetStrategyClassDefaultsResponse()._impl_.settings_)>(1, 0, 0)},
+  }}, {{
+    "\50\10\0\0\0\0\0\0"
+    "otrader.GetStrategyClassDefaultsResponse"
+    "settings"
+  }},
+};
+
+::uint8_t* GetStrategyClassDefaultsResponse::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.GetStrategyClassDefaultsResponse)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // map<string, double> settings = 1;
-  if (!this->_internal_settings().empty()) {
-    using MapType = ::_pb::Map<std::string, double>;
+  if (!_internal_settings().empty()) {
+    using MapType = ::google::protobuf::Map<std::string, double>;
     using WireHelper = GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse::Funcs;
-    const auto& map_field = this->_internal_settings();
-    auto check_utf8 = [](const MapType::value_type& entry) {
-      (void)entry;
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        entry.first.data(), static_cast<int>(entry.first.length()),
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-        "otrader.GetStrategyClassDefaultsResponse.SettingsEntry.key");
-    };
+    const auto& field = _internal_settings();
 
-    if (stream->IsSerializationDeterministic() && map_field.size() > 1) {
-      for (const auto& entry : ::_pbi::MapSorterPtr<MapType>(map_field)) {
-        target = WireHelper::InternalSerialize(1, entry.first, entry.second, target, stream);
-        check_utf8(entry);
+    if (stream->IsSerializationDeterministic() && field.size() > 1) {
+      for (const auto& entry : ::google::protobuf::internal::MapSorterPtr<MapType>(field)) {
+        target = WireHelper::InternalSerialize(
+            1, entry.first, entry.second, target, stream);
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            entry.first.data(), static_cast<int>(entry.first.length()),
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.GetStrategyClassDefaultsResponse.settings");
       }
     } else {
-      for (const auto& entry : map_field) {
-        target = WireHelper::InternalSerialize(1, entry.first, entry.second, target, stream);
-        check_utf8(entry);
+      for (const auto& entry : field) {
+        target = WireHelper::InternalSerialize(
+            1, entry.first, entry.second, target, stream);
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            entry.first.data(), static_cast<int>(entry.first.length()),
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.GetStrategyClassDefaultsResponse.settings");
       }
     }
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.GetStrategyClassDefaultsResponse)
   return target;
 }
 
-size_t GetStrategyClassDefaultsResponse::ByteSizeLong() const {
+::size_t GetStrategyClassDefaultsResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.GetStrategyClassDefaultsResponse)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // map<string, double> settings = 1;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(this->_internal_settings_size());
-  for (::PROTOBUF_NAMESPACE_ID::Map< std::string, double >::const_iterator
-      it = this->_internal_settings().begin();
-      it != this->_internal_settings().end(); ++it) {
-    total_size += GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse::Funcs::ByteSizeLong(it->first, it->second);
+  total_size += 1 * ::google::protobuf::internal::FromIntSize(_internal_settings_size());
+  for (const auto& entry : _internal_settings()) {
+    total_size += GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse::Funcs::ByteSizeLong(entry.first, entry.second);
   }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GetStrategyClassDefaultsResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData GetStrategyClassDefaultsResponse::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     GetStrategyClassDefaultsResponse::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetStrategyClassDefaultsResponse::GetClassData() const { return &_class_data_; }
-
-void GetStrategyClassDefaultsResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<GetStrategyClassDefaultsResponse *>(to)->MergeFrom(
-      static_cast<const GetStrategyClassDefaultsResponse &>(from));
-}
+const ::google::protobuf::Message::ClassData*GetStrategyClassDefaultsResponse::GetClassData() const { return &_class_data_; }
 
 
-void GetStrategyClassDefaultsResponse::MergeFrom(const GetStrategyClassDefaultsResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.GetStrategyClassDefaultsResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void GetStrategyClassDefaultsResponse::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetStrategyClassDefaultsResponse*>(&to_msg);
+  auto& from = static_cast<const GetStrategyClassDefaultsResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.GetStrategyClassDefaultsResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  settings_.MergeFrom(from.settings_);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.settings_.MergeFrom(from._impl_.settings_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void GetStrategyClassDefaultsResponse::CopyFrom(const GetStrategyClassDefaultsResponse& from) {
@@ -5209,187 +5361,185 @@ void GetStrategyClassDefaultsResponse::CopyFrom(const GetStrategyClassDefaultsRe
   MergeFrom(from);
 }
 
-bool GetStrategyClassDefaultsResponse::IsInitialized() const {
+PROTOBUF_NOINLINE bool GetStrategyClassDefaultsResponse::IsInitialized() const {
   return true;
 }
 
 void GetStrategyClassDefaultsResponse::InternalSwap(GetStrategyClassDefaultsResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  settings_.InternalSwap(&other->settings_);
+  _impl_.settings_.InternalSwap(&other->_impl_.settings_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata GetStrategyClassDefaultsResponse::GetMetadata() const {
+::google::protobuf::Metadata GetStrategyClassDefaultsResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[14]);
 }
-
 // ===================================================================
 
 class AddStrategyResponse::_Internal {
  public:
 };
 
-AddStrategyResponse::AddStrategyResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+AddStrategyResponse::AddStrategyResponse(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.AddStrategyResponse)
 }
-AddStrategyResponse::AddStrategyResponse(const AddStrategyResponse& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  strategy_name_.InitDefault();
+AddStrategyResponse::AddStrategyResponse(const AddStrategyResponse& from) : ::google::protobuf::Message() {
+  AddStrategyResponse* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_name_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.strategy_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    strategy_name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_strategy_name().empty()) {
-    strategy_name_.Set(from._internal_strategy_name(), 
-      GetArenaForAllocation());
+    _this->_impl_.strategy_name_.Set(from._internal_strategy_name(), _this->GetArenaForAllocation());
   }
+
   // @@protoc_insertion_point(copy_constructor:otrader.AddStrategyResponse)
 }
-
-inline void AddStrategyResponse::SharedCtor() {
-strategy_name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  strategy_name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void AddStrategyResponse::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.strategy_name_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.strategy_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 AddStrategyResponse::~AddStrategyResponse() {
   // @@protoc_insertion_point(destructor:otrader.AddStrategyResponse)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void AddStrategyResponse::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  strategy_name_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.strategy_name_.Destroy();
 }
-
 void AddStrategyResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void AddStrategyResponse::Clear() {
+PROTOBUF_NOINLINE void AddStrategyResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.AddStrategyResponse)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  strategy_name_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.strategy_name_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* AddStrategyResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string strategy_name = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_strategy_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.AddStrategyResponse.strategy_name"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* AddStrategyResponse::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* AddStrategyResponse::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 49, 2> AddStrategyResponse::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_AddStrategyResponse_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string strategy_name = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(AddStrategyResponse, _impl_.strategy_name_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string strategy_name = 1;
+    {PROTOBUF_FIELD_OFFSET(AddStrategyResponse, _impl_.strategy_name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\33\15\0\0\0\0\0\0"
+    "otrader.AddStrategyResponse"
+    "strategy_name"
+  }},
+};
+
+::uint8_t* AddStrategyResponse::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.AddStrategyResponse)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string strategy_name = 1;
   if (!this->_internal_strategy_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_strategy_name().data(), static_cast<int>(this->_internal_strategy_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.AddStrategyResponse.strategy_name");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_strategy_name(), target);
+    const std::string& _s = this->_internal_strategy_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.AddStrategyResponse.strategy_name");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.AddStrategyResponse)
   return target;
 }
 
-size_t AddStrategyResponse::ByteSizeLong() const {
+::size_t AddStrategyResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.AddStrategyResponse)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string strategy_name = 1;
   if (!this->_internal_strategy_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_strategy_name());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_strategy_name());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData AddStrategyResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData AddStrategyResponse::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     AddStrategyResponse::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AddStrategyResponse::GetClassData() const { return &_class_data_; }
-
-void AddStrategyResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<AddStrategyResponse *>(to)->MergeFrom(
-      static_cast<const AddStrategyResponse &>(from));
-}
+const ::google::protobuf::Message::ClassData*AddStrategyResponse::GetClassData() const { return &_class_data_; }
 
 
-void AddStrategyResponse::MergeFrom(const AddStrategyResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.AddStrategyResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void AddStrategyResponse::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<AddStrategyResponse*>(&to_msg);
+  auto& from = static_cast<const AddStrategyResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.AddStrategyResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_strategy_name().empty()) {
-    _internal_set_strategy_name(from._internal_strategy_name());
+    _this->_internal_set_strategy_name(from._internal_strategy_name());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void AddStrategyResponse::CopyFrom(const AddStrategyResponse& from) {
@@ -5399,7 +5549,7 @@ void AddStrategyResponse::CopyFrom(const AddStrategyResponse& from) {
   MergeFrom(from);
 }
 
-bool AddStrategyResponse::IsInitialized() const {
+PROTOBUF_NOINLINE bool AddStrategyResponse::IsInitialized() const {
   return true;
 }
 
@@ -5408,164 +5558,156 @@ void AddStrategyResponse::InternalSwap(AddStrategyResponse* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &strategy_name_, lhs_arena,
-      &other->strategy_name_, rhs_arena
-  );
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.strategy_name_, lhs_arena,
+                                       &other->_impl_.strategy_name_, rhs_arena);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata AddStrategyResponse::GetMetadata() const {
+::google::protobuf::Metadata AddStrategyResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[15]);
 }
-
 // ===================================================================
 
 class RemoveStrategyResponse::_Internal {
  public:
 };
 
-RemoveStrategyResponse::RemoveStrategyResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+RemoveStrategyResponse::RemoveStrategyResponse(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.RemoveStrategyResponse)
 }
 RemoveStrategyResponse::RemoveStrategyResponse(const RemoveStrategyResponse& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  removed_ = from.removed_;
+    : ::google::protobuf::Message(), _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:otrader.RemoveStrategyResponse)
 }
-
-inline void RemoveStrategyResponse::SharedCtor() {
-removed_ = false;
+inline void RemoveStrategyResponse::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.removed_){false},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
 }
-
 RemoveStrategyResponse::~RemoveStrategyResponse() {
   // @@protoc_insertion_point(destructor:otrader.RemoveStrategyResponse)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void RemoveStrategyResponse::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
 }
-
 void RemoveStrategyResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void RemoveStrategyResponse::Clear() {
+PROTOBUF_NOINLINE void RemoveStrategyResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.RemoveStrategyResponse)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  removed_ = false;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.removed_ = false;
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* RemoveStrategyResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // bool removed = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          removed_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* RemoveStrategyResponse::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* RemoveStrategyResponse::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 0, 2> RemoveStrategyResponse::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_RemoveStrategyResponse_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // bool removed = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(RemoveStrategyResponse, _impl_.removed_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(RemoveStrategyResponse, _impl_.removed_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // bool removed = 1;
+    {PROTOBUF_FIELD_OFFSET(RemoveStrategyResponse, _impl_.removed_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+::uint8_t* RemoveStrategyResponse::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.RemoveStrategyResponse)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // bool removed = 1;
   if (this->_internal_removed() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_removed(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        1, this->_internal_removed(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.RemoveStrategyResponse)
   return target;
 }
 
-size_t RemoveStrategyResponse::ByteSizeLong() const {
+::size_t RemoveStrategyResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.RemoveStrategyResponse)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // bool removed = 1;
   if (this->_internal_removed() != 0) {
-    total_size += 1 + 1;
+    total_size += 2;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData RemoveStrategyResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData RemoveStrategyResponse::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     RemoveStrategyResponse::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RemoveStrategyResponse::GetClassData() const { return &_class_data_; }
-
-void RemoveStrategyResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<RemoveStrategyResponse *>(to)->MergeFrom(
-      static_cast<const RemoveStrategyResponse &>(from));
-}
+const ::google::protobuf::Message::ClassData*RemoveStrategyResponse::GetClassData() const { return &_class_data_; }
 
 
-void RemoveStrategyResponse::MergeFrom(const RemoveStrategyResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.RemoveStrategyResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void RemoveStrategyResponse::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<RemoveStrategyResponse*>(&to_msg);
+  auto& from = static_cast<const RemoveStrategyResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.RemoveStrategyResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_removed() != 0) {
-    _internal_set_removed(from._internal_removed());
+    _this->_internal_set_removed(from._internal_removed());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void RemoveStrategyResponse::CopyFrom(const RemoveStrategyResponse& from) {
@@ -5575,168 +5717,162 @@ void RemoveStrategyResponse::CopyFrom(const RemoveStrategyResponse& from) {
   MergeFrom(from);
 }
 
-bool RemoveStrategyResponse::IsInitialized() const {
+PROTOBUF_NOINLINE bool RemoveStrategyResponse::IsInitialized() const {
   return true;
 }
 
 void RemoveStrategyResponse::InternalSwap(RemoveStrategyResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(removed_, other->removed_);
+        swap(_impl_.removed_, other->_impl_.removed_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata RemoveStrategyResponse::GetMetadata() const {
+::google::protobuf::Metadata RemoveStrategyResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[16]);
 }
-
 // ===================================================================
 
 class DeleteStrategyResponse::_Internal {
  public:
 };
 
-DeleteStrategyResponse::DeleteStrategyResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+DeleteStrategyResponse::DeleteStrategyResponse(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.DeleteStrategyResponse)
 }
 DeleteStrategyResponse::DeleteStrategyResponse(const DeleteStrategyResponse& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  deleted_ = from.deleted_;
+    : ::google::protobuf::Message(), _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:otrader.DeleteStrategyResponse)
 }
-
-inline void DeleteStrategyResponse::SharedCtor() {
-deleted_ = false;
+inline void DeleteStrategyResponse::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.deleted_){false},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
 }
-
 DeleteStrategyResponse::~DeleteStrategyResponse() {
   // @@protoc_insertion_point(destructor:otrader.DeleteStrategyResponse)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void DeleteStrategyResponse::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
 }
-
 void DeleteStrategyResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void DeleteStrategyResponse::Clear() {
+PROTOBUF_NOINLINE void DeleteStrategyResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.DeleteStrategyResponse)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  deleted_ = false;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.deleted_ = false;
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* DeleteStrategyResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // bool deleted = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          deleted_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* DeleteStrategyResponse::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* DeleteStrategyResponse::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 0, 2> DeleteStrategyResponse::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_DeleteStrategyResponse_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // bool deleted = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(DeleteStrategyResponse, _impl_.deleted_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(DeleteStrategyResponse, _impl_.deleted_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // bool deleted = 1;
+    {PROTOBUF_FIELD_OFFSET(DeleteStrategyResponse, _impl_.deleted_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+::uint8_t* DeleteStrategyResponse::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.DeleteStrategyResponse)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // bool deleted = 1;
   if (this->_internal_deleted() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_deleted(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        1, this->_internal_deleted(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.DeleteStrategyResponse)
   return target;
 }
 
-size_t DeleteStrategyResponse::ByteSizeLong() const {
+::size_t DeleteStrategyResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.DeleteStrategyResponse)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // bool deleted = 1;
   if (this->_internal_deleted() != 0) {
-    total_size += 1 + 1;
+    total_size += 2;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData DeleteStrategyResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData DeleteStrategyResponse::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     DeleteStrategyResponse::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*DeleteStrategyResponse::GetClassData() const { return &_class_data_; }
-
-void DeleteStrategyResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<DeleteStrategyResponse *>(to)->MergeFrom(
-      static_cast<const DeleteStrategyResponse &>(from));
-}
+const ::google::protobuf::Message::ClassData*DeleteStrategyResponse::GetClassData() const { return &_class_data_; }
 
 
-void DeleteStrategyResponse::MergeFrom(const DeleteStrategyResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.DeleteStrategyResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void DeleteStrategyResponse::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<DeleteStrategyResponse*>(&to_msg);
+  auto& from = static_cast<const DeleteStrategyResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.DeleteStrategyResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_deleted() != 0) {
-    _internal_set_deleted(from._internal_deleted());
+    _this->_internal_set_deleted(from._internal_deleted());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void DeleteStrategyResponse::CopyFrom(const DeleteStrategyResponse& from) {
@@ -5746,180 +5882,172 @@ void DeleteStrategyResponse::CopyFrom(const DeleteStrategyResponse& from) {
   MergeFrom(from);
 }
 
-bool DeleteStrategyResponse::IsInitialized() const {
+PROTOBUF_NOINLINE bool DeleteStrategyResponse::IsInitialized() const {
   return true;
 }
 
 void DeleteStrategyResponse::InternalSwap(DeleteStrategyResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(deleted_, other->deleted_);
+        swap(_impl_.deleted_, other->_impl_.deleted_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata DeleteStrategyResponse::GetMetadata() const {
+::google::protobuf::Metadata DeleteStrategyResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[17]);
 }
-
 // ===================================================================
 
 class GetRemovedStrategiesResponse::_Internal {
  public:
 };
 
-GetRemovedStrategiesResponse::GetRemovedStrategiesResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  removed_strategies_(arena) {
-  SharedCtor();
+GetRemovedStrategiesResponse::GetRemovedStrategiesResponse(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.GetRemovedStrategiesResponse)
 }
-GetRemovedStrategiesResponse::GetRemovedStrategiesResponse(const GetRemovedStrategiesResponse& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      removed_strategies_(from.removed_strategies_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+GetRemovedStrategiesResponse::GetRemovedStrategiesResponse(const GetRemovedStrategiesResponse& from) : ::google::protobuf::Message() {
+  GetRemovedStrategiesResponse* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.removed_strategies_){from._impl_.removed_strategies_},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
   // @@protoc_insertion_point(copy_constructor:otrader.GetRemovedStrategiesResponse)
 }
-
-inline void GetRemovedStrategiesResponse::SharedCtor() {
+inline void GetRemovedStrategiesResponse::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.removed_strategies_){arena},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
 }
-
 GetRemovedStrategiesResponse::~GetRemovedStrategiesResponse() {
   // @@protoc_insertion_point(destructor:otrader.GetRemovedStrategiesResponse)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void GetRemovedStrategiesResponse::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _internal_mutable_removed_strategies()->~RepeatedPtrField();
 }
-
 void GetRemovedStrategiesResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void GetRemovedStrategiesResponse::Clear() {
+PROTOBUF_NOINLINE void GetRemovedStrategiesResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.GetRemovedStrategiesResponse)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  removed_strategies_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_mutable_removed_strategies()->Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* GetRemovedStrategiesResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // repeated string removed_strategies = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_removed_strategies();
-            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(ptr);
-            CHK_(::_pbi::VerifyUTF8(str, "otrader.GetRemovedStrategiesResponse.removed_strategies"));
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* GetRemovedStrategiesResponse::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* GetRemovedStrategiesResponse::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 63, 2> GetRemovedStrategiesResponse::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_GetRemovedStrategiesResponse_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // repeated string removed_strategies = 1;
+    {::_pbi::TcParser::FastUR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(GetRemovedStrategiesResponse, _impl_.removed_strategies_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated string removed_strategies = 1;
+    {PROTOBUF_FIELD_OFFSET(GetRemovedStrategiesResponse, _impl_.removed_strategies_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kUtf8String | ::_fl::kRepSString)},
+  }},
+  // no aux_entries
+  {{
+    "\44\22\0\0\0\0\0\0"
+    "otrader.GetRemovedStrategiesResponse"
+    "removed_strategies"
+  }},
+};
+
+::uint8_t* GetRemovedStrategiesResponse::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.GetRemovedStrategiesResponse)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // repeated string removed_strategies = 1;
-  for (int i = 0, n = this->_internal_removed_strategies_size(); i < n; i++) {
-    const auto& s = this->_internal_removed_strategies(i);
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      s.data(), static_cast<int>(s.length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.GetRemovedStrategiesResponse.removed_strategies");
+  for (int i = 0, n = this->_internal_removed_strategies_size(); i < n; ++i) {
+    const auto& s = this->_internal_removed_strategies().Get(i);
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.GetRemovedStrategiesResponse.removed_strategies");
     target = stream->WriteString(1, s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.GetRemovedStrategiesResponse)
   return target;
 }
 
-size_t GetRemovedStrategiesResponse::ByteSizeLong() const {
+::size_t GetRemovedStrategiesResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.GetRemovedStrategiesResponse)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // repeated string removed_strategies = 1;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(removed_strategies_.size());
-  for (int i = 0, n = removed_strategies_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-      removed_strategies_.Get(i));
+  total_size += 1 * ::google::protobuf::internal::FromIntSize(_internal_removed_strategies().size());
+  for (int i = 0, n = _internal_removed_strategies().size(); i < n; ++i) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+        _internal_removed_strategies().Get(i));
   }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GetRemovedStrategiesResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData GetRemovedStrategiesResponse::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     GetRemovedStrategiesResponse::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetRemovedStrategiesResponse::GetClassData() const { return &_class_data_; }
-
-void GetRemovedStrategiesResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<GetRemovedStrategiesResponse *>(to)->MergeFrom(
-      static_cast<const GetRemovedStrategiesResponse &>(from));
-}
+const ::google::protobuf::Message::ClassData*GetRemovedStrategiesResponse::GetClassData() const { return &_class_data_; }
 
 
-void GetRemovedStrategiesResponse::MergeFrom(const GetRemovedStrategiesResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.GetRemovedStrategiesResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void GetRemovedStrategiesResponse::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GetRemovedStrategiesResponse*>(&to_msg);
+  auto& from = static_cast<const GetRemovedStrategiesResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.GetRemovedStrategiesResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  removed_strategies_.MergeFrom(from.removed_strategies_);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_mutable_removed_strategies()->MergeFrom(from._internal_removed_strategies());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void GetRemovedStrategiesResponse::CopyFrom(const GetRemovedStrategiesResponse& from) {
@@ -5929,222 +6057,206 @@ void GetRemovedStrategiesResponse::CopyFrom(const GetRemovedStrategiesResponse& 
   MergeFrom(from);
 }
 
-bool GetRemovedStrategiesResponse::IsInitialized() const {
+PROTOBUF_NOINLINE bool GetRemovedStrategiesResponse::IsInitialized() const {
   return true;
 }
 
 void GetRemovedStrategiesResponse::InternalSwap(GetRemovedStrategiesResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  removed_strategies_.InternalSwap(&other->removed_strategies_);
+  _impl_.removed_strategies_.InternalSwap(&other->_impl_.removed_strategies_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata GetRemovedStrategiesResponse::GetMetadata() const {
+::google::protobuf::Metadata GetRemovedStrategiesResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[18]);
 }
-
 // ===================================================================
 
 StrategyHoldingsResponse_HoldingsEntry_DoNotUse::StrategyHoldingsResponse_HoldingsEntry_DoNotUse() {}
-StrategyHoldingsResponse_HoldingsEntry_DoNotUse::StrategyHoldingsResponse_HoldingsEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+StrategyHoldingsResponse_HoldingsEntry_DoNotUse::StrategyHoldingsResponse_HoldingsEntry_DoNotUse(::google::protobuf::Arena* arena)
     : SuperType(arena) {}
 void StrategyHoldingsResponse_HoldingsEntry_DoNotUse::MergeFrom(const StrategyHoldingsResponse_HoldingsEntry_DoNotUse& other) {
   MergeFromInternal(other);
 }
-::PROTOBUF_NAMESPACE_ID::Metadata StrategyHoldingsResponse_HoldingsEntry_DoNotUse::GetMetadata() const {
+::google::protobuf::Metadata StrategyHoldingsResponse_HoldingsEntry_DoNotUse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[19]);
 }
-
 // ===================================================================
 
 class StrategyHoldingsResponse::_Internal {
  public:
 };
 
-StrategyHoldingsResponse::StrategyHoldingsResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  holdings_(arena) {
-  SharedCtor();
-  if (arena != nullptr && !is_message_owned) {
-    arena->OwnCustomDestructor(this, &StrategyHoldingsResponse::ArenaDtor);
-  }
+StrategyHoldingsResponse::StrategyHoldingsResponse(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.StrategyHoldingsResponse)
 }
-StrategyHoldingsResponse::StrategyHoldingsResponse(const StrategyHoldingsResponse& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  holdings_.MergeFrom(from.holdings_);
+StrategyHoldingsResponse::StrategyHoldingsResponse(const StrategyHoldingsResponse& from) : ::google::protobuf::Message() {
+  StrategyHoldingsResponse* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      /* decltype(_impl_.holdings_) */ {},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _this->_impl_.holdings_.MergeFrom(from._impl_.holdings_);
+
   // @@protoc_insertion_point(copy_constructor:otrader.StrategyHoldingsResponse)
 }
-
-inline void StrategyHoldingsResponse::SharedCtor() {
+inline void StrategyHoldingsResponse::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      /* decltype(_impl_.holdings_) */ {::google::protobuf::internal::ArenaInitialized(), arena},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
 }
-
 StrategyHoldingsResponse::~StrategyHoldingsResponse() {
   // @@protoc_insertion_point(destructor:otrader.StrategyHoldingsResponse)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    ArenaDtor(this);
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void StrategyHoldingsResponse::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  holdings_.Destruct();
-}
-
-void StrategyHoldingsResponse::ArenaDtor(void* object) {
-  StrategyHoldingsResponse* _this = reinterpret_cast< StrategyHoldingsResponse* >(object);
-  _this->holdings_.Destruct();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.holdings_.~MapField();
 }
 void StrategyHoldingsResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void StrategyHoldingsResponse::Clear() {
+PROTOBUF_NOINLINE void StrategyHoldingsResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.StrategyHoldingsResponse)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  holdings_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.holdings_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* StrategyHoldingsResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // map<string, string> holdings = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(&holdings_, ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* StrategyHoldingsResponse::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* StrategyHoldingsResponse::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 49, 2> StrategyHoldingsResponse::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_StrategyHoldingsResponse_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // map<string, string> holdings = 1;
+    {PROTOBUF_FIELD_OFFSET(StrategyHoldingsResponse, _impl_.holdings_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMap)},
+  }}, {{
+    {::_pbi::TcParser::GetMapAuxInfo<decltype(StrategyHoldingsResponse()._impl_.holdings_)>(1, 0, 0)},
+  }}, {{
+    "\40\10\0\0\0\0\0\0"
+    "otrader.StrategyHoldingsResponse"
+    "holdings"
+  }},
+};
+
+::uint8_t* StrategyHoldingsResponse::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.StrategyHoldingsResponse)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // map<string, string> holdings = 1;
-  if (!this->_internal_holdings().empty()) {
-    using MapType = ::_pb::Map<std::string, std::string>;
+  if (!_internal_holdings().empty()) {
+    using MapType = ::google::protobuf::Map<std::string, std::string>;
     using WireHelper = StrategyHoldingsResponse_HoldingsEntry_DoNotUse::Funcs;
-    const auto& map_field = this->_internal_holdings();
-    auto check_utf8 = [](const MapType::value_type& entry) {
-      (void)entry;
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        entry.first.data(), static_cast<int>(entry.first.length()),
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-        "otrader.StrategyHoldingsResponse.HoldingsEntry.key");
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        entry.second.data(), static_cast<int>(entry.second.length()),
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-        "otrader.StrategyHoldingsResponse.HoldingsEntry.value");
-    };
+    const auto& field = _internal_holdings();
 
-    if (stream->IsSerializationDeterministic() && map_field.size() > 1) {
-      for (const auto& entry : ::_pbi::MapSorterPtr<MapType>(map_field)) {
-        target = WireHelper::InternalSerialize(1, entry.first, entry.second, target, stream);
-        check_utf8(entry);
+    if (stream->IsSerializationDeterministic() && field.size() > 1) {
+      for (const auto& entry : ::google::protobuf::internal::MapSorterPtr<MapType>(field)) {
+        target = WireHelper::InternalSerialize(
+            1, entry.first, entry.second, target, stream);
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            entry.first.data(), static_cast<int>(entry.first.length()),
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyHoldingsResponse.holdings");
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            entry.second.data(), static_cast<int>(entry.second.length()),
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyHoldingsResponse.holdings");
       }
     } else {
-      for (const auto& entry : map_field) {
-        target = WireHelper::InternalSerialize(1, entry.first, entry.second, target, stream);
-        check_utf8(entry);
+      for (const auto& entry : field) {
+        target = WireHelper::InternalSerialize(
+            1, entry.first, entry.second, target, stream);
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            entry.first.data(), static_cast<int>(entry.first.length()),
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyHoldingsResponse.holdings");
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            entry.second.data(), static_cast<int>(entry.second.length()),
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyHoldingsResponse.holdings");
       }
     }
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.StrategyHoldingsResponse)
   return target;
 }
 
-size_t StrategyHoldingsResponse::ByteSizeLong() const {
+::size_t StrategyHoldingsResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.StrategyHoldingsResponse)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // map<string, string> holdings = 1;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(this->_internal_holdings_size());
-  for (::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >::const_iterator
-      it = this->_internal_holdings().begin();
-      it != this->_internal_holdings().end(); ++it) {
-    total_size += StrategyHoldingsResponse_HoldingsEntry_DoNotUse::Funcs::ByteSizeLong(it->first, it->second);
+  total_size += 1 * ::google::protobuf::internal::FromIntSize(_internal_holdings_size());
+  for (const auto& entry : _internal_holdings()) {
+    total_size += StrategyHoldingsResponse_HoldingsEntry_DoNotUse::Funcs::ByteSizeLong(entry.first, entry.second);
   }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StrategyHoldingsResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData StrategyHoldingsResponse::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     StrategyHoldingsResponse::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StrategyHoldingsResponse::GetClassData() const { return &_class_data_; }
-
-void StrategyHoldingsResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<StrategyHoldingsResponse *>(to)->MergeFrom(
-      static_cast<const StrategyHoldingsResponse &>(from));
-}
+const ::google::protobuf::Message::ClassData*StrategyHoldingsResponse::GetClassData() const { return &_class_data_; }
 
 
-void StrategyHoldingsResponse::MergeFrom(const StrategyHoldingsResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategyHoldingsResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void StrategyHoldingsResponse::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<StrategyHoldingsResponse*>(&to_msg);
+  auto& from = static_cast<const StrategyHoldingsResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategyHoldingsResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  holdings_.MergeFrom(from.holdings_);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.holdings_.MergeFrom(from._impl_.holdings_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void StrategyHoldingsResponse::CopyFrom(const StrategyHoldingsResponse& from) {
@@ -6154,491 +6266,525 @@ void StrategyHoldingsResponse::CopyFrom(const StrategyHoldingsResponse& from) {
   MergeFrom(from);
 }
 
-bool StrategyHoldingsResponse::IsInitialized() const {
+PROTOBUF_NOINLINE bool StrategyHoldingsResponse::IsInitialized() const {
   return true;
 }
 
 void StrategyHoldingsResponse::InternalSwap(StrategyHoldingsResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  holdings_.InternalSwap(&other->holdings_);
+  _impl_.holdings_.InternalSwap(&other->_impl_.holdings_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata StrategyHoldingsResponse::GetMetadata() const {
+::google::protobuf::Metadata StrategyHoldingsResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[20]);
 }
-
 // ===================================================================
 
 class BasePositionMsg::_Internal {
  public:
 };
 
-BasePositionMsg::BasePositionMsg(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+BasePositionMsg::BasePositionMsg(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.BasePositionMsg)
 }
-BasePositionMsg::BasePositionMsg(const BasePositionMsg& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  symbol_.InitDefault();
+BasePositionMsg::BasePositionMsg(const BasePositionMsg& from) : ::google::protobuf::Message() {
+  BasePositionMsg* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.symbol_){},
+      decltype(_impl_.avg_cost_){},
+      decltype(_impl_.cost_value_){},
+      decltype(_impl_.realized_pnl_){},
+      decltype(_impl_.mid_price_){},
+      decltype(_impl_.delta_){},
+      decltype(_impl_.gamma_){},
+      decltype(_impl_.theta_){},
+      decltype(_impl_.vega_){},
+      decltype(_impl_.quantity_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.symbol_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    symbol_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.symbol_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_symbol().empty()) {
-    symbol_.Set(from._internal_symbol(), 
-      GetArenaForAllocation());
+    _this->_impl_.symbol_.Set(from._internal_symbol(), _this->GetArenaForAllocation());
   }
-  ::memcpy(&avg_cost_, &from.avg_cost_,
-    static_cast<size_t>(reinterpret_cast<char*>(&quantity_) -
-    reinterpret_cast<char*>(&avg_cost_)) + sizeof(quantity_));
+  ::memcpy(&_impl_.avg_cost_, &from._impl_.avg_cost_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.quantity_) -
+    reinterpret_cast<char*>(&_impl_.avg_cost_)) + sizeof(_impl_.quantity_));
+
   // @@protoc_insertion_point(copy_constructor:otrader.BasePositionMsg)
 }
-
-inline void BasePositionMsg::SharedCtor() {
-symbol_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  symbol_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&avg_cost_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&quantity_) -
-    reinterpret_cast<char*>(&avg_cost_)) + sizeof(quantity_));
+inline void BasePositionMsg::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.symbol_){},
+      decltype(_impl_.avg_cost_){0},
+      decltype(_impl_.cost_value_){0},
+      decltype(_impl_.realized_pnl_){0},
+      decltype(_impl_.mid_price_){0},
+      decltype(_impl_.delta_){0},
+      decltype(_impl_.gamma_){0},
+      decltype(_impl_.theta_){0},
+      decltype(_impl_.vega_){0},
+      decltype(_impl_.quantity_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.symbol_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.symbol_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 BasePositionMsg::~BasePositionMsg() {
   // @@protoc_insertion_point(destructor:otrader.BasePositionMsg)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void BasePositionMsg::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  symbol_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.symbol_.Destroy();
 }
-
 void BasePositionMsg::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void BasePositionMsg::Clear() {
+PROTOBUF_NOINLINE void BasePositionMsg::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.BasePositionMsg)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  symbol_.ClearToEmpty();
-  ::memset(&avg_cost_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&quantity_) -
-      reinterpret_cast<char*>(&avg_cost_)) + sizeof(quantity_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.symbol_.ClearToEmpty();
+  ::memset(&_impl_.avg_cost_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.quantity_) -
+      reinterpret_cast<char*>(&_impl_.avg_cost_)) + sizeof(_impl_.quantity_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* BasePositionMsg::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string symbol = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_symbol();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.BasePositionMsg.symbol"));
-        } else
-          goto handle_unusual;
-        continue;
-      // int32 quantity = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          quantity_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // double avg_cost = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
-          avg_cost_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double cost_value = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 33)) {
-          cost_value_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double realized_pnl = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 41)) {
-          realized_pnl_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double mid_price = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 49)) {
-          mid_price_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double delta = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 57)) {
-          delta_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double gamma = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 65)) {
-          gamma_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double theta = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 73)) {
-          theta_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double vega = 10;
-      case 10:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 81)) {
-          vega_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* BasePositionMsg::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* BasePositionMsg::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<4, 10, 0, 46, 2> BasePositionMsg::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    10, 120,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294966272,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    10,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_BasePositionMsg_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string symbol = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.symbol_)}},
+    // int32 quantity = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BasePositionMsg, _impl_.quantity_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.quantity_)}},
+    // double avg_cost = 3;
+    {::_pbi::TcParser::FastF64S1,
+     {25, 63, 0, PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.avg_cost_)}},
+    // double cost_value = 4;
+    {::_pbi::TcParser::FastF64S1,
+     {33, 63, 0, PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.cost_value_)}},
+    // double realized_pnl = 5;
+    {::_pbi::TcParser::FastF64S1,
+     {41, 63, 0, PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.realized_pnl_)}},
+    // double mid_price = 6;
+    {::_pbi::TcParser::FastF64S1,
+     {49, 63, 0, PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.mid_price_)}},
+    // double delta = 7;
+    {::_pbi::TcParser::FastF64S1,
+     {57, 63, 0, PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.delta_)}},
+    // double gamma = 8;
+    {::_pbi::TcParser::FastF64S1,
+     {65, 63, 0, PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.gamma_)}},
+    // double theta = 9;
+    {::_pbi::TcParser::FastF64S1,
+     {73, 63, 0, PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.theta_)}},
+    // double vega = 10;
+    {::_pbi::TcParser::FastF64S1,
+     {81, 63, 0, PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.vega_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string symbol = 1;
+    {PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.symbol_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // int32 quantity = 2;
+    {PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.quantity_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // double avg_cost = 3;
+    {PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.avg_cost_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double cost_value = 4;
+    {PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.cost_value_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double realized_pnl = 5;
+    {PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.realized_pnl_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double mid_price = 6;
+    {PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.mid_price_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double delta = 7;
+    {PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.delta_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double gamma = 8;
+    {PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.gamma_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double theta = 9;
+    {PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.theta_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double vega = 10;
+    {PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.vega_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+  }},
+  // no aux_entries
+  {{
+    "\27\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+    "otrader.BasePositionMsg"
+    "symbol"
+  }},
+};
+
+::uint8_t* BasePositionMsg::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.BasePositionMsg)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string symbol = 1;
   if (!this->_internal_symbol().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_symbol().data(), static_cast<int>(this->_internal_symbol().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.BasePositionMsg.symbol");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_symbol(), target);
+    const std::string& _s = this->_internal_symbol();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.BasePositionMsg.symbol");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // int32 quantity = 2;
   if (this->_internal_quantity() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_quantity(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<2>(
+            stream, this->_internal_quantity(), target);
   }
 
   // double avg_cost = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_avg_cost = this->_internal_avg_cost();
-  uint64_t raw_avg_cost;
+  ::uint64_t raw_avg_cost;
   memcpy(&raw_avg_cost, &tmp_avg_cost, sizeof(tmp_avg_cost));
   if (raw_avg_cost != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(3, this->_internal_avg_cost(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        3, this->_internal_avg_cost(), target);
   }
 
   // double cost_value = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cost_value = this->_internal_cost_value();
-  uint64_t raw_cost_value;
+  ::uint64_t raw_cost_value;
   memcpy(&raw_cost_value, &tmp_cost_value, sizeof(tmp_cost_value));
   if (raw_cost_value != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(4, this->_internal_cost_value(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        4, this->_internal_cost_value(), target);
   }
 
   // double realized_pnl = 5;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_realized_pnl = this->_internal_realized_pnl();
-  uint64_t raw_realized_pnl;
+  ::uint64_t raw_realized_pnl;
   memcpy(&raw_realized_pnl, &tmp_realized_pnl, sizeof(tmp_realized_pnl));
   if (raw_realized_pnl != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(5, this->_internal_realized_pnl(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        5, this->_internal_realized_pnl(), target);
   }
 
   // double mid_price = 6;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_mid_price = this->_internal_mid_price();
-  uint64_t raw_mid_price;
+  ::uint64_t raw_mid_price;
   memcpy(&raw_mid_price, &tmp_mid_price, sizeof(tmp_mid_price));
   if (raw_mid_price != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(6, this->_internal_mid_price(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        6, this->_internal_mid_price(), target);
   }
 
   // double delta = 7;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = this->_internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(7, this->_internal_delta(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        7, this->_internal_delta(), target);
   }
 
   // double gamma = 8;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = this->_internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(8, this->_internal_gamma(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        8, this->_internal_gamma(), target);
   }
 
   // double theta = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = this->_internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(9, this->_internal_theta(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        9, this->_internal_theta(), target);
   }
 
   // double vega = 10;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = this->_internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(10, this->_internal_vega(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        10, this->_internal_vega(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.BasePositionMsg)
   return target;
 }
 
-size_t BasePositionMsg::ByteSizeLong() const {
+::size_t BasePositionMsg::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.BasePositionMsg)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string symbol = 1;
   if (!this->_internal_symbol().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_symbol());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_symbol());
   }
 
   // double avg_cost = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_avg_cost = this->_internal_avg_cost();
-  uint64_t raw_avg_cost;
+  ::uint64_t raw_avg_cost;
   memcpy(&raw_avg_cost, &tmp_avg_cost, sizeof(tmp_avg_cost));
   if (raw_avg_cost != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double cost_value = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cost_value = this->_internal_cost_value();
-  uint64_t raw_cost_value;
+  ::uint64_t raw_cost_value;
   memcpy(&raw_cost_value, &tmp_cost_value, sizeof(tmp_cost_value));
   if (raw_cost_value != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double realized_pnl = 5;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_realized_pnl = this->_internal_realized_pnl();
-  uint64_t raw_realized_pnl;
+  ::uint64_t raw_realized_pnl;
   memcpy(&raw_realized_pnl, &tmp_realized_pnl, sizeof(tmp_realized_pnl));
   if (raw_realized_pnl != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double mid_price = 6;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_mid_price = this->_internal_mid_price();
-  uint64_t raw_mid_price;
+  ::uint64_t raw_mid_price;
   memcpy(&raw_mid_price, &tmp_mid_price, sizeof(tmp_mid_price));
   if (raw_mid_price != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double delta = 7;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = this->_internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double gamma = 8;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = this->_internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double theta = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = this->_internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double vega = 10;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = this->_internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // int32 quantity = 2;
   if (this->_internal_quantity() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_quantity());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_quantity());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData BasePositionMsg::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData BasePositionMsg::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     BasePositionMsg::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*BasePositionMsg::GetClassData() const { return &_class_data_; }
-
-void BasePositionMsg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<BasePositionMsg *>(to)->MergeFrom(
-      static_cast<const BasePositionMsg &>(from));
-}
+const ::google::protobuf::Message::ClassData*BasePositionMsg::GetClassData() const { return &_class_data_; }
 
 
-void BasePositionMsg::MergeFrom(const BasePositionMsg& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.BasePositionMsg)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void BasePositionMsg::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<BasePositionMsg*>(&to_msg);
+  auto& from = static_cast<const BasePositionMsg&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.BasePositionMsg)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_symbol().empty()) {
-    _internal_set_symbol(from._internal_symbol());
+    _this->_internal_set_symbol(from._internal_symbol());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_avg_cost = from._internal_avg_cost();
-  uint64_t raw_avg_cost;
+  ::uint64_t raw_avg_cost;
   memcpy(&raw_avg_cost, &tmp_avg_cost, sizeof(tmp_avg_cost));
   if (raw_avg_cost != 0) {
-    _internal_set_avg_cost(from._internal_avg_cost());
+    _this->_internal_set_avg_cost(from._internal_avg_cost());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cost_value = from._internal_cost_value();
-  uint64_t raw_cost_value;
+  ::uint64_t raw_cost_value;
   memcpy(&raw_cost_value, &tmp_cost_value, sizeof(tmp_cost_value));
   if (raw_cost_value != 0) {
-    _internal_set_cost_value(from._internal_cost_value());
+    _this->_internal_set_cost_value(from._internal_cost_value());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_realized_pnl = from._internal_realized_pnl();
-  uint64_t raw_realized_pnl;
+  ::uint64_t raw_realized_pnl;
   memcpy(&raw_realized_pnl, &tmp_realized_pnl, sizeof(tmp_realized_pnl));
   if (raw_realized_pnl != 0) {
-    _internal_set_realized_pnl(from._internal_realized_pnl());
+    _this->_internal_set_realized_pnl(from._internal_realized_pnl());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_mid_price = from._internal_mid_price();
-  uint64_t raw_mid_price;
+  ::uint64_t raw_mid_price;
   memcpy(&raw_mid_price, &tmp_mid_price, sizeof(tmp_mid_price));
   if (raw_mid_price != 0) {
-    _internal_set_mid_price(from._internal_mid_price());
+    _this->_internal_set_mid_price(from._internal_mid_price());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = from._internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
-    _internal_set_delta(from._internal_delta());
+    _this->_internal_set_delta(from._internal_delta());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = from._internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
-    _internal_set_gamma(from._internal_gamma());
+    _this->_internal_set_gamma(from._internal_gamma());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = from._internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
-    _internal_set_theta(from._internal_theta());
+    _this->_internal_set_theta(from._internal_theta());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = from._internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
-    _internal_set_vega(from._internal_vega());
+    _this->_internal_set_vega(from._internal_vega());
   }
   if (from._internal_quantity() != 0) {
-    _internal_set_quantity(from._internal_quantity());
+    _this->_internal_set_quantity(from._internal_quantity());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void BasePositionMsg::CopyFrom(const BasePositionMsg& from) {
@@ -6648,7 +6794,7 @@ void BasePositionMsg::CopyFrom(const BasePositionMsg& from) {
   MergeFrom(from);
 }
 
-bool BasePositionMsg::IsInitialized() const {
+PROTOBUF_NOINLINE bool BasePositionMsg::IsInitialized() const {
   return true;
 }
 
@@ -6657,569 +6803,587 @@ void BasePositionMsg::InternalSwap(BasePositionMsg* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &symbol_, lhs_arena,
-      &other->symbol_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(BasePositionMsg, quantity_)
-      + sizeof(BasePositionMsg::quantity_)
-      - PROTOBUF_FIELD_OFFSET(BasePositionMsg, avg_cost_)>(
-          reinterpret_cast<char*>(&avg_cost_),
-          reinterpret_cast<char*>(&other->avg_cost_));
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.symbol_, lhs_arena,
+                                       &other->_impl_.symbol_, rhs_arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.quantity_)
+      + sizeof(BasePositionMsg::_impl_.quantity_)
+      - PROTOBUF_FIELD_OFFSET(BasePositionMsg, _impl_.avg_cost_)>(
+          reinterpret_cast<char*>(&_impl_.avg_cost_),
+          reinterpret_cast<char*>(&other->_impl_.avg_cost_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata BasePositionMsg::GetMetadata() const {
+::google::protobuf::Metadata BasePositionMsg::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[21]);
 }
-
 // ===================================================================
 
 class OptionPositionMsg::_Internal {
  public:
 };
 
-OptionPositionMsg::OptionPositionMsg(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  legs_(arena) {
-  SharedCtor();
+OptionPositionMsg::OptionPositionMsg(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.OptionPositionMsg)
 }
-OptionPositionMsg::OptionPositionMsg(const OptionPositionMsg& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      legs_(from.legs_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  symbol_.InitDefault();
+OptionPositionMsg::OptionPositionMsg(const OptionPositionMsg& from) : ::google::protobuf::Message() {
+  OptionPositionMsg* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.legs_){from._impl_.legs_},
+      decltype(_impl_.symbol_){},
+      decltype(_impl_.combo_type_){},
+      decltype(_impl_.avg_cost_){},
+      decltype(_impl_.cost_value_){},
+      decltype(_impl_.realized_pnl_){},
+      decltype(_impl_.mid_price_){},
+      decltype(_impl_.delta_){},
+      decltype(_impl_.gamma_){},
+      decltype(_impl_.theta_){},
+      decltype(_impl_.vega_){},
+      decltype(_impl_.quantity_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.symbol_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    symbol_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.symbol_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_symbol().empty()) {
-    symbol_.Set(from._internal_symbol(), 
-      GetArenaForAllocation());
+    _this->_impl_.symbol_.Set(from._internal_symbol(), _this->GetArenaForAllocation());
   }
-  combo_type_.InitDefault();
+  _impl_.combo_type_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    combo_type_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.combo_type_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_combo_type().empty()) {
-    combo_type_.Set(from._internal_combo_type(), 
-      GetArenaForAllocation());
+    _this->_impl_.combo_type_.Set(from._internal_combo_type(), _this->GetArenaForAllocation());
   }
-  ::memcpy(&avg_cost_, &from.avg_cost_,
-    static_cast<size_t>(reinterpret_cast<char*>(&quantity_) -
-    reinterpret_cast<char*>(&avg_cost_)) + sizeof(quantity_));
+  ::memcpy(&_impl_.avg_cost_, &from._impl_.avg_cost_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.quantity_) -
+    reinterpret_cast<char*>(&_impl_.avg_cost_)) + sizeof(_impl_.quantity_));
+
   // @@protoc_insertion_point(copy_constructor:otrader.OptionPositionMsg)
 }
-
-inline void OptionPositionMsg::SharedCtor() {
-symbol_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  symbol_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-combo_type_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  combo_type_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&avg_cost_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&quantity_) -
-    reinterpret_cast<char*>(&avg_cost_)) + sizeof(quantity_));
+inline void OptionPositionMsg::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.legs_){arena},
+      decltype(_impl_.symbol_){},
+      decltype(_impl_.combo_type_){},
+      decltype(_impl_.avg_cost_){0},
+      decltype(_impl_.cost_value_){0},
+      decltype(_impl_.realized_pnl_){0},
+      decltype(_impl_.mid_price_){0},
+      decltype(_impl_.delta_){0},
+      decltype(_impl_.gamma_){0},
+      decltype(_impl_.theta_){0},
+      decltype(_impl_.vega_){0},
+      decltype(_impl_.quantity_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.symbol_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.symbol_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.combo_type_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.combo_type_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 OptionPositionMsg::~OptionPositionMsg() {
   // @@protoc_insertion_point(destructor:otrader.OptionPositionMsg)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void OptionPositionMsg::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  symbol_.Destroy();
-  combo_type_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.legs_.~RepeatedPtrField();
+  _impl_.symbol_.Destroy();
+  _impl_.combo_type_.Destroy();
 }
-
 void OptionPositionMsg::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void OptionPositionMsg::Clear() {
+PROTOBUF_NOINLINE void OptionPositionMsg::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.OptionPositionMsg)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  legs_.Clear();
-  symbol_.ClearToEmpty();
-  combo_type_.ClearToEmpty();
-  ::memset(&avg_cost_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&quantity_) -
-      reinterpret_cast<char*>(&avg_cost_)) + sizeof(quantity_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_mutable_legs()->Clear();
+  _impl_.symbol_.ClearToEmpty();
+  _impl_.combo_type_.ClearToEmpty();
+  ::memset(&_impl_.avg_cost_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.quantity_) -
+      reinterpret_cast<char*>(&_impl_.avg_cost_)) + sizeof(_impl_.quantity_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* OptionPositionMsg::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string symbol = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_symbol();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OptionPositionMsg.symbol"));
-        } else
-          goto handle_unusual;
-        continue;
-      // int32 quantity = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          quantity_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // double avg_cost = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
-          avg_cost_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double cost_value = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 33)) {
-          cost_value_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double realized_pnl = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 41)) {
-          realized_pnl_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double mid_price = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 49)) {
-          mid_price_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double delta = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 57)) {
-          delta_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double gamma = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 65)) {
-          gamma_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double theta = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 73)) {
-          theta_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double vega = 10;
-      case 10:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 81)) {
-          vega_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // string combo_type = 11;
-      case 11:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 90)) {
-          auto str = _internal_mutable_combo_type();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.OptionPositionMsg.combo_type"));
-        } else
-          goto handle_unusual;
-        continue;
-      // repeated .otrader.BasePositionMsg legs = 12;
-      case 12:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 98)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_legs(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<98>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* OptionPositionMsg::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* OptionPositionMsg::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<4, 12, 1, 58, 2> OptionPositionMsg::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    12, 120,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294963200,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    12,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_OptionPositionMsg_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string symbol = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.symbol_)}},
+    // int32 quantity = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OptionPositionMsg, _impl_.quantity_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.quantity_)}},
+    // double avg_cost = 3;
+    {::_pbi::TcParser::FastF64S1,
+     {25, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.avg_cost_)}},
+    // double cost_value = 4;
+    {::_pbi::TcParser::FastF64S1,
+     {33, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.cost_value_)}},
+    // double realized_pnl = 5;
+    {::_pbi::TcParser::FastF64S1,
+     {41, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.realized_pnl_)}},
+    // double mid_price = 6;
+    {::_pbi::TcParser::FastF64S1,
+     {49, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.mid_price_)}},
+    // double delta = 7;
+    {::_pbi::TcParser::FastF64S1,
+     {57, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.delta_)}},
+    // double gamma = 8;
+    {::_pbi::TcParser::FastF64S1,
+     {65, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.gamma_)}},
+    // double theta = 9;
+    {::_pbi::TcParser::FastF64S1,
+     {73, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.theta_)}},
+    // double vega = 10;
+    {::_pbi::TcParser::FastF64S1,
+     {81, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.vega_)}},
+    // string combo_type = 11;
+    {::_pbi::TcParser::FastUS1,
+     {90, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.combo_type_)}},
+    // repeated .otrader.BasePositionMsg legs = 12;
+    {::_pbi::TcParser::FastMtR1,
+     {98, 63, 0, PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.legs_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string symbol = 1;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.symbol_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // int32 quantity = 2;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.quantity_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // double avg_cost = 3;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.avg_cost_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double cost_value = 4;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.cost_value_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double realized_pnl = 5;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.realized_pnl_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double mid_price = 6;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.mid_price_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double delta = 7;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.delta_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double gamma = 8;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.gamma_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double theta = 9;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.theta_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double vega = 10;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.vega_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // string combo_type = 11;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.combo_type_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // repeated .otrader.BasePositionMsg legs = 12;
+    {PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.legs_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::otrader::BasePositionMsg>()},
+  }}, {{
+    "\31\6\0\0\0\0\0\0\0\0\0\12\0\0\0\0"
+    "otrader.OptionPositionMsg"
+    "symbol"
+    "combo_type"
+  }},
+};
+
+::uint8_t* OptionPositionMsg::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.OptionPositionMsg)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string symbol = 1;
   if (!this->_internal_symbol().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_symbol().data(), static_cast<int>(this->_internal_symbol().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OptionPositionMsg.symbol");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_symbol(), target);
+    const std::string& _s = this->_internal_symbol();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OptionPositionMsg.symbol");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // int32 quantity = 2;
   if (this->_internal_quantity() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_quantity(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<2>(
+            stream, this->_internal_quantity(), target);
   }
 
   // double avg_cost = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_avg_cost = this->_internal_avg_cost();
-  uint64_t raw_avg_cost;
+  ::uint64_t raw_avg_cost;
   memcpy(&raw_avg_cost, &tmp_avg_cost, sizeof(tmp_avg_cost));
   if (raw_avg_cost != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(3, this->_internal_avg_cost(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        3, this->_internal_avg_cost(), target);
   }
 
   // double cost_value = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cost_value = this->_internal_cost_value();
-  uint64_t raw_cost_value;
+  ::uint64_t raw_cost_value;
   memcpy(&raw_cost_value, &tmp_cost_value, sizeof(tmp_cost_value));
   if (raw_cost_value != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(4, this->_internal_cost_value(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        4, this->_internal_cost_value(), target);
   }
 
   // double realized_pnl = 5;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_realized_pnl = this->_internal_realized_pnl();
-  uint64_t raw_realized_pnl;
+  ::uint64_t raw_realized_pnl;
   memcpy(&raw_realized_pnl, &tmp_realized_pnl, sizeof(tmp_realized_pnl));
   if (raw_realized_pnl != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(5, this->_internal_realized_pnl(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        5, this->_internal_realized_pnl(), target);
   }
 
   // double mid_price = 6;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_mid_price = this->_internal_mid_price();
-  uint64_t raw_mid_price;
+  ::uint64_t raw_mid_price;
   memcpy(&raw_mid_price, &tmp_mid_price, sizeof(tmp_mid_price));
   if (raw_mid_price != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(6, this->_internal_mid_price(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        6, this->_internal_mid_price(), target);
   }
 
   // double delta = 7;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = this->_internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(7, this->_internal_delta(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        7, this->_internal_delta(), target);
   }
 
   // double gamma = 8;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = this->_internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(8, this->_internal_gamma(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        8, this->_internal_gamma(), target);
   }
 
   // double theta = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = this->_internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(9, this->_internal_theta(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        9, this->_internal_theta(), target);
   }
 
   // double vega = 10;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = this->_internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(10, this->_internal_vega(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        10, this->_internal_vega(), target);
   }
 
   // string combo_type = 11;
   if (!this->_internal_combo_type().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_combo_type().data(), static_cast<int>(this->_internal_combo_type().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.OptionPositionMsg.combo_type");
-    target = stream->WriteStringMaybeAliased(
-        11, this->_internal_combo_type(), target);
+    const std::string& _s = this->_internal_combo_type();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.OptionPositionMsg.combo_type");
+    target = stream->WriteStringMaybeAliased(11, _s, target);
   }
 
   // repeated .otrader.BasePositionMsg legs = 12;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_legs_size()); i < n; i++) {
-    const auto& repfield = this->_internal_legs(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+    const auto& repfield = this->_internal_legs().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
         InternalWriteMessage(12, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.OptionPositionMsg)
   return target;
 }
 
-size_t OptionPositionMsg::ByteSizeLong() const {
+::size_t OptionPositionMsg::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.OptionPositionMsg)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // repeated .otrader.BasePositionMsg legs = 12;
   total_size += 1UL * this->_internal_legs_size();
-  for (const auto& msg : this->legs_) {
+  for (const auto& msg : this->_internal_legs()) {
     total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
   }
-
   // string symbol = 1;
   if (!this->_internal_symbol().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_symbol());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_symbol());
   }
 
   // string combo_type = 11;
   if (!this->_internal_combo_type().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_combo_type());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_combo_type());
   }
 
   // double avg_cost = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_avg_cost = this->_internal_avg_cost();
-  uint64_t raw_avg_cost;
+  ::uint64_t raw_avg_cost;
   memcpy(&raw_avg_cost, &tmp_avg_cost, sizeof(tmp_avg_cost));
   if (raw_avg_cost != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double cost_value = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cost_value = this->_internal_cost_value();
-  uint64_t raw_cost_value;
+  ::uint64_t raw_cost_value;
   memcpy(&raw_cost_value, &tmp_cost_value, sizeof(tmp_cost_value));
   if (raw_cost_value != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double realized_pnl = 5;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_realized_pnl = this->_internal_realized_pnl();
-  uint64_t raw_realized_pnl;
+  ::uint64_t raw_realized_pnl;
   memcpy(&raw_realized_pnl, &tmp_realized_pnl, sizeof(tmp_realized_pnl));
   if (raw_realized_pnl != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double mid_price = 6;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_mid_price = this->_internal_mid_price();
-  uint64_t raw_mid_price;
+  ::uint64_t raw_mid_price;
   memcpy(&raw_mid_price, &tmp_mid_price, sizeof(tmp_mid_price));
   if (raw_mid_price != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double delta = 7;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = this->_internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double gamma = 8;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = this->_internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double theta = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = this->_internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double vega = 10;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = this->_internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // int32 quantity = 2;
   if (this->_internal_quantity() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_quantity());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_quantity());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData OptionPositionMsg::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData OptionPositionMsg::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     OptionPositionMsg::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*OptionPositionMsg::GetClassData() const { return &_class_data_; }
-
-void OptionPositionMsg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<OptionPositionMsg *>(to)->MergeFrom(
-      static_cast<const OptionPositionMsg &>(from));
-}
+const ::google::protobuf::Message::ClassData*OptionPositionMsg::GetClassData() const { return &_class_data_; }
 
 
-void OptionPositionMsg::MergeFrom(const OptionPositionMsg& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.OptionPositionMsg)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void OptionPositionMsg::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<OptionPositionMsg*>(&to_msg);
+  auto& from = static_cast<const OptionPositionMsg&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.OptionPositionMsg)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  legs_.MergeFrom(from.legs_);
+  _this->_internal_mutable_legs()->MergeFrom(from._internal_legs());
   if (!from._internal_symbol().empty()) {
-    _internal_set_symbol(from._internal_symbol());
+    _this->_internal_set_symbol(from._internal_symbol());
   }
   if (!from._internal_combo_type().empty()) {
-    _internal_set_combo_type(from._internal_combo_type());
+    _this->_internal_set_combo_type(from._internal_combo_type());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_avg_cost = from._internal_avg_cost();
-  uint64_t raw_avg_cost;
+  ::uint64_t raw_avg_cost;
   memcpy(&raw_avg_cost, &tmp_avg_cost, sizeof(tmp_avg_cost));
   if (raw_avg_cost != 0) {
-    _internal_set_avg_cost(from._internal_avg_cost());
+    _this->_internal_set_avg_cost(from._internal_avg_cost());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cost_value = from._internal_cost_value();
-  uint64_t raw_cost_value;
+  ::uint64_t raw_cost_value;
   memcpy(&raw_cost_value, &tmp_cost_value, sizeof(tmp_cost_value));
   if (raw_cost_value != 0) {
-    _internal_set_cost_value(from._internal_cost_value());
+    _this->_internal_set_cost_value(from._internal_cost_value());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_realized_pnl = from._internal_realized_pnl();
-  uint64_t raw_realized_pnl;
+  ::uint64_t raw_realized_pnl;
   memcpy(&raw_realized_pnl, &tmp_realized_pnl, sizeof(tmp_realized_pnl));
   if (raw_realized_pnl != 0) {
-    _internal_set_realized_pnl(from._internal_realized_pnl());
+    _this->_internal_set_realized_pnl(from._internal_realized_pnl());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_mid_price = from._internal_mid_price();
-  uint64_t raw_mid_price;
+  ::uint64_t raw_mid_price;
   memcpy(&raw_mid_price, &tmp_mid_price, sizeof(tmp_mid_price));
   if (raw_mid_price != 0) {
-    _internal_set_mid_price(from._internal_mid_price());
+    _this->_internal_set_mid_price(from._internal_mid_price());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = from._internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
-    _internal_set_delta(from._internal_delta());
+    _this->_internal_set_delta(from._internal_delta());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = from._internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
-    _internal_set_gamma(from._internal_gamma());
+    _this->_internal_set_gamma(from._internal_gamma());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = from._internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
-    _internal_set_theta(from._internal_theta());
+    _this->_internal_set_theta(from._internal_theta());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = from._internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
-    _internal_set_vega(from._internal_vega());
+    _this->_internal_set_vega(from._internal_vega());
   }
   if (from._internal_quantity() != 0) {
-    _internal_set_quantity(from._internal_quantity());
+    _this->_internal_set_quantity(from._internal_quantity());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void OptionPositionMsg::CopyFrom(const OptionPositionMsg& from) {
@@ -7229,7 +7393,7 @@ void OptionPositionMsg::CopyFrom(const OptionPositionMsg& from) {
   MergeFrom(from);
 }
 
-bool OptionPositionMsg::IsInitialized() const {
+PROTOBUF_NOINLINE bool OptionPositionMsg::IsInitialized() const {
   return true;
 }
 
@@ -7238,466 +7402,485 @@ void OptionPositionMsg::InternalSwap(OptionPositionMsg* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  legs_.InternalSwap(&other->legs_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &symbol_, lhs_arena,
-      &other->symbol_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &combo_type_, lhs_arena,
-      &other->combo_type_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(OptionPositionMsg, quantity_)
-      + sizeof(OptionPositionMsg::quantity_)
-      - PROTOBUF_FIELD_OFFSET(OptionPositionMsg, avg_cost_)>(
-          reinterpret_cast<char*>(&avg_cost_),
-          reinterpret_cast<char*>(&other->avg_cost_));
+  _impl_.legs_.InternalSwap(&other->_impl_.legs_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.symbol_, lhs_arena,
+                                       &other->_impl_.symbol_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.combo_type_, lhs_arena,
+                                       &other->_impl_.combo_type_, rhs_arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.quantity_)
+      + sizeof(OptionPositionMsg::_impl_.quantity_)
+      - PROTOBUF_FIELD_OFFSET(OptionPositionMsg, _impl_.avg_cost_)>(
+          reinterpret_cast<char*>(&_impl_.avg_cost_),
+          reinterpret_cast<char*>(&other->_impl_.avg_cost_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata OptionPositionMsg::GetMetadata() const {
+::google::protobuf::Metadata OptionPositionMsg::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[22]);
 }
-
 // ===================================================================
 
 class PortfolioSummaryMsg::_Internal {
  public:
 };
 
-PortfolioSummaryMsg::PortfolioSummaryMsg(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+PortfolioSummaryMsg::PortfolioSummaryMsg(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.PortfolioSummaryMsg)
 }
 PortfolioSummaryMsg::PortfolioSummaryMsg(const PortfolioSummaryMsg& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&total_cost_, &from.total_cost_,
-    static_cast<size_t>(reinterpret_cast<char*>(&vega_) -
-    reinterpret_cast<char*>(&total_cost_)) + sizeof(vega_));
+    : ::google::protobuf::Message(), _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:otrader.PortfolioSummaryMsg)
 }
-
-inline void PortfolioSummaryMsg::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&total_cost_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&vega_) -
-    reinterpret_cast<char*>(&total_cost_)) + sizeof(vega_));
+inline void PortfolioSummaryMsg::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.total_cost_){0},
+      decltype(_impl_.current_value_){0},
+      decltype(_impl_.unrealized_pnl_){0},
+      decltype(_impl_.realized_pnl_){0},
+      decltype(_impl_.pnl_){0},
+      decltype(_impl_.delta_){0},
+      decltype(_impl_.gamma_){0},
+      decltype(_impl_.theta_){0},
+      decltype(_impl_.vega_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
 }
-
 PortfolioSummaryMsg::~PortfolioSummaryMsg() {
   // @@protoc_insertion_point(destructor:otrader.PortfolioSummaryMsg)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void PortfolioSummaryMsg::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
 }
-
 void PortfolioSummaryMsg::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void PortfolioSummaryMsg::Clear() {
+PROTOBUF_NOINLINE void PortfolioSummaryMsg::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.PortfolioSummaryMsg)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&total_cost_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&vega_) -
-      reinterpret_cast<char*>(&total_cost_)) + sizeof(vega_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  ::memset(&_impl_.total_cost_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.vega_) -
+      reinterpret_cast<char*>(&_impl_.total_cost_)) + sizeof(_impl_.vega_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* PortfolioSummaryMsg::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // double total_cost = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 9)) {
-          total_cost_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double current_value = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 17)) {
-          current_value_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double unrealized_pnl = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
-          unrealized_pnl_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double realized_pnl = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 33)) {
-          realized_pnl_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double pnl = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 41)) {
-          pnl_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double delta = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 49)) {
-          delta_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double gamma = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 57)) {
-          gamma_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double theta = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 65)) {
-          theta_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double vega = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 73)) {
-          vega_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* PortfolioSummaryMsg::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* PortfolioSummaryMsg::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<4, 9, 0, 0, 2> PortfolioSummaryMsg::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    9, 120,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294966784,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    9,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_PortfolioSummaryMsg_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // double total_cost = 1;
+    {::_pbi::TcParser::FastF64S1,
+     {9, 63, 0, PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.total_cost_)}},
+    // double current_value = 2;
+    {::_pbi::TcParser::FastF64S1,
+     {17, 63, 0, PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.current_value_)}},
+    // double unrealized_pnl = 3;
+    {::_pbi::TcParser::FastF64S1,
+     {25, 63, 0, PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.unrealized_pnl_)}},
+    // double realized_pnl = 4;
+    {::_pbi::TcParser::FastF64S1,
+     {33, 63, 0, PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.realized_pnl_)}},
+    // double pnl = 5;
+    {::_pbi::TcParser::FastF64S1,
+     {41, 63, 0, PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.pnl_)}},
+    // double delta = 6;
+    {::_pbi::TcParser::FastF64S1,
+     {49, 63, 0, PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.delta_)}},
+    // double gamma = 7;
+    {::_pbi::TcParser::FastF64S1,
+     {57, 63, 0, PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.gamma_)}},
+    // double theta = 8;
+    {::_pbi::TcParser::FastF64S1,
+     {65, 63, 0, PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.theta_)}},
+    // double vega = 9;
+    {::_pbi::TcParser::FastF64S1,
+     {73, 63, 0, PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.vega_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // double total_cost = 1;
+    {PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.total_cost_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double current_value = 2;
+    {PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.current_value_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double unrealized_pnl = 3;
+    {PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.unrealized_pnl_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double realized_pnl = 4;
+    {PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.realized_pnl_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double pnl = 5;
+    {PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.pnl_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double delta = 6;
+    {PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.delta_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double gamma = 7;
+    {PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.gamma_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double theta = 8;
+    {PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.theta_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double vega = 9;
+    {PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.vega_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+::uint8_t* PortfolioSummaryMsg::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.PortfolioSummaryMsg)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // double total_cost = 1;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_total_cost = this->_internal_total_cost();
-  uint64_t raw_total_cost;
+  ::uint64_t raw_total_cost;
   memcpy(&raw_total_cost, &tmp_total_cost, sizeof(tmp_total_cost));
   if (raw_total_cost != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(1, this->_internal_total_cost(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        1, this->_internal_total_cost(), target);
   }
 
   // double current_value = 2;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_current_value = this->_internal_current_value();
-  uint64_t raw_current_value;
+  ::uint64_t raw_current_value;
   memcpy(&raw_current_value, &tmp_current_value, sizeof(tmp_current_value));
   if (raw_current_value != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(2, this->_internal_current_value(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        2, this->_internal_current_value(), target);
   }
 
   // double unrealized_pnl = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_unrealized_pnl = this->_internal_unrealized_pnl();
-  uint64_t raw_unrealized_pnl;
+  ::uint64_t raw_unrealized_pnl;
   memcpy(&raw_unrealized_pnl, &tmp_unrealized_pnl, sizeof(tmp_unrealized_pnl));
   if (raw_unrealized_pnl != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(3, this->_internal_unrealized_pnl(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        3, this->_internal_unrealized_pnl(), target);
   }
 
   // double realized_pnl = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_realized_pnl = this->_internal_realized_pnl();
-  uint64_t raw_realized_pnl;
+  ::uint64_t raw_realized_pnl;
   memcpy(&raw_realized_pnl, &tmp_realized_pnl, sizeof(tmp_realized_pnl));
   if (raw_realized_pnl != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(4, this->_internal_realized_pnl(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        4, this->_internal_realized_pnl(), target);
   }
 
   // double pnl = 5;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_pnl = this->_internal_pnl();
-  uint64_t raw_pnl;
+  ::uint64_t raw_pnl;
   memcpy(&raw_pnl, &tmp_pnl, sizeof(tmp_pnl));
   if (raw_pnl != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(5, this->_internal_pnl(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        5, this->_internal_pnl(), target);
   }
 
   // double delta = 6;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = this->_internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(6, this->_internal_delta(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        6, this->_internal_delta(), target);
   }
 
   // double gamma = 7;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = this->_internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(7, this->_internal_gamma(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        7, this->_internal_gamma(), target);
   }
 
   // double theta = 8;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = this->_internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(8, this->_internal_theta(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        8, this->_internal_theta(), target);
   }
 
   // double vega = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = this->_internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(9, this->_internal_vega(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        9, this->_internal_vega(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.PortfolioSummaryMsg)
   return target;
 }
 
-size_t PortfolioSummaryMsg::ByteSizeLong() const {
+::size_t PortfolioSummaryMsg::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.PortfolioSummaryMsg)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // double total_cost = 1;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_total_cost = this->_internal_total_cost();
-  uint64_t raw_total_cost;
+  ::uint64_t raw_total_cost;
   memcpy(&raw_total_cost, &tmp_total_cost, sizeof(tmp_total_cost));
   if (raw_total_cost != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double current_value = 2;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_current_value = this->_internal_current_value();
-  uint64_t raw_current_value;
+  ::uint64_t raw_current_value;
   memcpy(&raw_current_value, &tmp_current_value, sizeof(tmp_current_value));
   if (raw_current_value != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double unrealized_pnl = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_unrealized_pnl = this->_internal_unrealized_pnl();
-  uint64_t raw_unrealized_pnl;
+  ::uint64_t raw_unrealized_pnl;
   memcpy(&raw_unrealized_pnl, &tmp_unrealized_pnl, sizeof(tmp_unrealized_pnl));
   if (raw_unrealized_pnl != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double realized_pnl = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_realized_pnl = this->_internal_realized_pnl();
-  uint64_t raw_realized_pnl;
+  ::uint64_t raw_realized_pnl;
   memcpy(&raw_realized_pnl, &tmp_realized_pnl, sizeof(tmp_realized_pnl));
   if (raw_realized_pnl != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double pnl = 5;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_pnl = this->_internal_pnl();
-  uint64_t raw_pnl;
+  ::uint64_t raw_pnl;
   memcpy(&raw_pnl, &tmp_pnl, sizeof(tmp_pnl));
   if (raw_pnl != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double delta = 6;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = this->_internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double gamma = 7;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = this->_internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double theta = 8;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = this->_internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double vega = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = this->_internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PortfolioSummaryMsg::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData PortfolioSummaryMsg::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     PortfolioSummaryMsg::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PortfolioSummaryMsg::GetClassData() const { return &_class_data_; }
-
-void PortfolioSummaryMsg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<PortfolioSummaryMsg *>(to)->MergeFrom(
-      static_cast<const PortfolioSummaryMsg &>(from));
-}
+const ::google::protobuf::Message::ClassData*PortfolioSummaryMsg::GetClassData() const { return &_class_data_; }
 
 
-void PortfolioSummaryMsg::MergeFrom(const PortfolioSummaryMsg& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.PortfolioSummaryMsg)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void PortfolioSummaryMsg::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<PortfolioSummaryMsg*>(&to_msg);
+  auto& from = static_cast<const PortfolioSummaryMsg&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.PortfolioSummaryMsg)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_total_cost = from._internal_total_cost();
-  uint64_t raw_total_cost;
+  ::uint64_t raw_total_cost;
   memcpy(&raw_total_cost, &tmp_total_cost, sizeof(tmp_total_cost));
   if (raw_total_cost != 0) {
-    _internal_set_total_cost(from._internal_total_cost());
+    _this->_internal_set_total_cost(from._internal_total_cost());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_current_value = from._internal_current_value();
-  uint64_t raw_current_value;
+  ::uint64_t raw_current_value;
   memcpy(&raw_current_value, &tmp_current_value, sizeof(tmp_current_value));
   if (raw_current_value != 0) {
-    _internal_set_current_value(from._internal_current_value());
+    _this->_internal_set_current_value(from._internal_current_value());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_unrealized_pnl = from._internal_unrealized_pnl();
-  uint64_t raw_unrealized_pnl;
+  ::uint64_t raw_unrealized_pnl;
   memcpy(&raw_unrealized_pnl, &tmp_unrealized_pnl, sizeof(tmp_unrealized_pnl));
   if (raw_unrealized_pnl != 0) {
-    _internal_set_unrealized_pnl(from._internal_unrealized_pnl());
+    _this->_internal_set_unrealized_pnl(from._internal_unrealized_pnl());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_realized_pnl = from._internal_realized_pnl();
-  uint64_t raw_realized_pnl;
+  ::uint64_t raw_realized_pnl;
   memcpy(&raw_realized_pnl, &tmp_realized_pnl, sizeof(tmp_realized_pnl));
   if (raw_realized_pnl != 0) {
-    _internal_set_realized_pnl(from._internal_realized_pnl());
+    _this->_internal_set_realized_pnl(from._internal_realized_pnl());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_pnl = from._internal_pnl();
-  uint64_t raw_pnl;
+  ::uint64_t raw_pnl;
   memcpy(&raw_pnl, &tmp_pnl, sizeof(tmp_pnl));
   if (raw_pnl != 0) {
-    _internal_set_pnl(from._internal_pnl());
+    _this->_internal_set_pnl(from._internal_pnl());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = from._internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
-    _internal_set_delta(from._internal_delta());
+    _this->_internal_set_delta(from._internal_delta());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = from._internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
-    _internal_set_gamma(from._internal_gamma());
+    _this->_internal_set_gamma(from._internal_gamma());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = from._internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
-    _internal_set_theta(from._internal_theta());
+    _this->_internal_set_theta(from._internal_theta());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = from._internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
-    _internal_set_vega(from._internal_vega());
+    _this->_internal_set_vega(from._internal_vega());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void PortfolioSummaryMsg::CopyFrom(const PortfolioSummaryMsg& from) {
@@ -7707,307 +7890,305 @@ void PortfolioSummaryMsg::CopyFrom(const PortfolioSummaryMsg& from) {
   MergeFrom(from);
 }
 
-bool PortfolioSummaryMsg::IsInitialized() const {
+PROTOBUF_NOINLINE bool PortfolioSummaryMsg::IsInitialized() const {
   return true;
 }
 
 void PortfolioSummaryMsg::InternalSwap(PortfolioSummaryMsg* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, vega_)
-      + sizeof(PortfolioSummaryMsg::vega_)
-      - PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, total_cost_)>(
-          reinterpret_cast<char*>(&total_cost_),
-          reinterpret_cast<char*>(&other->total_cost_));
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.vega_)
+      + sizeof(PortfolioSummaryMsg::_impl_.vega_)
+      - PROTOBUF_FIELD_OFFSET(PortfolioSummaryMsg, _impl_.total_cost_)>(
+          reinterpret_cast<char*>(&_impl_.total_cost_),
+          reinterpret_cast<char*>(&other->_impl_.total_cost_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata PortfolioSummaryMsg::GetMetadata() const {
+::google::protobuf::Metadata PortfolioSummaryMsg::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[23]);
 }
-
 // ===================================================================
 
 StrategyHoldingMsg_OptionsEntry_DoNotUse::StrategyHoldingMsg_OptionsEntry_DoNotUse() {}
-StrategyHoldingMsg_OptionsEntry_DoNotUse::StrategyHoldingMsg_OptionsEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+StrategyHoldingMsg_OptionsEntry_DoNotUse::StrategyHoldingMsg_OptionsEntry_DoNotUse(::google::protobuf::Arena* arena)
     : SuperType(arena) {}
 void StrategyHoldingMsg_OptionsEntry_DoNotUse::MergeFrom(const StrategyHoldingMsg_OptionsEntry_DoNotUse& other) {
   MergeFromInternal(other);
 }
-::PROTOBUF_NAMESPACE_ID::Metadata StrategyHoldingMsg_OptionsEntry_DoNotUse::GetMetadata() const {
+::google::protobuf::Metadata StrategyHoldingMsg_OptionsEntry_DoNotUse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[24]);
 }
-
 // ===================================================================
 
 class StrategyHoldingMsg::_Internal {
  public:
+  using HasBits = decltype(std::declval<StrategyHoldingMsg>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(StrategyHoldingMsg, _impl_._has_bits_);
   static const ::otrader::BasePositionMsg& underlying(const StrategyHoldingMsg* msg);
+  static void set_has_underlying(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
   static const ::otrader::PortfolioSummaryMsg& summary(const StrategyHoldingMsg* msg);
+  static void set_has_summary(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
 };
 
-const ::otrader::BasePositionMsg&
-StrategyHoldingMsg::_Internal::underlying(const StrategyHoldingMsg* msg) {
-  return *msg->underlying_;
+const ::otrader::BasePositionMsg& StrategyHoldingMsg::_Internal::underlying(const StrategyHoldingMsg* msg) {
+  return *msg->_impl_.underlying_;
 }
-const ::otrader::PortfolioSummaryMsg&
-StrategyHoldingMsg::_Internal::summary(const StrategyHoldingMsg* msg) {
-  return *msg->summary_;
+const ::otrader::PortfolioSummaryMsg& StrategyHoldingMsg::_Internal::summary(const StrategyHoldingMsg* msg) {
+  return *msg->_impl_.summary_;
 }
-StrategyHoldingMsg::StrategyHoldingMsg(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  options_(arena) {
-  SharedCtor();
-  if (arena != nullptr && !is_message_owned) {
-    arena->OwnCustomDestructor(this, &StrategyHoldingMsg::ArenaDtor);
-  }
+StrategyHoldingMsg::StrategyHoldingMsg(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.StrategyHoldingMsg)
 }
-StrategyHoldingMsg::StrategyHoldingMsg(const StrategyHoldingMsg& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  options_.MergeFrom(from.options_);
-  if (from._internal_has_underlying()) {
-    underlying_ = new ::otrader::BasePositionMsg(*from.underlying_);
-  } else {
-    underlying_ = nullptr;
+StrategyHoldingMsg::StrategyHoldingMsg(const StrategyHoldingMsg& from) : ::google::protobuf::Message() {
+  StrategyHoldingMsg* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /* decltype(_impl_.options_) */ {},
+      decltype(_impl_.underlying_){nullptr},
+      decltype(_impl_.summary_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _this->_impl_.options_.MergeFrom(from._impl_.options_);
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.underlying_ = new ::otrader::BasePositionMsg(*from._impl_.underlying_);
   }
-  if (from._internal_has_summary()) {
-    summary_ = new ::otrader::PortfolioSummaryMsg(*from.summary_);
-  } else {
-    summary_ = nullptr;
+  if ((from._impl_._has_bits_[0] & 0x00000002u) != 0) {
+    _this->_impl_.summary_ = new ::otrader::PortfolioSummaryMsg(*from._impl_.summary_);
   }
+
   // @@protoc_insertion_point(copy_constructor:otrader.StrategyHoldingMsg)
 }
-
-inline void StrategyHoldingMsg::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&underlying_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&summary_) -
-    reinterpret_cast<char*>(&underlying_)) + sizeof(summary_));
+inline void StrategyHoldingMsg::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      /* decltype(_impl_.options_) */ {::google::protobuf::internal::ArenaInitialized(), arena},
+      decltype(_impl_.underlying_){nullptr},
+      decltype(_impl_.summary_){nullptr},
+  };
 }
-
 StrategyHoldingMsg::~StrategyHoldingMsg() {
   // @@protoc_insertion_point(destructor:otrader.StrategyHoldingMsg)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    ArenaDtor(this);
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void StrategyHoldingMsg::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  options_.Destruct();
-  if (this != internal_default_instance()) delete underlying_;
-  if (this != internal_default_instance()) delete summary_;
-}
-
-void StrategyHoldingMsg::ArenaDtor(void* object) {
-  StrategyHoldingMsg* _this = reinterpret_cast< StrategyHoldingMsg* >(object);
-  _this->options_.Destruct();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.options_.~MapField();
+  if (this != internal_default_instance()) delete _impl_.underlying_;
+  if (this != internal_default_instance()) delete _impl_.summary_;
 }
 void StrategyHoldingMsg::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void StrategyHoldingMsg::Clear() {
+PROTOBUF_NOINLINE void StrategyHoldingMsg::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.StrategyHoldingMsg)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  options_.Clear();
-  if (GetArenaForAllocation() == nullptr && underlying_ != nullptr) {
-    delete underlying_;
-  }
-  underlying_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && summary_ != nullptr) {
-    delete summary_;
-  }
-  summary_ = nullptr;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* StrategyHoldingMsg::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .otrader.BasePositionMsg underlying = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_underlying(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // map<string, .otrader.OptionPositionMsg> options = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(&options_, ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      // .otrader.PortfolioSummaryMsg summary = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          ptr = ctx->ParseMessage(_internal_mutable_summary(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
+  _impl_.options_.Clear();
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      ABSL_DCHECK(_impl_.underlying_ != nullptr);
+      _impl_.underlying_->Clear();
     }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
+    if (cached_has_bits & 0x00000002u) {
+      ABSL_DCHECK(_impl_.summary_ != nullptr);
+      _impl_.summary_->Clear();
+    }
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-uint8_t* StrategyHoldingMsg::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:otrader.StrategyHoldingMsg)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+const char* StrategyHoldingMsg::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
 
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 3, 4, 42, 2> StrategyHoldingMsg::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(StrategyHoldingMsg, _impl_._has_bits_),
+    0, // no _extensions_
+    4, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967284,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    4,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_StrategyHoldingMsg_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .otrader.PortfolioSummaryMsg summary = 4;
+    {::_pbi::TcParser::FastMtS1,
+     {34, 1, 3, PROTOBUF_FIELD_OFFSET(StrategyHoldingMsg, _impl_.summary_)}},
+    // .otrader.BasePositionMsg underlying = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(StrategyHoldingMsg, _impl_.underlying_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .otrader.BasePositionMsg underlying = 1;
+    {PROTOBUF_FIELD_OFFSET(StrategyHoldingMsg, _impl_.underlying_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // map<string, .otrader.OptionPositionMsg> options = 2;
+    {PROTOBUF_FIELD_OFFSET(StrategyHoldingMsg, _impl_.options_), -1, 1,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMap)},
+    // .otrader.PortfolioSummaryMsg summary = 4;
+    {PROTOBUF_FIELD_OFFSET(StrategyHoldingMsg, _impl_.summary_), _Internal::kHasBitsOffset + 1, 3,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::otrader::BasePositionMsg>()},
+    {::_pbi::TcParser::GetMapAuxInfo<decltype(StrategyHoldingMsg()._impl_.options_)>(1, 0, 0)},
+    {::_pbi::TcParser::CreateInArenaStorageCb<::otrader::OptionPositionMsg>},
+    {::_pbi::TcParser::GetTable<::otrader::PortfolioSummaryMsg>()},
+  }}, {{
+    "\32\0\7\0\0\0\0\0"
+    "otrader.StrategyHoldingMsg"
+    "options"
+  }},
+};
+
+::uint8_t* StrategyHoldingMsg::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:otrader.StrategyHoldingMsg)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
   // .otrader.BasePositionMsg underlying = 1;
-  if (this->_internal_has_underlying()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::underlying(this),
         _Internal::underlying(this).GetCachedSize(), target, stream);
   }
 
   // map<string, .otrader.OptionPositionMsg> options = 2;
-  if (!this->_internal_options().empty()) {
-    using MapType = ::_pb::Map<std::string, ::otrader::OptionPositionMsg>;
+  if (!_internal_options().empty()) {
+    using MapType = ::google::protobuf::Map<std::string, ::otrader::OptionPositionMsg>;
     using WireHelper = StrategyHoldingMsg_OptionsEntry_DoNotUse::Funcs;
-    const auto& map_field = this->_internal_options();
-    auto check_utf8 = [](const MapType::value_type& entry) {
-      (void)entry;
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-        entry.first.data(), static_cast<int>(entry.first.length()),
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-        "otrader.StrategyHoldingMsg.OptionsEntry.key");
-    };
+    const auto& field = _internal_options();
 
-    if (stream->IsSerializationDeterministic() && map_field.size() > 1) {
-      for (const auto& entry : ::_pbi::MapSorterPtr<MapType>(map_field)) {
-        target = WireHelper::InternalSerialize(2, entry.first, entry.second, target, stream);
-        check_utf8(entry);
+    if (stream->IsSerializationDeterministic() && field.size() > 1) {
+      for (const auto& entry : ::google::protobuf::internal::MapSorterPtr<MapType>(field)) {
+        target = WireHelper::InternalSerialize(
+            2, entry.first, entry.second, target, stream);
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            entry.first.data(), static_cast<int>(entry.first.length()),
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyHoldingMsg.options");
       }
     } else {
-      for (const auto& entry : map_field) {
-        target = WireHelper::InternalSerialize(2, entry.first, entry.second, target, stream);
-        check_utf8(entry);
+      for (const auto& entry : field) {
+        target = WireHelper::InternalSerialize(
+            2, entry.first, entry.second, target, stream);
+        ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            entry.first.data(), static_cast<int>(entry.first.length()),
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyHoldingMsg.options");
       }
     }
   }
 
   // .otrader.PortfolioSummaryMsg summary = 4;
-  if (this->_internal_has_summary()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000002u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(4, _Internal::summary(this),
         _Internal::summary(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.StrategyHoldingMsg)
   return target;
 }
 
-size_t StrategyHoldingMsg::ByteSizeLong() const {
+::size_t StrategyHoldingMsg::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.StrategyHoldingMsg)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // map<string, .otrader.OptionPositionMsg> options = 2;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(this->_internal_options_size());
-  for (::PROTOBUF_NAMESPACE_ID::Map< std::string, ::otrader::OptionPositionMsg >::const_iterator
-      it = this->_internal_options().begin();
-      it != this->_internal_options().end(); ++it) {
-    total_size += StrategyHoldingMsg_OptionsEntry_DoNotUse::Funcs::ByteSizeLong(it->first, it->second);
+  total_size += 1 * ::google::protobuf::internal::FromIntSize(_internal_options_size());
+  for (const auto& entry : _internal_options()) {
+    total_size += StrategyHoldingMsg_OptionsEntry_DoNotUse::Funcs::ByteSizeLong(entry.first, entry.second);
   }
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    // .otrader.BasePositionMsg underlying = 1;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          *_impl_.underlying_);
+    }
 
-  // .otrader.BasePositionMsg underlying = 1;
-  if (this->_internal_has_underlying()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *underlying_);
+    // .otrader.PortfolioSummaryMsg summary = 4;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          *_impl_.summary_);
+    }
+
   }
-
-  // .otrader.PortfolioSummaryMsg summary = 4;
-  if (this->_internal_has_summary()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *summary_);
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StrategyHoldingMsg::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData StrategyHoldingMsg::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     StrategyHoldingMsg::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StrategyHoldingMsg::GetClassData() const { return &_class_data_; }
-
-void StrategyHoldingMsg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<StrategyHoldingMsg *>(to)->MergeFrom(
-      static_cast<const StrategyHoldingMsg &>(from));
-}
+const ::google::protobuf::Message::ClassData*StrategyHoldingMsg::GetClassData() const { return &_class_data_; }
 
 
-void StrategyHoldingMsg::MergeFrom(const StrategyHoldingMsg& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategyHoldingMsg)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void StrategyHoldingMsg::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<StrategyHoldingMsg*>(&to_msg);
+  auto& from = static_cast<const StrategyHoldingMsg&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategyHoldingMsg)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  options_.MergeFrom(from.options_);
-  if (from._internal_has_underlying()) {
-    _internal_mutable_underlying()->::otrader::BasePositionMsg::MergeFrom(from._internal_underlying());
+  _this->_impl_.options_.MergeFrom(from._impl_.options_);
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _this->_internal_mutable_underlying()->::otrader::BasePositionMsg::MergeFrom(
+          from._internal_underlying());
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _this->_internal_mutable_summary()->::otrader::PortfolioSummaryMsg::MergeFrom(
+          from._internal_summary());
+    }
   }
-  if (from._internal_has_summary()) {
-    _internal_mutable_summary()->::otrader::PortfolioSummaryMsg::MergeFrom(from._internal_summary());
-  }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void StrategyHoldingMsg::CopyFrom(const StrategyHoldingMsg& from) {
@@ -8017,525 +8198,514 @@ void StrategyHoldingMsg::CopyFrom(const StrategyHoldingMsg& from) {
   MergeFrom(from);
 }
 
-bool StrategyHoldingMsg::IsInitialized() const {
+PROTOBUF_NOINLINE bool StrategyHoldingMsg::IsInitialized() const {
   return true;
 }
 
 void StrategyHoldingMsg::InternalSwap(StrategyHoldingMsg* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  options_.InternalSwap(&other->options_);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(StrategyHoldingMsg, summary_)
-      + sizeof(StrategyHoldingMsg::summary_)
-      - PROTOBUF_FIELD_OFFSET(StrategyHoldingMsg, underlying_)>(
-          reinterpret_cast<char*>(&underlying_),
-          reinterpret_cast<char*>(&other->underlying_));
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  _impl_.options_.InternalSwap(&other->_impl_.options_);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(StrategyHoldingMsg, _impl_.summary_)
+      + sizeof(StrategyHoldingMsg::_impl_.summary_)
+      - PROTOBUF_FIELD_OFFSET(StrategyHoldingMsg, _impl_.underlying_)>(
+          reinterpret_cast<char*>(&_impl_.underlying_),
+          reinterpret_cast<char*>(&other->_impl_.underlying_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata StrategyHoldingMsg::GetMetadata() const {
+::google::protobuf::Metadata StrategyHoldingMsg::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[25]);
 }
-
 // ===================================================================
 
 class StrategyConfig::_Internal {
  public:
 };
 
-StrategyConfig::StrategyConfig(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+StrategyConfig::StrategyConfig(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.StrategyConfig)
 }
-StrategyConfig::StrategyConfig(const StrategyConfig& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  parquet_path_.InitDefault();
+StrategyConfig::StrategyConfig(const StrategyConfig& from) : ::google::protobuf::Message() {
+  StrategyConfig* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.parquet_path_){},
+      decltype(_impl_.strategy_name_){},
+      decltype(_impl_.iv_price_mode_){},
+      decltype(_impl_.strategy_setting_){},
+      decltype(_impl_.start_date_){},
+      decltype(_impl_.end_date_){},
+      decltype(_impl_.fee_rate_){},
+      decltype(_impl_.slippage_bps_){},
+      decltype(_impl_.risk_free_rate_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.parquet_path_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    parquet_path_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.parquet_path_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_parquet_path().empty()) {
-    parquet_path_.Set(from._internal_parquet_path(), 
-      GetArenaForAllocation());
+    _this->_impl_.parquet_path_.Set(from._internal_parquet_path(), _this->GetArenaForAllocation());
   }
-  strategy_name_.InitDefault();
+  _impl_.strategy_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    strategy_name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_strategy_name().empty()) {
-    strategy_name_.Set(from._internal_strategy_name(), 
-      GetArenaForAllocation());
+    _this->_impl_.strategy_name_.Set(from._internal_strategy_name(), _this->GetArenaForAllocation());
   }
-  iv_price_mode_.InitDefault();
+  _impl_.iv_price_mode_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    iv_price_mode_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.iv_price_mode_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_iv_price_mode().empty()) {
-    iv_price_mode_.Set(from._internal_iv_price_mode(), 
-      GetArenaForAllocation());
+    _this->_impl_.iv_price_mode_.Set(from._internal_iv_price_mode(), _this->GetArenaForAllocation());
   }
-  strategy_setting_.InitDefault();
+  _impl_.strategy_setting_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    strategy_setting_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_setting_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_strategy_setting().empty()) {
-    strategy_setting_.Set(from._internal_strategy_setting(), 
-      GetArenaForAllocation());
+    _this->_impl_.strategy_setting_.Set(from._internal_strategy_setting(), _this->GetArenaForAllocation());
   }
-  start_date_.InitDefault();
+  _impl_.start_date_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    start_date_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.start_date_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_start_date().empty()) {
-    start_date_.Set(from._internal_start_date(), 
-      GetArenaForAllocation());
+    _this->_impl_.start_date_.Set(from._internal_start_date(), _this->GetArenaForAllocation());
   }
-  end_date_.InitDefault();
+  _impl_.end_date_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    end_date_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.end_date_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_end_date().empty()) {
-    end_date_.Set(from._internal_end_date(), 
-      GetArenaForAllocation());
+    _this->_impl_.end_date_.Set(from._internal_end_date(), _this->GetArenaForAllocation());
   }
-  ::memcpy(&fee_rate_, &from.fee_rate_,
-    static_cast<size_t>(reinterpret_cast<char*>(&risk_free_rate_) -
-    reinterpret_cast<char*>(&fee_rate_)) + sizeof(risk_free_rate_));
+  ::memcpy(&_impl_.fee_rate_, &from._impl_.fee_rate_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.risk_free_rate_) -
+    reinterpret_cast<char*>(&_impl_.fee_rate_)) + sizeof(_impl_.risk_free_rate_));
+
   // @@protoc_insertion_point(copy_constructor:otrader.StrategyConfig)
 }
-
-inline void StrategyConfig::SharedCtor() {
-parquet_path_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  parquet_path_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-strategy_name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  strategy_name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-iv_price_mode_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  iv_price_mode_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-strategy_setting_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  strategy_setting_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-start_date_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  start_date_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-end_date_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  end_date_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&fee_rate_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&risk_free_rate_) -
-    reinterpret_cast<char*>(&fee_rate_)) + sizeof(risk_free_rate_));
+inline void StrategyConfig::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.parquet_path_){},
+      decltype(_impl_.strategy_name_){},
+      decltype(_impl_.iv_price_mode_){},
+      decltype(_impl_.strategy_setting_){},
+      decltype(_impl_.start_date_){},
+      decltype(_impl_.end_date_){},
+      decltype(_impl_.fee_rate_){0},
+      decltype(_impl_.slippage_bps_){0},
+      decltype(_impl_.risk_free_rate_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.parquet_path_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.parquet_path_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.strategy_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.iv_price_mode_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.iv_price_mode_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.strategy_setting_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.strategy_setting_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.start_date_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.start_date_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.end_date_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.end_date_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 StrategyConfig::~StrategyConfig() {
   // @@protoc_insertion_point(destructor:otrader.StrategyConfig)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void StrategyConfig::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  parquet_path_.Destroy();
-  strategy_name_.Destroy();
-  iv_price_mode_.Destroy();
-  strategy_setting_.Destroy();
-  start_date_.Destroy();
-  end_date_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.parquet_path_.Destroy();
+  _impl_.strategy_name_.Destroy();
+  _impl_.iv_price_mode_.Destroy();
+  _impl_.strategy_setting_.Destroy();
+  _impl_.start_date_.Destroy();
+  _impl_.end_date_.Destroy();
 }
-
 void StrategyConfig::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void StrategyConfig::Clear() {
+PROTOBUF_NOINLINE void StrategyConfig::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.StrategyConfig)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  parquet_path_.ClearToEmpty();
-  strategy_name_.ClearToEmpty();
-  iv_price_mode_.ClearToEmpty();
-  strategy_setting_.ClearToEmpty();
-  start_date_.ClearToEmpty();
-  end_date_.ClearToEmpty();
-  ::memset(&fee_rate_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&risk_free_rate_) -
-      reinterpret_cast<char*>(&fee_rate_)) + sizeof(risk_free_rate_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.parquet_path_.ClearToEmpty();
+  _impl_.strategy_name_.ClearToEmpty();
+  _impl_.iv_price_mode_.ClearToEmpty();
+  _impl_.strategy_setting_.ClearToEmpty();
+  _impl_.start_date_.ClearToEmpty();
+  _impl_.end_date_.ClearToEmpty();
+  ::memset(&_impl_.fee_rate_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.risk_free_rate_) -
+      reinterpret_cast<char*>(&_impl_.fee_rate_)) + sizeof(_impl_.risk_free_rate_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* StrategyConfig::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string parquet_path = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_parquet_path();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategyConfig.parquet_path"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string strategy_name = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_strategy_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategyConfig.strategy_name"));
-        } else
-          goto handle_unusual;
-        continue;
-      // double fee_rate = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
-          fee_rate_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double slippage_bps = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 33)) {
-          slippage_bps_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double risk_free_rate = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 41)) {
-          risk_free_rate_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // string iv_price_mode = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
-          auto str = _internal_mutable_iv_price_mode();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategyConfig.iv_price_mode"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string strategy_setting = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
-          auto str = _internal_mutable_strategy_setting();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategyConfig.strategy_setting"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string start_date = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 66)) {
-          auto str = _internal_mutable_start_date();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategyConfig.start_date"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string end_date = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 74)) {
-          auto str = _internal_mutable_end_date();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StrategyConfig.end_date"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* StrategyConfig::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* StrategyConfig::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<4, 9, 0, 111, 2> StrategyConfig::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    9, 120,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294966784,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    9,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_StrategyConfig_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string parquet_path = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.parquet_path_)}},
+    // string strategy_name = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.strategy_name_)}},
+    // double fee_rate = 3;
+    {::_pbi::TcParser::FastF64S1,
+     {25, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.fee_rate_)}},
+    // double slippage_bps = 4;
+    {::_pbi::TcParser::FastF64S1,
+     {33, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.slippage_bps_)}},
+    // double risk_free_rate = 5;
+    {::_pbi::TcParser::FastF64S1,
+     {41, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.risk_free_rate_)}},
+    // string iv_price_mode = 6;
+    {::_pbi::TcParser::FastUS1,
+     {50, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.iv_price_mode_)}},
+    // string strategy_setting = 7;
+    {::_pbi::TcParser::FastUS1,
+     {58, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.strategy_setting_)}},
+    // string start_date = 8;
+    {::_pbi::TcParser::FastUS1,
+     {66, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.start_date_)}},
+    // string end_date = 9;
+    {::_pbi::TcParser::FastUS1,
+     {74, 63, 0, PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.end_date_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string parquet_path = 1;
+    {PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.parquet_path_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string strategy_name = 2;
+    {PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.strategy_name_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // double fee_rate = 3;
+    {PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.fee_rate_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double slippage_bps = 4;
+    {PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.slippage_bps_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double risk_free_rate = 5;
+    {PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.risk_free_rate_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // string iv_price_mode = 6;
+    {PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.iv_price_mode_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string strategy_setting = 7;
+    {PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.strategy_setting_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string start_date = 8;
+    {PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.start_date_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string end_date = 9;
+    {PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.end_date_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\26\14\15\0\0\0\15\20\12\10\0\0\0\0\0\0"
+    "otrader.StrategyConfig"
+    "parquet_path"
+    "strategy_name"
+    "iv_price_mode"
+    "strategy_setting"
+    "start_date"
+    "end_date"
+  }},
+};
+
+::uint8_t* StrategyConfig::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.StrategyConfig)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string parquet_path = 1;
   if (!this->_internal_parquet_path().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_parquet_path().data(), static_cast<int>(this->_internal_parquet_path().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategyConfig.parquet_path");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_parquet_path(), target);
+    const std::string& _s = this->_internal_parquet_path();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyConfig.parquet_path");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // string strategy_name = 2;
   if (!this->_internal_strategy_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_strategy_name().data(), static_cast<int>(this->_internal_strategy_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategyConfig.strategy_name");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_strategy_name(), target);
+    const std::string& _s = this->_internal_strategy_name();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyConfig.strategy_name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // double fee_rate = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_fee_rate = this->_internal_fee_rate();
-  uint64_t raw_fee_rate;
+  ::uint64_t raw_fee_rate;
   memcpy(&raw_fee_rate, &tmp_fee_rate, sizeof(tmp_fee_rate));
   if (raw_fee_rate != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(3, this->_internal_fee_rate(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        3, this->_internal_fee_rate(), target);
   }
 
   // double slippage_bps = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_slippage_bps = this->_internal_slippage_bps();
-  uint64_t raw_slippage_bps;
+  ::uint64_t raw_slippage_bps;
   memcpy(&raw_slippage_bps, &tmp_slippage_bps, sizeof(tmp_slippage_bps));
   if (raw_slippage_bps != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(4, this->_internal_slippage_bps(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        4, this->_internal_slippage_bps(), target);
   }
 
   // double risk_free_rate = 5;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_risk_free_rate = this->_internal_risk_free_rate();
-  uint64_t raw_risk_free_rate;
+  ::uint64_t raw_risk_free_rate;
   memcpy(&raw_risk_free_rate, &tmp_risk_free_rate, sizeof(tmp_risk_free_rate));
   if (raw_risk_free_rate != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(5, this->_internal_risk_free_rate(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        5, this->_internal_risk_free_rate(), target);
   }
 
   // string iv_price_mode = 6;
   if (!this->_internal_iv_price_mode().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_iv_price_mode().data(), static_cast<int>(this->_internal_iv_price_mode().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategyConfig.iv_price_mode");
-    target = stream->WriteStringMaybeAliased(
-        6, this->_internal_iv_price_mode(), target);
+    const std::string& _s = this->_internal_iv_price_mode();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyConfig.iv_price_mode");
+    target = stream->WriteStringMaybeAliased(6, _s, target);
   }
 
   // string strategy_setting = 7;
   if (!this->_internal_strategy_setting().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_strategy_setting().data(), static_cast<int>(this->_internal_strategy_setting().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategyConfig.strategy_setting");
-    target = stream->WriteStringMaybeAliased(
-        7, this->_internal_strategy_setting(), target);
+    const std::string& _s = this->_internal_strategy_setting();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyConfig.strategy_setting");
+    target = stream->WriteStringMaybeAliased(7, _s, target);
   }
 
   // string start_date = 8;
   if (!this->_internal_start_date().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_start_date().data(), static_cast<int>(this->_internal_start_date().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategyConfig.start_date");
-    target = stream->WriteStringMaybeAliased(
-        8, this->_internal_start_date(), target);
+    const std::string& _s = this->_internal_start_date();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyConfig.start_date");
+    target = stream->WriteStringMaybeAliased(8, _s, target);
   }
 
   // string end_date = 9;
   if (!this->_internal_end_date().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_end_date().data(), static_cast<int>(this->_internal_end_date().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StrategyConfig.end_date");
-    target = stream->WriteStringMaybeAliased(
-        9, this->_internal_end_date(), target);
+    const std::string& _s = this->_internal_end_date();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StrategyConfig.end_date");
+    target = stream->WriteStringMaybeAliased(9, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.StrategyConfig)
   return target;
 }
 
-size_t StrategyConfig::ByteSizeLong() const {
+::size_t StrategyConfig::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.StrategyConfig)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string parquet_path = 1;
   if (!this->_internal_parquet_path().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_parquet_path());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_parquet_path());
   }
 
   // string strategy_name = 2;
   if (!this->_internal_strategy_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_strategy_name());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_strategy_name());
   }
 
   // string iv_price_mode = 6;
   if (!this->_internal_iv_price_mode().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_iv_price_mode());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_iv_price_mode());
   }
 
   // string strategy_setting = 7;
   if (!this->_internal_strategy_setting().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_strategy_setting());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_strategy_setting());
   }
 
   // string start_date = 8;
   if (!this->_internal_start_date().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_start_date());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_start_date());
   }
 
   // string end_date = 9;
   if (!this->_internal_end_date().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_end_date());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_end_date());
   }
 
   // double fee_rate = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_fee_rate = this->_internal_fee_rate();
-  uint64_t raw_fee_rate;
+  ::uint64_t raw_fee_rate;
   memcpy(&raw_fee_rate, &tmp_fee_rate, sizeof(tmp_fee_rate));
   if (raw_fee_rate != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double slippage_bps = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_slippage_bps = this->_internal_slippage_bps();
-  uint64_t raw_slippage_bps;
+  ::uint64_t raw_slippage_bps;
   memcpy(&raw_slippage_bps, &tmp_slippage_bps, sizeof(tmp_slippage_bps));
   if (raw_slippage_bps != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double risk_free_rate = 5;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_risk_free_rate = this->_internal_risk_free_rate();
-  uint64_t raw_risk_free_rate;
+  ::uint64_t raw_risk_free_rate;
   memcpy(&raw_risk_free_rate, &tmp_risk_free_rate, sizeof(tmp_risk_free_rate));
   if (raw_risk_free_rate != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StrategyConfig::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData StrategyConfig::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     StrategyConfig::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StrategyConfig::GetClassData() const { return &_class_data_; }
-
-void StrategyConfig::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<StrategyConfig *>(to)->MergeFrom(
-      static_cast<const StrategyConfig &>(from));
-}
+const ::google::protobuf::Message::ClassData*StrategyConfig::GetClassData() const { return &_class_data_; }
 
 
-void StrategyConfig::MergeFrom(const StrategyConfig& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategyConfig)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void StrategyConfig::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<StrategyConfig*>(&to_msg);
+  auto& from = static_cast<const StrategyConfig&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.StrategyConfig)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_parquet_path().empty()) {
-    _internal_set_parquet_path(from._internal_parquet_path());
+    _this->_internal_set_parquet_path(from._internal_parquet_path());
   }
   if (!from._internal_strategy_name().empty()) {
-    _internal_set_strategy_name(from._internal_strategy_name());
+    _this->_internal_set_strategy_name(from._internal_strategy_name());
   }
   if (!from._internal_iv_price_mode().empty()) {
-    _internal_set_iv_price_mode(from._internal_iv_price_mode());
+    _this->_internal_set_iv_price_mode(from._internal_iv_price_mode());
   }
   if (!from._internal_strategy_setting().empty()) {
-    _internal_set_strategy_setting(from._internal_strategy_setting());
+    _this->_internal_set_strategy_setting(from._internal_strategy_setting());
   }
   if (!from._internal_start_date().empty()) {
-    _internal_set_start_date(from._internal_start_date());
+    _this->_internal_set_start_date(from._internal_start_date());
   }
   if (!from._internal_end_date().empty()) {
-    _internal_set_end_date(from._internal_end_date());
+    _this->_internal_set_end_date(from._internal_end_date());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_fee_rate = from._internal_fee_rate();
-  uint64_t raw_fee_rate;
+  ::uint64_t raw_fee_rate;
   memcpy(&raw_fee_rate, &tmp_fee_rate, sizeof(tmp_fee_rate));
   if (raw_fee_rate != 0) {
-    _internal_set_fee_rate(from._internal_fee_rate());
+    _this->_internal_set_fee_rate(from._internal_fee_rate());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_slippage_bps = from._internal_slippage_bps();
-  uint64_t raw_slippage_bps;
+  ::uint64_t raw_slippage_bps;
   memcpy(&raw_slippage_bps, &tmp_slippage_bps, sizeof(tmp_slippage_bps));
   if (raw_slippage_bps != 0) {
-    _internal_set_slippage_bps(from._internal_slippage_bps());
+    _this->_internal_set_slippage_bps(from._internal_slippage_bps());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_risk_free_rate = from._internal_risk_free_rate();
-  uint64_t raw_risk_free_rate;
+  ::uint64_t raw_risk_free_rate;
   memcpy(&raw_risk_free_rate, &tmp_risk_free_rate, sizeof(tmp_risk_free_rate));
   if (raw_risk_free_rate != 0) {
-    _internal_set_risk_free_rate(from._internal_risk_free_rate());
+    _this->_internal_set_risk_free_rate(from._internal_risk_free_rate());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void StrategyConfig::CopyFrom(const StrategyConfig& from) {
@@ -8545,7 +8715,7 @@ void StrategyConfig::CopyFrom(const StrategyConfig& from) {
   MergeFrom(from);
 }
 
-bool StrategyConfig::IsInitialized() const {
+PROTOBUF_NOINLINE bool StrategyConfig::IsInitialized() const {
   return true;
 }
 
@@ -8554,331 +8724,310 @@ void StrategyConfig::InternalSwap(StrategyConfig* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &parquet_path_, lhs_arena,
-      &other->parquet_path_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &strategy_name_, lhs_arena,
-      &other->strategy_name_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &iv_price_mode_, lhs_arena,
-      &other->iv_price_mode_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &strategy_setting_, lhs_arena,
-      &other->strategy_setting_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &start_date_, lhs_arena,
-      &other->start_date_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &end_date_, lhs_arena,
-      &other->end_date_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(StrategyConfig, risk_free_rate_)
-      + sizeof(StrategyConfig::risk_free_rate_)
-      - PROTOBUF_FIELD_OFFSET(StrategyConfig, fee_rate_)>(
-          reinterpret_cast<char*>(&fee_rate_),
-          reinterpret_cast<char*>(&other->fee_rate_));
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.parquet_path_, lhs_arena,
+                                       &other->_impl_.parquet_path_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.strategy_name_, lhs_arena,
+                                       &other->_impl_.strategy_name_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.iv_price_mode_, lhs_arena,
+                                       &other->_impl_.iv_price_mode_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.strategy_setting_, lhs_arena,
+                                       &other->_impl_.strategy_setting_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.start_date_, lhs_arena,
+                                       &other->_impl_.start_date_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.end_date_, lhs_arena,
+                                       &other->_impl_.end_date_, rhs_arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.risk_free_rate_)
+      + sizeof(StrategyConfig::_impl_.risk_free_rate_)
+      - PROTOBUF_FIELD_OFFSET(StrategyConfig, _impl_.fee_rate_)>(
+          reinterpret_cast<char*>(&_impl_.fee_rate_),
+          reinterpret_cast<char*>(&other->_impl_.fee_rate_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata StrategyConfig::GetMetadata() const {
+::google::protobuf::Metadata StrategyConfig::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[26]);
 }
-
 // ===================================================================
 
 class StreamRequest::_Internal {
  public:
+  using HasBits = decltype(std::declval<StreamRequest>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(StreamRequest, _impl_._has_bits_);
   static const ::otrader::StrategyConfig& strategy(const StreamRequest* msg);
+  static void set_has_strategy(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
-const ::otrader::StrategyConfig&
-StreamRequest::_Internal::strategy(const StreamRequest* msg) {
-  return *msg->strategy_;
+const ::otrader::StrategyConfig& StreamRequest::_Internal::strategy(const StreamRequest* msg) {
+  return *msg->_impl_.strategy_;
 }
-StreamRequest::StreamRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  model_ids_(arena) {
-  SharedCtor();
+StreamRequest::StreamRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.StreamRequest)
 }
-StreamRequest::StreamRequest(const StreamRequest& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      model_ids_(from.model_ids_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  job_id_.InitDefault();
+StreamRequest::StreamRequest(const StreamRequest& from) : ::google::protobuf::Message() {
+  StreamRequest* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.model_ids_){from._impl_.model_ids_},
+      decltype(_impl_.job_id_){},
+      decltype(_impl_.correlation_id_){},
+      decltype(_impl_.strategy_){nullptr},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.job_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    job_id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.job_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_job_id().empty()) {
-    job_id_.Set(from._internal_job_id(), 
-      GetArenaForAllocation());
+    _this->_impl_.job_id_.Set(from._internal_job_id(), _this->GetArenaForAllocation());
   }
-  correlation_id_.InitDefault();
+  _impl_.correlation_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    correlation_id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.correlation_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_correlation_id().empty()) {
-    correlation_id_.Set(from._internal_correlation_id(), 
-      GetArenaForAllocation());
+    _this->_impl_.correlation_id_.Set(from._internal_correlation_id(), _this->GetArenaForAllocation());
   }
-  if (from._internal_has_strategy()) {
-    strategy_ = new ::otrader::StrategyConfig(*from.strategy_);
-  } else {
-    strategy_ = nullptr;
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.strategy_ = new ::otrader::StrategyConfig(*from._impl_.strategy_);
   }
+
   // @@protoc_insertion_point(copy_constructor:otrader.StreamRequest)
 }
-
-inline void StreamRequest::SharedCtor() {
-job_id_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  job_id_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-correlation_id_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  correlation_id_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-strategy_ = nullptr;
+inline void StreamRequest::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.model_ids_){arena},
+      decltype(_impl_.job_id_){},
+      decltype(_impl_.correlation_id_){},
+      decltype(_impl_.strategy_){nullptr},
+  };
+  _impl_.job_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.job_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.correlation_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.correlation_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 StreamRequest::~StreamRequest() {
   // @@protoc_insertion_point(destructor:otrader.StreamRequest)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void StreamRequest::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  job_id_.Destroy();
-  correlation_id_.Destroy();
-  if (this != internal_default_instance()) delete strategy_;
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _internal_mutable_model_ids()->~RepeatedPtrField();
+  _impl_.job_id_.Destroy();
+  _impl_.correlation_id_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.strategy_;
 }
-
 void StreamRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void StreamRequest::Clear() {
+PROTOBUF_NOINLINE void StreamRequest::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.StreamRequest)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  model_ids_.Clear();
-  job_id_.ClearToEmpty();
-  correlation_id_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && strategy_ != nullptr) {
-    delete strategy_;
+  _internal_mutable_model_ids()->Clear();
+  _impl_.job_id_.ClearToEmpty();
+  _impl_.correlation_id_.ClearToEmpty();
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.strategy_ != nullptr);
+    _impl_.strategy_->Clear();
   }
-  strategy_ = nullptr;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* StreamRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string job_id = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_job_id();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StreamRequest.job_id"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string correlation_id = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_correlation_id();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.StreamRequest.correlation_id"));
-        } else
-          goto handle_unusual;
-        continue;
-      // repeated string model_ids = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_model_ids();
-            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(ptr);
-            CHK_(::_pbi::VerifyUTF8(str, "otrader.StreamRequest.model_ids"));
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      // .otrader.StrategyConfig strategy = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          ptr = ctx->ParseMessage(_internal_mutable_strategy(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* StreamRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* StreamRequest::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 4, 1, 59, 2> StreamRequest::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(StreamRequest, _impl_._has_bits_),
+    0, // no _extensions_
+    4, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967280,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    4,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_StreamRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // .otrader.StrategyConfig strategy = 4;
+    {::_pbi::TcParser::FastMtS1,
+     {34, 0, 0, PROTOBUF_FIELD_OFFSET(StreamRequest, _impl_.strategy_)}},
+    // string job_id = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StreamRequest, _impl_.job_id_)}},
+    // string correlation_id = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(StreamRequest, _impl_.correlation_id_)}},
+    // repeated string model_ids = 3;
+    {::_pbi::TcParser::FastUR1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(StreamRequest, _impl_.model_ids_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string job_id = 1;
+    {PROTOBUF_FIELD_OFFSET(StreamRequest, _impl_.job_id_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string correlation_id = 2;
+    {PROTOBUF_FIELD_OFFSET(StreamRequest, _impl_.correlation_id_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // repeated string model_ids = 3;
+    {PROTOBUF_FIELD_OFFSET(StreamRequest, _impl_.model_ids_), -1, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kUtf8String | ::_fl::kRepSString)},
+    // .otrader.StrategyConfig strategy = 4;
+    {PROTOBUF_FIELD_OFFSET(StreamRequest, _impl_.strategy_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::otrader::StrategyConfig>()},
+  }}, {{
+    "\25\6\16\11\0\0\0\0"
+    "otrader.StreamRequest"
+    "job_id"
+    "correlation_id"
+    "model_ids"
+  }},
+};
+
+::uint8_t* StreamRequest::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.StreamRequest)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string job_id = 1;
   if (!this->_internal_job_id().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_job_id().data(), static_cast<int>(this->_internal_job_id().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StreamRequest.job_id");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_job_id(), target);
+    const std::string& _s = this->_internal_job_id();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StreamRequest.job_id");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // string correlation_id = 2;
   if (!this->_internal_correlation_id().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_correlation_id().data(), static_cast<int>(this->_internal_correlation_id().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StreamRequest.correlation_id");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_correlation_id(), target);
+    const std::string& _s = this->_internal_correlation_id();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StreamRequest.correlation_id");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // repeated string model_ids = 3;
-  for (int i = 0, n = this->_internal_model_ids_size(); i < n; i++) {
-    const auto& s = this->_internal_model_ids(i);
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      s.data(), static_cast<int>(s.length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.StreamRequest.model_ids");
+  for (int i = 0, n = this->_internal_model_ids_size(); i < n; ++i) {
+    const auto& s = this->_internal_model_ids().Get(i);
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.StreamRequest.model_ids");
     target = stream->WriteString(3, s, target);
   }
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .otrader.StrategyConfig strategy = 4;
-  if (this->_internal_has_strategy()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(4, _Internal::strategy(this),
         _Internal::strategy(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.StreamRequest)
   return target;
 }
 
-size_t StreamRequest::ByteSizeLong() const {
+::size_t StreamRequest::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.StreamRequest)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // repeated string model_ids = 3;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(model_ids_.size());
-  for (int i = 0, n = model_ids_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-      model_ids_.Get(i));
+  total_size += 1 * ::google::protobuf::internal::FromIntSize(_internal_model_ids().size());
+  for (int i = 0, n = _internal_model_ids().size(); i < n; ++i) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+        _internal_model_ids().Get(i));
   }
-
   // string job_id = 1;
   if (!this->_internal_job_id().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_job_id());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_job_id());
   }
 
   // string correlation_id = 2;
   if (!this->_internal_correlation_id().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_correlation_id());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_correlation_id());
   }
 
   // .otrader.StrategyConfig strategy = 4;
-  if (this->_internal_has_strategy()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *strategy_);
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *_impl_.strategy_);
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StreamRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData StreamRequest::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     StreamRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StreamRequest::GetClassData() const { return &_class_data_; }
-
-void StreamRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<StreamRequest *>(to)->MergeFrom(
-      static_cast<const StreamRequest &>(from));
-}
+const ::google::protobuf::Message::ClassData*StreamRequest::GetClassData() const { return &_class_data_; }
 
 
-void StreamRequest::MergeFrom(const StreamRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.StreamRequest)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void StreamRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<StreamRequest*>(&to_msg);
+  auto& from = static_cast<const StreamRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.StreamRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  model_ids_.MergeFrom(from.model_ids_);
+  _this->_internal_mutable_model_ids()->MergeFrom(from._internal_model_ids());
   if (!from._internal_job_id().empty()) {
-    _internal_set_job_id(from._internal_job_id());
+    _this->_internal_set_job_id(from._internal_job_id());
   }
   if (!from._internal_correlation_id().empty()) {
-    _internal_set_correlation_id(from._internal_correlation_id());
+    _this->_internal_set_correlation_id(from._internal_correlation_id());
   }
-  if (from._internal_has_strategy()) {
-    _internal_mutable_strategy()->::otrader::StrategyConfig::MergeFrom(from._internal_strategy());
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_internal_mutable_strategy()->::otrader::StrategyConfig::MergeFrom(
+        from._internal_strategy());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void StreamRequest::CopyFrom(const StreamRequest& from) {
@@ -8888,7 +9037,7 @@ void StreamRequest::CopyFrom(const StreamRequest& from) {
   MergeFrom(from);
 }
 
-bool StreamRequest::IsInitialized() const {
+PROTOBUF_NOINLINE bool StreamRequest::IsInitialized() const {
   return true;
 }
 
@@ -8897,325 +9046,329 @@ void StreamRequest::InternalSwap(StreamRequest* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  model_ids_.InternalSwap(&other->model_ids_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &job_id_, lhs_arena,
-      &other->job_id_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &correlation_id_, lhs_arena,
-      &other->correlation_id_, rhs_arena
-  );
-  swap(strategy_, other->strategy_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  _impl_.model_ids_.InternalSwap(&other->_impl_.model_ids_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.job_id_, lhs_arena,
+                                       &other->_impl_.job_id_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.correlation_id_, lhs_arena,
+                                       &other->_impl_.correlation_id_, rhs_arena);
+  swap(_impl_.strategy_, other->_impl_.strategy_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata StreamRequest::GetMetadata() const {
+::google::protobuf::Metadata StreamRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[27]);
 }
-
 // ===================================================================
 
 class GreeksPayload::_Internal {
  public:
 };
 
-GreeksPayload::GreeksPayload(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+GreeksPayload::GreeksPayload(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.GreeksPayload)
 }
 GreeksPayload::GreeksPayload(const GreeksPayload& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&delta_, &from.delta_,
-    static_cast<size_t>(reinterpret_cast<char*>(&rho_) -
-    reinterpret_cast<char*>(&delta_)) + sizeof(rho_));
+    : ::google::protobuf::Message(), _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:otrader.GreeksPayload)
 }
-
-inline void GreeksPayload::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&delta_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&rho_) -
-    reinterpret_cast<char*>(&delta_)) + sizeof(rho_));
+inline void GreeksPayload::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.delta_){0},
+      decltype(_impl_.gamma_){0},
+      decltype(_impl_.theta_){0},
+      decltype(_impl_.vega_){0},
+      decltype(_impl_.rho_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
 }
-
 GreeksPayload::~GreeksPayload() {
   // @@protoc_insertion_point(destructor:otrader.GreeksPayload)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void GreeksPayload::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
 }
-
 void GreeksPayload::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void GreeksPayload::Clear() {
+PROTOBUF_NOINLINE void GreeksPayload::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.GreeksPayload)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&delta_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&rho_) -
-      reinterpret_cast<char*>(&delta_)) + sizeof(rho_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  ::memset(&_impl_.delta_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.rho_) -
+      reinterpret_cast<char*>(&_impl_.delta_)) + sizeof(_impl_.rho_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* GreeksPayload::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // double delta = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 9)) {
-          delta_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double gamma = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 17)) {
-          gamma_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double theta = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
-          theta_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double vega = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 33)) {
-          vega_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double rho = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 41)) {
-          rho_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* GreeksPayload::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* GreeksPayload::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 5, 0, 0, 2> GreeksPayload::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    5, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967264,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    5,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_GreeksPayload_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // double delta = 1;
+    {::_pbi::TcParser::FastF64S1,
+     {9, 63, 0, PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.delta_)}},
+    // double gamma = 2;
+    {::_pbi::TcParser::FastF64S1,
+     {17, 63, 0, PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.gamma_)}},
+    // double theta = 3;
+    {::_pbi::TcParser::FastF64S1,
+     {25, 63, 0, PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.theta_)}},
+    // double vega = 4;
+    {::_pbi::TcParser::FastF64S1,
+     {33, 63, 0, PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.vega_)}},
+    // double rho = 5;
+    {::_pbi::TcParser::FastF64S1,
+     {41, 63, 0, PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.rho_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // double delta = 1;
+    {PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.delta_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double gamma = 2;
+    {PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.gamma_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double theta = 3;
+    {PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.theta_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double vega = 4;
+    {PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.vega_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double rho = 5;
+    {PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.rho_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+::uint8_t* GreeksPayload::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.GreeksPayload)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // double delta = 1;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = this->_internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(1, this->_internal_delta(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        1, this->_internal_delta(), target);
   }
 
   // double gamma = 2;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = this->_internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(2, this->_internal_gamma(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        2, this->_internal_gamma(), target);
   }
 
   // double theta = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = this->_internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(3, this->_internal_theta(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        3, this->_internal_theta(), target);
   }
 
   // double vega = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = this->_internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(4, this->_internal_vega(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        4, this->_internal_vega(), target);
   }
 
   // double rho = 5;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_rho = this->_internal_rho();
-  uint64_t raw_rho;
+  ::uint64_t raw_rho;
   memcpy(&raw_rho, &tmp_rho, sizeof(tmp_rho));
   if (raw_rho != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(5, this->_internal_rho(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        5, this->_internal_rho(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.GreeksPayload)
   return target;
 }
 
-size_t GreeksPayload::ByteSizeLong() const {
+::size_t GreeksPayload::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.GreeksPayload)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // double delta = 1;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = this->_internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double gamma = 2;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = this->_internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double theta = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = this->_internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double vega = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = this->_internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double rho = 5;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_rho = this->_internal_rho();
-  uint64_t raw_rho;
+  ::uint64_t raw_rho;
   memcpy(&raw_rho, &tmp_rho, sizeof(tmp_rho));
   if (raw_rho != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GreeksPayload::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData GreeksPayload::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     GreeksPayload::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GreeksPayload::GetClassData() const { return &_class_data_; }
-
-void GreeksPayload::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<GreeksPayload *>(to)->MergeFrom(
-      static_cast<const GreeksPayload &>(from));
-}
+const ::google::protobuf::Message::ClassData*GreeksPayload::GetClassData() const { return &_class_data_; }
 
 
-void GreeksPayload::MergeFrom(const GreeksPayload& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.GreeksPayload)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void GreeksPayload::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<GreeksPayload*>(&to_msg);
+  auto& from = static_cast<const GreeksPayload&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.GreeksPayload)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_delta = from._internal_delta();
-  uint64_t raw_delta;
+  ::uint64_t raw_delta;
   memcpy(&raw_delta, &tmp_delta, sizeof(tmp_delta));
   if (raw_delta != 0) {
-    _internal_set_delta(from._internal_delta());
+    _this->_internal_set_delta(from._internal_delta());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_gamma = from._internal_gamma();
-  uint64_t raw_gamma;
+  ::uint64_t raw_gamma;
   memcpy(&raw_gamma, &tmp_gamma, sizeof(tmp_gamma));
   if (raw_gamma != 0) {
-    _internal_set_gamma(from._internal_gamma());
+    _this->_internal_set_gamma(from._internal_gamma());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_theta = from._internal_theta();
-  uint64_t raw_theta;
+  ::uint64_t raw_theta;
   memcpy(&raw_theta, &tmp_theta, sizeof(tmp_theta));
   if (raw_theta != 0) {
-    _internal_set_theta(from._internal_theta());
+    _this->_internal_set_theta(from._internal_theta());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_vega = from._internal_vega();
-  uint64_t raw_vega;
+  ::uint64_t raw_vega;
   memcpy(&raw_vega, &tmp_vega, sizeof(tmp_vega));
   if (raw_vega != 0) {
-    _internal_set_vega(from._internal_vega());
+    _this->_internal_set_vega(from._internal_vega());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_rho = from._internal_rho();
-  uint64_t raw_rho;
+  ::uint64_t raw_rho;
   memcpy(&raw_rho, &tmp_rho, sizeof(tmp_rho));
   if (raw_rho != 0) {
-    _internal_set_rho(from._internal_rho());
+    _this->_internal_set_rho(from._internal_rho());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void GreeksPayload::CopyFrom(const GreeksPayload& from) {
@@ -9225,294 +9378,295 @@ void GreeksPayload::CopyFrom(const GreeksPayload& from) {
   MergeFrom(from);
 }
 
-bool GreeksPayload::IsInitialized() const {
+PROTOBUF_NOINLINE bool GreeksPayload::IsInitialized() const {
   return true;
 }
 
 void GreeksPayload::InternalSwap(GreeksPayload* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(GreeksPayload, rho_)
-      + sizeof(GreeksPayload::rho_)
-      - PROTOBUF_FIELD_OFFSET(GreeksPayload, delta_)>(
-          reinterpret_cast<char*>(&delta_),
-          reinterpret_cast<char*>(&other->delta_));
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.rho_)
+      + sizeof(GreeksPayload::_impl_.rho_)
+      - PROTOBUF_FIELD_OFFSET(GreeksPayload, _impl_.delta_)>(
+          reinterpret_cast<char*>(&_impl_.delta_),
+          reinterpret_cast<char*>(&other->_impl_.delta_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata GreeksPayload::GetMetadata() const {
+::google::protobuf::Metadata GreeksPayload::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[28]);
 }
-
 // ===================================================================
 
 class CVaRPayload::_Internal {
  public:
 };
 
-CVaRPayload::CVaRPayload(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+CVaRPayload::CVaRPayload(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.CVaRPayload)
 }
 CVaRPayload::CVaRPayload(const CVaRPayload& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&var_95_, &from.var_95_,
-    static_cast<size_t>(reinterpret_cast<char*>(&cvar_99_) -
-    reinterpret_cast<char*>(&var_95_)) + sizeof(cvar_99_));
+    : ::google::protobuf::Message(), _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:otrader.CVaRPayload)
 }
-
-inline void CVaRPayload::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&var_95_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&cvar_99_) -
-    reinterpret_cast<char*>(&var_95_)) + sizeof(cvar_99_));
+inline void CVaRPayload::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.var_95_){0},
+      decltype(_impl_.cvar_95_){0},
+      decltype(_impl_.var_99_){0},
+      decltype(_impl_.cvar_99_){0},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
 }
-
 CVaRPayload::~CVaRPayload() {
   // @@protoc_insertion_point(destructor:otrader.CVaRPayload)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void CVaRPayload::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
 }
-
 void CVaRPayload::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void CVaRPayload::Clear() {
+PROTOBUF_NOINLINE void CVaRPayload::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.CVaRPayload)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&var_95_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&cvar_99_) -
-      reinterpret_cast<char*>(&var_95_)) + sizeof(cvar_99_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  ::memset(&_impl_.var_95_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.cvar_99_) -
+      reinterpret_cast<char*>(&_impl_.var_95_)) + sizeof(_impl_.cvar_99_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* CVaRPayload::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // double var_95 = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 9)) {
-          var_95_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double cvar_95 = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 17)) {
-          cvar_95_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double var_99 = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
-          var_99_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double cvar_99 = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 33)) {
-          cvar_99_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* CVaRPayload::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* CVaRPayload::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 4, 0, 0, 2> CVaRPayload::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    4, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967280,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    4,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_CVaRPayload_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // double cvar_99 = 4;
+    {::_pbi::TcParser::FastF64S1,
+     {33, 63, 0, PROTOBUF_FIELD_OFFSET(CVaRPayload, _impl_.cvar_99_)}},
+    // double var_95 = 1;
+    {::_pbi::TcParser::FastF64S1,
+     {9, 63, 0, PROTOBUF_FIELD_OFFSET(CVaRPayload, _impl_.var_95_)}},
+    // double cvar_95 = 2;
+    {::_pbi::TcParser::FastF64S1,
+     {17, 63, 0, PROTOBUF_FIELD_OFFSET(CVaRPayload, _impl_.cvar_95_)}},
+    // double var_99 = 3;
+    {::_pbi::TcParser::FastF64S1,
+     {25, 63, 0, PROTOBUF_FIELD_OFFSET(CVaRPayload, _impl_.var_99_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // double var_95 = 1;
+    {PROTOBUF_FIELD_OFFSET(CVaRPayload, _impl_.var_95_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double cvar_95 = 2;
+    {PROTOBUF_FIELD_OFFSET(CVaRPayload, _impl_.cvar_95_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double var_99 = 3;
+    {PROTOBUF_FIELD_OFFSET(CVaRPayload, _impl_.var_99_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double cvar_99 = 4;
+    {PROTOBUF_FIELD_OFFSET(CVaRPayload, _impl_.cvar_99_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+::uint8_t* CVaRPayload::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.CVaRPayload)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // double var_95 = 1;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_var_95 = this->_internal_var_95();
-  uint64_t raw_var_95;
+  ::uint64_t raw_var_95;
   memcpy(&raw_var_95, &tmp_var_95, sizeof(tmp_var_95));
   if (raw_var_95 != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(1, this->_internal_var_95(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        1, this->_internal_var_95(), target);
   }
 
   // double cvar_95 = 2;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cvar_95 = this->_internal_cvar_95();
-  uint64_t raw_cvar_95;
+  ::uint64_t raw_cvar_95;
   memcpy(&raw_cvar_95, &tmp_cvar_95, sizeof(tmp_cvar_95));
   if (raw_cvar_95 != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(2, this->_internal_cvar_95(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        2, this->_internal_cvar_95(), target);
   }
 
   // double var_99 = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_var_99 = this->_internal_var_99();
-  uint64_t raw_var_99;
+  ::uint64_t raw_var_99;
   memcpy(&raw_var_99, &tmp_var_99, sizeof(tmp_var_99));
   if (raw_var_99 != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(3, this->_internal_var_99(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        3, this->_internal_var_99(), target);
   }
 
   // double cvar_99 = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cvar_99 = this->_internal_cvar_99();
-  uint64_t raw_cvar_99;
+  ::uint64_t raw_cvar_99;
   memcpy(&raw_cvar_99, &tmp_cvar_99, sizeof(tmp_cvar_99));
   if (raw_cvar_99 != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(4, this->_internal_cvar_99(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        4, this->_internal_cvar_99(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.CVaRPayload)
   return target;
 }
 
-size_t CVaRPayload::ByteSizeLong() const {
+::size_t CVaRPayload::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.CVaRPayload)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // double var_95 = 1;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_var_95 = this->_internal_var_95();
-  uint64_t raw_var_95;
+  ::uint64_t raw_var_95;
   memcpy(&raw_var_95, &tmp_var_95, sizeof(tmp_var_95));
   if (raw_var_95 != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double cvar_95 = 2;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cvar_95 = this->_internal_cvar_95();
-  uint64_t raw_cvar_95;
+  ::uint64_t raw_cvar_95;
   memcpy(&raw_cvar_95, &tmp_cvar_95, sizeof(tmp_cvar_95));
   if (raw_cvar_95 != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double var_99 = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_var_99 = this->_internal_var_99();
-  uint64_t raw_var_99;
+  ::uint64_t raw_var_99;
   memcpy(&raw_var_99, &tmp_var_99, sizeof(tmp_var_99));
   if (raw_var_99 != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double cvar_99 = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cvar_99 = this->_internal_cvar_99();
-  uint64_t raw_cvar_99;
+  ::uint64_t raw_cvar_99;
   memcpy(&raw_cvar_99, &tmp_cvar_99, sizeof(tmp_cvar_99));
   if (raw_cvar_99 != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData CVaRPayload::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData CVaRPayload::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     CVaRPayload::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*CVaRPayload::GetClassData() const { return &_class_data_; }
-
-void CVaRPayload::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<CVaRPayload *>(to)->MergeFrom(
-      static_cast<const CVaRPayload &>(from));
-}
+const ::google::protobuf::Message::ClassData*CVaRPayload::GetClassData() const { return &_class_data_; }
 
 
-void CVaRPayload::MergeFrom(const CVaRPayload& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.CVaRPayload)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void CVaRPayload::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<CVaRPayload*>(&to_msg);
+  auto& from = static_cast<const CVaRPayload&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.CVaRPayload)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_var_95 = from._internal_var_95();
-  uint64_t raw_var_95;
+  ::uint64_t raw_var_95;
   memcpy(&raw_var_95, &tmp_var_95, sizeof(tmp_var_95));
   if (raw_var_95 != 0) {
-    _internal_set_var_95(from._internal_var_95());
+    _this->_internal_set_var_95(from._internal_var_95());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cvar_95 = from._internal_cvar_95();
-  uint64_t raw_cvar_95;
+  ::uint64_t raw_cvar_95;
   memcpy(&raw_cvar_95, &tmp_cvar_95, sizeof(tmp_cvar_95));
   if (raw_cvar_95 != 0) {
-    _internal_set_cvar_95(from._internal_cvar_95());
+    _this->_internal_set_cvar_95(from._internal_cvar_95());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_var_99 = from._internal_var_99();
-  uint64_t raw_var_99;
+  ::uint64_t raw_var_99;
   memcpy(&raw_var_99, &tmp_var_99, sizeof(tmp_var_99));
   if (raw_var_99 != 0) {
-    _internal_set_var_99(from._internal_var_99());
+    _this->_internal_set_var_99(from._internal_var_99());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cvar_99 = from._internal_cvar_99();
-  uint64_t raw_cvar_99;
+  ::uint64_t raw_cvar_99;
   memcpy(&raw_cvar_99, &tmp_cvar_99, sizeof(tmp_cvar_99));
   if (raw_cvar_99 != 0) {
-    _internal_set_cvar_99(from._internal_cvar_99());
+    _this->_internal_set_cvar_99(from._internal_cvar_99());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void CVaRPayload::CopyFrom(const CVaRPayload& from) {
@@ -9522,326 +9676,337 @@ void CVaRPayload::CopyFrom(const CVaRPayload& from) {
   MergeFrom(from);
 }
 
-bool CVaRPayload::IsInitialized() const {
+PROTOBUF_NOINLINE bool CVaRPayload::IsInitialized() const {
   return true;
 }
 
 void CVaRPayload::InternalSwap(CVaRPayload* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(CVaRPayload, cvar_99_)
-      + sizeof(CVaRPayload::cvar_99_)
-      - PROTOBUF_FIELD_OFFSET(CVaRPayload, var_95_)>(
-          reinterpret_cast<char*>(&var_95_),
-          reinterpret_cast<char*>(&other->var_95_));
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(CVaRPayload, _impl_.cvar_99_)
+      + sizeof(CVaRPayload::_impl_.cvar_99_)
+      - PROTOBUF_FIELD_OFFSET(CVaRPayload, _impl_.var_95_)>(
+          reinterpret_cast<char*>(&_impl_.var_95_),
+          reinterpret_cast<char*>(&other->_impl_.var_95_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata CVaRPayload::GetMetadata() const {
+::google::protobuf::Metadata CVaRPayload::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[29]);
 }
-
 // ===================================================================
 
 class ModelResult::_Internal {
  public:
 };
 
-ModelResult::ModelResult(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+ModelResult::ModelResult(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.ModelResult)
 }
-ModelResult::ModelResult(const ModelResult& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  model_id_.InitDefault();
+ModelResult::ModelResult(const ModelResult& from) : ::google::protobuf::Message() {
+  ModelResult* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.model_id_){},
+      decltype(_impl_.hedge_ratio_){},
+      decltype(_impl_.pnl_){},
+      decltype(_impl_.cumulative_pnl_){},
+      decltype(_impl_.inference_latency_ns_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.model_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    model_id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.model_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_model_id().empty()) {
-    model_id_.Set(from._internal_model_id(), 
-      GetArenaForAllocation());
+    _this->_impl_.model_id_.Set(from._internal_model_id(), _this->GetArenaForAllocation());
   }
-  ::memcpy(&hedge_ratio_, &from.hedge_ratio_,
-    static_cast<size_t>(reinterpret_cast<char*>(&inference_latency_ns_) -
-    reinterpret_cast<char*>(&hedge_ratio_)) + sizeof(inference_latency_ns_));
+  ::memcpy(&_impl_.hedge_ratio_, &from._impl_.hedge_ratio_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.inference_latency_ns_) -
+    reinterpret_cast<char*>(&_impl_.hedge_ratio_)) + sizeof(_impl_.inference_latency_ns_));
+
   // @@protoc_insertion_point(copy_constructor:otrader.ModelResult)
 }
-
-inline void ModelResult::SharedCtor() {
-model_id_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  model_id_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&hedge_ratio_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&inference_latency_ns_) -
-    reinterpret_cast<char*>(&hedge_ratio_)) + sizeof(inference_latency_ns_));
+inline void ModelResult::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.model_id_){},
+      decltype(_impl_.hedge_ratio_){0},
+      decltype(_impl_.pnl_){0},
+      decltype(_impl_.cumulative_pnl_){0},
+      decltype(_impl_.inference_latency_ns_){::int64_t{0}},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.model_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.model_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 ModelResult::~ModelResult() {
   // @@protoc_insertion_point(destructor:otrader.ModelResult)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void ModelResult::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  model_id_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.model_id_.Destroy();
 }
-
 void ModelResult::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void ModelResult::Clear() {
+PROTOBUF_NOINLINE void ModelResult::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.ModelResult)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  model_id_.ClearToEmpty();
-  ::memset(&hedge_ratio_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&inference_latency_ns_) -
-      reinterpret_cast<char*>(&hedge_ratio_)) + sizeof(inference_latency_ns_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.model_id_.ClearToEmpty();
+  ::memset(&_impl_.hedge_ratio_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.inference_latency_ns_) -
+      reinterpret_cast<char*>(&_impl_.hedge_ratio_)) + sizeof(_impl_.inference_latency_ns_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* ModelResult::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string model_id = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_model_id();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.ModelResult.model_id"));
-        } else
-          goto handle_unusual;
-        continue;
-      // double hedge_ratio = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 17)) {
-          hedge_ratio_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double pnl = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
-          pnl_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double cumulative_pnl = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 33)) {
-          cumulative_pnl_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // int64 inference_latency_ns = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
-          inference_latency_ns_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* ModelResult::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* ModelResult::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 5, 0, 36, 2> ModelResult::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    5, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967264,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    5,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_ModelResult_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string model_id = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.model_id_)}},
+    // double hedge_ratio = 2;
+    {::_pbi::TcParser::FastF64S1,
+     {17, 63, 0, PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.hedge_ratio_)}},
+    // double pnl = 3;
+    {::_pbi::TcParser::FastF64S1,
+     {25, 63, 0, PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.pnl_)}},
+    // double cumulative_pnl = 4;
+    {::_pbi::TcParser::FastF64S1,
+     {33, 63, 0, PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.cumulative_pnl_)}},
+    // int64 inference_latency_ns = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(ModelResult, _impl_.inference_latency_ns_), 63>(),
+     {40, 63, 0, PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.inference_latency_ns_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string model_id = 1;
+    {PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.model_id_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // double hedge_ratio = 2;
+    {PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.hedge_ratio_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double pnl = 3;
+    {PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.pnl_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double cumulative_pnl = 4;
+    {PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.cumulative_pnl_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // int64 inference_latency_ns = 5;
+    {PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.inference_latency_ns_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+  }},
+  // no aux_entries
+  {{
+    "\23\10\0\0\0\0\0\0"
+    "otrader.ModelResult"
+    "model_id"
+  }},
+};
+
+::uint8_t* ModelResult::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.ModelResult)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string model_id = 1;
   if (!this->_internal_model_id().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_model_id().data(), static_cast<int>(this->_internal_model_id().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.ModelResult.model_id");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_model_id(), target);
+    const std::string& _s = this->_internal_model_id();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.ModelResult.model_id");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // double hedge_ratio = 2;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_hedge_ratio = this->_internal_hedge_ratio();
-  uint64_t raw_hedge_ratio;
+  ::uint64_t raw_hedge_ratio;
   memcpy(&raw_hedge_ratio, &tmp_hedge_ratio, sizeof(tmp_hedge_ratio));
   if (raw_hedge_ratio != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(2, this->_internal_hedge_ratio(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        2, this->_internal_hedge_ratio(), target);
   }
 
   // double pnl = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_pnl = this->_internal_pnl();
-  uint64_t raw_pnl;
+  ::uint64_t raw_pnl;
   memcpy(&raw_pnl, &tmp_pnl, sizeof(tmp_pnl));
   if (raw_pnl != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(3, this->_internal_pnl(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        3, this->_internal_pnl(), target);
   }
 
   // double cumulative_pnl = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cumulative_pnl = this->_internal_cumulative_pnl();
-  uint64_t raw_cumulative_pnl;
+  ::uint64_t raw_cumulative_pnl;
   memcpy(&raw_cumulative_pnl, &tmp_cumulative_pnl, sizeof(tmp_cumulative_pnl));
   if (raw_cumulative_pnl != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(4, this->_internal_cumulative_pnl(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        4, this->_internal_cumulative_pnl(), target);
   }
 
   // int64 inference_latency_ns = 5;
   if (this->_internal_inference_latency_ns() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(5, this->_internal_inference_latency_ns(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<5>(
+            stream, this->_internal_inference_latency_ns(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.ModelResult)
   return target;
 }
 
-size_t ModelResult::ByteSizeLong() const {
+::size_t ModelResult::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.ModelResult)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string model_id = 1;
   if (!this->_internal_model_id().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_model_id());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_model_id());
   }
 
   // double hedge_ratio = 2;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_hedge_ratio = this->_internal_hedge_ratio();
-  uint64_t raw_hedge_ratio;
+  ::uint64_t raw_hedge_ratio;
   memcpy(&raw_hedge_ratio, &tmp_hedge_ratio, sizeof(tmp_hedge_ratio));
   if (raw_hedge_ratio != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double pnl = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_pnl = this->_internal_pnl();
-  uint64_t raw_pnl;
+  ::uint64_t raw_pnl;
   memcpy(&raw_pnl, &tmp_pnl, sizeof(tmp_pnl));
   if (raw_pnl != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double cumulative_pnl = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cumulative_pnl = this->_internal_cumulative_pnl();
-  uint64_t raw_cumulative_pnl;
+  ::uint64_t raw_cumulative_pnl;
   memcpy(&raw_cumulative_pnl, &tmp_cumulative_pnl, sizeof(tmp_cumulative_pnl));
   if (raw_cumulative_pnl != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // int64 inference_latency_ns = 5;
   if (this->_internal_inference_latency_ns() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_inference_latency_ns());
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_inference_latency_ns());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ModelResult::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData ModelResult::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     ModelResult::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ModelResult::GetClassData() const { return &_class_data_; }
-
-void ModelResult::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<ModelResult *>(to)->MergeFrom(
-      static_cast<const ModelResult &>(from));
-}
+const ::google::protobuf::Message::ClassData*ModelResult::GetClassData() const { return &_class_data_; }
 
 
-void ModelResult::MergeFrom(const ModelResult& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.ModelResult)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void ModelResult::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<ModelResult*>(&to_msg);
+  auto& from = static_cast<const ModelResult&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.ModelResult)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_model_id().empty()) {
-    _internal_set_model_id(from._internal_model_id());
+    _this->_internal_set_model_id(from._internal_model_id());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_hedge_ratio = from._internal_hedge_ratio();
-  uint64_t raw_hedge_ratio;
+  ::uint64_t raw_hedge_ratio;
   memcpy(&raw_hedge_ratio, &tmp_hedge_ratio, sizeof(tmp_hedge_ratio));
   if (raw_hedge_ratio != 0) {
-    _internal_set_hedge_ratio(from._internal_hedge_ratio());
+    _this->_internal_set_hedge_ratio(from._internal_hedge_ratio());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_pnl = from._internal_pnl();
-  uint64_t raw_pnl;
+  ::uint64_t raw_pnl;
   memcpy(&raw_pnl, &tmp_pnl, sizeof(tmp_pnl));
   if (raw_pnl != 0) {
-    _internal_set_pnl(from._internal_pnl());
+    _this->_internal_set_pnl(from._internal_pnl());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cumulative_pnl = from._internal_cumulative_pnl();
-  uint64_t raw_cumulative_pnl;
+  ::uint64_t raw_cumulative_pnl;
   memcpy(&raw_cumulative_pnl, &tmp_cumulative_pnl, sizeof(tmp_cumulative_pnl));
   if (raw_cumulative_pnl != 0) {
-    _internal_set_cumulative_pnl(from._internal_cumulative_pnl());
+    _this->_internal_set_cumulative_pnl(from._internal_cumulative_pnl());
   }
   if (from._internal_inference_latency_ns() != 0) {
-    _internal_set_inference_latency_ns(from._internal_inference_latency_ns());
+    _this->_internal_set_inference_latency_ns(from._internal_inference_latency_ns());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void ModelResult::CopyFrom(const ModelResult& from) {
@@ -9851,7 +10016,7 @@ void ModelResult::CopyFrom(const ModelResult& from) {
   MergeFrom(from);
 }
 
-bool ModelResult::IsInitialized() const {
+PROTOBUF_NOINLINE bool ModelResult::IsInitialized() const {
   return true;
 }
 
@@ -9860,281 +10025,295 @@ void ModelResult::InternalSwap(ModelResult* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &model_id_, lhs_arena,
-      &other->model_id_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(ModelResult, inference_latency_ns_)
-      + sizeof(ModelResult::inference_latency_ns_)
-      - PROTOBUF_FIELD_OFFSET(ModelResult, hedge_ratio_)>(
-          reinterpret_cast<char*>(&hedge_ratio_),
-          reinterpret_cast<char*>(&other->hedge_ratio_));
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.model_id_, lhs_arena,
+                                       &other->_impl_.model_id_, rhs_arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.inference_latency_ns_)
+      + sizeof(ModelResult::_impl_.inference_latency_ns_)
+      - PROTOBUF_FIELD_OFFSET(ModelResult, _impl_.hedge_ratio_)>(
+          reinterpret_cast<char*>(&_impl_.hedge_ratio_),
+          reinterpret_cast<char*>(&other->_impl_.hedge_ratio_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata ModelResult::GetMetadata() const {
+::google::protobuf::Metadata ModelResult::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[30]);
 }
-
 // ===================================================================
 
 class EngineStateUpdate::_Internal {
  public:
+  using HasBits = decltype(std::declval<EngineStateUpdate>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_._has_bits_);
   static const ::otrader::GreeksPayload& greeks(const EngineStateUpdate* msg);
+  static void set_has_greeks(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
   static const ::otrader::CVaRPayload& cvar(const EngineStateUpdate* msg);
+  static void set_has_cvar(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
 };
 
-const ::otrader::GreeksPayload&
-EngineStateUpdate::_Internal::greeks(const EngineStateUpdate* msg) {
-  return *msg->greeks_;
+const ::otrader::GreeksPayload& EngineStateUpdate::_Internal::greeks(const EngineStateUpdate* msg) {
+  return *msg->_impl_.greeks_;
 }
-const ::otrader::CVaRPayload&
-EngineStateUpdate::_Internal::cvar(const EngineStateUpdate* msg) {
-  return *msg->cvar_;
+const ::otrader::CVaRPayload& EngineStateUpdate::_Internal::cvar(const EngineStateUpdate* msg) {
+  return *msg->_impl_.cvar_;
 }
-EngineStateUpdate::EngineStateUpdate(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  model_results_(arena) {
-  SharedCtor();
+EngineStateUpdate::EngineStateUpdate(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.EngineStateUpdate)
 }
-EngineStateUpdate::EngineStateUpdate(const EngineStateUpdate& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      model_results_(from.model_results_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  job_id_.InitDefault();
+EngineStateUpdate::EngineStateUpdate(const EngineStateUpdate& from) : ::google::protobuf::Message() {
+  EngineStateUpdate* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.model_results_){from._impl_.model_results_},
+      decltype(_impl_.job_id_){},
+      decltype(_impl_.greeks_){nullptr},
+      decltype(_impl_.cvar_){nullptr},
+      decltype(_impl_.tick_timestamp_ns_){},
+      decltype(_impl_.spot_price_){},
+      decltype(_impl_.implied_vol_){},
+      decltype(_impl_.pnl_){},
+      decltype(_impl_.cumulative_pnl_){},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.job_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    job_id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.job_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_job_id().empty()) {
-    job_id_.Set(from._internal_job_id(), 
-      GetArenaForAllocation());
+    _this->_impl_.job_id_.Set(from._internal_job_id(), _this->GetArenaForAllocation());
   }
-  if (from._internal_has_greeks()) {
-    greeks_ = new ::otrader::GreeksPayload(*from.greeks_);
-  } else {
-    greeks_ = nullptr;
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    _this->_impl_.greeks_ = new ::otrader::GreeksPayload(*from._impl_.greeks_);
   }
-  if (from._internal_has_cvar()) {
-    cvar_ = new ::otrader::CVaRPayload(*from.cvar_);
-  } else {
-    cvar_ = nullptr;
+  if ((from._impl_._has_bits_[0] & 0x00000002u) != 0) {
+    _this->_impl_.cvar_ = new ::otrader::CVaRPayload(*from._impl_.cvar_);
   }
-  ::memcpy(&tick_timestamp_ns_, &from.tick_timestamp_ns_,
-    static_cast<size_t>(reinterpret_cast<char*>(&cumulative_pnl_) -
-    reinterpret_cast<char*>(&tick_timestamp_ns_)) + sizeof(cumulative_pnl_));
+  ::memcpy(&_impl_.tick_timestamp_ns_, &from._impl_.tick_timestamp_ns_,
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.cumulative_pnl_) -
+    reinterpret_cast<char*>(&_impl_.tick_timestamp_ns_)) + sizeof(_impl_.cumulative_pnl_));
+
   // @@protoc_insertion_point(copy_constructor:otrader.EngineStateUpdate)
 }
-
-inline void EngineStateUpdate::SharedCtor() {
-job_id_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  job_id_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&greeks_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&cumulative_pnl_) -
-    reinterpret_cast<char*>(&greeks_)) + sizeof(cumulative_pnl_));
+inline void EngineStateUpdate::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+      decltype(_impl_.model_results_){arena},
+      decltype(_impl_.job_id_){},
+      decltype(_impl_.greeks_){nullptr},
+      decltype(_impl_.cvar_){nullptr},
+      decltype(_impl_.tick_timestamp_ns_){::int64_t{0}},
+      decltype(_impl_.spot_price_){0},
+      decltype(_impl_.implied_vol_){0},
+      decltype(_impl_.pnl_){0},
+      decltype(_impl_.cumulative_pnl_){0},
+  };
+  _impl_.job_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.job_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 EngineStateUpdate::~EngineStateUpdate() {
   // @@protoc_insertion_point(destructor:otrader.EngineStateUpdate)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void EngineStateUpdate::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  job_id_.Destroy();
-  if (this != internal_default_instance()) delete greeks_;
-  if (this != internal_default_instance()) delete cvar_;
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.model_results_.~RepeatedPtrField();
+  _impl_.job_id_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.greeks_;
+  if (this != internal_default_instance()) delete _impl_.cvar_;
 }
-
 void EngineStateUpdate::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void EngineStateUpdate::Clear() {
+PROTOBUF_NOINLINE void EngineStateUpdate::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.EngineStateUpdate)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  model_results_.Clear();
-  job_id_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && greeks_ != nullptr) {
-    delete greeks_;
-  }
-  greeks_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && cvar_ != nullptr) {
-    delete cvar_;
-  }
-  cvar_ = nullptr;
-  ::memset(&tick_timestamp_ns_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&cumulative_pnl_) -
-      reinterpret_cast<char*>(&tick_timestamp_ns_)) + sizeof(cumulative_pnl_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* EngineStateUpdate::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string job_id = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_job_id();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.EngineStateUpdate.job_id"));
-        } else
-          goto handle_unusual;
-        continue;
-      // int64 tick_timestamp_ns = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          tick_timestamp_ns_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // double spot_price = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
-          spot_price_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double implied_vol = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 33)) {
-          implied_vol_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // .otrader.GreeksPayload greeks = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
-          ptr = ctx->ParseMessage(_internal_mutable_greeks(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // repeated .otrader.ModelResult model_results = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_model_results(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<50>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      // .otrader.CVaRPayload cvar = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
-          ptr = ctx->ParseMessage(_internal_mutable_cvar(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // double pnl = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 65)) {
-          pnl_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      // double cumulative_pnl = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 73)) {
-          cumulative_pnl_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
+  _internal_mutable_model_results()->Clear();
+  _impl_.job_id_.ClearToEmpty();
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      ABSL_DCHECK(_impl_.greeks_ != nullptr);
+      _impl_.greeks_->Clear();
     }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
+    if (cached_has_bits & 0x00000002u) {
+      ABSL_DCHECK(_impl_.cvar_ != nullptr);
+      _impl_.cvar_->Clear();
+    }
+  }
+  ::memset(&_impl_.tick_timestamp_ns_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.cumulative_pnl_) -
+      reinterpret_cast<char*>(&_impl_.tick_timestamp_ns_)) + sizeof(_impl_.cumulative_pnl_));
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-uint8_t* EngineStateUpdate::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+const char* EngineStateUpdate::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<4, 9, 3, 48, 2> EngineStateUpdate::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_._has_bits_),
+    0, // no _extensions_
+    9, 120,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294966784,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    9,  // num_field_entries
+    3,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_EngineStateUpdate_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string job_id = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.job_id_)}},
+    // int64 tick_timestamp_ns = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(EngineStateUpdate, _impl_.tick_timestamp_ns_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.tick_timestamp_ns_)}},
+    // double spot_price = 3;
+    {::_pbi::TcParser::FastF64S1,
+     {25, 63, 0, PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.spot_price_)}},
+    // double implied_vol = 4;
+    {::_pbi::TcParser::FastF64S1,
+     {33, 63, 0, PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.implied_vol_)}},
+    // .otrader.GreeksPayload greeks = 5;
+    {::_pbi::TcParser::FastMtS1,
+     {42, 0, 0, PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.greeks_)}},
+    // repeated .otrader.ModelResult model_results = 6;
+    {::_pbi::TcParser::FastMtR1,
+     {50, 63, 1, PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.model_results_)}},
+    // .otrader.CVaRPayload cvar = 7;
+    {::_pbi::TcParser::FastMtS1,
+     {58, 1, 2, PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.cvar_)}},
+    // double pnl = 8;
+    {::_pbi::TcParser::FastF64S1,
+     {65, 63, 0, PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.pnl_)}},
+    // double cumulative_pnl = 9;
+    {::_pbi::TcParser::FastF64S1,
+     {73, 63, 0, PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.cumulative_pnl_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string job_id = 1;
+    {PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.job_id_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // int64 tick_timestamp_ns = 2;
+    {PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.tick_timestamp_ns_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
+    // double spot_price = 3;
+    {PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.spot_price_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double implied_vol = 4;
+    {PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.implied_vol_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // .otrader.GreeksPayload greeks = 5;
+    {PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.greeks_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // repeated .otrader.ModelResult model_results = 6;
+    {PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.model_results_), -1, 1,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .otrader.CVaRPayload cvar = 7;
+    {PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.cvar_), _Internal::kHasBitsOffset + 1, 2,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // double pnl = 8;
+    {PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.pnl_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+    // double cumulative_pnl = 9;
+    {PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.cumulative_pnl_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kDouble)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::otrader::GreeksPayload>()},
+    {::_pbi::TcParser::GetTable<::otrader::ModelResult>()},
+    {::_pbi::TcParser::GetTable<::otrader::CVaRPayload>()},
+  }}, {{
+    "\31\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+    "otrader.EngineStateUpdate"
+    "job_id"
+  }},
+};
+
+::uint8_t* EngineStateUpdate::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.EngineStateUpdate)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string job_id = 1;
   if (!this->_internal_job_id().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_job_id().data(), static_cast<int>(this->_internal_job_id().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.EngineStateUpdate.job_id");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_job_id(), target);
+    const std::string& _s = this->_internal_job_id();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.EngineStateUpdate.job_id");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // int64 tick_timestamp_ns = 2;
   if (this->_internal_tick_timestamp_ns() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(2, this->_internal_tick_timestamp_ns(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt64ToArrayWithField<2>(
+            stream, this->_internal_tick_timestamp_ns(), target);
   }
 
   // double spot_price = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_spot_price = this->_internal_spot_price();
-  uint64_t raw_spot_price;
+  ::uint64_t raw_spot_price;
   memcpy(&raw_spot_price, &tmp_spot_price, sizeof(tmp_spot_price));
   if (raw_spot_price != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(3, this->_internal_spot_price(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        3, this->_internal_spot_price(), target);
   }
 
   // double implied_vol = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_implied_vol = this->_internal_implied_vol();
-  uint64_t raw_implied_vol;
+  ::uint64_t raw_implied_vol;
   memcpy(&raw_implied_vol, &tmp_implied_vol, sizeof(tmp_implied_vol));
   if (raw_implied_vol != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(4, this->_internal_implied_vol(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        4, this->_internal_implied_vol(), target);
   }
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .otrader.GreeksPayload greeks = 5;
-  if (this->_internal_has_greeks()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(5, _Internal::greeks(this),
         _Internal::greeks(this).GetCachedSize(), target, stream);
   }
@@ -10142,187 +10321,203 @@ uint8_t* EngineStateUpdate::_InternalSerialize(
   // repeated .otrader.ModelResult model_results = 6;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_model_results_size()); i < n; i++) {
-    const auto& repfield = this->_internal_model_results(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+    const auto& repfield = this->_internal_model_results().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
         InternalWriteMessage(6, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   // .otrader.CVaRPayload cvar = 7;
-  if (this->_internal_has_cvar()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+  if (cached_has_bits & 0x00000002u) {
+    target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessage(7, _Internal::cvar(this),
         _Internal::cvar(this).GetCachedSize(), target, stream);
   }
 
   // double pnl = 8;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_pnl = this->_internal_pnl();
-  uint64_t raw_pnl;
+  ::uint64_t raw_pnl;
   memcpy(&raw_pnl, &tmp_pnl, sizeof(tmp_pnl));
   if (raw_pnl != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(8, this->_internal_pnl(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        8, this->_internal_pnl(), target);
   }
 
   // double cumulative_pnl = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cumulative_pnl = this->_internal_cumulative_pnl();
-  uint64_t raw_cumulative_pnl;
+  ::uint64_t raw_cumulative_pnl;
   memcpy(&raw_cumulative_pnl, &tmp_cumulative_pnl, sizeof(tmp_cumulative_pnl));
   if (raw_cumulative_pnl != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteDoubleToArray(9, this->_internal_cumulative_pnl(), target);
+    target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+        9, this->_internal_cumulative_pnl(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.EngineStateUpdate)
   return target;
 }
 
-size_t EngineStateUpdate::ByteSizeLong() const {
+::size_t EngineStateUpdate::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.EngineStateUpdate)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // repeated .otrader.ModelResult model_results = 6;
   total_size += 1UL * this->_internal_model_results_size();
-  for (const auto& msg : this->model_results_) {
+  for (const auto& msg : this->_internal_model_results()) {
     total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
   }
-
   // string job_id = 1;
   if (!this->_internal_job_id().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_job_id());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_job_id());
   }
 
-  // .otrader.GreeksPayload greeks = 5;
-  if (this->_internal_has_greeks()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *greeks_);
-  }
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    // .otrader.GreeksPayload greeks = 5;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          *_impl_.greeks_);
+    }
 
-  // .otrader.CVaRPayload cvar = 7;
-  if (this->_internal_has_cvar()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *cvar_);
-  }
+    // .otrader.CVaRPayload cvar = 7;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          *_impl_.cvar_);
+    }
 
+  }
   // int64 tick_timestamp_ns = 2;
   if (this->_internal_tick_timestamp_ns() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_tick_timestamp_ns());
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+        this->_internal_tick_timestamp_ns());
   }
 
   // double spot_price = 3;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_spot_price = this->_internal_spot_price();
-  uint64_t raw_spot_price;
+  ::uint64_t raw_spot_price;
   memcpy(&raw_spot_price, &tmp_spot_price, sizeof(tmp_spot_price));
   if (raw_spot_price != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double implied_vol = 4;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_implied_vol = this->_internal_implied_vol();
-  uint64_t raw_implied_vol;
+  ::uint64_t raw_implied_vol;
   memcpy(&raw_implied_vol, &tmp_implied_vol, sizeof(tmp_implied_vol));
   if (raw_implied_vol != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double pnl = 8;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_pnl = this->_internal_pnl();
-  uint64_t raw_pnl;
+  ::uint64_t raw_pnl;
   memcpy(&raw_pnl, &tmp_pnl, sizeof(tmp_pnl));
   if (raw_pnl != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
   // double cumulative_pnl = 9;
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cumulative_pnl = this->_internal_cumulative_pnl();
-  uint64_t raw_cumulative_pnl;
+  ::uint64_t raw_cumulative_pnl;
   memcpy(&raw_cumulative_pnl, &tmp_cumulative_pnl, sizeof(tmp_cumulative_pnl));
   if (raw_cumulative_pnl != 0) {
-    total_size += 1 + 8;
+    total_size += 9;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData EngineStateUpdate::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData EngineStateUpdate::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     EngineStateUpdate::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*EngineStateUpdate::GetClassData() const { return &_class_data_; }
-
-void EngineStateUpdate::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<EngineStateUpdate *>(to)->MergeFrom(
-      static_cast<const EngineStateUpdate &>(from));
-}
+const ::google::protobuf::Message::ClassData*EngineStateUpdate::GetClassData() const { return &_class_data_; }
 
 
-void EngineStateUpdate::MergeFrom(const EngineStateUpdate& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.EngineStateUpdate)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void EngineStateUpdate::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<EngineStateUpdate*>(&to_msg);
+  auto& from = static_cast<const EngineStateUpdate&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.EngineStateUpdate)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  model_results_.MergeFrom(from.model_results_);
+  _this->_internal_mutable_model_results()->MergeFrom(from._internal_model_results());
   if (!from._internal_job_id().empty()) {
-    _internal_set_job_id(from._internal_job_id());
+    _this->_internal_set_job_id(from._internal_job_id());
   }
-  if (from._internal_has_greeks()) {
-    _internal_mutable_greeks()->::otrader::GreeksPayload::MergeFrom(from._internal_greeks());
-  }
-  if (from._internal_has_cvar()) {
-    _internal_mutable_cvar()->::otrader::CVaRPayload::MergeFrom(from._internal_cvar());
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _this->_internal_mutable_greeks()->::otrader::GreeksPayload::MergeFrom(
+          from._internal_greeks());
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _this->_internal_mutable_cvar()->::otrader::CVaRPayload::MergeFrom(
+          from._internal_cvar());
+    }
   }
   if (from._internal_tick_timestamp_ns() != 0) {
-    _internal_set_tick_timestamp_ns(from._internal_tick_timestamp_ns());
+    _this->_internal_set_tick_timestamp_ns(from._internal_tick_timestamp_ns());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_spot_price = from._internal_spot_price();
-  uint64_t raw_spot_price;
+  ::uint64_t raw_spot_price;
   memcpy(&raw_spot_price, &tmp_spot_price, sizeof(tmp_spot_price));
   if (raw_spot_price != 0) {
-    _internal_set_spot_price(from._internal_spot_price());
+    _this->_internal_set_spot_price(from._internal_spot_price());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_implied_vol = from._internal_implied_vol();
-  uint64_t raw_implied_vol;
+  ::uint64_t raw_implied_vol;
   memcpy(&raw_implied_vol, &tmp_implied_vol, sizeof(tmp_implied_vol));
   if (raw_implied_vol != 0) {
-    _internal_set_implied_vol(from._internal_implied_vol());
+    _this->_internal_set_implied_vol(from._internal_implied_vol());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_pnl = from._internal_pnl();
-  uint64_t raw_pnl;
+  ::uint64_t raw_pnl;
   memcpy(&raw_pnl, &tmp_pnl, sizeof(tmp_pnl));
   if (raw_pnl != 0) {
-    _internal_set_pnl(from._internal_pnl());
+    _this->_internal_set_pnl(from._internal_pnl());
   }
-  static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
+  static_assert(sizeof(::uint64_t) == sizeof(double),
+                "Code assumes ::uint64_t and double are the same size.");
   double tmp_cumulative_pnl = from._internal_cumulative_pnl();
-  uint64_t raw_cumulative_pnl;
+  ::uint64_t raw_cumulative_pnl;
   memcpy(&raw_cumulative_pnl, &tmp_cumulative_pnl, sizeof(tmp_cumulative_pnl));
   if (raw_cumulative_pnl != 0) {
-    _internal_set_cumulative_pnl(from._internal_cumulative_pnl());
+    _this->_internal_set_cumulative_pnl(from._internal_cumulative_pnl());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void EngineStateUpdate::CopyFrom(const EngineStateUpdate& from) {
@@ -10332,7 +10527,7 @@ void EngineStateUpdate::CopyFrom(const EngineStateUpdate& from) {
   MergeFrom(from);
 }
 
-bool EngineStateUpdate::IsInitialized() const {
+PROTOBUF_NOINLINE bool EngineStateUpdate::IsInitialized() const {
   return true;
 }
 
@@ -10341,278 +10536,266 @@ void EngineStateUpdate::InternalSwap(EngineStateUpdate* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  model_results_.InternalSwap(&other->model_results_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &job_id_, lhs_arena,
-      &other->job_id_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(EngineStateUpdate, cumulative_pnl_)
-      + sizeof(EngineStateUpdate::cumulative_pnl_)
-      - PROTOBUF_FIELD_OFFSET(EngineStateUpdate, greeks_)>(
-          reinterpret_cast<char*>(&greeks_),
-          reinterpret_cast<char*>(&other->greeks_));
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  _impl_.model_results_.InternalSwap(&other->_impl_.model_results_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.job_id_, lhs_arena,
+                                       &other->_impl_.job_id_, rhs_arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.cumulative_pnl_)
+      + sizeof(EngineStateUpdate::_impl_.cumulative_pnl_)
+      - PROTOBUF_FIELD_OFFSET(EngineStateUpdate, _impl_.greeks_)>(
+          reinterpret_cast<char*>(&_impl_.greeks_),
+          reinterpret_cast<char*>(&other->_impl_.greeks_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata EngineStateUpdate::GetMetadata() const {
+::google::protobuf::Metadata EngineStateUpdate::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[31]);
 }
-
 // ===================================================================
 
 class CommandRequest::_Internal {
  public:
 };
 
-CommandRequest::CommandRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+CommandRequest::CommandRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.CommandRequest)
 }
-CommandRequest::CommandRequest(const CommandRequest& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  command_id_.InitDefault();
+CommandRequest::CommandRequest(const CommandRequest& from) : ::google::protobuf::Message() {
+  CommandRequest* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.command_id_){},
+      decltype(_impl_.action_){},
+      decltype(_impl_.payload_json_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.command_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    command_id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.command_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_command_id().empty()) {
-    command_id_.Set(from._internal_command_id(), 
-      GetArenaForAllocation());
+    _this->_impl_.command_id_.Set(from._internal_command_id(), _this->GetArenaForAllocation());
   }
-  action_.InitDefault();
+  _impl_.action_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    action_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.action_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_action().empty()) {
-    action_.Set(from._internal_action(), 
-      GetArenaForAllocation());
+    _this->_impl_.action_.Set(from._internal_action(), _this->GetArenaForAllocation());
   }
-  payload_json_.InitDefault();
+  _impl_.payload_json_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    payload_json_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.payload_json_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_payload_json().empty()) {
-    payload_json_.Set(from._internal_payload_json(), 
-      GetArenaForAllocation());
+    _this->_impl_.payload_json_.Set(from._internal_payload_json(), _this->GetArenaForAllocation());
   }
+
   // @@protoc_insertion_point(copy_constructor:otrader.CommandRequest)
 }
-
-inline void CommandRequest::SharedCtor() {
-command_id_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  command_id_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-action_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  action_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-payload_json_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  payload_json_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void CommandRequest::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.command_id_){},
+      decltype(_impl_.action_){},
+      decltype(_impl_.payload_json_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.command_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.command_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.action_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.action_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.payload_json_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.payload_json_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 CommandRequest::~CommandRequest() {
   // @@protoc_insertion_point(destructor:otrader.CommandRequest)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void CommandRequest::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  command_id_.Destroy();
-  action_.Destroy();
-  payload_json_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.command_id_.Destroy();
+  _impl_.action_.Destroy();
+  _impl_.payload_json_.Destroy();
 }
-
 void CommandRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void CommandRequest::Clear() {
+PROTOBUF_NOINLINE void CommandRequest::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.CommandRequest)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  command_id_.ClearToEmpty();
-  action_.ClearToEmpty();
-  payload_json_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.command_id_.ClearToEmpty();
+  _impl_.action_.ClearToEmpty();
+  _impl_.payload_json_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* CommandRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string command_id = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_command_id();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.CommandRequest.command_id"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string action = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_action();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.CommandRequest.action"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string payload_json = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_payload_json();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.CommandRequest.payload_json"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* CommandRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* CommandRequest::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 59, 2> CommandRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_CommandRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string command_id = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(CommandRequest, _impl_.command_id_)}},
+    // string action = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(CommandRequest, _impl_.action_)}},
+    // string payload_json = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(CommandRequest, _impl_.payload_json_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string command_id = 1;
+    {PROTOBUF_FIELD_OFFSET(CommandRequest, _impl_.command_id_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string action = 2;
+    {PROTOBUF_FIELD_OFFSET(CommandRequest, _impl_.action_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string payload_json = 3;
+    {PROTOBUF_FIELD_OFFSET(CommandRequest, _impl_.payload_json_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\26\12\6\14\0\0\0\0"
+    "otrader.CommandRequest"
+    "command_id"
+    "action"
+    "payload_json"
+  }},
+};
+
+::uint8_t* CommandRequest::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.CommandRequest)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string command_id = 1;
   if (!this->_internal_command_id().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_command_id().data(), static_cast<int>(this->_internal_command_id().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.CommandRequest.command_id");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_command_id(), target);
+    const std::string& _s = this->_internal_command_id();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.CommandRequest.command_id");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // string action = 2;
   if (!this->_internal_action().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_action().data(), static_cast<int>(this->_internal_action().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.CommandRequest.action");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_action(), target);
+    const std::string& _s = this->_internal_action();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.CommandRequest.action");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // string payload_json = 3;
   if (!this->_internal_payload_json().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_payload_json().data(), static_cast<int>(this->_internal_payload_json().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.CommandRequest.payload_json");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_payload_json(), target);
+    const std::string& _s = this->_internal_payload_json();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.CommandRequest.payload_json");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.CommandRequest)
   return target;
 }
 
-size_t CommandRequest::ByteSizeLong() const {
+::size_t CommandRequest::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.CommandRequest)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string command_id = 1;
   if (!this->_internal_command_id().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_command_id());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_command_id());
   }
 
   // string action = 2;
   if (!this->_internal_action().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_action());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_action());
   }
 
   // string payload_json = 3;
   if (!this->_internal_payload_json().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_payload_json());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_payload_json());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData CommandRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData CommandRequest::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     CommandRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*CommandRequest::GetClassData() const { return &_class_data_; }
-
-void CommandRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<CommandRequest *>(to)->MergeFrom(
-      static_cast<const CommandRequest &>(from));
-}
+const ::google::protobuf::Message::ClassData*CommandRequest::GetClassData() const { return &_class_data_; }
 
 
-void CommandRequest::MergeFrom(const CommandRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.CommandRequest)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void CommandRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<CommandRequest*>(&to_msg);
+  auto& from = static_cast<const CommandRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.CommandRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_command_id().empty()) {
-    _internal_set_command_id(from._internal_command_id());
+    _this->_internal_set_command_id(from._internal_command_id());
   }
   if (!from._internal_action().empty()) {
-    _internal_set_action(from._internal_action());
+    _this->_internal_set_action(from._internal_action());
   }
   if (!from._internal_payload_json().empty()) {
-    _internal_set_payload_json(from._internal_payload_json());
+    _this->_internal_set_payload_json(from._internal_payload_json());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void CommandRequest::CopyFrom(const CommandRequest& from) {
@@ -10622,7 +10805,7 @@ void CommandRequest::CopyFrom(const CommandRequest& from) {
   MergeFrom(from);
 }
 
-bool CommandRequest::IsInitialized() const {
+PROTOBUF_NOINLINE bool CommandRequest::IsInitialized() const {
   return true;
 }
 
@@ -10631,260 +10814,248 @@ void CommandRequest::InternalSwap(CommandRequest* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &command_id_, lhs_arena,
-      &other->command_id_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &action_, lhs_arena,
-      &other->action_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &payload_json_, lhs_arena,
-      &other->payload_json_, rhs_arena
-  );
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.command_id_, lhs_arena,
+                                       &other->_impl_.command_id_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.action_, lhs_arena,
+                                       &other->_impl_.action_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.payload_json_, lhs_arena,
+                                       &other->_impl_.payload_json_, rhs_arena);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata CommandRequest::GetMetadata() const {
+::google::protobuf::Metadata CommandRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[32]);
 }
-
 // ===================================================================
 
 class CommandAck::_Internal {
  public:
 };
 
-CommandAck::CommandAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+CommandAck::CommandAck(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:otrader.CommandAck)
 }
-CommandAck::CommandAck(const CommandAck& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  command_id_.InitDefault();
+CommandAck::CommandAck(const CommandAck& from) : ::google::protobuf::Message() {
+  CommandAck* const _this = this;
+  (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.command_id_){},
+      decltype(_impl_.error_message_){},
+      decltype(_impl_.success_){},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  _impl_.command_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    command_id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.command_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_command_id().empty()) {
-    command_id_.Set(from._internal_command_id(), 
-      GetArenaForAllocation());
+    _this->_impl_.command_id_.Set(from._internal_command_id(), _this->GetArenaForAllocation());
   }
-  error_message_.InitDefault();
+  _impl_.error_message_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    error_message_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.error_message_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_error_message().empty()) {
-    error_message_.Set(from._internal_error_message(), 
-      GetArenaForAllocation());
+    _this->_impl_.error_message_.Set(from._internal_error_message(), _this->GetArenaForAllocation());
   }
-  success_ = from.success_;
+  _this->_impl_.success_ = from._impl_.success_;
+
   // @@protoc_insertion_point(copy_constructor:otrader.CommandAck)
 }
-
-inline void CommandAck::SharedCtor() {
-command_id_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  command_id_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-error_message_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  error_message_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-success_ = false;
+inline void CommandAck::SharedCtor(::_pb::Arena* arena) {
+  (void)arena;
+  new (&_impl_) Impl_{
+      decltype(_impl_.command_id_){},
+      decltype(_impl_.error_message_){},
+      decltype(_impl_.success_){false},
+      /*decltype(_impl_._cached_size_)*/ {},
+  };
+  _impl_.command_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.command_id_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.error_message_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.error_message_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
-
 CommandAck::~CommandAck() {
   // @@protoc_insertion_point(destructor:otrader.CommandAck)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void CommandAck::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  command_id_.Destroy();
-  error_message_.Destroy();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.command_id_.Destroy();
+  _impl_.error_message_.Destroy();
 }
-
 void CommandAck::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
-void CommandAck::Clear() {
+PROTOBUF_NOINLINE void CommandAck::Clear() {
 // @@protoc_insertion_point(message_clear_start:otrader.CommandAck)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  command_id_.ClearToEmpty();
-  error_message_.ClearToEmpty();
-  success_ = false;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _impl_.command_id_.ClearToEmpty();
+  _impl_.error_message_.ClearToEmpty();
+  _impl_.success_ = false;
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* CommandAck::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string command_id = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_command_id();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.CommandAck.command_id"));
-        } else
-          goto handle_unusual;
-        continue;
-      // bool success = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          success_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // string error_message = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_error_message();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "otrader.CommandAck.error_message"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* CommandAck::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* CommandAck::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 50, 2> CommandAck::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_CommandAck_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string command_id = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(CommandAck, _impl_.command_id_)}},
+    // bool success = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(CommandAck, _impl_.success_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(CommandAck, _impl_.success_)}},
+    // string error_message = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(CommandAck, _impl_.error_message_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string command_id = 1;
+    {PROTOBUF_FIELD_OFFSET(CommandAck, _impl_.command_id_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // bool success = 2;
+    {PROTOBUF_FIELD_OFFSET(CommandAck, _impl_.success_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
+    // string error_message = 3;
+    {PROTOBUF_FIELD_OFFSET(CommandAck, _impl_.error_message_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\22\12\0\15\0\0\0\0"
+    "otrader.CommandAck"
+    "command_id"
+    "error_message"
+  }},
+};
+
+::uint8_t* CommandAck::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:otrader.CommandAck)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string command_id = 1;
   if (!this->_internal_command_id().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_command_id().data(), static_cast<int>(this->_internal_command_id().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.CommandAck.command_id");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_command_id(), target);
+    const std::string& _s = this->_internal_command_id();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.CommandAck.command_id");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   // bool success = 2;
   if (this->_internal_success() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(2, this->_internal_success(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        2, this->_internal_success(), target);
   }
 
   // string error_message = 3;
   if (!this->_internal_error_message().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_error_message().data(), static_cast<int>(this->_internal_error_message().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "otrader.CommandAck.error_message");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_error_message(), target);
+    const std::string& _s = this->_internal_error_message();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "otrader.CommandAck.error_message");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:otrader.CommandAck)
   return target;
 }
 
-size_t CommandAck::ByteSizeLong() const {
+::size_t CommandAck::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:otrader.CommandAck)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string command_id = 1;
   if (!this->_internal_command_id().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_command_id());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_command_id());
   }
 
   // string error_message = 3;
   if (!this->_internal_error_message().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_error_message());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_error_message());
   }
 
   // bool success = 2;
   if (this->_internal_success() != 0) {
-    total_size += 1 + 1;
+    total_size += 2;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData CommandAck::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+const ::google::protobuf::Message::ClassData CommandAck::_class_data_ = {
+    ::google::protobuf::Message::CopyWithSourceCheck,
     CommandAck::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*CommandAck::GetClassData() const { return &_class_data_; }
-
-void CommandAck::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<CommandAck *>(to)->MergeFrom(
-      static_cast<const CommandAck &>(from));
-}
+const ::google::protobuf::Message::ClassData*CommandAck::GetClassData() const { return &_class_data_; }
 
 
-void CommandAck::MergeFrom(const CommandAck& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:otrader.CommandAck)
-  GOOGLE_DCHECK_NE(&from, this);
-  uint32_t cached_has_bits = 0;
+void CommandAck::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<CommandAck*>(&to_msg);
+  auto& from = static_cast<const CommandAck&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:otrader.CommandAck)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_command_id().empty()) {
-    _internal_set_command_id(from._internal_command_id());
+    _this->_internal_set_command_id(from._internal_command_id());
   }
   if (!from._internal_error_message().empty()) {
-    _internal_set_error_message(from._internal_error_message());
+    _this->_internal_set_error_message(from._internal_error_message());
   }
   if (from._internal_success() != 0) {
-    _internal_set_success(from._internal_success());
+    _this->_internal_set_success(from._internal_success());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void CommandAck::CopyFrom(const CommandAck& from) {
@@ -10894,7 +11065,7 @@ void CommandAck::CopyFrom(const CommandAck& from) {
   MergeFrom(from);
 }
 
-bool CommandAck::IsInitialized() const {
+PROTOBUF_NOINLINE bool CommandAck::IsInitialized() const {
   return true;
 }
 
@@ -10903,163 +11074,23 @@ void CommandAck::InternalSwap(CommandAck* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &command_id_, lhs_arena,
-      &other->command_id_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &error_message_, lhs_arena,
-      &other->error_message_, rhs_arena
-  );
-  swap(success_, other->success_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.command_id_, lhs_arena,
+                                       &other->_impl_.command_id_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.error_message_, lhs_arena,
+                                       &other->_impl_.error_message_, rhs_arena);
+        swap(_impl_.success_, other->_impl_.success_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata CommandAck::GetMetadata() const {
+::google::protobuf::Metadata CommandAck::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_otrader_5fengine_2eproto_getter, &descriptor_table_otrader_5fengine_2eproto_once,
       file_level_metadata_otrader_5fengine_2eproto[33]);
 }
-
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace otrader
-PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::otrader::Empty*
-Arena::CreateMaybeMessage< ::otrader::Empty >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::Empty >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::EngineStatus*
-Arena::CreateMaybeMessage< ::otrader::EngineStatus >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::EngineStatus >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::StrategySummary*
-Arena::CreateMaybeMessage< ::otrader::StrategySummary >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::StrategySummary >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::LogLine*
-Arena::CreateMaybeMessage< ::otrader::LogLine >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::LogLine >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::StrategyUpdate*
-Arena::CreateMaybeMessage< ::otrader::StrategyUpdate >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::StrategyUpdate >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::StrategyNameRequest*
-Arena::CreateMaybeMessage< ::otrader::StrategyNameRequest >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::StrategyNameRequest >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::AddStrategyRequest*
-Arena::CreateMaybeMessage< ::otrader::AddStrategyRequest >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::AddStrategyRequest >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::OrderRecord*
-Arena::CreateMaybeMessage< ::otrader::OrderRecord >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::OrderRecord >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::TradeRecord*
-Arena::CreateMaybeMessage< ::otrader::TradeRecord >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::TradeRecord >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::OrdersAndTradesResponse*
-Arena::CreateMaybeMessage< ::otrader::OrdersAndTradesResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::OrdersAndTradesResponse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::ListPortfoliosResponse*
-Arena::CreateMaybeMessage< ::otrader::ListPortfoliosResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::ListPortfoliosResponse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::ListStrategyClassesResponse*
-Arena::CreateMaybeMessage< ::otrader::ListStrategyClassesResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::ListStrategyClassesResponse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::GetStrategyClassDefaultsRequest*
-Arena::CreateMaybeMessage< ::otrader::GetStrategyClassDefaultsRequest >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::GetStrategyClassDefaultsRequest >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse*
-Arena::CreateMaybeMessage< ::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::GetStrategyClassDefaultsResponse_SettingsEntry_DoNotUse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::GetStrategyClassDefaultsResponse*
-Arena::CreateMaybeMessage< ::otrader::GetStrategyClassDefaultsResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::GetStrategyClassDefaultsResponse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::AddStrategyResponse*
-Arena::CreateMaybeMessage< ::otrader::AddStrategyResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::AddStrategyResponse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::RemoveStrategyResponse*
-Arena::CreateMaybeMessage< ::otrader::RemoveStrategyResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::RemoveStrategyResponse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::DeleteStrategyResponse*
-Arena::CreateMaybeMessage< ::otrader::DeleteStrategyResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::DeleteStrategyResponse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::GetRemovedStrategiesResponse*
-Arena::CreateMaybeMessage< ::otrader::GetRemovedStrategiesResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::GetRemovedStrategiesResponse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse*
-Arena::CreateMaybeMessage< ::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::StrategyHoldingsResponse_HoldingsEntry_DoNotUse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::StrategyHoldingsResponse*
-Arena::CreateMaybeMessage< ::otrader::StrategyHoldingsResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::StrategyHoldingsResponse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::BasePositionMsg*
-Arena::CreateMaybeMessage< ::otrader::BasePositionMsg >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::BasePositionMsg >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::OptionPositionMsg*
-Arena::CreateMaybeMessage< ::otrader::OptionPositionMsg >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::OptionPositionMsg >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::PortfolioSummaryMsg*
-Arena::CreateMaybeMessage< ::otrader::PortfolioSummaryMsg >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::PortfolioSummaryMsg >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse*
-Arena::CreateMaybeMessage< ::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::StrategyHoldingMsg_OptionsEntry_DoNotUse >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::StrategyHoldingMsg*
-Arena::CreateMaybeMessage< ::otrader::StrategyHoldingMsg >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::StrategyHoldingMsg >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::StrategyConfig*
-Arena::CreateMaybeMessage< ::otrader::StrategyConfig >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::StrategyConfig >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::StreamRequest*
-Arena::CreateMaybeMessage< ::otrader::StreamRequest >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::StreamRequest >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::GreeksPayload*
-Arena::CreateMaybeMessage< ::otrader::GreeksPayload >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::GreeksPayload >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::CVaRPayload*
-Arena::CreateMaybeMessage< ::otrader::CVaRPayload >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::CVaRPayload >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::ModelResult*
-Arena::CreateMaybeMessage< ::otrader::ModelResult >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::ModelResult >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::EngineStateUpdate*
-Arena::CreateMaybeMessage< ::otrader::EngineStateUpdate >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::EngineStateUpdate >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::CommandRequest*
-Arena::CreateMaybeMessage< ::otrader::CommandRequest >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::CommandRequest >(arena);
-}
-template<> PROTOBUF_NOINLINE ::otrader::CommandAck*
-Arena::CreateMaybeMessage< ::otrader::CommandAck >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::otrader::CommandAck >(arena);
-}
-PROTOBUF_NAMESPACE_CLOSE
-
+namespace google {
+namespace protobuf {
+}  // namespace protobuf
+}  // namespace google
 // @@protoc_insertion_point(global_scope)
-#include <google/protobuf/port_undef.inc>
+#include "google/protobuf/port_undef.inc"

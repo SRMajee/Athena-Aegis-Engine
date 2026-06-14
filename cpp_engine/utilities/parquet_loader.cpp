@@ -57,11 +57,11 @@ bool ArrowParquetLoader::load(std::string const& path, std::string const& time_c
     infile = *status;
 
     // Parquet reader
-    auto reader_result = OpenFile(infile, default_memory_pool());
-    if (!reader_result.ok()) {
+    std::unique_ptr<FileReader> reader;
+    auto open_status = OpenFile(infile, default_memory_pool(), &reader);
+    if (!open_status.ok()) {
         return false;
     }
-    std::unique_ptr<FileReader> reader = std::move(reader_result).ValueOrDie();
 
     // Read table
     std::shared_ptr<Table> table;
@@ -80,12 +80,18 @@ bool ArrowParquetLoader::load(std::string const& path, std::string const& time_c
 
     if (meta_.row_count > 0) {
         const Array* ts_arr = detail::ColumnChunk0(table_.get(), time_col_index_);
-        if ((ts_arr != nullptr) && ts_arr->type_id() == Type::TIMESTAMP) {
-            const auto* ts = static_cast<const TimestampArray*>(ts_arr);
-            auto ts_type = std::static_pointer_cast<TimestampType>(ts_arr->type());
-            auto unit = ts_type->unit();
-            meta_.ts_start = TsToIso(detail::ArrowTsToChrono(ts->Value(0), unit));
-            meta_.ts_end = TsToIso(detail::ArrowTsToChrono(ts->Value(ts->length() - 1), unit));
+        if (ts_arr != nullptr) {
+            if (ts_arr->type_id() == Type::TIMESTAMP) {
+                const auto* ts = static_cast<const TimestampArray*>(ts_arr);
+                auto ts_type = std::static_pointer_cast<TimestampType>(ts_arr->type());
+                auto unit = ts_type->unit();
+                meta_.ts_start = TsToIso(detail::ArrowTsToChrono(ts->Value(0), unit));
+                meta_.ts_end = TsToIso(detail::ArrowTsToChrono(ts->Value(ts->length() - 1), unit));
+            } else if (ts_arr->type_id() == Type::INT64) {
+                const auto* ts = static_cast<const Int64Array*>(ts_arr);
+                meta_.ts_start = TsToIso(detail::ArrowInt64ToChrono(ts->Value(0)));
+                meta_.ts_end = TsToIso(detail::ArrowInt64ToChrono(ts->Value(ts->length() - 1)));
+            }
         }
     }
     return true;
@@ -102,16 +108,28 @@ void ArrowParquetLoader::collect_symbols(std::unordered_set<std::string>& out) c
         return;
     }
     const Array* arr = detail::ColumnChunk0(table_.get(), col_sym);
-    if ((arr == nullptr) || arr->type_id() != Type::STRING || arr->null_count() == arr->length()) {
+    if (arr == nullptr) {
         return;
     }
-    const auto* str_arr = static_cast<const StringArray*>(arr);
+    const bool is_string = (arr->type_id() == Type::STRING);
+    const bool is_large_string = (arr->type_id() == Type::LARGE_STRING);
+    if (!is_string && !is_large_string) {
+        return;
+    }
+    if (arr->null_count() == arr->length()) {
+        return;
+    }
     const int64_t n = arr->length();
     for (int64_t i = 0; i < n; ++i) {
         if (arr->IsNull(i)) {
             continue;
         }
-        std::string s = str_arr->GetString(i);
+        std::string s;
+        if (is_string) {
+            s = static_cast<const StringArray*>(arr)->GetString(i);
+        } else {
+            s = static_cast<const LargeStringArray*>(arr)->GetString(i);
+        }
         if (!s.empty()) {
             out.insert(std::move(s));
         }

@@ -26,18 +26,18 @@ def api_system_status() -> Dict[str, Any]:
 
 
 @router.post("/api/system/restart_live")
-def api_restart_live() -> Dict[str, Any]:
+async def api_restart_live() -> Dict[str, Any]:
     """Soft restart: StopMarketData + Disconnect, then Connect + StartMarketData."""
     if AppState.live.live_client is None:
         return {"status": "error", "error": "live_client not initialized"}
 
-    disc = AppState.live.live_client.disconnect_gateway()
-    conn = AppState.live.live_client.connect_gateway()
+    disc = await AppState.live.live_client.disconnect_gateway()
+    conn = await AppState.live.live_client.connect_gateway()
     return {"status": "ok", "disconnect": disc, "connect": conn}
 
 
 @router.get("/api/orders-trades/db")
-def api_orders_trades_db(
+async def api_orders_trades_db(
     strategy: Optional[str] = Query(None, description="Filter by strategy_name"),
     record_type: Optional[str] = Query(
         None, description="Order, Trade, or omitted for both"
@@ -45,7 +45,7 @@ def api_orders_trades_db(
     limit: int = Query(100, ge=1, le=5000),
 ) -> Dict[str, Any]:
     """Historical orders/trades from PostgreSQL (strategies + records)."""
-    return get_orders_trades_from_db(
+    return await get_orders_trades_from_db(
         strategy=strategy,
         record_type=record_type,
         limit=limit,
@@ -53,7 +53,6 @@ def api_orders_trades_db(
 
 
 @router.get("/api/database/contracts")
-def api_database_contracts() -> Dict[str, Any]:
+async def api_database_contracts() -> Dict[str, Any]:
     """Contract summary (equity + option totals and rows)."""
-    return get_contracts_overview_from_db()
-
+    return await get_contracts_overview_from_db()

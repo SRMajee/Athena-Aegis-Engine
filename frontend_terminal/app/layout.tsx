@@ -35,10 +35,10 @@ export default function RootLayout({
           {/* 右侧：上 65% 为 page content，下 35% 为 LogDock，整体高度锁死为一屏。
               左右分栏使用比例宽度：sidebar 占 ~12%，右侧 body 占其余空间。 */}
           <div className="flex-1 flex flex-col md:ml-[12%] min-h-0 h-screen">
-            <main className="basis-[65%] min-h-0 overflow-hidden">
+            <main className="flex-1 min-h-0 overflow-hidden">
               {children}
             </main>
-            <div className="basis-[35%] min-h-0">
+            <div className="shrink-0">
               <LogDock />
             </div>
           </div>

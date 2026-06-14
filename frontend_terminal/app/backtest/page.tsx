@@ -1,15 +1,19 @@
 'use client';
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { api, getApiBase } from "@/lib/api";
 import PageLayout from "@/app/components/PageLayout";
 import TerminalSelect from "@/app/components/TerminalSelect";
+import { useTradeStore } from "@/lib/store/useTradeStore";
 import type {
-  BacktestResponse,
   FileDetail,
   FileInfo,
   StrategyOption,
 } from "@/app/types/backtest";
+
+// Dynamically import TelemetryChart to prevent SSR issues (window is not defined)
+const TelemetryChart = dynamic(() => import("./TelemetryChart"), { ssr: false });
 
 const labelClass =
   "w-24 shrink-0 text-right form-label whitespace-nowrap";
@@ -84,25 +88,48 @@ export default function BacktestPage() {
   const [selectedStrategy, setSelectedStrategy] = useState<string>("");
   const [fileDetail, setFileDetail] = useState<FileDetail | null>(null);
 
-  const [running, setRunning] = useState(false);
-  const [backtestResult, setBacktestResult] = useState<BacktestResponse | null>(null);
-  type StatusBarPhase = "running" | "finalising" | "completed";
-  const [statusBarPhase, setStatusBarPhase] = useState<StatusBarPhase>("completed");
   const [feeRate, setFeeRate] = useState<number>(0.35);
   const [slippageBps, setSlippageBps] = useState<number>(5);
   const [riskFreeRate, setRiskFreeRate] = useState<number>(0.05);
   const [ivPriceMode, setIvPriceMode] = useState<"mid" | "bid" | "ask">("mid");
 
+  // Select Zustand store states
+  const isRunning = useTradeStore((s) => s.isRunning);
+  const statusBarPhase = useTradeStore((s) => s.statusBarPhase);
+  const summary = useTradeStore((s) => s.summary);
+  const dailyResults = useTradeStore((s) => s.dailyResults);
+  const storeError = useTradeStore((s) => s.error);
+  const maxDelta = useTradeStore((s) => s.maxDelta);
+  const maxGamma = useTradeStore((s) => s.maxGamma);
+  const maxTheta = useTradeStore((s) => s.maxTheta);
+  
+  // Running trackers
+  const runningFinalPnL = useTradeStore((s) => s.runningFinalPnL);
+  const runningMaxDrawdown = useTradeStore((s) => s.runningMaxDrawdown);
+  const runningUniqueDays = useTradeStore((s) => s.runningUniqueDays);
+  const runningDailyPnLs = useTradeStore((s) => s.runningDailyPnLs);
+  const runningDailyFees = useTradeStore((s) => s.runningDailyFees);
+  const runningDailyTrades = useTradeStore((s) => s.runningDailyTrades);
+  const runningDailyTimesteps = useTradeStore((s) => s.runningDailyTimesteps);
+  const runningSharpe = useTradeStore((s) => s.runningSharpe);
+  const runningDuration = useTradeStore((s) => s.runningDuration);
+  const runningFrames = useTradeStore((s) => s.runningFrames);
+  const runningTotalTrades = useTradeStore((s) => s.runningTotalTrades);
+  const runningTotalFees = useTradeStore((s) => s.runningTotalFees);
+
+  const startBacktest = useTradeStore((s) => s.startBacktest);
+  const stopBacktest = useTradeStore((s) => s.stopBacktest);
+  const clearStore = useTradeStore((s) => s.clearStore);
+
   const handleStopBacktest = async () => {
     try {
       const data = await api.post<{ status?: string }>("/api/backtest/cancel");
       if (data.status === "ok") {
-        setStatusBarPhase("completed");
+        stopBacktest();
       }
     } catch (error) {
       console.error("Error cancelling backtest", error);
-    } finally {
-      setRunning(false);
+      stopBacktest(); // Still stop UI if API fails
     }
   };
 
@@ -133,7 +160,10 @@ export default function BacktestPage() {
 
     fetchFiles();
     fetchStrategies();
-  }, []);
+    
+    // Clear telemetry store on mount
+    clearStore();
+  }, [clearStore]);
 
   const availableSymbols = useMemo(() => {
     const segments = files.filter((f) => f.type === "segment");
@@ -200,12 +230,10 @@ export default function BacktestPage() {
       return;
     }
 
-    setRunning(true);
-    setBacktestResult({ status: "ok", timestep_metrics: [] });
-    setStatusBarPhase("running");
+    clearStore();
 
     try {
-      const data = await api.post<BacktestResponse>("/api/run_backtest", {
+      const data = await api.post<{ status: string; job_id?: string; error?: string }>("/api/run_backtest", {
         parquet: selectedSymbol,
         strategy: selectedStrategy,
         fee_rate: feeRate,
@@ -217,56 +245,26 @@ export default function BacktestPage() {
         end_date: selectedDateEnd,
       });
 
-      if (data.status === "error") {
-        setBacktestResult({
-          status: "error",
-          error: data.error || "Unknown error",
+      if (data.status === "error" || !data.job_id) {
+        useTradeStore.setState({
+          error: data.error || "Failed to start backtest",
+          isRunning: false,
+          statusBarPhase: "completed",
         });
-        setStatusBarPhase("completed");
-      } else if (data.status === "cancelled") {
-        setBacktestResult({
-          status: "cancelled",
-          error: data.error || "Backtest cancelled by user",
-        });
-        setStatusBarPhase("completed");
       } else {
-        setBacktestResult({
-          status: "ok",
-          result: data.result,
-          timestep_metrics: data.timestep_metrics || [],
-          daily_results: data.daily_results || [],
-          chart_svg: data.chart_svg,
-          chart_image_base64: data.chart_image_base64,
-          errors: data.errors,
-        });
-        setStatusBarPhase("finalising");
+        // Enqueue stream telemetry subscription in Zustand
+        startBacktest(data.job_id, selectedStrategy, feeRate, riskFreeRate);
       }
     } catch (error) {
-      setBacktestResult({
-        status: "error",
+      useTradeStore.setState({
         error: `Network error: ${error instanceof Error ? error.message : "Unknown error"}`,
+        isRunning: false,
+        statusBarPhase: "completed",
       });
-      setStatusBarPhase("completed");
-    } finally {
-      setRunning(false);
     }
   };
 
-  // After "finalising", show "completed" briefly then keep green
-  const finalisingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  useEffect(() => {
-    if (statusBarPhase !== "finalising") return;
-    finalisingTimeoutRef.current = setTimeout(() => setStatusBarPhase("completed"), 800);
-    return () => {
-      if (finalisingTimeoutRef.current) {
-        clearTimeout(finalisingTimeoutRef.current);
-        finalisingTimeoutRef.current = null;
-      }
-    };
-  }, [statusBarPhase]);
-
   // On page refresh or navigate away: cancel any running backtest so backend clears the process.
-  // sendBeacon is used on beforeunload so the request is sent even when the page is unloading.
   const cancelBacktestUrl = `${getApiBase()}/api/backtest/cancel`;
   useEffect(() => {
     const handleBeforeUnload = () => {
@@ -295,13 +293,15 @@ export default function BacktestPage() {
     return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   };
 
+  const showValues = summary !== null && statusBarPhase === "completed";
+  const netPnl = summary ? summary.net_pnl : 0;
+
   return (
     <PageLayout title="Option Strategy Backtester">
       <React.Fragment>
-        {/* 主内容区域：左列配置固定，右列结果单独滚动 */}
         <div className="flex-1 min-h-0 overflow-hidden">
           <div className="h-full flex flex-col lg:flex-row gap-3 min-h-0">
-            {/* 左侧：所有配置表单（约 30% 宽度） */}
+            {/* Left Configuration Form */}
             <div className="w-full lg:w-[30%] flex-shrink-0">
               <div className="h-full border border-[color:var(--border-subtle)] px-3 py-2 space-y-2">
                 <h2 className="text-xs uppercase tracking-[0.12em] text-[color:var(--text-muted)]">
@@ -316,7 +316,7 @@ export default function BacktestPage() {
                         value={selectedSymbol}
                         onValueChange={setSelectedSymbol}
                         className={inputClass}
-                        disabled={loading || running || availableSymbols.length === 0}
+                        disabled={loading || isRunning || availableSymbols.length === 0}
                         placeholder={
                           loading
                             ? "Loading symbols..."
@@ -352,7 +352,7 @@ export default function BacktestPage() {
                           value={selectedDateStart}
                           onChange={(e) => setSelectedDateStart(e.target.value)}
                           className={inputClassDate}
-                          disabled={running || !selectedSymbol}
+                          disabled={isRunning || !selectedSymbol}
                         />
                       </div>
                       <div className="flex items-center gap-2">
@@ -362,7 +362,7 @@ export default function BacktestPage() {
                           value={selectedDateEnd}
                           onChange={(e) => setSelectedDateEnd(e.target.value)}
                           className={inputClassDate}
-                          disabled={running || !selectedSymbol}
+                          disabled={isRunning || !selectedSymbol}
                         />
                       </div>
                     </div>
@@ -373,7 +373,7 @@ export default function BacktestPage() {
                         value={selectedStrategy}
                         onValueChange={setSelectedStrategy}
                         className={inputClass}
-                        disabled={running || strategiesLoading}
+                        disabled={isRunning || strategiesLoading}
                         placeholder={
                           strategiesLoading
                             ? "Loading strategies..."
@@ -396,7 +396,7 @@ export default function BacktestPage() {
                         step="0.0001"
                         min="0"
                         className={inputClass}
-                        disabled={running}
+                        disabled={isRunning}
                       />
                     </div>
                     <div className="flex items-center gap-2">
@@ -408,7 +408,7 @@ export default function BacktestPage() {
                         step="1"
                         min="0"
                         className={inputClass}
-                        disabled={running}
+                        disabled={isRunning}
                       />
                     </div>
                     <div className="flex items-center gap-2">
@@ -419,7 +419,7 @@ export default function BacktestPage() {
                         type="number"
                         step="0.0001"
                         className={inputClass}
-                        disabled={running}
+                        disabled={isRunning}
                       />
                     </div>
                     <div className="flex items-center gap-2">
@@ -433,7 +433,7 @@ export default function BacktestPage() {
                             { value: "bid", label: "Bid" },
                             { value: "ask", label: "Ask" },
                           ]}
-                          disabled={running}
+                          disabled={isRunning}
                         />
                       </div>
                     </div>
@@ -441,22 +441,24 @@ export default function BacktestPage() {
 
                   <div className="flex items-center justify-end pt-1 gap-2">
                     <button
+                      id="btn-start-backtest"
                       onClick={handleRunBacktest}
                       disabled={
                         !selectedSymbol ||
                         !selectedDateStart ||
                         !selectedDateEnd ||
                         !selectedStrategy ||
-                        running
+                        isRunning
                       }
                       className="h-7 px-4 btn btn-primary disabled:text-[color:var(--text-muted)] disabled:border-[color:var(--border-subtle)] disabled:cursor-not-allowed rounded-none"
                     >
-                      {running ? "Running..." : "Start Backtest"}
+                      {isRunning ? "Running..." : "Start Backtest"}
                     </button>
                     <button
+                      id="btn-stop-backtest"
                       type="button"
                       onClick={handleStopBacktest}
-                      disabled={!running}
+                      disabled={!isRunning}
                       className="h-7 px-3 btn btn-danger disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       Stop
@@ -466,248 +468,252 @@ export default function BacktestPage() {
               </div>
             </div>
 
-            {/* 右侧：结果区域（状态条、错误、指标、图表、日度结果），在自身内部滚动 */}
+            {/* Right Results Dashboard */}
             <div className="mt-3 lg:mt-0 flex-1 min-h-0 flex flex-col space-y-3 overflow-auto">
-              {/* Status bar between config and chart when running/finalising */}
+              {/* Status Banner */}
               {(statusBarPhase === "running" || statusBarPhase === "finalising") && (
-                <div className="w-full py-2 px-3 text-center text-xs uppercase tracking-wide font-medium bg-[color:var(--surface-subtle)] text-[color:var(--text-muted)] border border-[color:var(--border-subtle)]">
+                <div id="bt-status-banner" className="w-full py-2 px-3 text-center text-xs uppercase tracking-wide font-medium bg-[color:var(--surface-subtle)] text-[color:var(--text-muted)] border border-[color:var(--border-subtle)]">
                   {statusBarPhase === "running" ? "Running" : "Finalising"}
                 </div>
               )}
 
-              {backtestResult?.status === "error" && (
+              {storeError && (
                 <div className="border border-[color:var(--state-error)] bg-[color:var(--surface-subtle)] px-3 py-2">
                   <p className="text-xs text-[color:var(--state-error)]">
-                    <span className="font-medium">Error:</span> {backtestResult.error}
+                    <span className="font-medium">Error:</span> {storeError}
                   </p>
                 </div>
               )}
 
-              {backtestResult?.status === "cancelled" && (
-                <div className="border border-[color:var(--border-subtle)] bg-[color:var(--surface-subtle)] px-3 py-2">
-                  <p className="text-xs text-[color:var(--text-muted)]">
-                    Backtest cancelled by user.
-                  </p>
-                </div>
-              )}
-
+              {/* Metrics cards grid */}
+              {/* Metrics cards grid */}
               {(() => {
-                const r = backtestResult?.result;
-                const hasResult = backtestResult?.status === "ok" && !!r;
-                const showValues = hasResult && statusBarPhase === "completed";
-                const netPnl =
-                  r != null
-                    ? r.net_pnl ?? r.final_pnl - (r.total_fees ?? 0)
-                    : 0;
+                const isCompleted = (statusBarPhase === "completed" || statusBarPhase === "finalising") && summary !== null;
+                
+                const displayFinalPnL = isCompleted ? summary!.final_pnl : (statusBarPhase === "running" ? runningFinalPnL : null);
+                const finalPnLColor = displayFinalPnL !== null
+                  ? (displayFinalPnL >= 0 ? "text-[color:var(--state-success)]" : "text-[color:var(--state-error)]")
+                  : "text-[color:var(--text-soft)]";
+                const finalPnLText = displayFinalPnL !== null ? `$${displayFinalPnL.toFixed(2)}` : "—";
 
-                const formatOrDash = (value: string | number | null | undefined) =>
-                  showValues && value != null && value !== ""
-                    ? String(value)
-                    : "—";
+                const displayNetPnL = isCompleted ? summary!.net_pnl : (statusBarPhase === "running" ? (runningFinalPnL - runningTotalFees) : null);
+                const netPnLColor = displayNetPnL !== null
+                  ? (displayNetPnL >= 0 ? "text-[color:var(--state-success)]" : "text-[color:var(--state-error)]")
+                  : "text-[color:var(--text-soft)]";
+                const netPnLText = displayNetPnL !== null ? `$${displayNetPnL.toFixed(2)}` : "—";
+
+                const displaySharpe = isCompleted ? summary!.daily_sharpe : (statusBarPhase === "running" ? runningSharpe : null);
+                const sharpeText = displaySharpe !== null ? Number(displaySharpe).toFixed(3) : "—";
+
+                const displayMaxDD = isCompleted ? summary!.max_drawdown : (statusBarPhase === "running" ? runningMaxDrawdown : null);
+                const maxDDText = displayMaxDD !== null ? `${Number(displayMaxDD).toFixed(2)}%` : "—";
+
+                const displayTrades = isCompleted ? summary!.total_trades : (statusBarPhase === "running" ? runningTotalTrades : null);
+                const tradesText = displayTrades !== null ? displayTrades : "—";
+
+                const displayFees = isCompleted ? summary!.total_fees : (statusBarPhase === "running" ? runningTotalFees : null);
+                const feesText = displayFees !== null ? `$${Number(displayFees).toFixed(2)}` : "—";
+
+                const displayDays = isCompleted ? summary!.num_days : (statusBarPhase === "running" ? runningUniqueDays.size : null);
+                const daysText = displayDays !== null && displayDays >= 1 ? displayDays : "—";
+
+                const displayDuration = isCompleted ? summary!.duration_seconds : (statusBarPhase === "running" ? runningDuration : null);
+                const durationText = displayDuration !== null ? `${displayDuration.toFixed(2)}s` : "—";
+
+                const displayFrames = isCompleted ? summary!.processed_timesteps : (statusBarPhase === "running" ? runningFrames : null);
+                const framesText = displayFrames !== null ? displayFrames : "—";
+
+                const displayRows = isCompleted ? (summary!.total_rows ?? summary!.processed_timesteps) : (statusBarPhase === "running" ? runningFrames : null);
+                const rowsText = displayRows !== null ? displayRows.toLocaleString() : "—";
 
                 return (
-                  <>
-                    <div className="grid grid-cols-5 gap-2">
-                      <MetricCard
-                        label="Final PnL"
-                        valueClassName={`text-lg ${
-                          showValues && r && r.final_pnl >= 0
-                            ? "text-[color:var(--state-success)]"
-                            : showValues
-                              ? "text-[color:var(--state-error)]"
-                              : "text-[color:var(--text-soft)]"
-                        }`}
-                      >
-                        {showValues && r
-                          ? `$${r.final_pnl.toFixed(2)}`
-                          : "—"}
-                      </MetricCard>
+                  <div className="grid grid-cols-5 gap-2">
+                    <MetricCard label="Final PnL" valueClassName={`text-lg ${finalPnLColor}`}>
+                      {finalPnLText}
+                    </MetricCard>
 
-                      <MetricCard
-                        label="Net PnL"
-                        valueClassName={`text-lg ${
-                          showValues && r && netPnl >= 0
-                            ? "text-[color:var(--state-success)]"
-                            : showValues
-                              ? "text-[color:var(--state-error)]"
-                              : "text-[color:var(--text-soft)]"
-                        }`}
-                      >
-                        {showValues && r
-                          ? `$${netPnl.toFixed(2)}`
-                          : "—"}
-                      </MetricCard>
+                    <MetricCard label="Net PnL" valueClassName={`text-lg ${netPnLColor}`}>
+                      {netPnLText}
+                    </MetricCard>
 
-                      <MetricCard label="Sharpe (Daily)">
-                        {showValues && r && r.daily_sharpe != null
-                          ? Number(r.daily_sharpe).toFixed(3)
-                          : "—"}
-                      </MetricCard>
+                    <MetricCard label="Sharpe (Daily)">
+                      {sharpeText}
+                    </MetricCard>
 
-                      <MetricCard label="Max DD">
-                        {showValues && r && r.max_drawdown != null
-                          ? Number(r.max_drawdown).toFixed(2)
-                          : "—"}
-                      </MetricCard>
+                    <MetricCard label="Max DD">
+                      {maxDDText}
+                    </MetricCard>
 
-                      <MetricCard label="Total Trades">
-                        {showValues && r
-                          ? formatOrDash(r.total_trades)
-                          : "—"}
-                      </MetricCard>
+                    <MetricCard label="Total Trades">
+                      {tradesText}
+                    </MetricCard>
 
-                      <MetricCard label="Total Fees">
-                        {showValues && r
-                          ? `$${Number(r.total_fees ?? 0).toFixed(2)}`
-                          : "—"}
-                      </MetricCard>
+                    <MetricCard label="Total Fees">
+                      {feesText}
+                    </MetricCard>
 
-                      <MetricCard label="Days">
-                        {showValues && r && r.num_days != null && r.num_days > 1
-                          ? r.num_days
-                          : "—"}
-                      </MetricCard>
+                    <MetricCard label="Days">
+                      {daysText}
+                    </MetricCard>
 
-                      <MetricCard label="Duration">
-                        {showValues && r && r.duration_seconds != null ? (
-                          r.duration_seconds < 1 ? (
-                            `${Math.round(r.duration_ms ?? 0)}ms`
-                          ) : (
-                            `${r.duration_seconds.toFixed(2)}s`
-                          )
-                        ) : (
-                          "—"
-                        )}
-                      </MetricCard>
+                    <MetricCard label="Duration">
+                      {durationText}
+                    </MetricCard>
 
-                      <MetricCard label="Max Delta">
-                        {showValues && r
-                          ? r.max_delta.toFixed(4)
-                          : "—"}
-                      </MetricCard>
+                    <MetricCard label="Max Delta">
+                      {statusBarPhase === "running" || isCompleted ? maxDelta.toFixed(4) : "—"}
+                    </MetricCard>
 
-                      <MetricCard label="Max Gamma">
-                        {showValues && r
-                          ? r.max_gamma.toFixed(4)
-                          : "—"}
-                      </MetricCard>
+                    <MetricCard label="Max Gamma">
+                      {statusBarPhase === "running" || isCompleted ? maxGamma.toFixed(4) : "—"}
+                    </MetricCard>
 
-                      <MetricCard label="Max Theta">
-                        {showValues && r
-                          ? r.max_theta.toFixed(4)
-                          : "—"}
-                      </MetricCard>
+                    <MetricCard label="Max Theta">
+                      {statusBarPhase === "running" || isCompleted ? maxTheta.toFixed(4) : "—"}
+                    </MetricCard>
 
-                      <MetricCard label="Frames">
-                        {showValues && r
-                          ? formatOrDash(r.total_frames ?? r.processed_timesteps)
-                          : "—"}
-                      </MetricCard>
+                    <MetricCard label="Frames">
+                      {framesText}
+                    </MetricCard>
 
-                      <MetricCard label="Rows">
-                        {showValues && r
-                          ? (r.total_rows ?? 0).toLocaleString()
-                          : "—"}
-                      </MetricCard>
-                    </div>
-
-                    {/* Status bar below metrics when completed */}
-                    {hasResult && statusBarPhase === "completed" && (
-                      <div className="w-full py-2 px-3 mt-2 text-center text-xs uppercase tracking-wide font-medium border border-[color:var(--border-subtle)] text-[color:var(--text-muted)]">
-                        Completed
-                      </div>
-                    )}
-                  </>
+                    <MetricCard label="Rows">
+                      {rowsText}
+                    </MetricCard>
+                  </div>
                 );
               })()}
 
-              {(running || backtestResult?.chart_svg || backtestResult?.chart_image_base64) && (
-                <div className="border border-[color:var(--border-subtle)] px-2 py-2">
-                  <div className="relative min-h-[320px] flex flex-col">
-                    {!backtestResult?.chart_svg && !backtestResult?.chart_image_base64 ? (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <p className="text-sm text-[color:var(--text-muted)]">Waiting for chart...</p>
-                      </div>
-                    ) : (
-                      <>
-                        <h3 className="text-xs uppercase tracking-[0.12em] mb-1 text-[color:var(--text-muted)]">
-                          PnL / Delta / Theta / Gamma (backend)
-                        </h3>
-                        {/* eslint-disable-next-line @next/next/no-img-element -- inline chart from backend (SVG or base64) */}
-                        <img
-                          src={
-                            backtestResult?.chart_svg
-                              ? `data:image/svg+xml;charset=utf-8,${encodeURIComponent(backtestResult.chart_svg)}`
-                              : `data:image/png;base64,${backtestResult?.chart_image_base64 ?? ""}`
-                          }
-                          alt="Backtest chart"
-                          className="w-full max-w-full h-auto border border-[color:var(--border-subtle)]"
-                        />
-                      </>
-                    )}
-                  </div>
+              {/* Status bar below metrics when completed */}
+              {statusBarPhase === "completed" && summary && (
+                <div id="bt-completed-banner" className="w-full py-2 px-3 mt-2 text-center text-xs uppercase tracking-wide font-medium border border-[color:var(--border-subtle)] text-[color:var(--text-muted)]">
+                  Completed
                 </div>
               )}
 
-              {backtestResult?.daily_results && backtestResult.daily_results.length > 0 && (
-                <div className="panel px-3 py-2">
+              {/* Chart container */}
+              <div className="border border-[color:var(--border-subtle)] px-2 py-2">
+                <div className="relative min-h-[320px] h-[340px] flex flex-col">
                   <h3 className="text-xs uppercase tracking-[0.12em] mb-2 text-[color:var(--text-muted)]">
-                    Daily Results ({backtestResult.daily_results.length} days)
+                    Live PnL / Delta / Spot Price Telemetry Stream
                   </h3>
-                  <div className="overflow-x-auto">
-                    <table className="table-terminal">
-                      <thead>
-                        <tr>
-                          <th className="text-left">Date</th>
-                          <th className="text-right">PnL</th>
-                          <th className="text-right">Net PnL</th>
-                          <th className="text-right">Fees</th>
-                          <th className="text-right">Trades</th>
-                          <th className="text-right">Timesteps</th>
-                          <th className="text-right">Rows</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {backtestResult.daily_results.map((daily, idx) => {
-                          const filePath = daily.file;
-                          const fileName = filePath.split('/').pop() || '';
-                          const dateStr = fileName.replace('.parquet', '');
-                          let displayDate = dateStr;
-                          if (dateStr.length === 8 && /^\d{8}$/.test(dateStr)) {
-                            displayDate = `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`;
-                          }
-                          const netPnl = daily.net_pnl ?? (daily.pnl - daily.fees);
-                          return (
-                            <tr key={idx} className="table-row-hover">
-                              <td className="numeric-12 text-left text-[color:var(--text-primary)]">
-                                {displayDate}
-                              </td>
-                              <td className={`numeric-12 text-right ${daily.pnl >= 0 ? 'text-[color:var(--state-success)]' : 'text-[color:var(--state-error)]'}`}>
-                                ${daily.pnl.toFixed(2)}
-                              </td>
-                              <td className={`numeric-12 text-right ${netPnl >= 0 ? 'text-[color:var(--state-success)]' : 'text-[color:var(--state-error)]'}`}>
-                                ${netPnl.toFixed(2)}
-                              </td>
-                              <td className="numeric-12 text-right text-[color:var(--text-soft)]">
-                                ${daily.fees.toFixed(2)}
-                              </td>
-                              <td className="numeric-12 text-right text-[color:var(--text-primary)]">
-                                {daily.trades}
-                              </td>
-                              <td className="numeric-12 text-right text-[color:var(--text-soft)]">
-                                {daily.timesteps.toLocaleString()}
-                              </td>
-                              <td className="numeric-12 text-right text-[color:var(--text-soft)]">
-                                {daily.rows.toLocaleString()}
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                  <div className="flex-1 relative">
+                    <TelemetryChart />
                   </div>
                 </div>
-              )}
+              </div>
+
+              {/* Daily results table — shown in real-time while running, finalised at end */}
+              {(() => {
+                const isCompleted = statusBarPhase === 'completed' && summary !== null;
+                const isActive = statusBarPhase === 'running' || statusBarPhase === 'finalising';
+
+                // Build real-time rows from running state
+                const liveRows: Array<{
+                  date: string;
+                  dayPnL: number;
+                  netDayPnL: number;
+                  fees: number;
+                  trades: number;
+                  timesteps: number;
+                }> = [];
+
+                if (isActive || (isCompleted && dailyResults.length === 0)) {
+                  const sortedDates = Object.keys(runningDailyPnLs).sort();
+                  let prevCum = 0;
+                  for (const d of sortedDates) {
+                    const cumPnL = runningDailyPnLs[d];
+                    const dayPnL = cumPnL - prevCum;
+                    const fees = runningDailyFees[d] ?? 0;
+                    const trades = runningDailyTrades[d] ?? 0;
+                    const timesteps = runningDailyTimesteps[d] ?? 0;
+                    liveRows.push({
+                      date: d,
+                      dayPnL,
+                      netDayPnL: dayPnL - fees,
+                      fees,
+                      trades,
+                      timesteps,
+                    });
+                    prevCum = cumPnL;
+                  }
+                }
+
+                const showLive = liveRows.length > 0 && (isActive || (isCompleted && dailyResults.length === 0));
+                const showFinal = isCompleted && dailyResults.length > 0;
+
+                if (!showLive && !showFinal) return null;
+
+                return (
+                  <div className="panel px-3 py-2">
+                    <h3 className="text-xs uppercase tracking-[0.12em] mb-2 text-[color:var(--text-muted)] flex items-center gap-2">
+                      Daily Results
+                      {isActive && (
+                        <span className="text-[color:var(--state-warning)] text-[10px] normal-case tracking-normal animate-pulse">
+                          • live
+                        </span>
+                      )}
+                      <span className="text-[color:var(--text-muted)] text-[10px] font-normal normal-case tracking-normal">
+                        ({showFinal ? dailyResults.length : liveRows.length} days)
+                      </span>
+                    </h3>
+                    <div className="overflow-x-auto max-h-64 overflow-y-auto">
+                      <table className="table-terminal">
+                        <thead className="sticky top-0 z-10" style={{ backgroundColor: 'var(--surface-subtle)' }}>
+                          <tr>
+                            <th className="text-left">Date</th>
+                            <th className="text-right">PnL</th>
+                            <th className="text-right">Net PnL</th>
+                            <th className="text-right">Fees</th>
+                            <th className="text-right">Trades</th>
+                            <th className="text-right">Timesteps</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {showFinal
+                            ? dailyResults.map((daily, idx) => {
+                                const filePath = daily.file;
+                                const fileName = filePath.split('/').pop() ?? '';
+                                const raw = fileName.replace('.parquet', '');
+                                const displayDate =
+                                  raw.length === 8 && /^\d{8}$/.test(raw)
+                                    ? `${raw.slice(0, 4)}-${raw.slice(4, 6)}-${raw.slice(6, 8)}`
+                                    : raw;
+                                const netPnL = daily.net_pnl ?? daily.pnl - daily.fees;
+                                return (
+                                  <tr key={idx} className="table-row-hover">
+                                    <td className="numeric-12 text-left text-[color:var(--text-primary)]">{displayDate}</td>
+                                    <td className={`numeric-12 text-right ${daily.pnl >= 0 ? 'text-[color:var(--state-success)]' : 'text-[color:var(--state-error)]'}`}>
+                                      ${daily.pnl.toFixed(2)}
+                                    </td>
+                                    <td className={`numeric-12 text-right ${netPnL >= 0 ? 'text-[color:var(--state-success)]' : 'text-[color:var(--state-error)]'}`}>
+                                      ${netPnL.toFixed(2)}
+                                    </td>
+                                    <td className="numeric-12 text-right text-[color:var(--text-soft)]">${daily.fees.toFixed(2)}</td>
+                                    <td className="numeric-12 text-right text-[color:var(--text-primary)]">{daily.trades}</td>
+                                    <td className="numeric-12 text-right text-[color:var(--text-soft)]">{daily.timesteps.toLocaleString()}</td>
+                                  </tr>
+                                );
+                              })
+                            : liveRows.map((row, idx) => (
+                                <tr key={idx} className="table-row-hover">
+                                  <td className="numeric-12 text-left text-[color:var(--text-primary)]">{row.date}</td>
+                                  <td className={`numeric-12 text-right ${row.dayPnL >= 0 ? 'text-[color:var(--state-success)]' : 'text-[color:var(--state-error)]'}`}>
+                                    ${row.dayPnL.toFixed(2)}
+                                  </td>
+                                  <td className={`numeric-12 text-right ${row.netDayPnL >= 0 ? 'text-[color:var(--state-success)]' : 'text-[color:var(--state-error)]'}`}>
+                                    ${row.netDayPnL.toFixed(2)}
+                                  </td>
+                                  <td className="numeric-12 text-right text-[color:var(--text-soft)]">${row.fees.toFixed(2)}</td>
+                                  <td className="numeric-12 text-right text-[color:var(--text-primary)]">{row.trades}</td>
+                                  <td className="numeric-12 text-right text-[color:var(--text-soft)]">{row.timesteps.toLocaleString()}</td>
+                                </tr>
+                              ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>

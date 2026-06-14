@@ -36,10 +36,15 @@ template <std::integral T> auto get_int64(const Array* arr, int64_t i) -> T {
     return static_cast<T>(static_cast<const Int64Array*>(arr)->Value(i));
 }
 auto get_symbol(const Array* arr_sym, int64_t i) -> std::string {
-    if ((arr_sym == nullptr) || arr_sym->type_id() != Type::STRING || arr_sym->IsNull(i)) {
+    if (arr_sym == nullptr || arr_sym->IsNull(i)) {
         return {};
     }
-    return static_cast<const StringArray*>(arr_sym)->GetString(i);
+    if (arr_sym->type_id() == Type::STRING) {
+        return static_cast<const StringArray*>(arr_sym)->GetString(i);
+    } else if (arr_sym->type_id() == Type::LARGE_STRING) {
+        return static_cast<const LargeStringArray*>(arr_sym)->GetString(i);
+    }
+    return {};
 }
 
 } // namespace

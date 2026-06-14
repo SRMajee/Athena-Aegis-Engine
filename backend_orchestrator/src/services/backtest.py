@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+import os
+from uuid import uuid4, UUID
 from typing import Any, Dict
 
-from src.infra.backtest_runner import cancel_current_backtest, run_backtest_cpp
 from src.infra.state import AppState
-
+from src.infra.db import async_session_maker, Strategy, BacktestJob
 
 DEFAULT_FEE_RATE = 0.35
 DEFAULT_RISK_FREE_RATE = 0.05
@@ -17,7 +18,7 @@ class BacktestService:
     """High-level backtest operations."""
 
     @staticmethod
-    def run_backtest(request: Dict[str, Any]) -> Dict[str, Any]:
+    async def run_backtest(request: Dict[str, Any]) -> Dict[str, Any]:
         parquet = request.get("parquet", "")
         strategy = request.get("strategy", "")
         strategy_setting = request.get("strategy_setting", None)
@@ -41,24 +42,70 @@ class BacktestService:
         if not start_date or not end_date:
             return {"status": "error", "error": "Missing required fields: start_date, end_date"}
 
-        result = run_backtest_cpp(
-            parquet_path=parquet,
-            strategy_name=strategy,
-            fee_rate=fee_rate,
-            slippage_bps=slippage_bps,
-            risk_free_rate=risk_free_rate,
-            iv_price_mode=iv_price_mode,
-            strategy_setting=strategy_setting,
-            start_date=start_date,
-            end_date=end_date,
-        )
-        # progress_info into result
-        if result.get("status") == "ok" and "result" in result and "progress_info" in result:
-            result["result"]["progress_info"] = result.pop("progress_info")
-        return result
+        correlation_id = str(uuid4())
+
+        # 1. Create Strategy and BacktestJob records in PostgreSQL
+        try:
+            async with async_session_maker() as session:
+                db_strategy = Strategy(
+                    name=strategy,
+                    instrument=parquet,
+                    parameters=strategy_setting or {}
+                )
+                session.add(db_strategy)
+                await session.flush()  # Populate db_strategy.id
+
+                db_job = BacktestJob(
+                    id=UUID(correlation_id),
+                    strategy_id=db_strategy.id,
+                    status="PENDING",
+                    correlation_id=correlation_id
+                )
+                session.add(db_job)
+                await session.commit()
+        except Exception as e:
+            return {"status": "error", "error": f"Failed to persist job metadata: {e}"}
+
+        # 2. Enqueue the backtest job in the ARQ Redis task queue
+        job_payload = {
+            "parquet": parquet,
+            "strategy": strategy,
+            "fee_rate": fee_rate,
+            "slippage_bps": slippage_bps,
+            "risk_free_rate": risk_free_rate,
+            "iv_price_mode": iv_price_mode,
+            "strategy_setting": strategy_setting or {},
+            "start_date": start_date,
+            "end_date": end_date,
+            "correlation_id": correlation_id
+        }
+
+        try:
+            arq_redis = getattr(AppState, "arq_redis", None)
+            if arq_redis is None:
+                return {"status": "error", "error": "ARQ Redis queue not initialized"}
+            
+            await arq_redis.enqueue_job(
+                "run_backtest_job",
+                job_payload,
+                _job_id=correlation_id
+            )
+            # Track the active job ID for cancellations
+            AppState.backtest.active_job_id = correlation_id
+        except Exception as e:
+            return {"status": "error", "error": f"Failed to enqueue backtest task: {e}"}
+
+        # Return 202 Accepted equivalent
+        return {"status": "ok", "job_id": correlation_id}
 
     @staticmethod
-    def cancel_backtest() -> Dict[str, Any]:
+    async def cancel_backtest() -> Dict[str, Any]:
         """Cancel running C++ backtest (if any)."""
-        return cancel_current_backtest()
-
+        job_id = getattr(AppState.backtest, "active_job_id", None)
+        if job_id:
+            redis_client = getattr(AppState, "redis", None)
+            if redis_client:
+                # Set a cancel signal in Redis with 60 second expiration
+                await redis_client.set(f"job_cancel:{job_id}", "1", ex=60)
+            return {"status": "ok", "message": f"Cancel signal sent for job {job_id}"}
+        return {"status": "ok", "message": "No active backtest job found"}

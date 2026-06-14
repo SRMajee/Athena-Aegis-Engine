@@ -1,7 +1,19 @@
 from __future__ import annotations
 
 import os
+import dotenv
 from typing import Any, Dict, List, Optional, Sequence, Tuple
+from datetime import datetime
+from uuid import UUID, uuid4
+import sqlalchemy as sa
+from sqlalchemy import Column
+from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+from sqlmodel import SQLModel, Field
+from sqlmodel.ext.asyncio.session import AsyncSession
+
+# Load .env file
+dotenv.load_dotenv()
 
 try:
     import psycopg2  # type: ignore[import]
@@ -13,6 +25,94 @@ class DBError(Exception):
     """Domain-specific error for database access issues."""
 
 
+# Swap URL scheme dynamically
+DATABASE_URL = os.environ.get("DATABASE_URL", "").strip()
+if DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
+
+async_engine = None
+async_session_maker = None
+
+if DATABASE_URL:
+    async_engine = create_async_engine(
+        DATABASE_URL,
+        pool_size=10,
+        max_overflow=20,
+        echo=False
+    )
+    async_session_maker = async_sessionmaker(
+        async_engine,
+        class_=AsyncSession,
+        expire_on_commit=False
+    )
+
+
+async def get_async_session():
+    if async_session_maker is None:
+        raise DBError("Database connection not configured")
+    async with async_session_maker() as session:
+        yield session
+
+
+# SQLModel schemas for Deep Hedging & Execution Platform
+class Strategy(SQLModel, table=True):
+    __tablename__: str = "strategy"
+
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    name: str
+    instrument: str
+    parameters: dict = Field(default_factory=dict, sa_column=Column(JSONB))
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class BacktestJob(SQLModel, table=True):
+    __tablename__: str = "backtest_job"
+
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    strategy_id: UUID = Field(foreign_key="strategy.id")
+    status: str = Field(default="PENDING")
+    correlation_id: str = Field(unique=True, index=True)
+    started_at: datetime = Field(default_factory=datetime.utcnow)
+    completed_at: Optional[datetime] = Field(default=None)
+    summary: Optional[dict] = Field(default=None, sa_column=Column(JSONB))
+
+
+class ModelRegistry(SQLModel, table=True):
+    __tablename__: str = "model_registry"
+
+    id: str = Field(primary_key=True)
+    torchscript_path: str
+    training_run_id: str
+    input_shape: List[int] = Field(sa_column=Column(JSONB))
+    validation_cvar: float
+    registered_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class TickArchive(SQLModel, table=True):
+    __tablename__: str = "tick_archive"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    job_id: UUID = Field(foreign_key="backtest_job.id")
+    tick_timestamp_ns: int = Field(sa_column=Column(sa.BigInteger))
+    spot: float
+    iv: float
+    tick_metadata: Optional[dict] = Field(default=None, sa_column=Column("metadata", JSONB))
+
+
+class RiskSnapshot(SQLModel, table=True):
+    __tablename__: str = "risk_snapshot"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    job_id: UUID = Field(foreign_key="backtest_job.id")
+    model_id: str = Field(foreign_key="model_registry.id")
+    tick_idx: int
+    delta: float
+    gamma: float
+    cvar_95: float
+    cvar_99: float
+    pnl: float
+
+
 def get_connection():
     """PostgreSQL read-only connection (DATABASE_URL)."""
     if psycopg2 is None:
@@ -20,7 +120,9 @@ def get_connection():
     conninfo = os.environ.get("DATABASE_URL", "").strip()
     if not conninfo:
         raise DBError("DATABASE_URL not configured")
-    return psycopg2.connect(conninfo)
+    # Use original unmodified postgresql URL for psycopg2 connection
+    original_url = os.environ.get("DATABASE_URL", "").strip()
+    return psycopg2.connect(original_url)
 
 
 def fetch_orders_trades_raw(
@@ -55,7 +157,8 @@ def fetch_orders_trades_raw(
             if strategy:
                 where_clauses_orders.append("strategy_name = %s")
                 where_clauses_trades.append("strategy_name = %s")
-                params.append(strategy)
+                params.append(strategy)  # For orders_sql WHERE
+                params.append(strategy)  # For trades_sql WHERE
 
             orders_sql = """
                 SELECT

@@ -9,7 +9,7 @@ OptionStrategyTemplate::OptionStrategyTemplate(
     core::OptionStrategyEngine* strategy_engine, std::string strategy_name,
     std::string portfolio_name, const std::unordered_map<std::string, double>& setting)
     : engine_(strategy_engine), strategy_name_(std::move(strategy_name)),
-      portfolio_name_(std::move(portfolio_name)) {
+      portfolio_name_(std::move(portfolio_name)), setting_(setting) {
     if (engine_ == nullptr) {
         throw std::runtime_error("Strategy engine is null");
     }

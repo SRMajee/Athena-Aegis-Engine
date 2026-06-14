@@ -75,6 +75,7 @@ class OptionStrategyTemplate {
     std::string error_msg_;
     int timer_trigger_ = 1;
     int timer_cnt_ = 0;
+    std::unordered_map<std::string, double> setting_;
 };
 
 } // namespace strategy_cpp

@@ -6,6 +6,9 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from pathlib import Path
 
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -23,6 +26,8 @@ async def _otrader_lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     from src.infra.state import AppState  # noqa: F401
     from src.infra.websockets import log_queue_processor
     from src.infra.live_client_lifespan import live_client_lifespan
+    import redis.asyncio as aioredis
+    import os
 
     log_task: asyncio.Task | None = None
     try:
@@ -30,6 +35,21 @@ async def _otrader_lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
             AppState.main_loop = asyncio.get_running_loop()
         except RuntimeError:
             AppState.main_loop = asyncio.get_event_loop()
+
+        # Initialize log queue as asyncio.Queue
+        AppState.live.log_queue = asyncio.Queue()
+
+        # Initialize global Redis client pool
+        redis_host = os.getenv("REDIS_HOST", "localhost")
+        redis_port = int(os.getenv("REDIS_PORT", "6379"))
+        AppState.redis = aioredis.from_url(
+            f"redis://{redis_host}:{redis_port}", decode_responses=True
+        )
+
+        from arq import create_pool
+        from arq.connections import RedisSettings
+        AppState.arq_redis = await create_pool(RedisSettings(host=redis_host, port=redis_port))
+
         log_task = asyncio.create_task(log_queue_processor())
 
         async with live_client_lifespan():
@@ -44,7 +64,12 @@ async def _otrader_lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
                 await log_task
             except asyncio.CancelledError:
                 pass
-        # C++ live engine lifecycle external
+        # Close Redis client pool
+        if hasattr(AppState, "redis") and AppState.redis is not None:
+            await AppState.redis.close()
+        # Close ARQ Redis pool
+        if hasattr(AppState, "arq_redis") and AppState.arq_redis is not None:
+            await AppState.arq_redis.close()
 
 
 @asynccontextmanager
@@ -59,7 +84,11 @@ def _include_routes(app: FastAPI) -> None:
         from src.api.engine import router as engine_router
         from src.api.backtest import router as backtest_router
         from src.api.system import router as system_router
-        from src.infra.websockets import handle_logs_websocket, handle_strategies_websocket
+        from src.infra.websockets import (
+            handle_logs_websocket,
+            handle_strategies_websocket,
+            handle_stream_websocket,
+        )
 
         app.include_router(engine_router)
         app.include_router(backtest_router)
@@ -72,6 +101,10 @@ def _include_routes(app: FastAPI) -> None:
         @app.websocket("/ws/strategies")
         async def ws_strategies(ws: WebSocket) -> None:
             await handle_strategies_websocket(ws)
+
+        @app.websocket("/ws/stream")
+        async def ws_stream(ws: WebSocket, jobId: str) -> None:
+            await handle_stream_websocket(ws, jobId)
     except Exception as e:
         print(f"OTrader API not mounted (backtest-only): {e}")
 
