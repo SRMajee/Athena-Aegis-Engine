@@ -3,6 +3,8 @@
 #  Run from the project root:  .\start.ps1
 # =============================================================================
 
+$env:PATH = "C:\msys64\mingw64\bin;$env:PATH"
+
 $Root      = $PSScriptRoot
 $Backend   = Join-Path $Root "backend_orchestrator"
 $Frontend  = Join-Path $Root "frontend_terminal"
@@ -43,22 +45,23 @@ Write-Host ""
 Write-Host "      Waiting 3s for containers to be ready..." -ForegroundColor Gray
 Start-Sleep -Seconds 3
 
-# -- 2. Mock gRPC Engine ------------------------------------------------------
-Write-Host "[2/5] Opening window: Mock gRPC Engine (:50051)..." -ForegroundColor Yellow
+# -- 2. C++ gRPC Engine --------------------------------------------------------
+Write-Host "[2/5] Opening window: C++ gRPC Engine (:50051)..." -ForegroundColor Yellow
+$CppBuild = Join-Path $Root "cpp_engine\build"
 Start-Service `
-    -Title    "AFFINITY - gRPC Engine :50051" `
-    -WorkDir  $Backend `
-    -Command  "& '$Venv'; python mock_grpc_server.py"
+    -Title    "AFFINITY - C++ gRPC Engine :50051" `
+    -WorkDir  $CppBuild `
+    -Command  "`$env:PATH = 'C:\msys64\mingw64\bin;' + `$env:PATH; .\entry_live_grpc.exe"
 Write-Host "      [OK] Window opened" -ForegroundColor Green
 
 Start-Sleep -Seconds 2   # let gRPC bind before FastAPI connects
 
 # -- 3. FastAPI Backend -------------------------------------------------------
-Write-Host "[3/5] Opening window: FastAPI Backend (:8080)..." -ForegroundColor Yellow
+Write-Host "[3/5] Opening window: FastAPI Backend (:8085)..." -ForegroundColor Yellow
 Start-Service `
-    -Title    "AFFINITY - FastAPI Backend :8080" `
+    -Title    "AFFINITY - FastAPI Backend :8085" `
     -WorkDir  $Backend `
-    -Command  "& '$Venv'; python -m uvicorn server_fastapi:app --host 0.0.0.0 --port 8080 --reload"
+    -Command  "& '$Venv'; python -m uvicorn server_fastapi:app --host 0.0.0.0 --port 8085 --reload"
 Write-Host "      [OK] Window opened" -ForegroundColor Green
 
 Start-Sleep -Seconds 2
@@ -76,14 +79,14 @@ Write-Host "[5/5] Opening window: Next.js Frontend (:3000)..." -ForegroundColor 
 Start-Service `
     -Title    "AFFINITY - Next.js Frontend :3000" `
     -WorkDir  $Frontend `
-    -Command  "npm run dev"
+    -Command  "`$env:NEXT_PUBLIC_API_URL='http://localhost:8085'; npm run dev"
 Write-Host "      [OK] Window opened" -ForegroundColor Green
 
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "   All services launching in new windows!  " -ForegroundColor Cyan
 Write-Host "   Frontend ->  http://localhost:3000        " -ForegroundColor Cyan
-Write-Host "   Backend  ->  http://localhost:8080        " -ForegroundColor Cyan
+Write-Host "   Backend  ->  http://localhost:8085        " -ForegroundColor Cyan
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "  To stop everything, run:  .\stop.ps1" -ForegroundColor Gray

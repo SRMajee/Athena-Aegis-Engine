@@ -21,17 +21,186 @@ REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
 REDIS_PORT = int(os.getenv("REDIS_PORT", "6379"))
 
 
+def resolve_parquet_path(parquet_input: str, start_date: str = "", end_date: str = "", job_id: str = "") -> tuple[str, bool]:
+    """
+    Resolves the symbol or file path to a single parquet file path.
+    If multiple files exist in the date range, they are concatenated into a temporary combined file.
+    Returns (resolved_absolute_path, is_temporary_file).
+    """
+    if os.path.isabs(parquet_input) and os.path.isfile(parquet_input):
+        return parquet_input, False
+
+    workspace_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+    
+    candidate = os.path.abspath(os.path.join(workspace_root, parquet_input))
+    if os.path.isfile(candidate):
+        return candidate, False
+
+    symbol = os.path.basename(parquet_input)
+    dir_candidate = os.path.join(workspace_root, "data", symbol)
+    if not os.path.isdir(dir_candidate):
+        return candidate, False
+
+    # Get all matching parquet files in date range
+    files = []
+    start_clean = start_date.replace("-", "") if start_date else ""
+    end_clean = end_date.replace("-", "") if end_date else ""
+    
+    for f in os.listdir(dir_candidate):
+        if f.endswith(".parquet"):
+            stem = f[:-8]  # Remove ".parquet"
+            if len(stem) == 8 and stem.isdigit():
+                if start_clean and end_clean:
+                    if start_clean <= stem <= end_clean:
+                        files.append(os.path.join(dir_candidate, f))
+                else:
+                    files.append(os.path.join(dir_candidate, f))
+
+    if not files:
+        raise FileNotFoundError(f"No parquet data files found for symbol '{symbol}' within date range {start_date} ~ {end_date}")
+
+    if len(files) == 1:
+        return os.path.abspath(files[0]), False
+
+    # Combine multiple files
+    import pandas as pd
+    dfs = []
+    for f in sorted(files):
+        dfs.append(pd.read_parquet(f))
+    combined = pd.concat(dfs, ignore_index=True)
+    if "ts_recv" in combined.columns:
+        combined.sort_values("ts_recv", inplace=True)
+        
+    temp_dir = os.path.join(workspace_root, "data", "temp")
+    os.makedirs(temp_dir, exist_ok=True)
+    temp_path = os.path.abspath(os.path.join(temp_dir, f"combined_{job_id}.parquet"))
+    combined.to_parquet(temp_path)
+    return temp_path, True
+
+
+
+async def poll_and_insert_temp_files(job_id: str, strategy_name: str, fee_rate: float, trades_json_path: str, orders_json_path: str):
+    inserted_trades = set()
+    inserted_orders = {} # orderid -> status
+    
+    while True:
+        try:
+            # Poll trades
+            if os.path.exists(trades_json_path):
+                try:
+                    with open(trades_json_path, "r") as f:
+                        trades = json.load(f)
+                except Exception:
+                    trades = []
+                
+                new_trades = [t for t in trades if t.get("tradeid") not in inserted_trades]
+                if new_trades:
+                    async with async_session_maker() as session:
+                        await session.execute(
+                            sa.text("""
+                                INSERT INTO trades (timestamp, strategy_name, tradeid, symbol, direction, price, volume)
+                                VALUES (:timestamp, :strategy_name, :tradeid, :symbol, :direction, :price, :volume)
+                            """),
+                            [
+                                {
+                                    "timestamp": t.get("timestamp"),
+                                    "strategy_name": strategy_name,
+                                    "tradeid": t.get("tradeid"),
+                                    "symbol": t.get("symbol"),
+                                    "direction": t.get("direction"),
+                                    "price": float(t.get("price", 0.0)),
+                                    "volume": float(t.get("volume", 0.0))
+                                }
+                                for t in new_trades
+                            ]
+                        )
+                        await session.commit()
+                    for t in new_trades:
+                        inserted_trades.add(t.get("tradeid"))
+            
+            # Poll orders
+            if os.path.exists(orders_json_path):
+                try:
+                    with open(orders_json_path, "r") as f:
+                        orders = json.load(f)
+                except Exception:
+                    orders = []
+                
+                new_or_updated_orders = []
+                for o in orders:
+                    oid = o.get("orderid")
+                    status = o.get("status")
+                    if oid not in inserted_orders or inserted_orders[oid] != status:
+                        new_or_updated_orders.append(o)
+                
+                if new_or_updated_orders:
+                    async with async_session_maker() as session:
+                        for o in new_or_updated_orders:
+                            oid = o.get("orderid")
+                            if oid in inserted_orders:
+                                await session.execute(
+                                    sa.text("DELETE FROM orders WHERE orderid = :oid"),
+                                    {"oid": oid}
+                                )
+                        await session.execute(
+                            sa.text("""
+                                INSERT INTO orders (timestamp, strategy_name, orderid, symbol, direction, price, volume, traded, status)
+                                VALUES (:timestamp, :strategy_name, :orderid, :symbol, :direction, :price, :volume, :traded, :status)
+                            """),
+                            [
+                                {
+                                    "timestamp": o.get("timestamp"),
+                                    "strategy_name": strategy_name,
+                                    "orderid": o.get("orderid"),
+                                    "symbol": o.get("symbol"),
+                                    "direction": o.get("direction"),
+                                    "price": float(o.get("price", 0.0)),
+                                    "volume": float(o.get("volume", 0.0)),
+                                    "traded": float(o.get("traded", 0.0)),
+                                    "status": o.get("status")
+                                }
+                                for o in new_or_updated_orders
+                            ]
+                        )
+                        await session.commit()
+                    for o in new_or_updated_orders:
+                        inserted_orders[o.get("orderid")] = o.get("status")
+        except asyncio.CancelledError:
+            raise
+        except Exception as e:
+            print(f"Error in poll_and_insert_temp_files: {e}")
+        
+        await asyncio.sleep(0.5)
+
+
+
 async def run_backtest_job(ctx, job_payload: dict) -> dict:
     job_id = ctx["job_id"]
     started_at = datetime.utcnow()
+    temp_file_to_cleanup = None
+    polling_task = None
+    
+    workspace_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+    trades_json_path = os.path.join(workspace_root, "data", "temp", f"trades_{job_id}.json")
+    orders_json_path = os.path.join(workspace_root, "data", "temp", f"orders_{job_id}.json")
 
-    # Update job status in PostgreSQL to RUNNING
+    # Update job status in PostgreSQL to RUNNING and clear stale trades/orders
     async with async_session_maker() as session:
         job_record = await session.get(BacktestJob, UUID(job_id))
         if job_record:
             job_record.status = "RUNNING"
             job_record.started_at = started_at
-            await session.commit()
+        
+        # Clear old orders and trades for this strategy to prevent stale calculations
+        await session.execute(
+            sa.text("DELETE FROM trades WHERE strategy_name = :name"),
+            {"name": job_payload["strategy"]}
+        )
+        await session.execute(
+            sa.text("DELETE FROM orders WHERE strategy_name = :name"),
+            {"name": job_payload["strategy"]}
+        )
+        await session.commit()
 
     # Target live C++ engine gRPC server
     grpc_target = os.getenv("LIVE_GRPC_TARGET", "127.0.0.1:50051")
@@ -49,9 +218,21 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
     daily_rows = {}
 
     try:
+        # Ensure data/temp directory exists for engine exports
+        temp_dir = os.path.join(workspace_root, "data", "temp")
+        os.makedirs(temp_dir, exist_ok=True)
+
         # Build StreamRequest and StrategyConfig
+        resolved_path, is_temp = resolve_parquet_path(
+            job_payload["parquet"],
+            job_payload.get("start_date", ""),
+            job_payload.get("end_date", ""),
+            job_id
+        )
+        if is_temp:
+            temp_file_to_cleanup = resolved_path
         strat_cfg = pb2.StrategyConfig(
-            parquet_path=job_payload["parquet"],
+            parquet_path=resolved_path,
             strategy_name=job_payload["strategy"],
             fee_rate=float(job_payload.get("fee_rate", 0.35)),
             slippage_bps=float(job_payload.get("slippage_bps", 5.0)),
@@ -75,6 +256,16 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
             
             stream = stub.StartBacktest(stream_req, metadata=metadata)
             
+            polling_task = asyncio.create_task(
+                poll_and_insert_temp_files(
+                    job_id=job_id,
+                    strategy_name=job_payload["strategy"],
+                    fee_rate=float(job_payload.get("fee_rate", 0.35)),
+                    trades_json_path=trades_json_path,
+                    orders_json_path=orders_json_path
+                )
+            )
+
             async for update in stream:
                 # Check for cancellation
                 if await ctx["redis"].exists(f"job_cancel:{job_id}"):
@@ -119,22 +310,106 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
                     pnl=update.pnl
                 ))
 
+        # Stop polling task
+        if polling_task and not polling_task.done():
+            polling_task.cancel()
+            try:
+                await polling_task
+            except BaseException:
+                pass
+
+        # Clear trades/orders one final time before final insert
+        async with async_session_maker() as session:
+            await session.execute(
+                sa.text("DELETE FROM trades WHERE strategy_name = :name"),
+                {"name": job_payload["strategy"]}
+            )
+            await session.execute(
+                sa.text("DELETE FROM orders WHERE strategy_name = :name"),
+                {"name": job_payload["strategy"]}
+            )
+            await session.commit()
+
+        # Read and insert temp trades/orders from JSON files
+        trades_to_insert = []
+        orders_to_insert = []
+        if os.path.exists(trades_json_path):
+            try:
+                with open(trades_json_path, "r") as f:
+                    trades_to_insert = json.load(f)
+            except Exception as e:
+                print(f"Error loading trades JSON: {e}")
+        if os.path.exists(orders_json_path):
+            try:
+                with open(orders_json_path, "r") as f:
+                    orders_to_insert = json.load(f)
+            except Exception as e:
+                print(f"Error loading orders JSON: {e}")
+
+        # Insert trades & orders to DB
+        strategy_name = job_payload["strategy"]
+        async with async_session_maker() as session:
+            if trades_to_insert:
+                await session.execute(
+                    sa.text("""
+                        INSERT INTO trades (timestamp, strategy_name, tradeid, symbol, direction, price, volume)
+                        VALUES (:timestamp, :strategy_name, :tradeid, :symbol, :direction, :price, :volume)
+                    """),
+                    [
+                        {
+                            "timestamp": t.get("timestamp"),
+                            "strategy_name": strategy_name,
+                            "tradeid": t.get("tradeid"),
+                            "symbol": t.get("symbol"),
+                            "direction": t.get("direction"),
+                            "price": float(t.get("price", 0.0)),
+                            "volume": float(t.get("volume", 0.0))
+                        }
+                        for t in trades_to_insert
+                    ]
+                )
+            if orders_to_insert:
+                await session.execute(
+                    sa.text("""
+                        INSERT INTO orders (timestamp, strategy_name, orderid, symbol, direction, price, volume, traded, status)
+                        VALUES (:timestamp, :strategy_name, :orderid, :symbol, :direction, :price, :volume, :traded, :status)
+                    """),
+                    [
+                        {
+                            "timestamp": o.get("timestamp"),
+                            "strategy_name": strategy_name,
+                            "orderid": o.get("orderid"),
+                            "symbol": o.get("symbol"),
+                            "direction": o.get("direction"),
+                            "price": float(o.get("price", 0.0)),
+                            "volume": float(o.get("volume", 0.0)),
+                            "traded": float(o.get("traded", 0.0)),
+                            "status": o.get("status")
+                        }
+                        for o in orders_to_insert
+                    ]
+                )
+            await session.commit()
+
         # Query database orders & trades for this strategy to compute total trades and fees
         async with async_session_maker() as session:
             trades_result = await session.execute(
-                sa.text("SELECT timestamp, price, volume FROM trades WHERE strategy_name = :name"),
+                sa.text("SELECT timestamp, price, volume, symbol FROM trades WHERE strategy_name = :name"),
                 {"name": job_payload["strategy"]}
             )
             trades_rows = trades_result.fetchall()
             
-            total_trades = len(trades_rows)
             fee_rate = float(job_payload.get("fee_rate", 0.35))
             total_fees = 0.0
+            total_trades = 0
             
             for t_row in trades_rows:
-                ts_str, price, volume = t_row
-                fee = float(price) * float(volume) * fee_rate
+                ts_str, price, volume, symbol = t_row
+                if "_" in symbol:
+                    continue
+                fee = float(volume) * fee_rate
                 total_fees += fee
+                total_trades += 1
                 
                 # Assign trade to daily trades/fees
                 try:
@@ -182,7 +457,7 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
             p_end = daily_pnls[d_str]
             p_prev = daily_pnls[sorted_dates[sorted_dates.index(d_str) - 1]] if sorted_dates.index(d_str) > 0 else 0.0
             daily_results_list.append({
-                "file": f"data/{job_payload['strategy']}/{d_str}.parquet",
+                "file": f"data/{job_payload['parquet']}/{d_str}.parquet",
                 "pnl": p_end - p_prev,
                 "net_pnl": (p_end - p_prev) - daily_fees.get(d_str, 0.0),
                 "fees": daily_fees.get(d_str, 0.0),
@@ -274,6 +549,28 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
         
         await ctx["redis"].publish(f"job_stream:{job_id}", json.dumps({"status": "error", "error": str(e)}))
         return {"status": "error", "error": str(e)}
+    finally:
+        if polling_task and not polling_task.done():
+            polling_task.cancel()
+            try:
+                await polling_task
+            except BaseException:
+                pass
+
+        if temp_file_to_cleanup and os.path.exists(temp_file_to_cleanup):
+            try:
+                os.remove(temp_file_to_cleanup)
+            except Exception as cleanup_err:
+                print(f"Error cleaning up temp file {temp_file_to_cleanup}: {cleanup_err}")
+
+        # Clean up trades/orders JSON files
+        for p in [trades_json_path, orders_json_path]:
+            if p and os.path.exists(p):
+                try:
+                    os.remove(p)
+                except Exception as cleanup_err:
+                    print(f"Error cleaning up temp json {p}: {cleanup_err}")
+
 
 
 async def notify_model_updated(ctx, *args, **kwargs):

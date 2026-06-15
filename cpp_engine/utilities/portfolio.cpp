@@ -246,6 +246,22 @@ void PortfolioData::update_underlying_tick(const TickData& tick_data) const {
 }
 
 void PortfolioData::apply_frame(const PortfolioSnapshot& snapshot) {
+    dte_ref_ = snapshot.datetime;
+    for (auto& [_, chain] : chains) {
+        if (chain && !chain->options.empty()) {
+            for (auto& [_, opt] : chain->options) {
+                if (opt && opt->option_expiry.has_value()) {
+                    auto diff_hours = std::chrono::duration_cast<std::chrono::hours>(
+                                          *opt->option_expiry - snapshot.datetime)
+                                          .count();
+                    chain->days_to_expiry = diff_hours > 0 ? static_cast<int>(diff_hours / 24) : 0;
+                    chain->time_to_expiry = static_cast<double>(chain->days_to_expiry) / ANNUAL_DAYS;
+                    break;
+                }
+            }
+        }
+    }
+
     if (underlying) {
         underlying->bid_price = snapshot.underlying_bid;
         underlying->ask_price = snapshot.underlying_ask;

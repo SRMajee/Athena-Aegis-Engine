@@ -95,6 +95,8 @@ async def subscribe_to_job_channel(job_id: str) -> None:
             message = await pubsub.get_message(ignore_subscribe_messages=True, timeout=1.0)
             if message:
                 data = message["data"]
+                if isinstance(data, bytes):
+                    data = data.decode("utf-8")
                 clients = AppState.ws.job_subscribers.get(job_id, set())
                 for ws in list(clients):
                     try:
@@ -111,6 +113,32 @@ async def subscribe_to_job_channel(job_id: str) -> None:
 async def handle_stream_websocket(ws: WebSocket, job_id: str) -> None:
     """Subscribes the websocket client to a job_id's Redis PubSub channel updates."""
     await ws.accept()
+
+    # Avoid race conditions by checking if the job is already completed or failed in DB
+    from src.infra.db import async_session_maker, BacktestJob
+    from uuid import UUID
+    try:
+        job_uuid = UUID(job_id)
+        async with async_session_maker() as session:
+            job_record = await session.get(BacktestJob, job_uuid)
+            if job_record:
+                if job_record.status == "COMPLETE":
+                    final_payload = {
+                        "status": "ok",
+                        "result": job_record.summary,
+                    }
+                    await ws.send_text(json.dumps(final_payload))
+                    return
+                elif job_record.status == "FAILED":
+                    error_msg = job_record.summary.get("error", "Unknown error") if job_record.summary else "Unknown error"
+                    await ws.send_text(json.dumps({"status": "error", "error": error_msg}))
+                    return
+                elif job_record.status == "CANCELLED":
+                    await ws.send_text(json.dumps({"status": "cancelled", "error": "Backtest cancelled by user"}))
+                    return
+    except Exception as e:
+        print(f"Error checking job status in stream WS: {e}")
+
     if job_id not in AppState.ws.job_subscribers:
         AppState.ws.job_subscribers[job_id] = set()
     AppState.ws.job_subscribers[job_id].add(ws)

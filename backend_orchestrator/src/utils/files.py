@@ -13,6 +13,8 @@ def _resolve_root() -> Path:
     root = Path.cwd()
     if root.name == "build":
         root = root.parent
+    if root.name == "backend_orchestrator":
+        root = root.parent
     return root
 
 
@@ -269,31 +271,38 @@ def _snake_to_camel(snake_str: str) -> str:
 
 
 def list_strategies() -> str:
-    """List C++ strategy classes from Otrader/strategy; returns JSON (names + labels)."""
+    """List C++ strategy classes from cpp_engine/strategy; returns JSON (names + labels)."""
     try:
         root = _resolve_root()
-        strategy_cpp_dir = root / "Otrader" / "strategy"
+        strategy_cpp_dir = root / "cpp_engine" / "strategy"
         if not strategy_cpp_dir.exists():
-            strategy_cpp_dir = (root / "Otrader" / "strategy").resolve()
+            strategy_cpp_dir = (root / "cpp_engine" / "strategy").resolve()
 
         strategies: List[Dict[str, str]] = []
 
         if strategy_cpp_dir.exists() and strategy_cpp_dir.is_dir():
-            for cpp_file in strategy_cpp_dir.glob("*.cpp"):
-                if cpp_file.stem == "template":
+            for cpp_file in strategy_cpp_dir.glob("*.hpp"):
+                if cpp_file.stem in ("template", "strategy_registry"):
                     continue
                 file_stem = cpp_file.stem
                 strategy_class_name = _snake_to_camel(file_stem) + "Strategy"
+                # Handle special casing
+                if file_stem == "ironcondortest":
+                    strategy_class_name = "IronCondorTestStrategy"
+                elif file_stem == "straddletest":
+                    strategy_class_name = "StraddleTestStrategy"
                 display_name = file_stem.replace("_", " ").title()
                 strategies.append({"value": strategy_class_name, "label": display_name})
 
         known_cpp_strategies = {
-            "StraddleTestStrategy": "straddle test",
-            "IronCondorTestStrategy": "iron condor test",
+            "StraddleTestStrategy": "Straddle Test",
+            "IvMeanRevertStrategy": "IV Mean Revert",
+            "IronCondorTestStrategy": "Iron Condor Test",
+            "StraddleInventoryScalperStrategy": "Straddle Inventory Scalper",
         }
         for strategy_name, display_name in known_cpp_strategies.items():
             if not any(s["value"] == strategy_name for s in strategies):
-                strategies.append({"value": strategy_name, "label": display_name.title()})
+                strategies.append({"value": strategy_name, "label": display_name})
 
         strategies.sort(key=lambda x: x["value"])
         return json.dumps({"status": "ok", "strategies": strategies})

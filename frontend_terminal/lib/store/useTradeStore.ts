@@ -119,7 +119,11 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
   startBacktest: (jobId: string, strategyName: string, feeRate: number, riskFreeRate: number) => {
     // 1. Clean up any existing connection & timeouts & polling interval
     if (activeWs) {
-      try { activeWs.close(); } catch { /* ignore */ }
+      try {
+        activeWs.onclose = null;
+        activeWs.onerror = null;
+        activeWs.close();
+      } catch { /* ignore */ }
       activeWs = null;
     }
     if (finaliseTimeout) { clearTimeout(finaliseTimeout); finaliseTimeout = null; }
@@ -177,7 +181,7 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
         const perDay: { [date: string]: { fees: number; trades: number } } = {};
 
         for (const t of trades) {
-          const fee = (Number(t.price) || 0) * (Number(t.volume) || 0) * _feeRate;
+          const fee = (Number(t.volume) || 0) * _feeRate;
           totalFees += fee;
           // Parse date from timestamp
           try {
@@ -214,6 +218,28 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
       const ws = new WebSocket(url);
       activeWs = ws;
 
+      let connectionTimeout: NodeJS.Timeout | null = setTimeout(() => {
+        if (ws && ws.readyState === WebSocket.CONNECTING) {
+          ws.onclose = null;
+          ws.onerror = null;
+          ws.close();
+          activeWs = null;
+          if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
+          set({
+            error: 'Connection timeout: WebSocket failed to connect within 10 seconds.',
+            isRunning: false,
+            statusBarPhase: 'completed',
+          });
+        }
+      }, 10000);
+
+      ws.onopen = () => {
+        if (connectionTimeout) {
+          clearTimeout(connectionTimeout);
+          connectionTimeout = null;
+        }
+      };
+
       // Poll immediately and then every 1000ms
       void pollTrades();
       pollInterval = setInterval(() => { void pollTrades(); }, 1000);
@@ -224,7 +250,12 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
 
           // Final summary payload
           if (data.status === 'ok' && data.result) {
-            if (activeWs) { activeWs.close(); activeWs = null; }
+            if (activeWs) {
+              activeWs.onclose = null;
+              activeWs.onerror = null;
+              activeWs.close();
+              activeWs = null;
+            }
             if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
             set({
               summary: data.result as BacktestSummary,
@@ -238,13 +269,23 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
           }
           // Cancelled
           else if (data.status === 'cancelled') {
-            if (activeWs) { activeWs.close(); activeWs = null; }
+            if (activeWs) {
+              activeWs.onclose = null;
+              activeWs.onerror = null;
+              activeWs.close();
+              activeWs = null;
+            }
             if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
             set({ error: (data.error as string) || 'Backtest cancelled by user', isRunning: false, statusBarPhase: 'completed' });
           }
           // Error
           else if (data.status === 'error') {
-            if (activeWs) { activeWs.close(); activeWs = null; }
+            if (activeWs) {
+              activeWs.onclose = null;
+              activeWs.onerror = null;
+              activeWs.close();
+              activeWs = null;
+            }
             if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
             set({ error: (data.error as string) || 'Backtest execution failed', isRunning: false, statusBarPhase: 'completed' });
           }
@@ -335,13 +376,25 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
       };
 
       ws.onerror = () => {
+        if (connectionTimeout) { clearTimeout(connectionTimeout); connectionTimeout = null; }
         if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
         set({ error: 'WebSocket connection error', isRunning: false, statusBarPhase: 'completed' });
       };
 
       ws.onclose = () => {
+        if (connectionTimeout) { clearTimeout(connectionTimeout); connectionTimeout = null; }
         if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
         activeWs = null;
+        set((state) => {
+          if (state.isRunning) {
+            return {
+              isRunning: false,
+              statusBarPhase: 'completed',
+              error: state.error || 'Connection closed.'
+            };
+          }
+          return {};
+        });
       };
     } catch (err) {
       if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
@@ -354,14 +407,28 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
   },
 
   stopBacktest: () => {
-    if (activeWs) { try { activeWs.close(); } catch { /* ignore */ } activeWs = null; }
+    if (activeWs) {
+      try {
+        activeWs.onclose = null;
+        activeWs.onerror = null;
+        activeWs.close();
+      } catch { /* ignore */ }
+      activeWs = null;
+    }
     if (finaliseTimeout) { clearTimeout(finaliseTimeout); finaliseTimeout = null; }
     if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
     set({ isRunning: false, statusBarPhase: 'completed' });
   },
 
   clearStore: () => {
-    if (activeWs) { try { activeWs.close(); } catch { /* ignore */ } activeWs = null; }
+    if (activeWs) {
+      try {
+        activeWs.onclose = null;
+        activeWs.onerror = null;
+        activeWs.close();
+      } catch { /* ignore */ }
+      activeWs = null;
+    }
     if (finaliseTimeout) { clearTimeout(finaliseTimeout); finaliseTimeout = null; }
     if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
     set({

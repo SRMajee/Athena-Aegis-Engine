@@ -5,6 +5,8 @@
 #include "../../utilities/event.hpp"
 #include "../backtest/engine_backtest.hpp"
 #include "engine_db_pg.hpp"
+#include <fstream>
+#include <ctime>
 
 #include <cstdlib>
 #include <exception>
@@ -547,9 +549,102 @@ auto GrpcLiveEngineService::StartBacktest(
             engine.main_engine()->set_log_level(engines::DISABLED);
         }
 
+        size_t last_trade_count = 0;
+        size_t last_order_count = 0;
+
+        auto write_temp_files = [&]() {
+            auto* me = engine.main_engine();
+            if (!me) return;
+            auto trades = me->get_all_trades();
+            std::string trades_path = "../../data/temp/trades_" + request->job_id() + ".json";
+            std::ofstream out_t(trades_path);
+            if (out_t.is_open()) {
+                out_t << "[\n";
+                for (size_t i = 0; i < trades.size(); ++i) {
+                    const auto& t = trades[i];
+                    std::string dt_str = "";
+                    if (t.datetime.has_value()) {
+                        std::time_t tt = std::chrono::system_clock::to_time_t(*t.datetime);
+                        std::tm tm{};
+#if defined(_WIN32)
+                        gmtime_s(&tm, &tt);
+#else
+                        gmtime_r(&tt, &tm);
+#endif
+                        char buf[64];
+                        std::strftime(buf, sizeof(buf), "%Y-%m-%dT%H:%M:%SZ", &tm);
+                        dt_str = buf;
+                    }
+                    std::string dir_str = t.direction.has_value() ? utilities::to_string(*t.direction) : "LONG";
+                    out_t << "  {\n"
+                          << "    \"timestamp\": \"" << dt_str << "\",\n"
+                          << "    \"tradeid\": \"" << t.tradeid << "\",\n"
+                          << "    \"symbol\": \"" << t.symbol << "\",\n"
+                          << "    \"exchange\": \"" << utilities::to_string(t.exchange) << "\",\n"
+                          << "    \"orderid\": \"" << t.orderid << "\",\n"
+                          << "    \"direction\": \"" << dir_str << "\",\n"
+                          << "    \"price\": " << t.price << ",\n"
+                          << "    \"volume\": " << t.volume << "\n"
+                          << "  }" << (i + 1 < trades.size() ? "," : "") << "\n";
+                }
+                out_t << "]\n";
+            }
+
+            auto orders = me->get_all_orders();
+            std::string orders_path = "../../data/temp/orders_" + request->job_id() + ".json";
+            std::ofstream out_o(orders_path);
+            if (out_o.is_open()) {
+                out_o << "[\n";
+                for (size_t i = 0; i < orders.size(); ++i) {
+                    const auto& o = orders[i];
+                    std::string dt_str = "";
+                    if (o.datetime.has_value()) {
+                        std::time_t tt = std::chrono::system_clock::to_time_t(*o.datetime);
+                        std::tm tm{};
+#if defined(_WIN32)
+                        gmtime_s(&tm, &tt);
+#else
+                        gmtime_r(&tt, &tm);
+#endif
+                        char buf[64];
+                        std::strftime(buf, sizeof(buf), "%Y-%m-%dT%H:%M:%SZ", &tm);
+                        dt_str = buf;
+                    }
+                    std::string dir_str = o.direction.has_value() ? utilities::to_string(*o.direction) : "LONG";
+                    out_o << "  {\n"
+                          << "    \"timestamp\": \"" << dt_str << "\",\n"
+                          << "    \"orderid\": \"" << o.orderid << "\",\n"
+                          << "    \"symbol\": \"" << o.symbol << "\",\n"
+                          << "    \"exchange\": \"" << utilities::to_string(o.exchange) << "\",\n"
+                          << "    \"trading_class\": \"" << (o.trading_class.has_value() ? *o.trading_class : "") << "\",\n"
+                          << "    \"type\": \"" << utilities::to_string(o.type) << "\",\n"
+                          << "    \"direction\": \"" << dir_str << "\",\n"
+                          << "    \"price\": " << o.price << ",\n"
+                          << "    \"volume\": " << o.volume << ",\n"
+                          << "    \"traded\": " << o.traded << ",\n"
+                          << "    \"status\": \"" << utilities::to_string(o.status) << "\",\n"
+                          << "    \"reference\": \"" << o.reference << "\",\n"
+                          << "    \"is_combo\": " << (o.is_combo ? "true" : "false") << "\n"
+                          << "  }" << (i + 1 < orders.size() ? "," : "") << "\n";
+                }
+                out_o << "]\n";
+            }
+        };
+
         engine.register_timestep_callback([&](int /*timestep*/, backtest::Timestamp ts) {
             if (context->IsCancelled()) {
                 return;
+            }
+
+            auto* me = engine.main_engine();
+            if (me != nullptr) {
+                auto trades_size = me->get_all_trades().size();
+                auto orders_size = me->get_all_orders().size();
+                if (trades_size != last_trade_count || orders_size != last_order_count) {
+                    last_trade_count = trades_size;
+                    last_order_count = orders_size;
+                    write_temp_files();
+                }
             }
 
             ::otrader::EngineStateUpdate update;
@@ -563,10 +658,10 @@ auto GrpcLiveEngineService::StartBacktest(
             double spot_price = 0.0;
             double implied_vol = 0.0;
 
-            auto* me = engine.main_engine();
-            if (me != nullptr) {
-                if (me->option_strategy_engine() != nullptr) {
-                    auto* holding = me->option_strategy_engine()->get_strategy_holding();
+            auto* me_ptr = engine.main_engine();
+            if (me_ptr != nullptr) {
+                if (me_ptr->option_strategy_engine() != nullptr) {
+                    auto* holding = me_ptr->option_strategy_engine()->get_strategy_holding();
                     if (holding != nullptr) {
                         const double pnl = holding->summary.pnl;
                         update.set_pnl(pnl);
@@ -580,9 +675,9 @@ auto GrpcLiveEngineService::StartBacktest(
                         greeks->set_rho(0.0);
                     }
 
-                    auto* strategy = me->option_strategy_engine()->get_strategy();
+                    auto* strategy = me_ptr->option_strategy_engine()->get_strategy();
                     if (strategy != nullptr) {
-                        auto* portfolio = me->get_portfolio(strategy->portfolio_name());
+                        auto* portfolio = me_ptr->get_portfolio(strategy->portfolio_name());
                         if (portfolio != nullptr) {
                             if (portfolio->underlying != nullptr) {
                                 spot_price = portfolio->underlying->mid_price;
@@ -638,6 +733,9 @@ auto GrpcLiveEngineService::StartBacktest(
         }
 
         engine.run();
+
+        write_temp_files();
+
         return ::grpc::Status::OK;
     } catch (const std::exception& e) {
         return ::grpc::Status(::grpc::StatusCode::INTERNAL, e.what());

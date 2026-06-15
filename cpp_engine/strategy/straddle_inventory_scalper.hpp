@@ -55,13 +55,15 @@ class StraddleInventoryScalperStrategy : public OptionStrategyTemplate {
         tick_count_++;
 
         // Find chain
-        if (active_chain_sym_.empty()) {
+        if (active_chain_sym_.empty() || get_current_inventory() == 0) {
             auto chain_symbols = portfolio()->get_chain_by_expiry(min_dte_, max_dte_);
             if (chain_symbols.empty())
                 chain_symbols = portfolio()->get_chain_by_expiry(0, 30);
             if (chain_symbols.empty()) return;
-            active_chain_sym_ = chain_symbols[0];
-            subscribe_chains(std::span<const std::string>(&active_chain_sym_, 1));
+            if (chain_symbols[0] != active_chain_sym_) {
+                active_chain_sym_ = chain_symbols[0];
+                subscribe_chains(std::span<const std::string>(&active_chain_sym_, 1));
+            }
         }
 
         auto* chain = get_chain(active_chain_sym_);
@@ -162,9 +164,9 @@ class StraddleInventoryScalperStrategy : public OptionStrategyTemplate {
     }
 
     // Parameters
-    int window_size_ = 15;
-    double z_entry_ = 1.0;
-    double z_exit_ = 0.2;
+    int window_size_ = 5;
+    double z_entry_ = 0.5;
+    double z_exit_ = 0.1;
     int max_inventory_ = 3;
     int min_dte_ = 0;
     int max_dte_ = 14;

@@ -196,7 +196,19 @@ void BacktestEngine::execute_order_impl(const utilities::OrderRequest& req,
         }
     }
 
+    utilities::DateTime sim_time = std::chrono::system_clock::now();
+    if (main_engine_ && main_engine_->option_strategy_engine()) {
+        auto* strategy = main_engine_->option_strategy_engine()->get_strategy();
+        if (strategy != nullptr) {
+            auto* portfolio = main_engine_->get_portfolio(strategy->portfolio_name());
+            if (portfolio != nullptr) {
+                sim_time = portfolio->dte_ref();
+            }
+        }
+    }
+
     utilities::OrderData order = req.create_order_data(orderid, "Backtest");
+    order.datetime = sim_time;
     if (filled) {
         order.status = utilities::Status::ALLTRADED;
         order.traded = order.volume;
@@ -223,7 +235,7 @@ void BacktestEngine::execute_order_impl(const utilities::OrderRequest& req,
         trade.direction = req.direction;
         trade.price = fill_price;
         trade.volume = req.volume;
-        trade.datetime = std::chrono::system_clock::now();
+        trade.datetime = sim_time;
         utilities::TradeData* trade_slot = main_engine_->acquire_trade();
         if (trade_slot != nullptr) {
             *trade_slot = trade;
@@ -252,7 +264,7 @@ void BacktestEngine::execute_order_impl(const utilities::OrderRequest& req,
                 leg_trade.direction = leg.direction;
                 leg_trade.price = leg_price;
                 leg_trade.volume = req.volume * std::abs(static_cast<double>(leg.ratio));
-                leg_trade.datetime = std::chrono::system_clock::now();
+                leg_trade.datetime = sim_time;
                 utilities::TradeData* leg_slot = main_engine_->acquire_trade();
                 if (leg_slot != nullptr) {
                     *leg_slot = leg_trade;

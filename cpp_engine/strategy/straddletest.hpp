@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <string>
+#include <ctime>
 
 namespace strategy_cpp {
 
@@ -29,6 +30,8 @@ class StraddleTestStrategy : public OptionStrategyTemplate {
             stop_loss_pct_ = it->second;
 
         register_hedging(5, 0, 10);
+        last_day_ = -1;
+        tick_count_ = 0;
         write_log("StraddleTest initialized: DTE=[" + std::to_string(min_dte_) + "," +
                   std::to_string(max_dte_) + "] TP=" + std::to_string(take_profit_pct_) +
                   " SL=" + std::to_string(stop_loss_pct_));
@@ -41,6 +44,20 @@ class StraddleTestStrategy : public OptionStrategyTemplate {
 
     void on_timer_logic() override {
         if (!portfolio() || !underlying()) return;
+
+        auto current_time = portfolio()->dte_ref();
+        std::time_t tt = std::chrono::system_clock::to_time_t(current_time);
+        std::tm tm{};
+#if defined(_WIN32)
+        gmtime_s(&tm, &tt);
+#else
+        gmtime_r(&tt, &tm);
+#endif
+        int current_day = tm.tm_yday + tm.tm_year * 1000;
+        if (current_day != last_day_) {
+            last_day_ = current_day;
+            tick_count_ = 0;
+        }
 
         tick_count_++;
 
@@ -138,6 +155,7 @@ class StraddleTestStrategy : public OptionStrategyTemplate {
     double entry_premium_ = 0.0;
     int entry_tick_ = 0;
     int tick_count_ = 0;
+    int last_day_ = -1;
     std::string chain_symbol_;
 };
 

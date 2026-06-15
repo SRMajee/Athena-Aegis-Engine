@@ -429,6 +429,11 @@ auto PositionEngine::accumulate_position(utilities::BasePosition* pos,
     m["cv"] = round_digits(pos->current_value(), 2);
     m["tc"] = round_digits(pos->cost_value, 2);
     m["rlz"] = round_digits(pos->realized_pnl, 2);
+    double unreal = 0.0;
+    if (pos->quantity != 0) {
+        unreal = pos->quantity * (mid_price - pos->avg_cost) * pos->multiplier;
+    }
+    m["unreal"] = round_digits(unreal, 2);
     m["delta"] = round_digits(pos->quantity * pos->delta, 4);
     m["gamma"] = round_digits(pos->quantity * pos->gamma, 4);
     m["theta"] = round_digits(pos->quantity * pos->theta, 4);
@@ -451,6 +456,11 @@ auto PositionEngine::accumulate_position(utilities::BasePosition* pos,
     m["cv"] = round_digits(pos->current_value(), 2);
     m["tc"] = round_digits(pos->cost_value, 2);
     m["rlz"] = round_digits(pos->realized_pnl, 2);
+    double unreal = 0.0;
+    if (pos->quantity != 0) {
+        unreal = pos->quantity * (mid_price - pos->avg_cost) * pos->multiplier;
+    }
+    m["unreal"] = round_digits(unreal, 2);
     m["delta"] = round_digits(pos->quantity * pos->delta, 4);
     m["gamma"] = round_digits(pos->quantity * pos->gamma, 4);
     m["theta"] = round_digits(pos->quantity * pos->theta, 4);
@@ -475,6 +485,8 @@ auto PositionEngine::accumulate_option_position(utilities::OptionPositionData& o
         }
     }
 
+    double opt_unreal = 0.0;
+
     for (auto* leg : components) {
         const utilities::OptionData* inst = nullptr;
         auto it = portfolio->options.find(leg->symbol);
@@ -485,6 +497,7 @@ auto PositionEngine::accumulate_option_position(utilities::OptionPositionData& o
         current_value += acc["cv"];
         opt.cost_value += acc["tc"];
         opt.realized_pnl += acc["rlz"];
+        opt_unreal += acc["unreal"];
         opt.delta += acc["delta"];
         opt.gamma += acc["gamma"];
         opt.theta += acc["theta"];
@@ -503,6 +516,7 @@ auto PositionEngine::accumulate_option_position(utilities::OptionPositionData& o
     m["cv"] = round_digits(current_value, 2);
     m["tc"] = round_digits(opt.cost_value, 2);
     m["rlz"] = round_digits(opt.realized_pnl, 2);
+    m["unreal"] = round_digits(opt_unreal, 2);
     m["delta"] = round_digits(opt.delta, 4);
     m["gamma"] = round_digits(opt.gamma, 4);
     m["theta"] = round_digits(opt.theta, 4);
@@ -539,7 +553,7 @@ void PositionEngine::update_metrics(const std::string& strategy_name,
     }
     utilities::StrategyHolding& holding = strategy_holdings_.at(strategy_name);
 
-    std::map<std::string, double> totals{{"cv", 0.0},    {"tc", 0.0},    {"rlz", 0.0},
+    std::map<std::string, double> totals{{"cv", 0.0},    {"tc", 0.0},    {"rlz", 0.0}, {"unreal", 0.0},
                                          {"delta", 0.0}, {"gamma", 0.0}, {"theta", 0.0},
                                          {"vega", 0.0}};
 
@@ -552,10 +566,9 @@ void PositionEngine::update_metrics(const std::string& strategy_name,
                    accumulate_position(&holding.underlyingPosition, portfolio->underlying.get()));
     }
 
-    double unreal = totals["cv"] - totals["tc"];
     holding.summary.current_value = round_digits(totals["cv"], 2);
     holding.summary.total_cost = round_digits(totals["tc"], 2);
-    holding.summary.unrealized_pnl = round_digits(unreal, 2);
+    holding.summary.unrealized_pnl = round_digits(totals["unreal"], 2);
     holding.summary.realized_pnl = round_digits(totals["rlz"], 2);
     holding.summary.pnl = holding.summary.unrealized_pnl + holding.summary.realized_pnl;
     holding.summary.delta = round_digits(totals["delta"], 4);

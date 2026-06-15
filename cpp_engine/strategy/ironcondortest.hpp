@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <string>
+#include <ctime>
 
 namespace strategy_cpp {
 
@@ -32,6 +33,8 @@ class IronCondorTestStrategy : public OptionStrategyTemplate {
         if (auto it = setting_.find("stop_loss_pct"); it != setting_.end())
             stop_loss_pct_ = it->second;
 
+        last_day_ = -1;
+        tick_count_ = 0;
         write_log("IronCondorTest initialized: DTE=[" + std::to_string(min_dte_) + "," +
                   std::to_string(max_dte_) + "] delta=" + std::to_string(target_delta_) +
                   " wings=" + std::to_string(wing_width_));
@@ -43,6 +46,20 @@ class IronCondorTestStrategy : public OptionStrategyTemplate {
 
     void on_timer_logic() override {
         if (!portfolio() || !underlying()) return;
+
+        auto current_time = portfolio()->dte_ref();
+        std::time_t tt = std::chrono::system_clock::to_time_t(current_time);
+        std::tm tm{};
+#if defined(_WIN32)
+        gmtime_s(&tm, &tt);
+#else
+        gmtime_r(&tt, &tm);
+#endif
+        int current_day = tm.tm_yday + tm.tm_year * 1000;
+        if (current_day != last_day_) {
+            last_day_ = current_day;
+            tick_count_ = 0;
+        }
 
         tick_count_++;
 
@@ -184,10 +201,10 @@ class IronCondorTestStrategy : public OptionStrategyTemplate {
     double take_profit_pct_ = 0.50;
     double stop_loss_pct_ = 1.00;
 
-    // State
     bool position_open_ = false;
     double entry_credit_ = 0.0;
     int tick_count_ = 0;
+    int last_day_ = -1;
 };
 
 } // namespace strategy_cpp

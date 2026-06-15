@@ -50,13 +50,15 @@ class IvMeanRevertStrategy : public OptionStrategyTemplate {
         tick_count_++;
 
         // Find a chain to trade
-        if (active_chain_sym_.empty()) {
+        if (active_chain_sym_.empty() || !position_open_) {
             auto chain_symbols = portfolio()->get_chain_by_expiry(min_dte_, max_dte_);
             if (chain_symbols.empty())
                 chain_symbols = portfolio()->get_chain_by_expiry(0, 30);
             if (chain_symbols.empty()) return;
-            active_chain_sym_ = chain_symbols[0];
-            subscribe_chains(std::span<const std::string>(&active_chain_sym_, 1));
+            if (chain_symbols[0] != active_chain_sym_) {
+                active_chain_sym_ = chain_symbols[0];
+                subscribe_chains(std::span<const std::string>(&active_chain_sym_, 1));
+            }
         }
 
         auto* chain = get_chain(active_chain_sym_);
@@ -152,9 +154,9 @@ class IvMeanRevertStrategy : public OptionStrategyTemplate {
 
   private:
     // Parameters
-    int window_size_ = 20;
-    double z_entry_ = 1.5;
-    double z_exit_ = 0.5;
+    int window_size_ = 5;
+    double z_entry_ = 0.5;
+    double z_exit_ = 0.1;
     int max_hold_ticks_ = 60;
     int min_dte_ = 0;
     int max_dte_ = 14;
