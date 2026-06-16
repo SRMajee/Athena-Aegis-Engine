@@ -19,7 +19,7 @@ using namespace utilities;
 auto parse_occ_symbol(const std::string& symbol)
     -> std::tuple<std::optional<Timestamp>, std::optional<double>, std::optional<OptionType>> {
     std::string occ_part = symbol;
-    if (symbol.size() >= 21U) {
+    if (symbol.size() >= 15U) {
         occ_part = symbol.substr(symbol.size() - 15U);
     }
     if (occ_part.size() < 15U) {
