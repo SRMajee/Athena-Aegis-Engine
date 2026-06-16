@@ -87,7 +87,7 @@ def list_files(root: Path | None = None) -> List[FileInfo]:
                 total_size = sum(p.stat().st_size for p in parquet_files)
                 day_tokens: set[str] = set()
                 for p in parquet_files:
-                    stem = p.stem
+                    stem = p.stem.replace("-", "")
                     if _DAY_STEM_RE.match(stem):
                         day_tokens.add(stem)
                 sorted_days = sorted(day_tokens)

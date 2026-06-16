@@ -1,0 +1,32 @@
+{
+  "StraddleTestStrategy": {
+    "min_dte": 0.0,
+    "max_dte": 7.0,
+    "take_profit_pct": 0.30,
+    "stop_loss_pct": 0.50
+  },
+  "IronCondorTestStrategy": {
+    "min_dte": 14.0,
+    "max_dte": 45.0,
+    "target_delta": 0.16,
+    "wing_width": 5.0,
+    "take_profit_pct": 0.50,
+    "stop_loss_pct": 1.00
+  },
+  "IvMeanRevertStrategy": {
+    "window_size": 5.0,
+    "z_entry": 0.50,
+    "z_exit": 0.10,
+    "max_hold_ticks": 60.0,
+    "min_dte": 0.0,
+    "max_dte": 14.0
+  },
+  "StraddleInventoryScalperStrategy": {
+    "window_size": 5.0,
+    "z_entry": 0.50,
+    "z_exit": 0.10,
+    "max_inventory": 3.0,
+    "min_dte": 0.0,
+    "max_dte": 14.0
+  }
+}

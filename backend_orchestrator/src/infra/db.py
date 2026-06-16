@@ -128,13 +128,18 @@ def get_connection():
 def fetch_orders_trades_raw(
     strategy: Optional[str],
     limit: int,
-) -> Tuple[List[str], Sequence[Tuple[Any, ...]]]:
+    record_type: Optional[str] = None,
+) -> Tuple[List[str], Sequence[Tuple[Any, ...]], int, float, Dict[str, int], Dict[str, float]]:
     """
     Low-level query for historical orders & trades.
 
     Returns a tuple of:
     - strategies: distinct strategy_name list (for filters)
     - rows: raw rows from the unified orders/trades query
+    - total_count: total matching records in database
+    - total_volume: sum of volume of matching records
+    - daily_trades: date -> trade count
+    - daily_volume: date -> sum of trade volume
     """
     conn = get_connection()
     try:
@@ -151,14 +156,12 @@ def fetch_orders_trades_raw(
             strategies = [row[0] for row in cur.fetchall() if row[0]]
 
             params: List[Any] = []
-            where_clauses_orders: List[str] = []
-            where_clauses_trades: List[str] = []
+            orders_where: List[str] = []
+            trades_where: List[str] = []
 
             if strategy:
-                where_clauses_orders.append("strategy_name = %s")
-                where_clauses_trades.append("strategy_name = %s")
-                params.append(strategy)  # For orders_sql WHERE
-                params.append(strategy)  # For trades_sql WHERE
+                orders_where.append("strategy_name = %s")
+                trades_where.append("strategy_name = %s")
 
             orders_sql = """
                 SELECT
@@ -189,24 +192,113 @@ def fetch_orders_trades_raw(
                 FROM trades
             """
 
-            if strategy:
-                if where_clauses_orders:
-                    orders_sql += " WHERE " + " AND ".join(where_clauses_orders)
-                if where_clauses_trades:
-                    trades_sql += " WHERE " + " AND ".join(where_clauses_trades)
+            if orders_where:
+                orders_sql += " WHERE " + " AND ".join(orders_where)
+            if trades_where:
+                trades_sql += " WHERE " + " AND ".join(trades_where)
 
-            union_sql = f"""
-                {orders_sql}
-                UNION ALL
-                {trades_sql}
-                ORDER BY timestamp DESC
-                LIMIT %s
-            """
+            # Get total count and volume
+            total_count = 0
+            total_volume = 0.0
+            daily_trades: Dict[str, int] = {}
+            daily_volume: Dict[str, float] = {}
 
-            cur.execute(union_sql, (*params, limit))
+            if record_type == "Order":
+                count_sql = "SELECT COUNT(*), COALESCE(SUM(volume), 0) FROM orders"
+                count_params = []
+                if strategy:
+                    count_sql += " WHERE strategy_name = %s"
+                    count_params.append(strategy)
+                cur.execute(count_sql, count_params)
+                row = cur.fetchone()
+                if row:
+                    total_count, total_volume = int(row[0]), float(row[1])
+            elif record_type == "Trade":
+                count_sql = "SELECT COUNT(*), COALESCE(SUM(volume), 0) FROM trades"
+                count_params = []
+                if strategy:
+                    count_sql += " WHERE strategy_name = %s"
+                    count_params.append(strategy)
+                cur.execute(count_sql, count_params)
+                row = cur.fetchone()
+                if row:
+                    total_count, total_volume = int(row[0]), float(row[1])
+                
+                # Fetch daily aggregations
+                daily_sql = """
+                    SELECT SUBSTRING(timestamp, 1, 10) AS trade_date, COUNT(*), COALESCE(SUM(volume), 0)
+                    FROM trades
+                    {where}
+                    GROUP BY SUBSTRING(timestamp, 1, 10)
+                    ORDER BY trade_date
+                """
+                where_clause = ""
+                daily_params = []
+                if strategy:
+                    where_clause = "WHERE strategy_name = %s"
+                    daily_params.append(strategy)
+                cur.execute(daily_sql.format(where=where_clause), daily_params)
+                for r in cur.fetchall():
+                    d_str, count, vol = r[0], int(r[1]), float(r[2])
+                    if d_str:
+                        daily_trades[d_str] = count
+                        daily_volume[d_str] = vol
+            else:
+                count_sql_orders = "SELECT COUNT(*), COALESCE(SUM(volume), 0) FROM orders"
+                count_sql_trades = "SELECT COUNT(*), COALESCE(SUM(volume), 0) FROM trades"
+                params_orders = []
+                params_trades = []
+                if strategy:
+                    count_sql_orders += " WHERE strategy_name = %s"
+                    count_sql_trades += " WHERE strategy_name = %s"
+                    params_orders.append(strategy)
+                    params_trades.append(strategy)
+                cur.execute(count_sql_orders, params_orders)
+                r_o = cur.fetchone()
+                c_o, v_o = (int(r_o[0]), float(r_o[1])) if r_o else (0, 0.0)
+
+                cur.execute(count_sql_trades, params_trades)
+                r_t = cur.fetchone()
+                c_t, v_t = (int(r_t[0]), float(r_t[1])) if r_t else (0, 0.0)
+
+                total_count = c_o + c_t
+                total_volume = v_o + v_t
+
+            if record_type == "Order":
+                union_sql = f"""
+                    {orders_sql}
+                    ORDER BY timestamp DESC
+                    LIMIT %s
+                """
+                if strategy:
+                    params.append(strategy)
+                params.append(limit)
+            elif record_type == "Trade":
+                union_sql = f"""
+                    {trades_sql}
+                    ORDER BY timestamp DESC
+                    LIMIT %s
+                """
+                if strategy:
+                    params.append(strategy)
+                params.append(limit)
+            else:
+                union_sql = f"""
+                    {orders_sql}
+                    UNION ALL
+                    {trades_sql}
+                    ORDER BY timestamp DESC
+                    LIMIT %s
+                """
+                if strategy:
+                    params.append(strategy)
+                    params.append(strategy)
+                params.append(limit)
+
+            cur.execute(union_sql, params)
             rows = cur.fetchall()
 
-        return strategies, rows
+        return strategies, rows, total_count, total_volume, daily_trades, daily_volume
     except Exception as exc:  # pragma: no cover - simple wrapper
         raise DBError(f"Failed to fetch orders/trades: {exc}") from exc
     finally:

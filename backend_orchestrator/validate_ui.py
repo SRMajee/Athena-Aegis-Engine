@@ -60,7 +60,7 @@ def create_mock_data():
     print("Creating mock parquet data for backtesting...")
     # Create data/AAPL directory under the script's directory (FastAPI server CWD)
     root = Path(__file__).resolve().parent
-    data_dir = root / "data" / "AAPL"
+    data_dir = root / "data" / "AAPL" / "2026"
     data_dir.mkdir(parents=True, exist_ok=True)
     
     pq_path = data_dir / "20260601.parquet"

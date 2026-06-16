@@ -41,20 +41,22 @@ def resolve_parquet_path(parquet_input: str, start_date: str = "", end_date: str
     if not os.path.isdir(dir_candidate):
         return candidate, False
 
-    # Get all matching parquet files in date range
+    # Get all matching parquet files in date range recursively (supports symbol/year/date.parquet)
     files = []
     start_clean = start_date.replace("-", "") if start_date else ""
     end_clean = end_date.replace("-", "") if end_date else ""
     
-    for f in os.listdir(dir_candidate):
-        if f.endswith(".parquet"):
-            stem = f[:-8]  # Remove ".parquet"
-            if len(stem) == 8 and stem.isdigit():
-                if start_clean and end_clean:
-                    if start_clean <= stem <= end_clean:
-                        files.append(os.path.join(dir_candidate, f))
-                else:
-                    files.append(os.path.join(dir_candidate, f))
+    for root_dir, _, filenames in os.walk(dir_candidate):
+        for f in filenames:
+            if f.endswith(".parquet"):
+                stem = f[:-8]  # Remove ".parquet"
+                stem_clean = stem.replace("-", "")
+                if len(stem_clean) == 8 and stem_clean.isdigit():
+                    if start_clean and end_clean:
+                        if start_clean <= stem_clean <= end_clean:
+                            files.append(os.path.join(root_dir, f))
+                    else:
+                        files.append(os.path.join(root_dir, f))
 
     if not files:
         raise FileNotFoundError(f"No parquet data files found for symbol '{symbol}' within date range {start_date} ~ {end_date}")
@@ -274,6 +276,34 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
 
                 update_dict = MessageToDict(update, preserving_proto_field_name=True)
                 
+                # Real-time trades/fees telemetry
+                total_trades_val = 0
+                total_fees_val = 0.0
+                daily_trades_dict = {}
+                daily_fees_dict = {}
+                if os.path.exists(trades_json_path):
+                    try:
+                        with open(trades_json_path, "r") as f:
+                            trades_data = json.load(f)
+                            total_trades_val = len(trades_data)
+                            fee_rate_val = float(job_payload.get("fee_rate", 0.35))
+                            
+                            for t in trades_data:
+                                t_ts = t.get("timestamp")
+                                if t_ts:
+                                    d_str = t_ts[:10]
+                                    daily_trades_dict[d_str] = daily_trades_dict.get(d_str, 0) + 1
+                                    daily_fees_dict[d_str] = daily_fees_dict.get(d_str, 0.0) + (float(t.get("volume", 0.0)) * fee_rate_val)
+                                    
+                            total_fees_val = sum(daily_fees_dict.values())
+                    except Exception:
+                        pass
+                
+                update_dict["total_trades"] = total_trades_val
+                update_dict["total_fees"] = total_fees_val
+                update_dict["daily_trades"] = daily_trades_dict
+                update_dict["daily_fees"] = daily_fees_dict
+
                 # Publish state update to Redis PubSub
                 await ctx["redis"].publish(f"job_stream:{job_id}", json.dumps(update_dict))
 
@@ -456,8 +486,26 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
         for d_str in sorted_dates:
             p_end = daily_pnls[d_str]
             p_prev = daily_pnls[sorted_dates[sorted_dates.index(d_str) - 1]] if sorted_dates.index(d_str) > 0 else 0.0
+            
+            # Check if nested year/month/date directory exists
+            year_val = d_str[:4]
+            month_val = d_str[4:6]
+            formatted_date = f"{d_str[:4]}-{d_str[4:6]}-{d_str[6:8]}"
+            
+            # Check options-data style: data/symbol/year/month/year-month-date.parquet
+            check_deep_nested = os.path.join(workspace_root, "data", job_payload['parquet'], year_val, month_val, f"{formatted_date}.parquet")
+            # Check our style: data/symbol/year/date.parquet
+            check_nested = os.path.join(workspace_root, "data", job_payload['parquet'], year_val, f"{d_str}.parquet")
+            
+            if os.path.isfile(check_deep_nested):
+                rel_file_path = f"data/{job_payload['parquet']}/{year_val}/{month_val}/{formatted_date}.parquet"
+            elif os.path.isfile(check_nested):
+                rel_file_path = f"data/{job_payload['parquet']}/{year_val}/{d_str}.parquet"
+            else:
+                rel_file_path = f"data/{job_payload['parquet']}/{d_str}.parquet"
+                
             daily_results_list.append({
-                "file": f"data/{job_payload['parquet']}/{d_str}.parquet",
+                "file": rel_file_path,
                 "pnl": p_end - p_prev,
                 "net_pnl": (p_end - p_prev) - daily_fees.get(d_str, 0.0),
                 "fees": daily_fees.get(d_str, 0.0),

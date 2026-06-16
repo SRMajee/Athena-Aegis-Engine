@@ -162,7 +162,7 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
     // 3. Poll trades/fees from DB in real-time
     const pollTrades = async () => {
       try {
-        // The endpoint returns { strategies: string[], records: TradeRecord[] }
+        // The endpoint returns { strategies: string[], records: TradeRecord[], total_count?: number, total_volume?: number, daily_trades?: dict, daily_volume?: dict }
         const res = await api.get<{
           strategies?: string[];
           records?: Array<{
@@ -172,17 +172,28 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
             price: number | null;
             volume: number | null;
           }>;
+          total_count?: number;
+          total_volume?: number;
+          daily_trades?: { [date: string]: number };
+          daily_volume?: { [date: string]: number };
         }>(`/api/orders-trades/db?strategy=${encodeURIComponent(strategyName)}&record_type=Trade&limit=5000`);
 
         const allRecords = res?.records ?? [];
         const trades = allRecords.filter((r) => r.record_type === 'Trade');
-        const totalTrades = trades.length;
-        let totalFees = 0;
+        const totalTrades = res?.total_count ?? trades.length;
+        let totalFees = res?.total_volume !== undefined ? (res.total_volume * _feeRate) : 0;
+        
         const perDay: { [date: string]: { fees: number; trades: number } } = {};
+
+        if (res?.total_volume === undefined) {
+          for (const t of trades) {
+            const fee = (Number(t.volume) || 0) * _feeRate;
+            totalFees += fee;
+          }
+        }
 
         for (const t of trades) {
           const fee = (Number(t.volume) || 0) * _feeRate;
-          totalFees += fee;
           // Parse date from timestamp
           try {
             const d = new Date(t.timestamp).toISOString().slice(0, 10);
@@ -193,13 +204,23 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
         }
 
         set((state) => {
-          // Merge per-day fees and trades into running state
-          const newDailyFees = { ...state.runningDailyFees };
-          const newDailyTrades = { ...state.runningDailyTrades };
-          for (const [d, v] of Object.entries(perDay)) {
-            newDailyFees[d] = v.fees;
-            newDailyTrades[d] = v.trades;
+          let newDailyFees = { ...state.runningDailyFees };
+          let newDailyTrades = { ...state.runningDailyTrades };
+
+          if (res?.daily_trades !== undefined && res?.daily_volume !== undefined) {
+            newDailyTrades = res.daily_trades;
+            newDailyFees = {};
+            for (const [d, v] of Object.entries(res.daily_volume)) {
+              newDailyFees[d] = v * _feeRate;
+            }
+          } else {
+            // Merge per-day fees and trades into running state
+            for (const [d, v] of Object.entries(perDay)) {
+              newDailyFees[d] = v.fees;
+              newDailyTrades[d] = v.trades;
+            }
           }
+
           return {
             runningTotalTrades: totalTrades,
             runningTotalFees: totalFees,
@@ -353,6 +374,22 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
               const runningDuration = state.startTime ? (Date.now() - state.startTime) / 1000 : 0;
               const runningFrames = state.runningFrames + 1;
 
+              const runningTotalTrades = data.total_trades !== undefined ? Number(data.total_trades) : state.runningTotalTrades;
+              const runningTotalFees = data.total_fees !== undefined ? Number(data.total_fees) : state.runningTotalFees;
+
+              const newDailyTrades = { ...state.runningDailyTrades };
+              if (data.daily_trades) {
+                for (const [d, v] of Object.entries(data.daily_trades)) {
+                  newDailyTrades[d] = Number(v);
+                }
+              }
+              const newDailyFees = { ...state.runningDailyFees };
+              if (data.daily_fees) {
+                for (const [d, v] of Object.entries(data.daily_fees)) {
+                  newDailyFees[d] = Number(v);
+                }
+              }
+
               return {
                 metrics: newMetrics,
                 maxDelta: Math.max(state.maxDelta, tick.delta),
@@ -367,6 +404,10 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
                 runningSharpe,
                 runningDuration,
                 runningFrames,
+                runningTotalTrades,
+                runningTotalFees,
+                runningDailyTrades: newDailyTrades,
+                runningDailyFees: newDailyFees,
               };
             });
           }

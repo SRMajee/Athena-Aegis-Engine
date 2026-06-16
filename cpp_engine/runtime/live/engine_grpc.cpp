@@ -7,6 +7,7 @@
 #include "engine_db_pg.hpp"
 #include <fstream>
 #include <ctime>
+#include <filesystem>
 
 #include <cstdlib>
 #include <exception>
@@ -557,7 +558,8 @@ auto GrpcLiveEngineService::StartBacktest(
             if (!me) return;
             auto trades = me->get_all_trades();
             std::string trades_path = "../../data/temp/trades_" + request->job_id() + ".json";
-            std::ofstream out_t(trades_path);
+            std::string trades_tmp = trades_path + ".tmp";
+            std::ofstream out_t(trades_tmp);
             if (out_t.is_open()) {
                 out_t << "[\n";
                 for (size_t i = 0; i < trades.size(); ++i) {
@@ -588,11 +590,15 @@ auto GrpcLiveEngineService::StartBacktest(
                           << "  }" << (i + 1 < trades.size() ? "," : "") << "\n";
                 }
                 out_t << "]\n";
+                out_t.close();
+                std::error_code ec;
+                std::filesystem::rename(trades_tmp, trades_path, ec);
             }
 
             auto orders = me->get_all_orders();
             std::string orders_path = "../../data/temp/orders_" + request->job_id() + ".json";
-            std::ofstream out_o(orders_path);
+            std::string orders_tmp = orders_path + ".tmp";
+            std::ofstream out_o(orders_tmp);
             if (out_o.is_open()) {
                 out_o << "[\n";
                 for (size_t i = 0; i < orders.size(); ++i) {
@@ -628,6 +634,9 @@ auto GrpcLiveEngineService::StartBacktest(
                           << "  }" << (i + 1 < orders.size() ? "," : "") << "\n";
                 }
                 out_o << "]\n";
+                out_o.close();
+                std::error_code ec;
+                std::filesystem::rename(orders_tmp, orders_path, ec);
             }
         };
 

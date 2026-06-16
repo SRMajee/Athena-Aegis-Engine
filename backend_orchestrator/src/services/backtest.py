@@ -62,6 +62,18 @@ class BacktestService:
                     correlation_id=correlation_id
                 )
                 session.add(db_job)
+
+                # Clear old orders and trades for this strategy to prevent stale calculations
+                import sqlalchemy as sa
+                await session.execute(
+                    sa.text("DELETE FROM trades WHERE strategy_name = :name"),
+                    {"name": strategy}
+                )
+                await session.execute(
+                    sa.text("DELETE FROM orders WHERE strategy_name = :name"),
+                    {"name": strategy}
+                )
+
                 await session.commit()
         except Exception as e:
             return {"status": "error", "error": f"Failed to persist job metadata: {e}"}

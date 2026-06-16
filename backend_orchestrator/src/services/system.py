@@ -21,7 +21,7 @@ async def get_orders_trades_from_db(
             raise HTTPException(status_code=400, detail="record_type must be Order or Trade")
 
     try:
-        strategies, rows = await asyncio.to_thread(fetch_orders_trades_raw, strategy, limit)
+        strategies, rows, total_count, total_volume, daily_trades, daily_volume = await asyncio.to_thread(fetch_orders_trades_raw, strategy, limit, rec_type)
     except DBError as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
@@ -55,7 +55,14 @@ async def get_orders_trades_from_db(
             }
         )
 
-    return {"strategies": strategies, "records": records}
+    return {
+        "strategies": strategies,
+        "records": records,
+        "total_count": total_count,
+        "total_volume": total_volume,
+        "daily_trades": daily_trades,
+        "daily_volume": daily_volume
+    }
 
 
 async def get_contracts_overview_from_db() -> Dict[str, Any]:
