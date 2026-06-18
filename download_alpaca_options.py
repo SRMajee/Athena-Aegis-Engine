@@ -135,7 +135,7 @@ def fetch_underlying_prices(symbol: str, start_date_str: str, end_date_str: str,
     print(f"Loaded {len(prices)} underlying price points.")
     return prices
 
-def download_data(symbol: str, start_date_str: str, end_date_str: str, api_key: str, api_secret: str, output_dir: Path):
+def download_data(symbol: str, start_date_str: str, end_date_str: str, api_key: str, api_secret: str, output_dir: Path, max_contracts: int = 1000):
     headers = {
         "APCA-API-KEY-ID": api_key,
         "APCA-API-SECRET-KEY": api_secret
@@ -145,6 +145,10 @@ def download_data(symbol: str, start_date_str: str, end_date_str: str, api_key: 
     if not valid_contract_symbols:
         print("No valid contracts found for the date range.")
         return
+        
+    if max_contracts is not None and max_contracts > 0:
+        print(f"Limiting download to first {max_contracts} contracts.")
+        valid_contract_symbols = valid_contract_symbols[:max_contracts]
         
     underlying_prices = fetch_underlying_prices(symbol, start_date_str, end_date_str, headers)
         

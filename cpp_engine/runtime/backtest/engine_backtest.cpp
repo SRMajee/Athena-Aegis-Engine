@@ -363,17 +363,27 @@ auto BacktestEngine::run() -> BacktestResult {
     int step_count = 0;
     int64_t total_rows = 0;
 
+    utilities::PortfolioSnapshot prev_snap_data;
+    bool has_prev = false;
+
     data_engine->iter_timesteps(
         [this, &result, &start_time, &end_time, &step_count, &total_rows, data_engine,
-         strategy_engine](Timestamp ts, TimestepFrameColumnar const& frame) -> bool {
+         strategy_engine, &prev_snap_data, &has_prev](Timestamp ts, TimestepFrameColumnar const& frame) -> bool {
             if (step_count == 0) {
                 start_time = ts;
             }
             end_time = ts;
-            // Snapshot(step_count) = end-of-bar for this minute; portfolio gets bar's BBO.
+            // Build the snapshot on the fly, referencing the previous timestep's values
             utilities::PortfolioSnapshot* snap = main_engine_->acquire_snapshot();
             if (snap != nullptr) {
-                *snap = data_engine->get_precomputed_snapshot(step_count);
+                data_engine->build_snapshot_from_frame(frame, *snap, has_prev ? &prev_snap_data : nullptr);
+                
+                // Keep carry-over fields in prev_snap_data for next timestep
+                prev_snap_data.bid = snap->bid;
+                prev_snap_data.ask = snap->ask;
+                prev_snap_data.last = snap->last;
+                has_prev = true;
+                
                 main_engine_->put_event(utilities::Event(utilities::EventType::Snapshot, snap));
             }
             current_timestep_ = step_count + 1;
@@ -389,9 +399,15 @@ auto BacktestEngine::run() -> BacktestResult {
             if (holding) {
                 current_pnl_ = holding->summary.pnl;
                 current_delta_ = holding->summary.delta;
-                max_delta_ = std::max(std::abs(holding->summary.delta), max_delta_);
-                max_gamma_ = std::max(std::abs(holding->summary.gamma), max_gamma_);
-                max_theta_ = std::max(std::abs(holding->summary.theta), max_theta_);
+                if (!std::isnan(holding->summary.delta)) {
+                    max_delta_ = std::max(std::abs(holding->summary.delta), max_delta_);
+                }
+                if (!std::isnan(holding->summary.gamma)) {
+                    max_gamma_ = std::max(std::abs(holding->summary.gamma), max_gamma_);
+                }
+                if (!std::isnan(holding->summary.theta)) {
+                    max_theta_ = std::max(std::abs(holding->summary.theta), max_theta_);
+                }
 
                 // Peak PnL, drawdown
                 if (step_count == 0) {
@@ -400,7 +416,9 @@ auto BacktestEngine::run() -> BacktestResult {
                     peak_pnl_ = std::max(current_pnl_, peak_pnl_);
                 }
                 double drawdown = peak_pnl_ - current_pnl_;
-                max_drawdown_ = std::max(drawdown, max_drawdown_);
+                if (!std::isnan(drawdown)) {
+                    max_drawdown_ = std::max(drawdown, max_drawdown_);
+                }
             }
 
             for (auto const& cb : timestep_callbacks_) {

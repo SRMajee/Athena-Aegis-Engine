@@ -48,7 +48,7 @@ const CustomTooltip = ({
         <div key={p.dataKey} style={{ color: p.color, display: 'flex', justifyContent: 'space-between', gap: 12 }}>
           <span>{p.name}</span>
           <span style={{ fontWeight: 600 }}>
-            {p.dataKey === 'cumulative_pnl' || p.dataKey === 'spot_price'
+            {p.dataKey === 'cumulative_pnl' || p.dataKey === 'spot_price' || p.dataKey.startsWith('pnl_')
               ? `$${Number(p.value).toFixed(2)}`
               : p.dataKey === 'implied_vol'
                 ? `${(Number(p.value) * 100).toFixed(1)}%`
@@ -61,9 +61,28 @@ const CustomTooltip = ({
 };
 
 export default function TelemetryChart() {
-  const [renderData, setRenderData] = useState<StreamMetrics[]>([]);
+  const [renderData, setRenderData] = useState<any[]>([]);
   const lastMetricsLengthRef = useRef<number>(0);
   const lastMetricsRef = useRef<StreamMetrics[]>([]);
+
+  // Find model PnL lines dynamically from the first metrics data frame
+  const modelKeys = renderData.length > 0 && renderData[0].model_results
+    ? renderData[0].model_results.map((mr: any) => mr.model_id)
+    : [];
+
+  const getModelColor = (id: string) => {
+    if (id === "deep_hedge_ffnn") return "#f43f5e"; // rose
+    if (id === "deep_hedge_lstm") return "#a855f7"; // purple
+    if (id === "deep_hedge_adversarial") return "#06b6d4"; // cyan
+    return "#808080";
+  };
+
+  const getModelName = (id: string) => {
+    if (id === "deep_hedge_ffnn") return "FFNN PnL ($)";
+    if (id === "deep_hedge_lstm") return "LSTM PnL ($)";
+    if (id === "deep_hedge_adversarial") return "Adversarial PnL ($)";
+    return id;
+  };
 
   // Periodically read from Zustand store using requestAnimationFrame (30 FPS cap to save CPU)
   useEffect(() => {
@@ -81,15 +100,25 @@ export default function TelemetryChart() {
           lastMetricsLengthRef.current = currentMetrics.length;
           lastMetricsRef.current = currentMetrics;
 
-          // Downsample data points to max 400 points for smooth rendering
+           // Downsample data points to max 400 points for smooth rendering
           const maxRenderPoints = 400;
+          let processed = currentMetrics;
           if (currentMetrics.length > maxRenderPoints) {
             const factor = Math.ceil(currentMetrics.length / maxRenderPoints);
-            const downsampled = currentMetrics.filter((_, idx) => idx % factor === 0 || idx === currentMetrics.length - 1);
-            setRenderData(downsampled);
-          } else {
-            setRenderData(currentMetrics);
+            processed = currentMetrics.filter((_, idx) => idx % factor === 0 || idx === currentMetrics.length - 1);
           }
+          
+          const flattened = processed.map(m => {
+            const flatObj: any = { ...m };
+            if (m.model_results) {
+              for (const mr of m.model_results) {
+                flatObj[`pnl_${mr.model_id}`] = mr.cumulative_pnl;
+                flatObj[`delta_${mr.model_id}`] = mr.hedge_ratio;
+              }
+            }
+            return flatObj;
+          });
+          setRenderData(flattened);
           lastRenderTime = timestamp;
         }
       }
@@ -174,13 +203,40 @@ export default function TelemetryChart() {
           yAxisId="pnl"
           type="monotone"
           dataKey="cumulative_pnl"
-          name="Cum. PnL ($)"
+          name="Black-Scholes PnL ($)"
           stroke="#22c55e"
           dot={false}
           activeDot={{ r: 3, fill: '#22c55e' }}
           strokeWidth={1.5}
           isAnimationActive={false}
         />
+        {modelKeys.map((key: string) => (
+          <React.Fragment key={key}>
+            <Line
+              key={`pnl_${key}`}
+              yAxisId="pnl"
+              type="monotone"
+              dataKey={`pnl_${key}`}
+              name={getModelName(key)}
+              stroke={getModelColor(key)}
+              dot={false}
+              strokeWidth={1.2}
+              isAnimationActive={false}
+            />
+            <Line
+              key={`delta_${key}`}
+              yAxisId="greek"
+              type="monotone"
+              dataKey={`delta_${key}`}
+              name={`${getModelName(key).replace(' PnL ($)', '')} Delta`}
+              stroke={getModelColor(key)}
+              dot={false}
+              strokeWidth={1.0}
+              isAnimationActive={false}
+              strokeDasharray="4 4"
+            />
+          </React.Fragment>
+        ))}
         <Line
           yAxisId="spot"
           type="monotone"
@@ -196,7 +252,7 @@ export default function TelemetryChart() {
           yAxisId="greek"
           type="monotone"
           dataKey="delta"
-          name="Delta"
+          name="Black-Scholes Delta"
           stroke="#f59e0b"
           dot={false}
           activeDot={{ r: 3, fill: '#f59e0b' }}

@@ -57,3 +57,13 @@ Normalizes the raw yearly `spy_eod_YYYY.parquet` files (2011 to 2023) by parsing
   ```bash
   python scripts/convert_spy_eod.py
   ```
+
+### 6. Download Bulk Symbols  
+( `download_bulk_symbols.py`)
+Download bulk symbols data for a given date range and limit.
+# Active virtual env and run
+**Usage**:
+  ```bash
+& "backend_orchestrator/.venv/Scripts/Activate.ps1"
+python scripts/download_bulk_symbols.py --start 2025-06-02 --end 2025-06-10 --limit-contracts 1000
+  ```

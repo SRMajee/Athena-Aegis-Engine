@@ -71,9 +71,10 @@ def resolve_parquet_path(parquet_input: str, start_date: str = "", end_date: str
         dfs.append(pd.read_parquet(f))
     combined = pd.concat(dfs, ignore_index=True)
     if "ts_recv" in combined.columns:
+        combined["ts_recv"] = pd.to_datetime(combined["ts_recv"], errors="coerce")
         combined.sort_values("ts_recv", inplace=True)
         
-    temp_dir = os.path.join(workspace_root, "data", "temp")
+    temp_dir = os.path.join(workspace_root, "data", "temp", symbol)
     os.makedirs(temp_dir, exist_ok=True)
     temp_path = os.path.abspath(os.path.join(temp_dir, f"combined_{job_id}.parquet"))
     combined.to_parquet(temp_path)
@@ -310,6 +311,17 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
                 # Track metrics
                 pnl = update.cumulative_pnl
                 delta = update.greeks.delta
+                
+                # If a specific Deep Hedging model is requested, use its metrics for tracking & summary
+                model_ids = job_payload.get("model_ids", [])
+                active_model_id = model_ids[0] if model_ids else None
+                if active_model_id and active_model_id != "black_scholes":
+                    for mr in update.model_results:
+                        if mr.model_id == active_model_id:
+                            pnl = mr.cumulative_pnl
+                            delta = mr.hedge_ratio
+                            break
+                            
                 theta = update.greeks.theta
                 gamma = update.greeks.gamma
                 ts = update.tick_timestamp_ns
@@ -328,10 +340,10 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
                 daily_timesteps[date_str] = daily_timesteps.get(date_str, 0) + 1
                 daily_rows[date_str] = daily_rows.get(date_str, 0) + 1
 
-                # Collect RiskSnapshot
+                # Collect RiskSnapshot for baseline
                 snapshots.append(RiskSnapshot(
                     job_id=UUID(job_id),
-                    model_id=update.model_results[0].model_id if update.model_results else "baseline",
+                    model_id="baseline",
                     tick_idx=len(pnl_list) - 1,
                     delta=delta,
                     gamma=gamma,
@@ -339,6 +351,19 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
                     cvar_99=update.cvar.cvar_99,
                     pnl=update.pnl
                 ))
+                
+                # Collect RiskSnapshot for each deep hedging model
+                for mr in update.model_results:
+                    snapshots.append(RiskSnapshot(
+                        job_id=UUID(job_id),
+                        model_id=mr.model_id,
+                        tick_idx=len(pnl_list) - 1,
+                        delta=mr.hedge_ratio,
+                        gamma=gamma,
+                        cvar_95=update.cvar.cvar_95,
+                        cvar_99=update.cvar.cvar_99,
+                        pnl=mr.pnl
+                    ))
 
         # Stop polling task
         if polling_task and not polling_task.done():
@@ -545,7 +570,8 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
             "daily_sharpe": sharpe,
             "num_days": len(sorted_dates),
             "duration_seconds": (datetime.utcnow() - started_at).total_seconds(),
-            "processed_timesteps": len(pnl_list)
+            "processed_timesteps": len(pnl_list),
+            "daily_results": daily_results_list
         }
 
         # Update database with results

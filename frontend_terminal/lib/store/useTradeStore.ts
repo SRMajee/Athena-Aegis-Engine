@@ -12,6 +12,13 @@ export interface StreamMetrics {
   theta: number;
   vega: number;
   rho: number;
+  model_results?: Array<{
+    model_id: string;
+    hedge_ratio: number;
+    pnl: number;
+    cumulative_pnl: number;
+    inference_latency_ns: number;
+  }>;
 }
 
 export interface BacktestSummary {
@@ -60,6 +67,7 @@ interface TradeStoreState {
   maxDelta: number;
   maxGamma: number;
   maxTheta: number;
+  activeModelId: string | null;
 
   // Running telemetry metrics
   runningFinalPnL: number;
@@ -77,7 +85,7 @@ interface TradeStoreState {
   runningTotalFees: number;
   startTime: number | null;
 
-  startBacktest: (jobId: string, strategyName: string, feeRate: number, riskFreeRate: number) => void;
+  startBacktest: (jobId: string, strategyName: string, feeRate: number, riskFreeRate: number, modelId?: string) => void;
   stopBacktest: () => void;
   clearStore: () => void;
 }
@@ -100,6 +108,7 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
   maxDelta: 0,
   maxGamma: 0,
   maxTheta: 0,
+  activeModelId: null,
 
   runningFinalPnL: 0,
   runningPeak: -999999999.0,
@@ -116,7 +125,7 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
   runningTotalFees: 0,
   startTime: null,
 
-  startBacktest: (jobId: string, strategyName: string, feeRate: number, riskFreeRate: number) => {
+  startBacktest: (jobId: string, strategyName: string, feeRate: number, riskFreeRate: number, modelId?: string) => {
     // 1. Clean up any existing connection & timeouts & polling interval
     if (activeWs) {
       try {
@@ -143,6 +152,7 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
       maxDelta: 0,
       maxGamma: 0,
       maxTheta: 0,
+      activeModelId: modelId || null,
       runningFinalPnL: 0,
       runningPeak: -999999999.0,
       runningMaxDrawdown: 0,
@@ -278,11 +288,52 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
               activeWs = null;
             }
             if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
-            set({
-              summary: data.result as BacktestSummary,
-              dailyResults: (data.daily_results as DailyResult[]) || [],
-              isRunning: false,
-              statusBarPhase: 'finalising',
+            
+            const daily = (data.daily_results as DailyResult[]) || [];
+            
+            set((state) => {
+              let newMetrics = [...state.metrics];
+              if (newMetrics.length === 0 && daily.length > 0) {
+                let cumPnL = 0;
+                newMetrics = daily.map((d) => {
+                  cumPnL += d.pnl;
+                  const dateParts = d.file.split('/').pop()?.replace('.parquet', '') || '';
+                  let ts = Date.now();
+                  if (dateParts.length === 8 && /^\d{8}$/.test(dateParts)) {
+                    ts = new Date(`${dateParts.slice(0, 4)}-${dateParts.slice(4, 6)}-${dateParts.slice(6, 8)}`).getTime();
+                  } else if (dateParts.includes('-') && dateParts.length === 10) {
+                    ts = new Date(dateParts).getTime();
+                  }
+                  return {
+                    tick_timestamp_ns: ts * 1e6,
+                    spot_price: 0,
+                    implied_vol: 0,
+                    cumulative_pnl: cumPnL,
+                    pnl: d.pnl,
+                    delta: 0,
+                    gamma: 0,
+                    theta: 0,
+                    vega: 0,
+                    rho: 0,
+                    model_results: state.activeModelId && state.activeModelId !== 'black_scholes' ? [
+                      {
+                        model_id: state.activeModelId,
+                        hedge_ratio: 0,
+                        pnl: d.pnl,
+                        cumulative_pnl: cumPnL,
+                        inference_latency_ns: 0,
+                      }
+                    ] : [],
+                  };
+                });
+              }
+              return {
+                summary: data.result as BacktestSummary,
+                dailyResults: daily,
+                metrics: newMetrics,
+                isRunning: false,
+                statusBarPhase: 'finalising',
+              };
             });
             finaliseTimeout = setTimeout(() => {
               set({ statusBarPhase: 'completed' });
@@ -317,6 +368,11 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
               const iv = Number(data.implied_vol ?? data.iv ?? 0);
               const greeks = (data.greeks as Record<string, number>) ?? {};
 
+              let activeModelResult = null;
+              if (state.activeModelId && state.activeModelId !== 'black_scholes' && data.model_results) {
+                activeModelResult = data.model_results.find((mr: any) => mr.model_id === state.activeModelId);
+              }
+
               const tick: StreamMetrics = {
                 tick_timestamp_ns: Number(data.tick_timestamp_ns),
                 spot_price: spot,
@@ -328,47 +384,66 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
                 theta: Number(greeks.theta ?? 0),
                 vega: Number(greeks.vega ?? 0),
                 rho: Number(greeks.rho ?? 0),
+                model_results: data.model_results || [],
               };
 
               const newMetrics = [...state.metrics, tick];
               if (newMetrics.length > 10000) newMetrics.shift();
 
               // Running PnL metrics
-              const runningFinalPnL = tick.cumulative_pnl;
-              const runningPeak =
-                state.runningPeak === -999999999.0
-                  ? tick.cumulative_pnl
-                  : Math.max(state.runningPeak, tick.cumulative_pnl);
-              const runningMaxDrawdown = Math.max(state.runningMaxDrawdown, runningPeak - tick.cumulative_pnl);
+              const activePnL = activeModelResult ? Number(activeModelResult.cumulative_pnl) : tick.cumulative_pnl;
+              const activeDelta = activeModelResult ? Number(activeModelResult.hedge_ratio) : tick.delta;
 
-              const ms = tick.tick_timestamp_ns / 1e6;
-              const dateStr = !isNaN(ms) ? new Date(ms).toISOString().slice(0, 10) : '';
+              const hasPnL = activePnL !== null && activePnL !== undefined && !isNaN(activePnL) && isFinite(activePnL);
+              const runningFinalPnL = hasPnL ? activePnL : state.runningFinalPnL;
+              const runningPeak = hasPnL
+                ? (state.runningPeak === -999999999.0 ? activePnL : Math.max(state.runningPeak, activePnL))
+                : state.runningPeak;
+              const runningMaxDrawdown = hasPnL
+                ? Math.max(state.runningMaxDrawdown, runningPeak - activePnL)
+                : state.runningMaxDrawdown;
+
+              let dateStr = '';
+              try {
+                const ms = tick.tick_timestamp_ns / 1e6;
+                if (!isNaN(ms) && isFinite(ms) && ms > 0) {
+                  dateStr = new Date(ms).toISOString().slice(0, 10);
+                }
+              } catch (e) {
+                console.error('Error parsing tick timestamp:', tick.tick_timestamp_ns, e);
+              }
 
               const newUniqueDays = new Set(state.runningUniqueDays);
               if (dateStr) newUniqueDays.add(dateStr);
 
               const newDailyPnLs = { ...state.runningDailyPnLs };
-              if (dateStr) newDailyPnLs[dateStr] = tick.cumulative_pnl;
+              if (dateStr && hasPnL) newDailyPnLs[dateStr] = activePnL;
 
               const newDailyTimesteps = { ...state.runningDailyTimesteps };
               if (dateStr) newDailyTimesteps[dateStr] = (newDailyTimesteps[dateStr] ?? 0) + 1;
 
               // Sharpe
               let runningSharpe = 0;
-              const sortedDates = Object.keys(newDailyPnLs).sort();
-              const dailyReturns: number[] = [];
-              let prevP = 0;
-              for (const dStr of sortedDates) {
-                const currP = newDailyPnLs[dStr];
-                dailyReturns.push(currP - prevP);
-                prevP = currP;
-              }
-              if (dailyReturns.length > 1) {
-                const mean = dailyReturns.reduce((s, v) => s + v, 0) / dailyReturns.length;
-                const variance = dailyReturns.reduce((s, v) => s + Math.pow(v - mean, 2), 0) / (dailyReturns.length - 1);
-                const std = Math.sqrt(variance);
-                const rfDaily = riskFreeRate / 252.0;
-                runningSharpe = std > 0 ? ((mean - rfDaily) / std) * Math.sqrt(252) : 0;
+              try {
+                const sortedDates = Object.keys(newDailyPnLs).filter(Boolean).sort();
+                const dailyReturns: number[] = [];
+                let prevP = 0;
+                for (const dStr of sortedDates) {
+                  const currP = newDailyPnLs[dStr];
+                  if (!isNaN(currP) && isFinite(currP)) {
+                    dailyReturns.push(currP - prevP);
+                    prevP = currP;
+                  }
+                }
+                if (dailyReturns.length > 1) {
+                  const mean = dailyReturns.reduce((s, v) => s + v, 0) / dailyReturns.length;
+                  const variance = dailyReturns.reduce((s, v) => s + Math.pow(v - mean, 2), 0) / (dailyReturns.length - 1);
+                  const std = Math.sqrt(variance);
+                  const rfDaily = riskFreeRate / 252.0;
+                  runningSharpe = (isFinite(std) && std > 0) ? ((mean - rfDaily) / std) * Math.sqrt(252) : 0;
+                }
+              } catch (e) {
+                console.error('Error calculating Sharpe ratio:', e);
               }
 
               const runningDuration = state.startTime ? (Date.now() - state.startTime) / 1000 : 0;
@@ -390,18 +465,27 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
                 }
               }
 
+              const hasDelta = activeDelta !== null && activeDelta !== undefined && !isNaN(activeDelta) && isFinite(activeDelta);
+              const nextMaxDelta = hasDelta ? Math.max(state.maxDelta, Math.abs(activeDelta)) : state.maxDelta;
+
+              const hasGamma = tick.gamma !== null && tick.gamma !== undefined && !isNaN(tick.gamma) && isFinite(tick.gamma);
+              const nextMaxGamma = hasGamma ? Math.max(state.maxGamma, Math.abs(tick.gamma)) : state.maxGamma;
+
+              const hasTheta = tick.theta !== null && tick.theta !== undefined && !isNaN(tick.theta) && isFinite(tick.theta);
+              const nextMaxTheta = hasTheta ? Math.max(state.maxTheta, Math.abs(tick.theta)) : state.maxTheta;
+
               return {
                 metrics: newMetrics,
-                maxDelta: Math.max(state.maxDelta, tick.delta),
-                maxGamma: Math.max(state.maxGamma, tick.gamma),
-                maxTheta: Math.max(state.maxTheta, Math.abs(tick.theta)),
+                maxDelta: nextMaxDelta,
+                maxGamma: nextMaxGamma,
+                maxTheta: nextMaxTheta,
                 runningFinalPnL,
                 runningPeak,
                 runningMaxDrawdown,
                 runningUniqueDays: newUniqueDays,
                 runningDailyPnLs: newDailyPnLs,
                 runningDailyTimesteps: newDailyTimesteps,
-                runningSharpe,
+                runningSharpe: isNaN(runningSharpe) || !isFinite(runningSharpe) ? 0 : runningSharpe,
                 runningDuration,
                 runningFrames,
                 runningTotalTrades,
@@ -482,6 +566,7 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
       maxDelta: 0,
       maxGamma: 0,
       maxTheta: 0,
+      activeModelId: null,
       runningFinalPnL: 0,
       runningPeak: -999999999.0,
       runningMaxDrawdown: 0,

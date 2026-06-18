@@ -17,7 +17,8 @@ async def main():
         "iv_price_mode": "mid",
         "strategy_setting": {},
         "start_date": "2010-01-04",
-        "end_date": "2010-01-08"
+        "end_date": "2010-01-29",
+        "model_ids": ["deep_hedge_ffnn", "deep_hedge_lstm", "deep_hedge_adversarial"]
     }
     
     async with httpx.AsyncClient() as client:
@@ -58,8 +59,7 @@ async def main():
                     break
                 else:
                     ticks_count += 1
-                    if ticks_count % 10 == 0:
-                        print(f"Stream update: spot={msg.get('spot')}, pnl={msg.get('pnl')}")
+                    print(f"Stream update: {msg}")
             except asyncio.TimeoutError:
                 print("Timeout waiting for WebSocket update.")
                 break

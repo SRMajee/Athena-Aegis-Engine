@@ -93,6 +93,14 @@ export default function BacktestPage() {
   const [riskFreeRate, setRiskFreeRate] = useState<number>(0.05);
   const [ivPriceMode, setIvPriceMode] = useState<"mid" | "bid" | "ask">("mid");
 
+  const MODEL_OPTIONS = useMemo(() => [
+    { value: "black_scholes", label: "Black-Scholes (Baseline)" },
+    { value: "deep_hedge_ffnn", label: "FFNN (Deep Hedge)" },
+    { value: "deep_hedge_lstm", label: "LSTM (Deep Hedge)" },
+    { value: "deep_hedge_adversarial", label: "Adversarial Deep Hedge" },
+  ], []);
+  const [hedgingModel, setHedgingModel] = useState<string>("black_scholes");
+
   // Select Zustand store states
   const isRunning = useTradeStore((s) => s.isRunning);
   const statusBarPhase = useTradeStore((s) => s.statusBarPhase);
@@ -213,7 +221,14 @@ export default function BacktestPage() {
     });
     if (selected.date_start && selected.date_end) {
       setSelectedDateStart(selected.date_start);
-      setSelectedDateEnd(selected.date_end);
+      const startDate = new Date(selected.date_start);
+      const endDate = new Date(selected.date_end);
+      const limitDate = new Date(startDate.getTime() + 6 * 24 * 60 * 60 * 1000);
+      const targetDate = limitDate < endDate ? limitDate : endDate;
+      const yyyy = targetDate.getFullYear();
+      const mm = String(targetDate.getMonth() + 1).padStart(2, '0');
+      const dd = String(targetDate.getDate()).padStart(2, '0');
+      setSelectedDateEnd(`${yyyy}-${mm}-${dd}`);
     } else {
       setSelectedDateStart("");
       setSelectedDateEnd("");
@@ -230,6 +245,15 @@ export default function BacktestPage() {
       return;
     }
 
+    const start = new Date(selectedDateStart);
+    const end = new Date(selectedDateEnd);
+    const diffTime = Math.abs(end.getTime() - start.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    if (diffDays > 7) {
+      const proceed = confirm(`Warning: Selected duration is ${diffDays} days. Running a backtest for more than 7 days may cause performance strain or timeouts. Do you want to proceed?`);
+      if (!proceed) return;
+    }
+
     clearStore();
 
     try {
@@ -243,6 +267,7 @@ export default function BacktestPage() {
         strategy_setting: {},
         start_date: selectedDateStart,
         end_date: selectedDateEnd,
+        model_ids: hedgingModel !== "black_scholes" ? [hedgingModel] : [],
       });
 
       if (data.status === "error" || !data.job_id) {
@@ -253,7 +278,7 @@ export default function BacktestPage() {
         });
       } else {
         // Enqueue stream telemetry subscription in Zustand
-        startBacktest(data.job_id, selectedStrategy, feeRate, riskFreeRate);
+        startBacktest(data.job_id, selectedStrategy, feeRate, riskFreeRate, hedgingModel);
       }
     } catch (error) {
       useTradeStore.setState({
@@ -438,6 +463,17 @@ export default function BacktestPage() {
                       </div>
                     </div>
                   </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <label className={labelClass}>Hedge Model</label>
+                    <TerminalSelect
+                      value={hedgingModel}
+                      onValueChange={setHedgingModel}
+                      className={inputClass}
+                      disabled={isRunning}
+                      options={MODEL_OPTIONS}
+                    />
+                  </div>
 
                   <div className="flex items-center justify-end pt-1 gap-2">
                     <button
@@ -506,7 +542,7 @@ export default function BacktestPage() {
                 const sharpeText = displaySharpe !== null ? Number(displaySharpe).toFixed(3) : "—";
 
                 const displayMaxDD = isCompleted ? summary!.max_drawdown : (statusBarPhase === "running" ? runningMaxDrawdown : null);
-                const maxDDText = displayMaxDD !== null ? `${Number(displayMaxDD).toFixed(2)}%` : "—";
+                const maxDDText = displayMaxDD !== null ? `$${Number(displayMaxDD).toFixed(2)}` : "—";
 
                 const displayTrades = isCompleted ? summary!.total_trades : (statusBarPhase === "running" ? runningTotalTrades : null);
                 const tradesText = displayTrades !== null ? displayTrades : "—";
@@ -708,6 +744,65 @@ export default function BacktestPage() {
                                   <td className="numeric-12 text-right text-[color:var(--text-soft)]">{row.timesteps.toLocaleString()}</td>
                                 </tr>
                               ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Deep Hedging Model Comparison Table */}
+              {(() => {
+                const metrics = useTradeStore((s) => s.metrics);
+                const lastMetrics = metrics[metrics.length - 1];
+                const modelResults = lastMetrics?.model_results || [];
+                if (modelResults.length === 0) return null;
+
+                const friendlyName = (id: string) => {
+                  if (id === "deep_hedge_ffnn") return "Feed-Forward Neural Network (FFNN)";
+                  if (id === "deep_hedge_lstm") return "Long Short-Term Memory (LSTM)";
+                  if (id === "deep_hedge_adversarial") return "Adversarial Deep Hedging Model";
+                  return id;
+                };
+
+                return (
+                  <div className="panel px-3 py-2">
+                    <h3 className="text-xs uppercase tracking-[0.12em] mb-2 text-[color:var(--text-muted)]">
+                      Deep Hedging Model Comparison (Live Telemetry)
+                    </h3>
+                    <div className="overflow-x-auto">
+                      <table className="table-terminal">
+                        <thead>
+                          <tr>
+                            <th className="text-left">Model Name</th>
+                            <th className="text-right">Latest Hedge Ratio</th>
+                            <th className="text-right">Model PnL Diff</th>
+                            <th className="text-right">Inference Latency</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {modelResults.map((mr) => {
+                            const hedgeRatio = mr.hedge_ratio !== undefined && mr.hedge_ratio !== null ? mr.hedge_ratio : 0;
+                            const pnlDiff = mr.pnl !== undefined && mr.pnl !== null ? mr.pnl : 0;
+                            const latencyNs = mr.inference_latency_ns !== undefined && mr.inference_latency_ns !== null ? mr.inference_latency_ns : 0;
+                            const latencyUs = (latencyNs / 1000).toFixed(1);
+                            return (
+                              <tr key={mr.model_id} className="table-row-hover">
+                                <td className="text-left text-[color:var(--text-primary)] font-medium">
+                                  {friendlyName(mr.model_id)}
+                                </td>
+                                <td className="numeric-12 text-right text-[color:var(--text-soft)]">
+                                  {hedgeRatio.toFixed(4)}
+                                </td>
+                                <td className={`numeric-12 text-right ${pnlDiff >= 0 ? 'text-[color:var(--state-success)]' : 'text-[color:var(--state-error)]'}`}>
+                                  ${pnlDiff >= 0 ? '+' : ''}{pnlDiff.toFixed(2)}
+                                </td>
+                                <td className="numeric-12 text-right text-[color:var(--text-soft)]">
+                                  {latencyUs} μs
+                                </td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </table>
                     </div>

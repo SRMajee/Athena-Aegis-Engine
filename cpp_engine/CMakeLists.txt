@@ -7,17 +7,30 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # compiler flags for MSYS2 MinGW64
 if(CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_NO_SYSTEM_FROM_IMPORTED ON)
     add_compile_options(-Wall -Wextra -O3 -pthread)
 endif()
 
+
+
+
 # Find package dependencies
 find_package(Protobuf REQUIRED)
+message("Protobuf INCLUDE DIRS: ${Protobuf_INCLUDE_DIRS}")
+message("Protobuf LIBRARIES: ${Protobuf_LIBRARIES}")
+message("Protobuf Target: protobuf::libprotobuf")
+
 find_package(gRPC REQUIRED)
 find_package(cppzmq REQUIRED)
 find_package(Arrow REQUIRED)
 find_package(Parquet REQUIRED)
 find_package(absl REQUIRED)
 find_package(CURL REQUIRED)
+# find_package(Torch REQUIRED)
+
+
+
+
 
 # lets_be_rational library compilation
 set(LETS_BE_RATIONAL_SRC
@@ -40,6 +53,9 @@ file(GLOB TWS_API_SRC
 )
 
 add_library(tws_api STATIC ${TWS_API_SRC})
+target_include_directories(tws_api BEFORE PUBLIC
+    "${CMAKE_CURRENT_BINARY_DIR}/system_protobuf_headers"
+)
 target_include_directories(tws_api PUBLIC 
     ${TWS_API_DIR}
     ${TWS_API_DIR}/protobuf
@@ -117,6 +133,7 @@ add_executable(entry_backtest
     entry_backtest.cpp
     ${ENGINE_SOURCES}
 )
+target_include_directories(entry_backtest BEFORE PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/system_protobuf_headers")
 target_link_libraries(entry_backtest PRIVATE
     lets_be_rational
     tws_api
@@ -132,6 +149,7 @@ add_executable(entry_live_grpc
     entry_live_grpc.cpp
     ${ENGINE_SOURCES}
 )
+target_include_directories(entry_live_grpc BEFORE PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/system_protobuf_headers")
 target_link_libraries(entry_live_grpc PRIVATE
     lets_be_rational
     tws_api
@@ -147,6 +165,7 @@ add_executable(entry_gateway
     entry_gateway.cpp
     ${ENGINE_SOURCES}
 )
+target_include_directories(entry_gateway BEFORE PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/system_protobuf_headers")
 target_link_libraries(entry_gateway PRIVATE
     lets_be_rational
     tws_api
@@ -162,6 +181,7 @@ add_executable(entry_market_data
     entry_market_data.cpp
     ${ENGINE_SOURCES}
 )
+target_include_directories(entry_market_data BEFORE PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/system_protobuf_headers")
 target_link_libraries(entry_market_data PRIVATE
     lets_be_rational
     tws_api
@@ -177,6 +197,7 @@ add_executable(entry_live
     entry_live.cpp
     ${ENGINE_SOURCES}
 )
+target_include_directories(entry_live BEFORE PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/system_protobuf_headers")
 target_link_libraries(entry_live PRIVATE
     lets_be_rational
     tws_api
@@ -186,3 +207,11 @@ target_link_libraries(entry_live PRIVATE
     gRPC::grpc++
     cppzmq
 )
+
+
+
+
+
+
+
+

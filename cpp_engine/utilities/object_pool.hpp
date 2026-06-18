@@ -36,6 +36,13 @@ template <typename T> class ObjectPool {
             std::unique_lock lock(mutex_);
             shutdown_cv_.wait(lock,
                               [this] { return active_ops_.load(std::memory_order_acquire) == 0; });
+            for (const auto& block : blocks_) {
+                Slot* base = block.get();
+                for (size_t i = 0; i < chunk_size_; ++i) {
+                    T* p = ptr_from_slot(base + i);
+                    p->~T();
+                }
+            }
             head_ = nullptr;
             free_count_ = 0;
             in_use_.clear();
@@ -77,18 +84,6 @@ template <typename T> class ObjectPool {
                 in_use_.insert(p);
             }
         }
-        if (p == nullptr) {
-            return nullptr;
-        }
-        try {
-            new (p) T(std::forward<Args>(args)...);
-        } catch (...) {
-            std::lock_guard lock(mutex_);
-            in_use_.erase(p);
-            push_slot_unlocked(slot_from_ptr(p));
-            ++free_count_;
-            throw;
-        }
         return p;
     }
 
@@ -104,7 +99,6 @@ template <typename T> class ObjectPool {
         if (in_use_.erase(p) == 0) {
             return;
         }
-        p->~T();
         push_slot_unlocked(slot_from_ptr(p));
         ++free_count_;
     }
@@ -122,7 +116,6 @@ template <typename T> class ObjectPool {
         if (!is_owned_unlocked(p) || in_use_.erase(p) == 0) {
             return false;
         }
-        p->~T();
         push_slot_unlocked(slot_from_ptr(p));
         ++free_count_;
         return true;
@@ -181,6 +174,8 @@ template <typename T> class ObjectPool {
         auto block = std::make_unique<Slot[]>(chunk_size_);
         Slot* base = block.get();
         for (size_t i = 0; i < chunk_size_; ++i) {
+            T* p = ptr_from_slot(base + i);
+            new (p) T();
             push_slot_unlocked(base + i);
         }
         free_count_ += chunk_size_;

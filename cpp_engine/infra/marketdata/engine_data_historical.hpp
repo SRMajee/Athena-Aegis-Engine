@@ -50,6 +50,12 @@ class BacktestDataEngine : public utilities::BaseEngine {
     [[nodiscard]] bool has_data() const { return loader_ != nullptr && loaded_; }
     utilities::PortfolioData* portfolio_data() const;
 
+    /** Build snapshot from frame; prev keeps last state. */
+    void
+    build_snapshot_from_frame(TimestepFrameColumnar const& frame,
+                              utilities::PortfolioSnapshot& snapshot,
+                              utilities::PortfolioSnapshot const* prev = nullptr);
+
     /** Precomputed snapshots (one per frame). */
     [[nodiscard]] size_t get_precomputed_snapshot_count() const { return snapshots_.size(); }
     [[nodiscard]] utilities::PortfolioSnapshot const& get_precomputed_snapshot(size_t i) const {
@@ -65,10 +71,6 @@ class BacktestDataEngine : public utilities::BaseEngine {
     void build_option_apply_index();
     /** OCC symbol -> OptionData*. */
     void build_occ_to_option(std::unordered_set<std::string> const& occ_symbols);
-    /** Build snapshot from frame; prev keeps last state. */
-    utilities::PortfolioSnapshot
-    build_snapshot_from_frame(TimestepFrameColumnar const& frame,
-                              utilities::PortfolioSnapshot const* prev = nullptr);
     void precompute_snapshots();
 
     std::unique_ptr<ArrowParquetLoader> loader_;

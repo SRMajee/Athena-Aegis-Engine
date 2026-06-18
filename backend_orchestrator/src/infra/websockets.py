@@ -123,9 +123,11 @@ async def handle_stream_websocket(ws: WebSocket, job_id: str) -> None:
             job_record = await session.get(BacktestJob, job_uuid)
             if job_record:
                 if job_record.status == "COMPLETE":
+                    daily_results = job_record.summary.get("daily_results", []) if job_record.summary else []
                     final_payload = {
                         "status": "ok",
                         "result": job_record.summary,
+                        "daily_results": daily_results
                     }
                     await ws.send_text(json.dumps(final_payload))
                     return

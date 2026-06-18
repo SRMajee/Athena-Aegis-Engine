@@ -89,6 +89,7 @@ class BacktestService:
             "strategy_setting": strategy_setting or {},
             "start_date": start_date,
             "end_date": end_date,
+            "model_ids": request.get("model_ids", []),
             "correlation_id": correlation_id
         }
 

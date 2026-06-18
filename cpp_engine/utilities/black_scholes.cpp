@@ -62,7 +62,8 @@ auto years_to_expiry(std::chrono::system_clock::time_point now,
 auto bs_greeks(bool is_call, double spot, double strike, double time_to_expiry_years,
                double risk_free_rate, double sigma) -> BsGreeks {
     BsGreeks g;
-    if (spot <= 0.0 || strike <= 0.0 || time_to_expiry_years <= 0.0 || sigma <= 0.0) {
+    if (std::isnan(spot) || std::isnan(strike) || std::isnan(time_to_expiry_years) || std::isnan(sigma) ||
+        spot <= 0.0 || strike <= 0.0 || time_to_expiry_years <= 0.0 || sigma <= 0.0) {
         return g;
     }
     const double sqrt_t = std::sqrt(time_to_expiry_years);
@@ -81,12 +82,19 @@ auto bs_greeks(bool is_call, double spot, double strike, double time_to_expiry_y
                                            (risk_free_rate * strike * df * normal_cdf(-d2)));
     g.theta = theta_annual / 365.0;
     g.vega = bs_vega_raw(spot, strike, time_to_expiry_years, risk_free_rate, sigma) / 100.0;
+
+    if (!std::isfinite(g.delta) || std::isnan(g.delta)) g.delta = 0.0;
+    if (!std::isfinite(g.gamma) || std::isnan(g.gamma)) g.gamma = 0.0;
+    if (!std::isfinite(g.theta) || std::isnan(g.theta)) g.theta = 0.0;
+    if (!std::isfinite(g.vega) || std::isnan(g.vega)) g.vega = 0.0;
+
     return g;
 }
 
 auto implied_volatility_from_price(double option_price, double spot, double strike,
                                    double time_to_expiry_years, bool is_call) -> double {
-    if (option_price <= 0.0 || spot <= 0.0 || strike <= 0.0 || time_to_expiry_years <= 0.0) {
+    if (std::isnan(option_price) || std::isnan(spot) || std::isnan(strike) || std::isnan(time_to_expiry_years) ||
+        option_price <= 0.0 || spot <= 0.0 || strike <= 0.0 || time_to_expiry_years <= 0.0) {
         return 0.0;
     }
     const double q = is_call ? 1.0 : -1.0;

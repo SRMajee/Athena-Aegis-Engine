@@ -6,6 +6,7 @@
 #include <ctime>
 #include <sstream>
 #include <stdexcept>
+#include <vector>
 #ifdef _WIN32
 #include <windows.h>
 #endif
@@ -63,9 +64,53 @@ auto parse_occ_symbol(const std::string& symbol)
 }
 
 auto infer_underlying_from_filename(const std::string& filename) -> std::string {
-    // Filename formats: backtest_SPX_* or data/SPXW/SPXW-2025-08/*
+    // Standardize slashes to forward slash
+    std::string path_std = filename;
+    for (char& c : path_std) {
+        if (c == '\\') {
+            c = '/';
+        }
+    }
 
-    // Filename
+    // Split path by '/'
+    std::vector<std::string> parts;
+    std::string part;
+    std::istringstream iss(path_std);
+    while (std::getline(iss, part, '/')) {
+        if (!part.empty()) {
+            parts.push_back(part);
+        }
+    }
+
+    // Traverse parts to find the symbol under 'data'
+    for (size_t i = 0; i < parts.size(); ++i) {
+        std::string p = parts[i];
+        for (char& c : p) {
+            c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+        }
+        if (p == "data" && i + 1 < parts.size()) {
+            std::string symbol = parts[i + 1];
+            std::string symbol_lower = symbol;
+            for (char& c : symbol_lower) {
+                c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+            }
+            if (symbol_lower == "temp" && i + 2 < parts.size()) {
+                symbol = parts[i + 2];
+            }
+            // Strip any suffix like "-2025-08"
+            auto dash = symbol.find('-');
+            if (dash != std::string::npos) {
+                symbol = symbol.substr(0, dash);
+            }
+            // Capitalize and return
+            for (char& c : symbol) {
+                c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
+            }
+            return symbol;
+        }
+    }
+
+    // Fallback filename-based logic
     std::string name = filename;
     auto pos = name.find_last_of("/\\");
     if (pos != std::string::npos) {
@@ -89,27 +134,7 @@ auto infer_underlying_from_filename(const std::string& filename) -> std::string 
         return underlying;
     }
 
-    // SPXW dir: parent dir = underlying
-    std::string path = filename;
-    // Strip filename
-    auto slash = path.find_last_of("/\\");
-    if (slash == std::string::npos) {
-        return "";
-    }
-    path = path.substr(0, slash);
-    // Parent dir
-    auto slash2 = path.find_last_of("/\\");
-    std::string parent = (slash2 == std::string::npos) ? path : path.substr(slash2 + 1);
-    if (parent.empty()) {
-        return "";
-    }
-    // Strip suffix like "-2025-08"
-    auto dash = parent.find('-');
-    std::string underlying = (dash == std::string::npos) ? parent : parent.substr(0, dash);
-    for (char& c : underlying) {
-        c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
-    }
-    return underlying;
+    return "";
 }
 
 auto format_expiry_yyyymmdd(Timestamp expiry) -> std::string {

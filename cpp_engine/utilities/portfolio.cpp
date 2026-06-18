@@ -8,8 +8,93 @@
 #include <ranges>
 #include <sstream>
 #include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <queue>
+#include <vector>
+#include <functional>
 
 namespace utilities {
+
+class SimpleThreadPool {
+public:
+    SimpleThreadPool() {
+        size_t threads_count = std::max(1U, std::thread::hardware_concurrency());
+        workers.reserve(threads_count);
+        for (size_t i = 0; i < threads_count; ++i) {
+            workers.emplace_back([this]() {
+                while (true) {
+                    std::function<void()> task;
+                    {
+                        std::unique_lock<std::mutex> lock(queue_mutex);
+                        condition.wait(lock, [this]() { return stop || !tasks.empty(); });
+                        if (stop && tasks.empty()) {
+                            return;
+                        }
+                        task = std::move(tasks.front());
+                        tasks.pop();
+                    }
+                    task();
+                    {
+                        std::unique_lock<std::mutex> lock(completed_mutex);
+                        completed_count++;
+                        if (completed_count == target_completed_count) {
+                            completed_cv.notify_all();
+                        }
+                    }
+                }
+            });
+        }
+    }
+    ~SimpleThreadPool() {
+        {
+            std::unique_lock<std::mutex> lock(queue_mutex);
+            stop = true;
+        }
+        condition.notify_all();
+        for (std::thread& worker : workers) {
+            if (worker.joinable()) {
+                worker.join();
+            }
+        }
+    }
+
+    void enqueue(std::function<void()> task) {
+        {
+            std::unique_lock<std::mutex> lock(queue_mutex);
+            tasks.push(std::move(task));
+        }
+        condition.notify_one();
+    }
+
+    void wait_until_done(size_t expected) {
+        std::unique_lock<std::mutex> lock(completed_mutex);
+        completed_cv.wait(lock, [this, expected]() { return completed_count == expected; });
+    }
+
+    void reset_completed(size_t expected) {
+        std::unique_lock<std::mutex> lock(completed_mutex);
+        completed_count = 0;
+        target_completed_count = expected;
+    }
+
+private:
+    std::vector<std::thread> workers;
+    std::queue<std::function<void()>> tasks;
+    std::mutex queue_mutex;
+    std::condition_variable condition;
+    bool stop = false;
+
+    std::mutex completed_mutex;
+    std::condition_variable completed_cv;
+    size_t completed_count = 0;
+    size_t target_completed_count = 0;
+};
+
+static SimpleThreadPool& get_thread_pool() {
+    static SimpleThreadPool pool;
+    return pool;
+}
 
 OptionData::OptionData(const ContractData& contract)
     : symbol(contract.symbol), exchange(contract.exchange), size(contract.size),
@@ -285,18 +370,59 @@ void PortfolioData::apply_frame(const PortfolioSnapshot& snapshot) {
     std::vector<double> vega_vec(n, 0.0);
 
     const unsigned int n_workers = std::max(1U, std::thread::hardware_concurrency());
-    const size_t chunk = (n + n_workers - 1) / n_workers;
-    {
-        std::vector<std::jthread> threads;
-        threads.reserve(n_workers);
+    if (n < 128 || n_workers <= 1) {
+        // Sequential path for small arrays (extremely fast, no lock/threading overhead)
+        for (size_t i = 0; i < n; ++i) {
+            OptionData* opt = option_apply_order_[i];
+            if (opt == nullptr) {
+                continue;
+            }
+            const double bid = snapshot.bid[i];
+            const double ask = snapshot.ask[i];
+            const double k = opt->strike_price.value_or(0.0);
+            const double t = years_to_expiry(snapshot.datetime, opt->option_expiry);
+            const bool is_call = opt->option_type > 0;
+
+            if (spot <= 0.0 || k <= 0.0 || t <= 0.0) {
+                continue;
+            }
+            const double px = pick_iv_input_price(bid, ask, iv_price_mode_);
+            if (px <= 0.0) {
+                continue;
+            }
+            const double iv = implied_volatility_from_price(px, spot, k, t, is_call);
+            const BsGreeks g = bs_greeks(is_call, spot, k, t, risk_free_rate_, iv);
+            iv_vec[i] = iv;
+            delta_vec[i] = g.delta;
+            gamma_vec[i] = g.gamma;
+            theta_vec[i] = g.theta;
+            vega_vec[i] = g.vega;
+        }
+    } else {
+        // Parallel path using the persistent thread pool
+        const size_t chunk = (n + n_workers - 1) / n_workers;
+        auto& pool = get_thread_pool();
+        
+        size_t tasks_enqueued = 0;
         for (unsigned int w = 0; w < n_workers; ++w) {
             const size_t start = w * chunk;
             const size_t end = std::min(start + chunk, n);
             if (start >= end) {
                 break;
             }
-            threads.emplace_back([this, &snapshot, spot, start, end, &iv_vec, &delta_vec,
-                                  &gamma_vec, &theta_vec, &vega_vec]() -> void {
+            tasks_enqueued++;
+        }
+
+        pool.reset_completed(tasks_enqueued);
+
+        for (unsigned int w = 0; w < n_workers; ++w) {
+            const size_t start = w * chunk;
+            const size_t end = std::min(start + chunk, n);
+            if (start >= end) {
+                break;
+            }
+            pool.enqueue([this, &snapshot, spot, start, end, &iv_vec, &delta_vec,
+                          &gamma_vec, &theta_vec, &vega_vec]() -> void {
                 for (size_t i = start; i < end; ++i) {
                     OptionData* opt = option_apply_order_[i];
                     if (opt == nullptr) {
@@ -325,7 +451,7 @@ void PortfolioData::apply_frame(const PortfolioSnapshot& snapshot) {
                 }
             });
         }
-        // jthreads join when threads vector is destroyed at end of this block
+        pool.wait_until_done(tasks_enqueued);
     }
 
     for (size_t i = 0; i < n; ++i) {

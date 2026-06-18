@@ -1,3 +1,53 @@
+extern "C" {
+    inline void __assert_fail(const char* /*assertion*/, const char* /*file*/, unsigned int /*line*/, const char* /*function*/) noexcept {}
+}
+#include <cstdio>
+#include <windows.h>
+#ifdef ERROR
+#undef ERROR
+#endif
+
+typedef void* (*LoadModelFn)(const char*);
+typedef void (*FreeModelFn)(void*);
+typedef float (*RunInferenceFn)(void*, float, float, float, float, float, bool);
+
+static HMODULE g_torch_dll = nullptr;
+static LoadModelFn g_load_model = nullptr;
+static FreeModelFn g_free_model = nullptr;
+static RunInferenceFn g_run_inference = nullptr;
+
+static bool load_torch_inference_dll() {
+    if (g_torch_dll) return true;
+    std::printf("[TORCH WRAPPER] Setting DLL directory...\n");
+    SetDllDirectoryA("C:\\Users\\User\\Desktop\\Affinity-Core\\backend_orchestrator\\.venv\\Lib\\site-packages\\torch\\lib");
+    LoadLibraryA("C:\\Users\\User\\Desktop\\Affinity-Core\\backend_orchestrator\\.venv\\Lib\\site-packages\\torch\\lib\\libiomp5md.dll");
+    LoadLibraryA("C:\\Users\\User\\Desktop\\Affinity-Core\\backend_orchestrator\\.venv\\Lib\\site-packages\\torch\\lib\\c10.dll");
+    LoadLibraryA("C:\\Users\\User\\Desktop\\Affinity-Core\\backend_orchestrator\\.venv\\Lib\\site-packages\\torch\\lib\\torch_cpu.dll");
+    
+    std::printf("[TORCH WRAPPER] Loading torch_inference.dll...\n");
+    g_torch_dll = LoadLibraryA("torch_inference.dll");
+    if (!g_torch_dll) {
+        g_torch_dll = LoadLibraryA("build/torch_inference.dll");
+    }
+    if (!g_torch_dll) {
+        g_torch_dll = LoadLibraryA("cpp_engine/build/torch_inference.dll");
+    }
+    SetDllDirectoryA(nullptr);
+    
+    if (!g_torch_dll) {
+        std::printf("[TORCH WRAPPER] FAILED to load torch_inference.dll!\n");
+        return false;
+    }
+    std::printf("[TORCH WRAPPER] Successfully loaded torch_inference.dll. Getting functions...\n");
+    g_load_model = (LoadModelFn)GetProcAddress(g_torch_dll, "load_model");
+    g_free_model = (FreeModelFn)GetProcAddress(g_torch_dll, "free_model");
+    g_run_inference = (RunInferenceFn)GetProcAddress(g_torch_dll, "run_inference");
+    
+    bool ok = g_load_model && g_free_model && g_run_inference;
+    std::printf("[TORCH WRAPPER] Functions retrieved status: %d\n", ok);
+    return ok;
+}
+
 #include "engine_grpc.hpp"
 #include "../../core/engine_log.hpp"
 #include "../../strategy/strategy_registry.hpp"
@@ -640,6 +690,35 @@ auto GrpcLiveEngineService::StartBacktest(
             }
         };
 
+        std::unordered_map<std::string, void*> ml_models;
+        const bool has_dll = load_torch_inference_dll();
+        std::printf("[TORCH WRAPPER] has_dll: %d\n", has_dll);
+        if (has_dll) {
+            for (int i = 0; i < request->model_ids_size(); ++i) {
+                std::string model_id = request->model_ids(i);
+                std::string model_path = "../../models/" + model_id + ".pt";
+                if (!std::filesystem::exists(model_path)) {
+                    model_path = "../models/" + model_id + ".pt";
+                }
+                if (!std::filesystem::exists(model_path)) {
+                    model_path = "models/" + model_id + ".pt";
+                }
+                std::printf("[TORCH WRAPPER] Resolved path for %s: %s (exists: %d)\n",
+                            model_id.c_str(), model_path.c_str(), std::filesystem::exists(model_path));
+                void* model = g_load_model(model_path.c_str());
+                std::printf("[TORCH WRAPPER] Loaded model %s pointer: %p\n", model_id.c_str(), model);
+                if (model != nullptr) {
+                    ml_models[model_id] = model;
+                }
+            }
+        }
+
+        double last_spot_price = 0.0;
+        double last_baseline_delta = 0.0;
+        std::unordered_map<std::string, double> model_prev_deltas;
+        std::unordered_map<std::string, double> model_diff_cumulative_pnl;
+        std::unordered_map<std::string, std::unordered_map<std::string, double>> model_contract_prev_deltas;
+
         engine.register_timestep_callback([&](int /*timestep*/, backtest::Timestamp ts) {
             if (context->IsCancelled()) {
                 return;
@@ -666,11 +745,11 @@ auto GrpcLiveEngineService::StartBacktest(
 
             double spot_price = 0.0;
             double implied_vol = 0.0;
+            auto* holding = me != nullptr ? me->option_strategy_engine()->get_strategy_holding() : nullptr;
 
             auto* me_ptr = engine.main_engine();
             if (me_ptr != nullptr) {
                 if (me_ptr->option_strategy_engine() != nullptr) {
-                    auto* holding = me_ptr->option_strategy_engine()->get_strategy_holding();
                     if (holding != nullptr) {
                         const double pnl = holding->summary.pnl;
                         update.set_pnl(pnl);
@@ -708,14 +787,100 @@ auto GrpcLiveEngineService::StartBacktest(
             update.set_spot_price(spot_price);
             update.set_implied_vol(implied_vol);
 
-            // Scaffold repeated ModelResult (scaffolding for future ML models)
-            for (int i = 0; i < request->model_ids_size(); ++i) {
+            double spot_change = 0.0;
+            if (last_spot_price > 0.0) {
+                spot_change = spot_price - last_spot_price;
+            }
+
+            double strike = spot_price;
+            double dte = 30.0 / 365.25;
+
+            if (me_ptr != nullptr && me_ptr->option_strategy_engine() != nullptr && holding != nullptr) {
+                if (!holding->optionPositions.empty()) {
+                    auto it = holding->optionPositions.begin();
+                    auto* contract = me_ptr->get_contract(it->first);
+                    if (contract != nullptr) {
+                        if (contract->option_strike.has_value()) {
+                            strike = contract->option_strike.value();
+                        }
+                        if (contract->option_expiry.has_value()) {
+                            auto expiry = contract->option_expiry.value();
+                            auto diff = std::chrono::duration_cast<std::chrono::seconds>(expiry - ts).count();
+                            dte = static_cast<double>(diff) / (365.25 * 24.0 * 3600.0);
+                            if (dte < 0.0) dte = 0.0;
+                        }
+                    }
+                }
+            }
+
+            for (const auto& [model_id, model_ptr] : ml_models) {
+                double prev_d = model_prev_deltas[model_id];
+                double total_model_delta = 0.0;
+                auto start_time = std::chrono::high_resolution_clock::now();
+                const bool is_lstm = (model_id.find("lstm") != std::string::npos);
+                
+                if (me_ptr != nullptr && me_ptr->option_strategy_engine() != nullptr && holding != nullptr) {
+                    for (const auto& [symbol, pos] : holding->optionPositions) {
+                        if (pos.quantity == 0) continue;
+                        auto* contract = me_ptr->get_contract(symbol);
+                        if (contract == nullptr) continue;
+                        double contract_strike = spot_price;
+                        double contract_dte = 30.0 / 365.25;
+                        if (contract->option_strike.has_value()) {
+                            contract_strike = contract->option_strike.value();
+                        }
+                        if (contract->option_expiry.has_value()) {
+                            auto expiry = contract->option_expiry.value();
+                            auto diff = std::chrono::duration_cast<std::chrono::seconds>(expiry - ts).count();
+                            contract_dte = static_cast<double>(diff) / (365.25 * 24.0 * 3600.0);
+                            if (contract_dte < 0.0) contract_dte = 0.0;
+                        }
+
+                        double contract_delta = 0.0;
+                        if (model_ptr != nullptr && g_run_inference != nullptr) {
+                            double prev_contract_delta = model_contract_prev_deltas[model_id][symbol];
+                            contract_delta = g_run_inference(model_ptr,
+                                                             static_cast<float>(spot_price),
+                                                             static_cast<float>((spot_price / contract_strike) - 1.0),
+                                                             static_cast<float>(contract_dte),
+                                                             static_cast<float>(implied_vol),
+                                                             static_cast<float>(prev_contract_delta),
+                                                             is_lstm);
+                            if (!std::isfinite(contract_delta) || std::isnan(contract_delta)) {
+                                contract_delta = 0.0;
+                            }
+                            model_contract_prev_deltas[model_id][symbol] = contract_delta;
+                        }
+                        if (contract->option_type.has_value() && *contract->option_type == utilities::OptionType::PUT) {
+                            contract_delta = contract_delta - 1.0;
+                        }
+                        total_model_delta += contract_delta * pos.quantity;
+                    }
+                }
+                auto end_time = std::chrono::high_resolution_clock::now();
+                auto latency_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time).count();
+
+                if (last_spot_price > 0.0) {
+                    double diff_pnl = (last_baseline_delta - prev_d) * spot_change * 100.0;
+                    model_diff_cumulative_pnl[model_id] += diff_pnl;
+                }
+
+                double baseline_pnl = holding != nullptr ? holding->summary.pnl : 0.0;
+                double model_cum_pnl = baseline_pnl + model_diff_cumulative_pnl[model_id];
+
                 auto* mr = update.add_model_results();
-                mr->set_model_id(request->model_ids(i));
-                mr->set_hedge_ratio(0.0);
-                mr->set_pnl(0.0);
-                mr->set_cumulative_pnl(0.0);
-                mr->set_inference_latency_ns(0);
+                mr->set_model_id(model_id);
+                mr->set_hedge_ratio(total_model_delta);
+                mr->set_pnl(model_cum_pnl - baseline_pnl);
+                mr->set_cumulative_pnl(model_cum_pnl);
+                mr->set_inference_latency_ns(latency_ns);
+
+                model_prev_deltas[model_id] = total_model_delta;
+            }
+
+            last_spot_price = spot_price;
+            if (holding != nullptr) {
+                last_baseline_delta = holding->summary.delta;
             }
 
             // Circular tail risk stats (var/cvar)
@@ -744,6 +909,14 @@ auto GrpcLiveEngineService::StartBacktest(
         engine.run();
 
         write_temp_files();
+
+        if (has_dll && g_free_model != nullptr) {
+            for (auto& [model_id, model_ptr] : ml_models) {
+                if (model_ptr != nullptr) {
+                    g_free_model(model_ptr);
+                }
+            }
+        }
 
         return ::grpc::Status::OK;
     } catch (const std::exception& e) {

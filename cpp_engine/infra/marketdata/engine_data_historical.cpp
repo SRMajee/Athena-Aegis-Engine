@@ -151,7 +151,8 @@ void BacktestDataEngine::load_parquet(std::string const& rel_path, std::string c
             port->set_risk_free_rate(risk_free_rate_);
             port->set_iv_price_mode(iv_price_mode_);
         }
-        precompute_snapshots();
+        // Disable memory-heavy precomputing of all snapshots
+        // precompute_snapshots();
     }
 }
 
@@ -217,13 +218,12 @@ void BacktestDataEngine::build_occ_to_option(std::unordered_set<std::string> con
     }
 }
 
-auto BacktestDataEngine::build_snapshot_from_frame(TimestepFrameColumnar const& frame,
-                                                   utilities::PortfolioSnapshot const* prev)
-    -> utilities::PortfolioSnapshot {
-    utilities::PortfolioSnapshot snapshot;
+void BacktestDataEngine::build_snapshot_from_frame(TimestepFrameColumnar const& frame,
+                                                   utilities::PortfolioSnapshot& snapshot,
+                                                   utilities::PortfolioSnapshot const* prev) {
     utilities::PortfolioData* port = portfolio_data();
     if (frame.num_rows <= 0 || !port) {
-        return snapshot;
+        return;
     }
     const size_t n_opt = port->option_apply_order().size();
     snapshot.portfolio_name = port->name;
@@ -241,6 +241,10 @@ auto BacktestDataEngine::build_snapshot_from_frame(TimestepFrameColumnar const& 
         snapshot.bid = prev->bid;
         snapshot.ask = prev->ask;
         snapshot.last = prev->last;
+    } else {
+        std::fill(snapshot.bid.begin(), snapshot.bid.end(), 0.0);
+        std::fill(snapshot.ask.begin(), snapshot.ask.end(), 0.0);
+        std::fill(snapshot.last.begin(), snapshot.last.end(), 0.0);
     }
 
     double u_bid = 0.0;
@@ -282,25 +286,10 @@ auto BacktestDataEngine::build_snapshot_from_frame(TimestepFrameColumnar const& 
     snapshot.underlying_ask = u_ask;
     snapshot.underlying_last =
         (u_bid > 0.0 && u_ask > 0.0) ? 0.5 * (u_bid + u_ask) : (u_bid > 0.0 ? u_bid : u_ask);
-    return snapshot;
 }
 
 void BacktestDataEngine::precompute_snapshots() {
-    for (utilities::PortfolioSnapshot* p : snapshots_) {
-        snapshot_pool_.release(p);
-    }
-    snapshots_.clear();
-    if (!loader_ || !loaded_ || !portfolio_data()) {
-        return;
-    }
-    loader_->iter_timesteps([this](TimestepFrameColumnar const& frame) -> bool {
-        utilities::PortfolioSnapshot const* prev = snapshots_.empty() ? nullptr : snapshots_.back();
-        utilities::PortfolioSnapshot snapshot = build_snapshot_from_frame(frame, prev);
-        utilities::PortfolioSnapshot* p = snapshot_pool_.acquire();
-        *p = std::move(snapshot);
-        snapshots_.push_back(p);
-        return true;
-    });
+    // Disabled to save memory
 }
 
 void BacktestDataEngine::apply_precomputed_snapshot(size_t i) {
