@@ -78,6 +78,21 @@ function ToggleButtonGroup({
 }
 
 export default function BacktestPage() {
+  const [dontShowAgainChecked, setDontShowAgainChecked] = useState(false);
+  const [modalConfig, setModalConfig] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    isConfirm: boolean;
+    onConfirm?: () => void;
+    showCheckbox?: boolean;
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    isConfirm: false,
+  });
+
   const [files, setFiles] = useState<FileInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [strategies, setStrategies] = useState<StrategyOption[]>([]);
@@ -94,10 +109,26 @@ export default function BacktestPage() {
   const [ivPriceMode, setIvPriceMode] = useState<"mid" | "bid" | "ask">("mid");
 
   const MODEL_OPTIONS = useMemo(() => [
-    { value: "black_scholes", label: "Black-Scholes (Baseline)" },
-    { value: "deep_hedge_ffnn", label: "FFNN (Deep Hedge)" },
-    { value: "deep_hedge_lstm", label: "LSTM (Deep Hedge)" },
-    { value: "deep_hedge_adversarial", label: "Adversarial Deep Hedge" },
+    { 
+      value: "black_scholes", 
+      label: "Black-Scholes (Baseline)",
+      description: "Classical options pricing baseline utilizing mathematical Greeks." 
+    },
+    { 
+      value: "deep_hedge_ffnn", 
+      label: "FFNN (Deep Hedge)",
+      description: "Feed-Forward Neural Network trained on options chain lifecycles." 
+    },
+    { 
+      value: "deep_hedge_lstm", 
+      label: "LSTM (Deep Hedge)",
+      description: "Long Short-Term Memory network utilizing sequential step-by-step path history." 
+    },
+    { 
+      value: "deep_hedge_adversarial", 
+      label: "Adversarial Deep Hedge",
+      description: "Minimax neural model trained against adversarial market simulations." 
+    },
   ], []);
   const [hedgingModel, setHedgingModel] = useState<string>("black_scholes");
 
@@ -235,25 +266,7 @@ export default function BacktestPage() {
     }
   }, [selectedSymbol, files]);
 
-  const handleRunBacktest = async () => {
-    if (!selectedSymbol || !selectedStrategy) {
-      alert("Please select both a symbol and a strategy");
-      return;
-    }
-    if (!selectedDateStart || !selectedDateEnd) {
-      alert("Please enter both start and end dates");
-      return;
-    }
-
-    const start = new Date(selectedDateStart);
-    const end = new Date(selectedDateEnd);
-    const diffTime = Math.abs(end.getTime() - start.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-    if (diffDays > 7) {
-      const proceed = confirm(`Warning: Selected duration is ${diffDays} days. Running a backtest for more than 7 days may cause performance strain or timeouts. Do you want to proceed?`);
-      if (!proceed) return;
-    }
-
+  const executeBacktest = async () => {
     clearStore();
 
     try {
@@ -286,6 +299,79 @@ export default function BacktestPage() {
         isRunning: false,
         statusBarPhase: "completed",
       });
+    }
+  };
+
+  const handleRunBacktest = () => {
+    if (!selectedSymbol || !selectedStrategy) {
+      setModalConfig({
+        isOpen: true,
+        title: "Configuration Error",
+        message: "Please select both a symbol and a strategy before starting.",
+        isConfirm: false,
+      });
+      return;
+    }
+    if (!selectedDateStart || !selectedDateEnd) {
+      setModalConfig({
+        isOpen: true,
+        title: "Configuration Error",
+        message: "Please enter both start and end dates before starting.",
+        isConfirm: false,
+      });
+      return;
+    }
+
+    // Validate date range constraints
+    if (fileDetail?.date_start && selectedDateStart < fileDetail.date_start) {
+      setModalConfig({
+        isOpen: true,
+        title: "Date Out of Range",
+        message: `Selected start date (${selectedDateStart}) is before the available start date (${fileDetail.date_start}) for this symbol.`,
+        isConfirm: false,
+      });
+      return;
+    }
+    if (fileDetail?.date_end && selectedDateEnd > fileDetail.date_end) {
+      setModalConfig({
+        isOpen: true,
+        title: "Date Out of Range",
+        message: `Selected end date (${selectedDateEnd}) is after the available end date (${fileDetail.date_end}) for this symbol.`,
+        isConfirm: false,
+      });
+      return;
+    }
+    if (selectedDateStart > selectedDateEnd) {
+      setModalConfig({
+        isOpen: true,
+        title: "Configuration Error",
+        message: "Start date must be on or before end date.",
+        isConfirm: false,
+      });
+      return;
+    }
+
+    const start = new Date(selectedDateStart);
+    const end = new Date(selectedDateEnd);
+    const diffTime = Math.abs(end.getTime() - start.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    
+    if (diffDays > 7) {
+      const skipWarning = localStorage.getItem("skip7DayWarning") === "true";
+      if (skipWarning) {
+        executeBacktest();
+      } else {
+        setModalConfig({
+          isOpen: true,
+          title: "Performance Warning",
+          message: `Warning: Selected duration is ${diffDays} days. Running a backtest for more than 7 days may cause performance strain or timeouts.`,
+          isConfirm: true,
+          showCheckbox: true,
+          onConfirm: executeBacktest,
+        });
+      }
+    } else {
+      executeBacktest();
     }
   };
 
@@ -342,6 +428,7 @@ export default function BacktestPage() {
                         onValueChange={setSelectedSymbol}
                         className={inputClass}
                         disabled={loading || isRunning || availableSymbols.length === 0}
+                        showSearch={true}
                         placeholder={
                           loading
                             ? "Loading symbols..."
@@ -353,19 +440,19 @@ export default function BacktestPage() {
                       />
                     </div>
 
-                    <div>
-                      <label className={labelClass}>Available Duration</label>
-                      <p className="text-xs numeric-12 text-[color:var(--state-success)]">
-                        {fileDetail?.date_start && fileDetail?.date_end
-                          ? `${fileDetail.date_start} ~ ${fileDetail.date_end}`
-                          : "-"}
+                    <div className="p-2.5 border border-[color:var(--border-subtle)] bg-[color:var(--surface-subtle)] rounded-none hover:border-[color:var(--border-strong)] transition-all-custom">
+                      <p className="text-[10px] uppercase tracking-wider text-[color:var(--text-muted)] mb-1">
+                        Available History
                       </p>
-                      {fileDetail?.number_of_days != null && fileDetail?.size_bytes != null ? (
-                        <p className="text-xs numeric-12 text-[color:var(--state-success)] mt-1">
-                          {fileDetail.number_of_days} days, {formatFileSize(fileDetail.size_bytes)}
+                      <p className="text-xs font-semibold numeric-12 text-[color:var(--state-success)]">
+                        {fileDetail?.date_start && fileDetail?.date_end
+                          ? `${fileDetail.date_start} ➔ ${fileDetail.date_end}`
+                          : "Select a symbol to load range"}
+                      </p>
+                      {fileDetail?.number_of_days != null && fileDetail?.size_bytes != null && (
+                        <p className="text-[10px] text-[color:var(--text-muted)] mt-1">
+                          Span: <span className="text-[color:var(--text-primary)] font-medium">{fileDetail.number_of_days} Days</span> | Size: <span className="text-[color:var(--text-primary)] font-medium">{formatFileSize(fileDetail.size_bytes)}</span>
                         </p>
-                      ) : (
-                        <p className="text-xs numeric-12 text-[color:var(--text-muted)] mt-1">-</p>
                       )}
                     </div>
 
@@ -378,6 +465,8 @@ export default function BacktestPage() {
                           onChange={(e) => setSelectedDateStart(e.target.value)}
                           className={inputClassDate}
                           disabled={isRunning || !selectedSymbol}
+                          min={fileDetail?.date_start || undefined}
+                          max={fileDetail?.date_end || undefined}
                         />
                       </div>
                       <div className="flex items-center gap-2">
@@ -388,6 +477,8 @@ export default function BacktestPage() {
                           onChange={(e) => setSelectedDateEnd(e.target.value)}
                           className={inputClassDate}
                           disabled={isRunning || !selectedSymbol}
+                          min={fileDetail?.date_start || undefined}
+                          max={fileDetail?.date_end || undefined}
                         />
                       </div>
                     </div>
@@ -406,7 +497,19 @@ export default function BacktestPage() {
                               ? "No strategies found"
                               : "Select a strategy..."
                         }
-                        options={strategies.map((s) => ({ value: s.value, label: s.label }))}
+                        options={strategies.map((s) => {
+                          let desc = "";
+                          if (s.value === "StraddleTestStrategy") {
+                            desc = "Sells ATM Call/Put to collect premium; delta-hedges directional risk.";
+                          } else if (s.value === "IvMeanRevertStrategy") {
+                            desc = "Buys/sells straddles when ATM IV deviates significantly from its mean.";
+                          } else if (s.value === "IronCondorTestStrategy") {
+                            desc = "Sells OTM Call/Put spreads for defined-risk premium harvesting.";
+                          } else if (s.value === "StraddleInventoryScalperStrategy") {
+                            desc = "Scalps micro-deltas on a rolling inventory of short ATM straddles.";
+                          }
+                          return { value: s.value, label: s.label, description: desc };
+                        })}
                       />
                     </div>
                   </div>
@@ -505,10 +608,17 @@ export default function BacktestPage() {
             </div>
 
             {/* Right Results Dashboard */}
-            <div className="mt-3 lg:mt-0 flex-1 min-h-0 flex flex-col space-y-3 overflow-auto">
+            <div className="mt-3 lg:mt-0 flex-1 min-h-0 flex flex-col space-y-3 overflow-auto fade-in">
               {/* Status Banner */}
               {(statusBarPhase === "running" || statusBarPhase === "finalising") && (
-                <div id="bt-status-banner" className="w-full py-2 px-3 text-center text-xs uppercase tracking-wide font-medium bg-[color:var(--surface-subtle)] text-[color:var(--text-muted)] border border-[color:var(--border-subtle)]">
+                <div 
+                  id="bt-status-banner" 
+                  className={`w-full py-2 px-3 text-center text-xs uppercase tracking-wide font-medium border ${
+                    statusBarPhase === "running" 
+                      ? "pulse-running text-[color:var(--state-success)] bg-[color:var(--surface-subtle)]" 
+                      : "bg-[color:var(--surface-subtle)] text-[color:var(--text-muted)] border-[color:var(--border-subtle)]"
+                  }`}
+                >
                   {statusBarPhase === "running" ? "Running" : "Finalising"}
                 </div>
               )}
@@ -812,6 +922,62 @@ export default function BacktestPage() {
             </div>
           </div>
         </div>
+        {modalConfig.isOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[color:rgba(0,0,0,0.6)] backdrop-blur-xs fade-in">
+            <div className="w-[380px] border border-[color:var(--border-strong)] bg-[color:var(--surface-raised)] p-4 shadow-2xl relative">
+              <h3 className="text-xs uppercase tracking-wider text-[color:var(--text-primary)] font-bold mb-2 pb-1 border-b border-[color:var(--border-subtle)]">
+                {modalConfig.title}
+              </h3>
+              <p className="text-xs text-[color:var(--text-primary)] mb-4 leading-normal">
+                {modalConfig.message}
+              </p>
+              
+              {modalConfig.showCheckbox && (
+                <div className="flex items-center gap-2 mb-4 select-none">
+                  <input
+                    type="checkbox"
+                    id="dont-show-checkbox"
+                    checked={dontShowAgainChecked}
+                    onChange={(e) => setDontShowAgainChecked(e.target.checked)}
+                    className="h-3.5 w-3.5 border border-[color:var(--border-subtle)] bg-[color:var(--surface-subtle)] focus:outline-none"
+                  />
+                  <label htmlFor="dont-show-checkbox" className="text-[10px] uppercase tracking-wide text-[color:var(--text-muted)] cursor-pointer">
+                    Do not show this warning again
+                  </label>
+                </div>
+              )}
+
+              <div className="flex justify-end gap-2">
+                {modalConfig.isConfirm && (
+                  <button
+                    onClick={() => {
+                      setModalConfig(prev => ({ ...prev, isOpen: false }));
+                      setDontShowAgainChecked(false);
+                    }}
+                    className="h-6 px-3 text-[10px] btn btn-ghost"
+                  >
+                    Cancel
+                  </button>
+                )}
+                <button
+                  onClick={() => {
+                    setModalConfig(prev => ({ ...prev, isOpen: false }));
+                    if (modalConfig.showCheckbox && dontShowAgainChecked) {
+                      localStorage.setItem("skip7DayWarning", "true");
+                    }
+                    if (modalConfig.onConfirm) {
+                      modalConfig.onConfirm();
+                    }
+                    setDontShowAgainChecked(false);
+                  }}
+                  className="h-6 px-3 text-[10px] btn btn-primary bg-[color:var(--surface-subtle)] hover:bg-[color:var(--surface-raised)] text-[color:var(--text-primary)] border-[color:var(--border-strong)]"
+                >
+                  {modalConfig.isConfirm ? "Proceed" : "OK"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </React.Fragment>
     </PageLayout>
   );

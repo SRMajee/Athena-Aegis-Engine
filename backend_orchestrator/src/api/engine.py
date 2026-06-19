@@ -10,133 +10,266 @@ from src.services.strategy import StrategyService
 router = APIRouter()
 
 
-@router.post("/api/gateway/connect")
+# --- Live Engine - Gateway ---
+@router.post(
+    "/api/gateway/connect",
+    tags=["Live Engine - Gateway"],
+    summary="Connect Gateway",
+    description="Establish active connection between the execution runtime and the live brokerage gateway.",
+)
 async def connect_gateway() -> dict:
     return await MainService.connect_gateway()
 
 
-@router.post("/api/gateway/disconnect")
+@router.post(
+    "/api/gateway/disconnect",
+    tags=["Live Engine - Gateway"],
+    summary="Disconnect Gateway",
+    description="Gracefully terminate connection to the live brokerage gateway.",
+)
 async def disconnect_gateway() -> dict:
     return await MainService.disconnect_gateway()
 
 
-@router.get("/api/gateway/status")
+@router.get(
+    "/api/gateway/status",
+    tags=["Live Engine - Gateway"],
+    summary="Get Gateway Connection Status",
+    description="Query current connection status and active broker configuration of the gateway.",
+)
 async def get_gateway_status() -> dict:
     return await MainService.get_gateway_status()
 
 
-@router.get("/api/market/status")
+# --- Live Engine - Market Data ---
+@router.get(
+    "/api/market/status",
+    tags=["Live Engine - Market Data"],
+    summary="Get Market Data Stream Status",
+    description="Check whether market data streams are running and list current symbol subscriptions.",
+)
 async def get_market_status() -> dict:
     return await MainService.get_market_status()
 
 
-@router.post("/api/market/start")
+@router.post(
+    "/api/market/start",
+    tags=["Live Engine - Market Data"],
+    summary="Start Market Data Stream",
+    description="Activate real-time market data ticks and order-book updates subscription stream.",
+)
 async def start_market() -> dict:
     return await MainService.start_market_data()
 
 
-@router.post("/api/market/stop")
+@router.post(
+    "/api/market/stop",
+    tags=["Live Engine - Market Data"],
+    summary="Stop Market Data Stream",
+    description="Halt the active real-time market data subscription feed.",
+)
 async def stop_market() -> dict:
     return await MainService.stop_market_data()
 
 
-@router.get("/api/strategies")
+# --- Live Engine - Strategy Management ---
+@router.get(
+    "/api/strategies",
+    tags=["Live Engine - Strategy Management"],
+    summary="List Strategies",
+    description="List all currently instantiated strategy configurations and their runtime states.",
+)
 async def list_strategies() -> dict:
     return await StrategyService.list_strategies()
 
 
-@router.get("/api/strategies/updates")
+@router.get(
+    "/api/strategies/updates",
+    tags=["Live Engine - Strategy Management"],
+    summary="Get Strategy Updates",
+    description="Query real-time metrics and state-change events emitted from running strategies.",
+)
 def get_strategy_updates() -> dict:
     return StrategyService.get_strategy_updates()
 
 
-@router.get("/api/strategies/updates/clear")
+@router.get(
+    "/api/strategies/updates/clear",
+    tags=["Live Engine - Strategy Management"],
+    summary="Clear Strategy Updates Buffer",
+    description="Reset the strategy real-time update buffer.",
+)
 def clear_strategy_updates() -> dict:
     return StrategyService.clear_strategy_updates()
 
 
-@router.get("/api/strategies/meta/strategy-classes")
+@router.get(
+    "/api/strategies/meta/strategy-classes",
+    tags=["Live Engine - Strategy Management"],
+    summary="Get Available Strategy Classes",
+    description="Get list of all compiled C++ strategy classes available for live deployment.",
+)
 async def get_strategy_classes() -> dict:
     return await StrategyService.get_strategy_classes()
 
 
-@router.get("/api/strategies/meta/settings")
-async def get_strategy_class_settings(strategy_class: str = Query(..., alias="class")) -> dict:
-    """Default settings for strategy class (strategy_config.json)."""
+@router.get(
+    "/api/strategies/meta/settings",
+    tags=["Live Engine - Strategy Management"],
+    summary="Get Strategy Settings Schema",
+    description="Retrieve default configuration key-value structures for a given strategy class.",
+)
+async def get_strategy_class_settings(strategy_class: str = Query(..., alias="class", description="Name of the strategy class")) -> dict:
     return await StrategyService.get_strategy_class_defaults(strategy_class)
 
 
-@router.get("/api/strategies/meta/portfolios")
+@router.get(
+    "/api/strategies/meta/portfolios",
+    tags=["Live Engine - Strategy Management"],
+    summary="Get Portfolio Parameters",
+    description="Retrieve active deployment portfolios metadata including allocation weights.",
+)
 async def get_portfolios() -> dict:
     return await StrategyService.get_portfolios_meta()
 
 
-@router.get("/api/strategies/meta/removed-strategies")
+@router.get(
+    "/api/strategies/meta/removed-strategies",
+    tags=["Live Engine - Strategy Management"],
+    summary="Get Removed Strategies List",
+    description="Get IDs of strategies that were instantiated and subsequently removed from the session.",
+)
 async def get_removed_strategies() -> dict:
     return await StrategyService.get_removed_strategies()
 
 
-@router.post("/api/strategies")
+@router.post(
+    "/api/strategies",
+    tags=["Live Engine - Strategy Management"],
+    summary="Add Strategy",
+    description="Instantiate a C++ strategy class and associate it with a specific portfolio.",
+)
 async def add_strategy(req: AddStrategyRequest) -> dict:
     return await StrategyService.add_strategy(req)
 
 
-@router.post("/api/strategies/restore")
+@router.post(
+    "/api/strategies/restore",
+    tags=["Live Engine - Strategy Management"],
+    summary="Restore Strategy",
+    description="Restore configuration parameters and states of a previously removed strategy.",
+)
 async def restore_strategy(req: RestoreStrategyRequest) -> dict:
     return await StrategyService.restore_strategy(req)
 
 
-@router.post("/api/strategies/{strategy_name}/init")
+@router.post(
+    "/api/strategies/{strategy_name}/init",
+    tags=["Live Engine - Strategy Management"],
+    summary="Initialize Strategy",
+    description="Trigger compilation, binding, and state validation of the strategy instance.",
+)
 async def init_strategy(strategy_name: str) -> dict:
     return await StrategyService.init_strategy(strategy_name)
 
 
-@router.post("/api/strategies/{strategy_name}/start")
+@router.post(
+    "/api/strategies/{strategy_name}/start",
+    tags=["Live Engine - Strategy Management"],
+    summary="Start Strategy",
+    description="Enable trading execution and order submission loop for the strategy.",
+)
 async def start_strategy(strategy_name: str) -> dict:
     return await StrategyService.start_strategy(strategy_name)
 
 
-@router.post("/api/strategies/{strategy_name}/stop")
+@router.post(
+    "/api/strategies/{strategy_name}/stop",
+    tags=["Live Engine - Strategy Management"],
+    summary="Stop Strategy",
+    description="Halt the strategy's order execution loops (leaves existing orders resting).",
+)
 async def stop_strategy(strategy_name: str) -> dict:
     return await StrategyService.stop_strategy(strategy_name)
 
 
-@router.delete("/api/strategies/{strategy_name}/remove")
+@router.delete(
+    "/api/strategies/{strategy_name}/remove",
+    tags=["Live Engine - Strategy Management"],
+    summary="Remove Strategy",
+    description="Gracefully stop and deregister the strategy (cancel pending orders and exit holdings).",
+)
 async def remove_strategy(strategy_name: str) -> dict:
     return await StrategyService.remove_strategy(strategy_name)
 
 
-@router.delete("/api/strategies/{strategy_name}/delete")
+@router.delete(
+    "/api/strategies/{strategy_name}/delete",
+    tags=["Live Engine - Strategy Management"],
+    summary="Delete Strategy Configuration",
+    description="Permanently purge the strategy instance metadata and configuration.",
+)
 async def delete_strategy(strategy_name: str) -> dict:
     return await StrategyService.delete_strategy(strategy_name)
 
 
-@router.get("/api/strategies/holdings")
+@router.get(
+    "/api/strategies/holdings",
+    tags=["Live Engine - Strategy Management"],
+    summary="Get Active Positions",
+    description="Query runtime state for all open option and equity contract positions across active strategies.",
+)
 async def get_strategy_holdings() -> dict:
     return await StrategyService.get_strategy_holdings()
 
 
-@router.get("/api/orders-trades")
+# --- Live Engine - Orders & Trades ---
+@router.get(
+    "/api/orders-trades",
+    tags=["Live Engine - Orders & Trades"],
+    summary="Get Orders and Trades",
+    description="Retrieve live resting orders and completed trade execution receipts for the current session.",
+)
 async def get_orders_and_trades() -> dict:
     return await MainService.get_orders_and_trades()
 
 
-@router.get("/api/data/portfolios")
+@router.get(
+    "/api/data/portfolios",
+    tags=["Live Engine - Orders & Trades"],
+    summary="Get Portfolio Names",
+    description="Retrieve a list of all registered portfolio names.",
+)
 async def get_portfolio_names() -> dict:
     return await MainService.get_portfolio_names()
 
 
-@router.get("/logs")
+# --- Live Engine - Diagnostic Logs ---
+@router.get(
+    "/logs",
+    tags=["Live Engine - Diagnostic Logs"],
+    summary="Get Diagnostic Logs (JSON)",
+    description="Read recent system and engine diagnostic logs from the memory buffer.",
+)
 def get_logs(limit: int = 200) -> dict:
     return MainService.get_logs(limit)
 
 
-@router.get("/api/logs")
+@router.get(
+    "/api/logs",
+    tags=["Live Engine - Diagnostic Logs"],
+    summary="Get API Server Logs",
+    description="Read logs specifically generated by the FastAPI gateway server.",
+)
 def get_logs_api() -> dict:
     return MainService.get_logs_api()
 
 
-@router.post("/api/logs/clear")
+@router.post(
+    "/api/logs/clear",
+    tags=["Live Engine - Diagnostic Logs"],
+    summary="Clear Diagnostic Logs Buffer",
+    description="Clear the in-memory diagnostic logs buffer.",
+)
 def clear_logs() -> dict:
-    """Clear log buffer (e.g. Clear button)."""
     return MainService.clear_logs()

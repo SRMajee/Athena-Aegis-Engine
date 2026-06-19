@@ -177,11 +177,26 @@ async def poll_and_insert_temp_files(job_id: str, strategy_name: str, fee_rate: 
 
 
 
+async def check_cancellation_loop(job_id: str, stream: Any, redis_client: Any) -> None:
+    """Poll Redis for a cancel signal and cancel the gRPC stream immediately if detected."""
+    while True:
+        try:
+            if await redis_client.exists(f"job_cancel:{job_id}"):
+                await redis_client.delete(f"job_cancel:{job_id}")
+                print(f"[Cancellation] Job {job_id} cancellation detected. Cancelling gRPC stream.")
+                stream.cancel()
+                break
+        except Exception as e:
+            print(f"Error in cancel check loop: {e}")
+        await asyncio.sleep(0.1)
+
+
 async def run_backtest_job(ctx, job_payload: dict) -> dict:
     job_id = ctx["job_id"]
     started_at = datetime.utcnow()
     temp_file_to_cleanup = None
     polling_task = None
+    cancel_check_task = None
     
     workspace_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
     trades_json_path = os.path.join(workspace_root, "data", "temp", f"trades_{job_id}.json")
@@ -258,6 +273,11 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
             metadata = [("x-correlation-id", job_payload.get("correlation_id", job_id))]
             
             stream = stub.StartBacktest(stream_req, metadata=metadata)
+            
+            # Start cancellation checker task
+            cancel_check_task = asyncio.create_task(
+                check_cancellation_loop(job_id, stream, ctx["redis"])
+            )
             
             polling_task = asyncio.create_task(
                 poll_and_insert_temp_files(
@@ -598,15 +618,22 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
 
         return final_payload
 
-    except asyncio.CancelledError:
-        async with async_session_maker() as session:
-            job_record = await session.get(BacktestJob, UUID(job_id))
-            if job_record:
-                job_record.status = "CANCELLED"
-                job_record.completed_at = datetime.utcnow()
-                await session.commit()
-        await ctx["redis"].publish(f"job_stream:{job_id}", json.dumps({"status": "cancelled", "error": "Backtest cancelled by user"}))
-        raise
+    except (asyncio.CancelledError, grpc.aio.AioRpcError) as e:
+        is_cancelled = isinstance(e, asyncio.CancelledError)
+        if not is_cancelled and hasattr(e, "code") and e.code() == grpc.StatusCode.CANCELLED:
+            is_cancelled = True
+            
+        if is_cancelled:
+            async with async_session_maker() as session:
+                job_record = await session.get(BacktestJob, UUID(job_id))
+                if job_record:
+                    job_record.status = "CANCELLED"
+                    job_record.completed_at = datetime.utcnow()
+                    await session.commit()
+            await ctx["redis"].publish(f"job_stream:{job_id}", json.dumps({"status": "cancelled", "error": "Backtest cancelled by user"}))
+            raise asyncio.CancelledError("Job cancelled by user")
+        else:
+            raise
 
     except Exception as e:
         import traceback
@@ -624,6 +651,13 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
         await ctx["redis"].publish(f"job_stream:{job_id}", json.dumps({"status": "error", "error": str(e)}))
         return {"status": "error", "error": str(e)}
     finally:
+        if cancel_check_task and not cancel_check_task.done():
+            cancel_check_task.cancel()
+            try:
+                await cancel_check_task
+            except BaseException:
+                pass
+
         if polling_task and not polling_task.done():
             polling_task.cancel()
             try:
