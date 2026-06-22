@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 import dotenv
 from typing import Any, Dict, List, Optional, Sequence, Tuple
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import UUID, uuid4
 import sqlalchemy as sa
 from sqlalchemy import Column
@@ -62,7 +62,7 @@ class Strategy(SQLModel, table=True):
     name: str
     instrument: str
     parameters: dict = Field(default_factory=dict, sa_column=Column(JSONB))
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class BacktestJob(SQLModel, table=True):
@@ -72,7 +72,7 @@ class BacktestJob(SQLModel, table=True):
     strategy_id: UUID = Field(foreign_key="strategy.id")
     status: str = Field(default="PENDING")
     correlation_id: str = Field(unique=True, index=True)
-    started_at: datetime = Field(default_factory=datetime.utcnow)
+    started_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     completed_at: Optional[datetime] = Field(default=None)
     summary: Optional[dict] = Field(default=None, sa_column=Column(JSONB))
 
@@ -85,7 +85,7 @@ class ModelRegistry(SQLModel, table=True):
     training_run_id: str
     input_shape: List[int] = Field(sa_column=Column(JSONB))
     validation_cvar: float
-    registered_at: datetime = Field(default_factory=datetime.utcnow)
+    registered_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class TickArchive(SQLModel, table=True):
