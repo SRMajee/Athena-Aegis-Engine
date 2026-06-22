@@ -66,4 +66,22 @@ Download bulk symbols data for a given date range and limit.
   ```bash
 & "backend_orchestrator/.venv/Scripts/Activate.ps1"
 python scripts/download_bulk_symbols.py --start 2025-06-02 --end 2025-06-10 --limit-contracts 1000
+```
+
+---
+
+### 7. Download Alpaca Options (`download_alpaca_options.py`)
+Comprehensive crawler script to query and download raw option contracts chains from the Alpaca API.
+* **Usage**:
+  ```bash
+  python scripts/download_alpaca_options.py -s MSFT --start 2026-06-01
   ```
+
+---
+
+### 8. Configuration Utilities (`scripts/config_utilities/`)
+A subfolder containing utility scripts for scanning and indexing project-level configuration schemas:
+* `find_references.py`: Search for config usage references.
+* `list_projects_config.py`: Lists configured project profiles.
+* `print_project_json.py`: Outputs configured environments in JSON format.
+* `search_project_configs.py`: Query config indices matching query keywords.

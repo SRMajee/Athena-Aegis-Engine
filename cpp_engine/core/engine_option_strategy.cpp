@@ -46,7 +46,7 @@ void OptionStrategyEngine::load_strategy_config() {
     strategy_config_loaded_ = true;
     strategy_defaults_.clear();
 
-    constexpr const char* kPath = "Otrader/strategy_config.json";
+    constexpr const char* kPath = "cpp_engine/strategy_config.json";
     std::ifstream f(kPath);
     if (!f) {
         write_log(std::string("Strategy config not found: ") + kPath + " (skip)", 20 /* INFO */);

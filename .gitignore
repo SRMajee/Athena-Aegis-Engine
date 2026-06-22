@@ -19,6 +19,9 @@ __pycache__/
 *.pyd
 backend_orchestrator/.venv/
 backend_orchestrator/**/__pycache__/
+.pytest_cache/
+**/.pytest_cache/
+
 
 # Node & Next.js
 node_modules/
