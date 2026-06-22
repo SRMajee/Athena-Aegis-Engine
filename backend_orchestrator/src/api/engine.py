@@ -1,11 +1,12 @@
 """Unified engine API router: gateway, strategies, holdings, orders-trades, logs."""
 
-from fastapi import APIRouter, Query
+import os
+import shutil
+from fastapi import APIRouter, Query, UploadFile, File, HTTPException
 
 from src.api.schemas.engine import AddStrategyRequest, RestoreStrategyRequest
 from src.services.main import MainService
 from src.services.strategy import StrategyService
-
 
 router = APIRouter()
 
@@ -273,3 +274,39 @@ def get_logs_api() -> dict:
 )
 def clear_logs() -> dict:
     return MainService.clear_logs()
+
+
+# --- Live Engine - Model Registry ---
+@router.post(
+    "/api/models/upload",
+    tags=["Live Engine - Model Registry"],
+    summary="Upload Model Artifact",
+    description="Upload a serialized TorchScript (.pt) model artifact directly to the models registry directory.",
+)
+async def upload_model(
+    model_id: str = Query(..., description="Unique ID for the model registry, e.g. deep_hedge_ffnn_v2"),
+    file: UploadFile = File(...),
+) -> dict:
+    if not file.filename.endswith(".pt"):
+        raise HTTPException(status_code=400, detail="Only serialized PyTorch models (.pt extension) are supported.")
+    
+    # Target directory is project root / models
+    workspace_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+    models_dir = os.path.join(workspace_root, "models")
+    os.makedirs(models_dir, exist_ok=True)
+    
+    dest_path = os.path.join(models_dir, f"{model_id}.pt")
+    
+    # Save the file
+    try:
+        with open(dest_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save model file: {e}")
+        
+    return {
+        "status": "ok",
+        "message": f"Successfully uploaded model {model_id} to {dest_path}",
+        "model_id": model_id,
+        "path": dest_path
+    }

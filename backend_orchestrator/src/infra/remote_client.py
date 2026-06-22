@@ -22,8 +22,31 @@ class EngineClient:
         self._channel = grpc.aio.insecure_channel(self._target)
         self._stub = pb2_grpc.EngineServiceStub(self._channel)
 
+    def _reconnect(self) -> None:
+        """Close current channel and recreate connection to target."""
+        try:
+            self._channel = grpc.aio.insecure_channel(self._target)
+            self._stub = pb2_grpc.EngineServiceStub(self._channel)
+        except Exception:
+            pass
+
+    async def _execute_with_retry(self, method_name: str, *args, **kwargs) -> Any:
+        import asyncio
+        max_retries = 3
+        backoff = 0.5
+        for attempt in range(max_retries):
+            try:
+                method = getattr(self._stub, method_name)
+                return await method(*args, **kwargs)
+            except grpc.RpcError as e:
+                if attempt == max_retries - 1:
+                    raise e
+                self._reconnect()
+                await asyncio.sleep(backoff)
+                backoff *= 2
+
     async def get_status(self) -> Dict[str, Any]:
-        resp = await self._stub.GetStatus(pb2.Empty())
+        resp = await self._execute_with_retry("GetStatus", pb2.Empty())
         return {
             "status": "running" if resp.running else "stopped",
             "connected": bool(resp.connected),
@@ -31,7 +54,7 @@ class EngineClient:
         }
 
     async def get_orders_and_trades(self) -> Dict[str, Any]:
-        resp = await self._stub.GetOrdersAndTrades(pb2.Empty())
+        resp = await self._execute_with_retry("GetOrdersAndTrades", pb2.Empty())
         return self._convert_orders_and_trades(resp)
 
     @staticmethod
@@ -96,7 +119,7 @@ class EngineClient:
         return {"records": records}
 
     async def get_portfolio_names(self) -> List[str]:
-        resp = await self._stub.ListPortfolios(pb2.Empty())
+        resp = await self._execute_with_retry("ListPortfolios", pb2.Empty())
         return list(resp.portfolios)
 
     async def list_strategies(self) -> List[Dict[str, Any]]:
@@ -114,21 +137,21 @@ class EngineClient:
         return out
 
     async def get_strategy_classes(self) -> List[str]:
-        resp = await self._stub.ListStrategyClasses(pb2.Empty())
+        resp = await self._execute_with_retry("ListStrategyClasses", pb2.Empty())
         return list(resp.classes)
 
     async def get_strategy_class_defaults(self, strategy_class: str) -> Dict[str, float]:
         """Return default strategy settings for a class (from strategy_config.json)."""
         req = pb2.GetStrategyClassDefaultsRequest(strategy_class=strategy_class)
-        resp = await self._stub.GetStrategyClassDefaults(req)
+        resp = await self._execute_with_retry("GetStrategyClassDefaults", req)
         return dict(resp.settings)
 
     async def get_portfolios_meta(self) -> List[str]:
-        resp = await self._stub.ListPortfolios(pb2.Empty())
+        resp = await self._execute_with_retry("ListPortfolios", pb2.Empty())
         return list(resp.portfolios)
 
     async def get_removed_strategies(self) -> List[str]:
-        resp = await self._stub.GetRemovedStrategies(pb2.Empty())
+        resp = await self._execute_with_retry("GetRemovedStrategies", pb2.Empty())
         return list(resp.removed_strategies)
 
     async def add_strategy(
@@ -142,31 +165,31 @@ class EngineClient:
             portfolio_name=portfolio_name,
             setting_json=json.dumps(setting or {}),
         )
-        resp = await self._stub.AddStrategy(req)
+        resp = await self._execute_with_retry("AddStrategy", req)
         return {"status": "ok", "strategy_name": resp.strategy_name}
 
     async def init_strategy(self, strategy_name: str) -> Dict[str, Any]:
-        await self._stub.InitStrategy(pb2.StrategyNameRequest(strategy_name=strategy_name))
+        await self._execute_with_retry("InitStrategy", pb2.StrategyNameRequest(strategy_name=strategy_name))
         return {"status": "ok"}
 
     async def start_strategy(self, strategy_name: str) -> Dict[str, Any]:
-        await self._stub.StartStrategy(pb2.StrategyNameRequest(strategy_name=strategy_name))
+        await self._execute_with_retry("StartStrategy", pb2.StrategyNameRequest(strategy_name=strategy_name))
         return {"status": "ok"}
 
     async def stop_strategy(self, strategy_name: str) -> Dict[str, Any]:
-        await self._stub.StopStrategy(pb2.StrategyNameRequest(strategy_name=strategy_name))
+        await self._execute_with_retry("StopStrategy", pb2.StrategyNameRequest(strategy_name=strategy_name))
         return {"status": "ok"}
 
     async def remove_strategy(self, strategy_name: str) -> Dict[str, Any]:
-        resp = await self._stub.RemoveStrategy(pb2.StrategyNameRequest(strategy_name=strategy_name))
+        resp = await self._execute_with_retry("RemoveStrategy", pb2.StrategyNameRequest(strategy_name=strategy_name))
         return {"status": "ok", "removed": bool(resp.removed)}
 
     async def delete_strategy(self, strategy_name: str) -> Dict[str, Any]:
-        resp = await self._stub.DeleteStrategy(pb2.StrategyNameRequest(strategy_name=strategy_name))
+        resp = await self._execute_with_retry("DeleteStrategy", pb2.StrategyNameRequest(strategy_name=strategy_name))
         return {"status": "ok", "deleted": bool(resp.deleted)}
 
     async def get_strategy_holdings(self) -> Dict[str, Any]:
-        resp = await self._stub.GetStrategyHoldings(pb2.Empty())
+        resp = await self._execute_with_retry("GetStrategyHoldings", pb2.Empty())
         holdings: Dict[str, Any] = {}
         for name, data_str in resp.holdings.items():
             try:
@@ -182,7 +205,7 @@ class EngineClient:
     async def connect_gateway(self) -> Dict[str, Any]:
         """Connect IBKR gateway (account/order channel); market data is separate."""
         try:
-            await self._stub.ConnectGateway(pb2.Empty())
+            await self._execute_with_retry("ConnectGateway", pb2.Empty())
         except Exception as e:
             return {"status": "error", "message": f"Connect failed: {e}"}
 
@@ -206,11 +229,11 @@ class EngineClient:
     async def disconnect_gateway(self) -> Dict[str, Any]:
         try:
             try:
-                await self._stub.StopMarketData(pb2.Empty())
+                await self._execute_with_retry("StopMarketData", pb2.Empty())
             except Exception:
                 # Ignore StopMarketData errors on disconnect
                 pass
-            await self._stub.DisconnectGateway(pb2.Empty())
+            await self._execute_with_retry("DisconnectGateway", pb2.Empty())
             status = await self.get_status()
             return {
                 "status": "ok",
@@ -223,7 +246,7 @@ class EngineClient:
     async def start_market_data(self) -> Dict[str, Any]:
         """Start market data (gateway state unchanged)."""
         try:
-            await self._stub.StartMarketData(pb2.Empty())
+            await self._execute_with_retry("StartMarketData", pb2.Empty())
             status = await self.get_status()
             return {
                 "status": "ok",
@@ -236,7 +259,7 @@ class EngineClient:
     async def stop_market_data(self) -> Dict[str, Any]:
         """Stop market data (gateway state unchanged)."""
         try:
-            await self._stub.StopMarketData(pb2.Empty())
+            await self._execute_with_retry("StopMarketData", pb2.Empty())
             status = await self.get_status()
             return {
                 "status": "ok",
@@ -247,14 +270,20 @@ class EngineClient:
             return {"status": "error", "message": f"StopMarketData failed: {e}"}
 
     async def stream_logs(self):
-        """Yield log lines from C++ via gRPC StreamLogs (server-formatted)."""
-        try:
-            async for msg in self._stub.StreamLogs(pb2.Empty()):
-                # msg.line is a plain text line
-                yield msg.line
-        except Exception:
-            # Connection dropped or stream ended
-            return
+        """Yield log lines from C++ via gRPC StreamLogs (server-formatted) with auto-reconnect."""
+        import asyncio
+        backoff = 0.5
+        while True:
+            try:
+                async for msg in self._stub.StreamLogs(pb2.Empty()):
+                    backoff = 0.5
+                    yield msg.line
+            except grpc.RpcError:
+                self._reconnect()
+                await asyncio.sleep(backoff)
+                backoff = min(backoff * 2, 10.0)
+            except Exception:
+                return
 
     async def send_command(self, action: str, payload: dict) -> Dict[str, Any]:
         """Send manual commands (e.g. order, cancel) via the streaming SendCommand RPC."""

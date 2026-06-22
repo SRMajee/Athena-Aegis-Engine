@@ -43,6 +43,9 @@ struct OptionData {
     double gamma = 0;
     double theta = 0;
     double vega = 0;
+    double vanna = 0;
+    double volga = 0;
+    double charm = 0;
     double mid_iv = 0;
 
     void set_portfolio(PortfolioData* p);

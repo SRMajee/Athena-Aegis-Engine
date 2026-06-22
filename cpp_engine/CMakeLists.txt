@@ -8,11 +8,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # compiler flags for MSYS2 MinGW64
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_NO_SYSTEM_FROM_IMPORTED ON)
-    add_compile_options(-Wall -Wextra -O3 -pthread)
+    add_compile_options(-Wall -Wextra -O2 -pthread)
 endif()
 
 
 
+
+# --- CUDA Support ---
+option(USE_CUDA "Use CUDA if available" ON)
+if(USE_CUDA)
+    find_package(CUDA QUIET)
+    if(CUDA_FOUND)
+        message(STATUS "CUDA found. Enabling GPU acceleration support.")
+        add_compile_definitions(AFFINITY_USE_CUDA)
+        include_directories(${CUDA_INCLUDE_DIRS})
+    else()
+        message(STATUS "CUDA not found. Falling back to CPU-only execution.")
+    endif()
+endif()
 
 # Find package dependencies
 find_package(Protobuf REQUIRED)

@@ -14,9 +14,10 @@ import {
   Tooltip,
   Legend,
   ReferenceLine,
+  Brush,
 } from 'recharts';
 
-// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface StrategyRow {
   strategy_name: string;
@@ -50,7 +51,7 @@ interface OrderTrade {
   [key: string]: unknown;
 }
 
-// â”€â”€â”€ MetricCard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── MetricCard ─────────────────────────────────────────────────────────────
 
 function MetricCard({
   label,
@@ -75,7 +76,7 @@ function MetricCard({
   );
 }
 
-// â”€â”€â”€ Live Telemetry Tooltip â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Live Telemetry Tooltip ───────────────────────────────────────────────────
 
 const LiveTooltip = ({
   active,
@@ -118,14 +119,14 @@ const LiveTooltip = ({
   );
 };
 
-// â”€â”€â”€ Live Telemetry Chart â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Live Telemetry Chart ─────────────────────────────────────────────────────
 
 function LiveTelemetryChart({ data }: { data: TelemetryPoint[] }) {
   if (data.length === 0) {
     return (
       <div className="absolute inset-0 flex items-center justify-center">
         <p className="text-sm text-[color:var(--text-muted)] uppercase tracking-wider">
-          Waiting for live telemetryâ€¦
+          Waiting for live telemetry…
         </p>
       </div>
     );
@@ -243,6 +244,7 @@ function LiveTelemetryChart({ data }: { data: TelemetryPoint[] }) {
           isAnimationActive={false}
           strokeDasharray="3 3"
         />
+        <Brush dataKey="ts" tickFormatter={formatXTick} height={15} stroke="#374151" fill="#0d1117" />
       </LineChart>
     </ResponsiveContainer>
   );
@@ -275,12 +277,42 @@ export default function StrategyManagerPage() {
   // Orders & Trades from DB (latest 200 for the selected strategy)
   const [ordersTrades, setOrdersTrades] = useState<OrderTrade[]>([]);
 
+  // Connection Health Heartbeat State
+  const [isBackendConnected, setIsBackendConnected] = useState(true);
+
   // ── Resize state ───────────────────────────────────────────────────────────
   // leftW: width of left panel in px; chartH: height of chart in px
   const [leftW, setLeftW] = useState(420);
   const [chartH, setChartH] = useState(200);
+  const leftWRef = useRef(420);
+  const chartHRef = useRef(200);
   const draggingRef = useRef<null | 'col' | 'row'>(null);
   const dragStartRef = useRef({ x: 0, y: 0, leftW: 420, chartH: 200 });
+
+  useEffect(() => {
+    const savedLeftW = localStorage.getItem('leftW');
+    const savedChartH = localStorage.getItem('chartH');
+    if (savedLeftW) {
+      const parsed = parseInt(savedLeftW, 10);
+      setLeftW(parsed);
+      leftWRef.current = parsed;
+    }
+    if (savedChartH) {
+      const parsed = parseInt(savedChartH, 10);
+      setChartH(parsed);
+      chartHRef.current = parsed;
+    }
+  }, []);
+
+  const changeLeftW = (w: number) => {
+    leftWRef.current = w;
+    setLeftW(w);
+  };
+
+  const changeChartH = (h: number) => {
+    chartHRef.current = h;
+    setChartH(h);
+  };
 
   const onMouseDownCol = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -303,13 +335,17 @@ export default function StrategyManagerPage() {
       if (!draggingRef.current) return;
       if (draggingRef.current === 'col') {
         const dx = e.clientX - dragStartRef.current.x;
-        setLeftW(Math.max(260, Math.min(760, dragStartRef.current.leftW + dx)));
+        changeLeftW(Math.max(260, Math.min(760, dragStartRef.current.leftW + dx)));
       } else {
         const dy = e.clientY - dragStartRef.current.y;
-        setChartH(Math.max(100, Math.min(500, dragStartRef.current.chartH + dy)));
+        changeChartH(Math.max(100, Math.min(500, dragStartRef.current.chartH + dy)));
       }
     };
     const onUp = () => {
+      if (draggingRef.current) {
+        localStorage.setItem('leftW', String(leftWRef.current));
+        localStorage.setItem('chartH', String(chartHRef.current));
+      }
       draggingRef.current = null;
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
@@ -331,8 +367,10 @@ export default function StrategyManagerPage() {
       const list: StrategyRow[] = data.strategies || [];
       setStrategies(list);
       setSelectedStrategy((prev) => prev || (list[0]?.strategy_name ?? null));
+      setIsBackendConnected(true);
     } catch (e) {
       console.error('Error loading strategies', e);
+      setIsBackendConnected(false);
     } finally {
       setLoadingStrategies(false);
     }
@@ -341,6 +379,7 @@ export default function StrategyManagerPage() {
   const fetchHoldings = useCallback(async () => {
     try {
       const data = await api.get<{ holdings?: Record<string, any> }>('/api/strategies/holdings');
+      setIsBackendConnected(true);
       if (data.holdings) {
         setHoldings(data.holdings);
 
@@ -366,6 +405,7 @@ export default function StrategyManagerPage() {
       }
     } catch (e) {
       console.warn('Failed to fetch strategy holdings', e);
+      setIsBackendConnected(false);
     }
   }, []);
 
@@ -375,11 +415,13 @@ export default function StrategyManagerPage() {
         ? `/api/orders-trades/db?limit=200&strategy=${encodeURIComponent(strategyName)}`
         : '/api/orders-trades/db?limit=200';
       const data = await api.get<{ records?: OrderTrade[]; orders?: OrderTrade[]; trades?: OrderTrade[] }>(path);
+      setIsBackendConnected(true);
       // Backend may return records, orders, or trades key
       const records = data.records ?? data.orders ?? data.trades ?? [];
       setOrdersTrades(Array.isArray(records) ? records : []);
     } catch (e) {
       console.warn('Failed to fetch orders & trades', e);
+      setIsBackendConnected(false);
     }
   }, []);
 
@@ -427,6 +469,60 @@ export default function StrategyManagerPage() {
     const interval = setInterval(() => { void fetchOrdersTrades(selectedStrategy); }, 5000);
     return () => clearInterval(interval);
   }, [selectedStrategy, fetchOrdersTrades]);
+
+  const exportTelemetryCSV = () => {
+    if (selHistory.length === 0) {
+      alert("No telemetry data to export.");
+      return;
+    }
+    const headers = ["Timestamp", "uPnL", "Delta", "Gamma", "Theta", "Spot"];
+    const rows = selHistory.map((p) => [
+      new Date(p.ts).toISOString(),
+      p.pnl,
+      p.delta,
+      p.gamma,
+      p.theta,
+      p.spot ?? "",
+    ]);
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `${selectedStrategy}_telemetry.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const exportOrdersCSV = () => {
+    if (ordersTrades.length === 0) {
+      alert("No orders/trades data to export.");
+      return;
+    }
+    const headers = ["Type", "Symbol", "Direction", "Volume", "Traded", "Price", "Status", "Timestamp"];
+    const rows = ordersTrades.map((r) => [
+      r.record_type ?? "",
+      r.symbol ?? "",
+      r.direction ?? "",
+      r.volume ?? "",
+      r.traded ?? "",
+      r.price ?? "",
+      r.status ?? "",
+      r.timestamp ?? "",
+    ]);
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `${selectedStrategy}_orders_trades.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   // ── Derived metrics for selected strategy ──────────────────────────────────
 
@@ -534,7 +630,15 @@ export default function StrategyManagerPage() {
              style={{ width: selectedStrategy ? leftW : '100%', flexShrink: 0 }}>
 
           {/* Header */}
-          <p className="text-[10px] uppercase tracking-widest text-[color:var(--text-muted)]">System Control</p>
+          <div className="flex items-center justify-between shrink-0">
+            <p className="text-[10px] uppercase tracking-widest text-[color:var(--text-muted)]">System Control</p>
+            <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider">
+              <span className={`w-2 h-2 rounded-full ${isBackendConnected ? 'bg-green-500' : 'bg-red-500 animate-pulse'}`} />
+              <span className={isBackendConnected ? 'text-green-500' : 'text-red-500 font-semibold'}>
+                {isBackendConnected ? 'Connected' : 'Disconnected'}
+              </span>
+            </div>
+          </div>
 
           {/* Row 1: Strategy class */}
           <div className="flex flex-wrap items-center gap-2">
@@ -711,13 +815,29 @@ export default function StrategyManagerPage() {
                 </p>
                 <span className="text-[color:var(--state-success)] text-[10px] animate-pulse">â— live</span>
               </div>
-              <button
-                type="button"
-                onClick={() => setSelectedStrategy(null)}
-                className="text-[10px] text-[color:var(--text-muted)] hover:text-[color:var(--text-soft)] transition-colors"
-              >
-                âœ• close
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={exportTelemetryCSV}
+                  className="text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-green-400 border border-slate-700 transition-colors"
+                >
+                  Export Telemetry
+                </button>
+                <button
+                  type="button"
+                  onClick={exportOrdersCSV}
+                  className="text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-blue-400 border border-slate-700 transition-colors"
+                >
+                  Export Orders
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedStrategy(null)}
+                  className="text-[10px] text-[color:var(--text-muted)] hover:text-[color:var(--text-soft)] transition-colors ml-1"
+                >
+                  ✕ close
+                </button>
+              </div>
             </div>
 
             {/* â”€â”€ Metric Cards: 4 per row â”€â”€ */}

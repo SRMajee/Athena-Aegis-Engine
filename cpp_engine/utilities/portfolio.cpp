@@ -368,6 +368,9 @@ void PortfolioData::apply_frame(const PortfolioSnapshot& snapshot) {
     std::vector<double> gamma_vec(n, 0.0);
     std::vector<double> theta_vec(n, 0.0);
     std::vector<double> vega_vec(n, 0.0);
+    std::vector<double> vanna_vec(n, 0.0);
+    std::vector<double> volga_vec(n, 0.0);
+    std::vector<double> charm_vec(n, 0.0);
 
     const unsigned int n_workers = std::max(1U, std::thread::hardware_concurrency());
     if (n < 128 || n_workers <= 1) {
@@ -397,6 +400,9 @@ void PortfolioData::apply_frame(const PortfolioSnapshot& snapshot) {
             gamma_vec[i] = g.gamma;
             theta_vec[i] = g.theta;
             vega_vec[i] = g.vega;
+            vanna_vec[i] = g.vanna;
+            volga_vec[i] = g.volga;
+            charm_vec[i] = g.charm;
         }
     } else {
         // Parallel path using the persistent thread pool
@@ -422,7 +428,7 @@ void PortfolioData::apply_frame(const PortfolioSnapshot& snapshot) {
                 break;
             }
             pool.enqueue([this, &snapshot, spot, start, end, &iv_vec, &delta_vec,
-                          &gamma_vec, &theta_vec, &vega_vec]() -> void {
+                          &gamma_vec, &theta_vec, &vega_vec, &vanna_vec, &volga_vec, &charm_vec]() -> void {
                 for (size_t i = start; i < end; ++i) {
                     OptionData* opt = option_apply_order_[i];
                     if (opt == nullptr) {
@@ -448,6 +454,9 @@ void PortfolioData::apply_frame(const PortfolioSnapshot& snapshot) {
                     gamma_vec[i] = g.gamma;
                     theta_vec[i] = g.theta;
                     vega_vec[i] = g.vega;
+                    vanna_vec[i] = g.vanna;
+                    volga_vec[i] = g.volga;
+                    charm_vec[i] = g.charm;
                 }
             });
         }
@@ -470,6 +479,9 @@ void PortfolioData::apply_frame(const PortfolioSnapshot& snapshot) {
         opt->gamma = gamma_vec[i] * sz;
         opt->theta = theta_vec[i] * sz;
         opt->vega = vega_vec[i] * sz;
+        opt->vanna = vanna_vec[i] * sz;
+        opt->volga = volga_vec[i] * sz;
+        opt->charm = charm_vec[i] * sz;
         opt->mid_iv = iv_vec[i];
     }
     for (auto& [_, chain] : chains) {

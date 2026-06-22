@@ -14,6 +14,9 @@ struct BsGreeks {
     double gamma = 0.0;
     double theta = 0.0;
     double vega = 0.0;
+    double vanna = 0.0;
+    double volga = 0.0;
+    double charm = 0.0;
 };
 
 /** Pick IV input price (bid/ask/mid). */

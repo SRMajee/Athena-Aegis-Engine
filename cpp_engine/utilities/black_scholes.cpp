@@ -82,11 +82,19 @@ auto bs_greeks(bool is_call, double spot, double strike, double time_to_expiry_y
                                            (risk_free_rate * strike * df * normal_cdf(-d2)));
     g.theta = theta_annual / 365.0;
     g.vega = bs_vega_raw(spot, strike, time_to_expiry_years, risk_free_rate, sigma) / 100.0;
+    g.vanna = -pdf * d2 / (sigma * 100.0);
+    g.volga = g.vega * d1 * d2 / sigma;
+    const double charm_annual = is_call ? (-(pdf * (risk_free_rate / (sigma * sqrt_t) - d2 / (2.0 * time_to_expiry_years))) - risk_free_rate * normal_cdf(d1))
+                                         : (-(pdf * (risk_free_rate / (sigma * sqrt_t) - d2 / (2.0 * time_to_expiry_years))) + risk_free_rate * normal_cdf(-d1));
+    g.charm = charm_annual / 365.0;
 
     if (!std::isfinite(g.delta) || std::isnan(g.delta)) g.delta = 0.0;
     if (!std::isfinite(g.gamma) || std::isnan(g.gamma)) g.gamma = 0.0;
     if (!std::isfinite(g.theta) || std::isnan(g.theta)) g.theta = 0.0;
     if (!std::isfinite(g.vega) || std::isnan(g.vega)) g.vega = 0.0;
+    if (!std::isfinite(g.vanna) || std::isnan(g.vanna)) g.vanna = 0.0;
+    if (!std::isfinite(g.volga) || std::isnan(g.volga)) g.volga = 0.0;
+    if (!std::isfinite(g.charm) || std::isnan(g.charm)) g.charm = 0.0;
 
     return g;
 }
