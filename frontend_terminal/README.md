@@ -1,80 +1,127 @@
-# Frontend Architecture Overview
+# Frontend Dashboard Terminal (frontend_terminal)
 
-Next.js frontend (App Router). Responsibilities:
+The **Frontend Dashboard Terminal** is a Next.js (App Router) web interface designed for real-time monitoring and controlling of the Affinity-Core platform. It displays live trading parameters, strategy holdings, execution logs, and historical backtesting chart visualizations.
 
-- Live trading state display (gateway, market, strategies, holdings, logs)
-- Backtest configuration, submission, and result display
-- REST and WebSocket communication with the backend
+---
 
-## Top-Level Structure
+## 📊 Client-Side Integration Diagrams
+
+### 1. State Ingestion & Layout Flowchart
+Visualizes how inbound updates trigger component updates:
+
+```mermaid
+flowchart TD
+    API["FastAPI Backend (Port 8085)"] -->|WebSocket Logs / Status| WSClient["Browser WS Connection"]
+    API -->|REST HTTP responses| AxiosClient["HTTP API Helpers (lib/api.ts)"]
+
+    WSClient -->|Ingest lines| Zustand["Zustand Global State Stores"]
+    AxiosClient -->|Hydrate states| Zustand
+
+    Zustand -->|Recharts data stream| LiveChart["LiveTelemetryChart Panel"]
+    Zustand -->|Holdings arrays| Holdings["HoldingsTable Panel"]
+    Zustand -->|Logs buffer| Logs["TerminalLogs Panel"]
+
+    subgraph UI ["Dashboard Interface Layout"]
+        Layout["Resizable Panel Container"]
+        Layout -->|localStorage size key| LiveChart
+        Layout -->|localStorage size key| Holdings
+        Layout -->|localStorage size key| Logs
+    end
+```
+
+### 2. High-Level Design (HLD)
+Shows the dashboard terminal component boundaries:
+
+```mermaid
+graph TD
+    subgraph ViewPages ["Dashboard Pages (app/)"]
+        Layout["layout.tsx (Sidebar & StatusBar)"]
+        Home["page.tsx (Dashboard Entry)"]
+        Engine["engine/page.tsx (Gateway / Live Controls)"]
+        Backtest["backtest/page.tsx (Backtest Runs)"]
+    end
+
+    subgraph ZustandStores ["Zustand State Store Hooks"]
+        EngineStore["useEngineStore"]
+        BtStore["useBacktestStore"]
+        LogStore["useLogStore"]
+    end
+
+    subgraph Components ["UI Components"]
+        H_Card["StatusBar Connection Widget"]
+        Holdings["HoldingsTable"]
+        LogPanel["TerminalLogPanel"]
+        Charts["Recharts Chart visualizers"]
+    end
+
+    Layout --> EngineStore
+    Home --> EngineStore
+    Home --> LogStore
+    Engine --> EngineStore
+    Engine --> LogStore
+    Backtest --> BtStore
+
+    EngineStore -.-> H_Card
+    EngineStore -.-> Holdings
+    LogStore -.-> LogPanel
+    BtStore -.-> Charts
+```
+
+### 3. Backtest UI Render Sequence
+Visualizes the flow when triggering a backtest from the browser:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant User as User Click
+    participant Store as Zustand Backtest Store
+    participant Api as lib/api.ts Client
+    participant WS as WebSocket Ingestion
+    participant Chart as Recharts View
+
+    User->>Store: Click "Run Backtest"
+    activate Store
+    Store->>Api: submitBacktest(Payload)
+    Api-->>Store: Return HTTP 202 (Job UUID)
+    Store->>Store: Set status = RUNNING, progress = 0%
+    
+    activate WS
+    WS->>Store: Inbound event "progress_update" (e.g. 45%)
+    Store->>Store: Update progress bar UI
+    deactivate WS
+
+    activate WS
+    WS->>Store: Inbound event "job_complete" (Payload)
+    Store->>Store: Hydrate result series data
+    deactivate WS
+
+    Store->>Chart: Pass P&L curve series
+    activate Chart
+    Chart->>User: Render Zoomable Brush Chart
+    deactivate Chart
+    deactivate Store
+```
+
+---
+
+## 🗂️ Folder Structure
 
 ```
-frontend/
-├── app/                     # App Router entry and pages
-│   ├── layout.tsx           # Global layout (nav, status bar, theme)
-│   ├── page.tsx             # Home (overview / entry)
-│   ├── engine/              # Live engine pages (gateway, strategy, holdings)
-│   ├── backtest/            # Backtest config and result pages
-│   └── system/              # System status and DB view pages
-├── components/              # Reusable UI components
-│   ├── layout/              # Layout (Shell, Sidebar, Header, StatusBar)
-│   ├── engine/              # Engine components (strategy table, holdings table, log panel)
-│   ├── backtest/            # Backtest form, progress bar, result view
-│   └── common/              # Shared (tables, dialogs, buttons, chart containers)
-├── lib/                     # Non-UI logic (API calls, data models, hooks)
-│   ├── api.ts               # HTTP calls to backend
-│   ├── ws.ts                # WebSocket (logs / strategies)
-│   ├── types.ts             # TypeScript types (aligned with backend JSON)
-│   └── format.ts            # Display formatting (time, currency, percent)
-├── styles/                  # Global styles and design system (Tailwind / CSS modules)
-└── public/                  # Static assets
+frontend_terminal/
+├── app/                     # Next.js App Router Pages (engine, backtest, system layout)
+├── components/              # UI widgets (holding tables, forms, logs, and split containers)
+├── lib/                     # Client libraries (Axios API calls, WS client wrapper, Types)
+├── styles/                  # Styling configurations (Tailwind styles, global themes)
+├── public/                  # Static media assets & icons
+├── package.json             # NPM package scripts & dependencies
+└── tailwind.config.ts       # Tailwind CSS design system rules
 ```
 
-## Backend Interaction
+---
 
-### Live Engine
+## 💾 Data & REST API Client Integration
 
-- **Health and status**
-  - `GET /api/system/status` returns `{ backend, live }` with `status`, `connected`, `detail`.
-  - The global StatusBar polls this endpoint and displays Backend / Live Engine status (green / yellow / red).
-
-- **Gateway and market**
-  - Endpoints: `POST /api/gateway/connect`, `disconnect`; `GET /api/gateway/status`; `GET /api/market/status`; `POST /api/market/start`, `stop`.
-  - The Engine page controls and displays IB gateway and market data status via these endpoints.
-
-- **Strategies and holdings**
-  - Strategy list: `GET /api/strategies`
-  - Strategy classes and defaults: `GET /api/strategies/meta/strategy-classes`, `.../settings`
-  - Lifecycle: `POST /api/strategies`, `/{name}/init`, `/{name}/start`, `/{name}/stop`, `/{name}/remove`, `/{name}/delete`
-  - Holdings: `GET /api/strategies/holdings`
-  - Updates: `GET /api/strategies/updates`, `.../clear`
-  - The strategy page creates, starts, and stops strategies and displays holdings.
-
-- **Orders, trades, portfolios**
-  - `GET /api/orders-trades`: Order/Trade list (backend gRPC wrapper).
-  - `GET /api/data/portfolios`: Portfolio names.
-
-- **Logs**
-  - History: `GET /logs`, `GET /api/logs`
-  - Live: WebSocket `/ws/logs`; `lib/ws.ts` establishes the connection; new lines are appended to the log view.
-  - Clear: `POST /api/logs/clear`
-
-### Backtest
-
-- **Files and strategy list**
-  - `GET /api/files`: `.dbn` / `.parquet` file list.
-  - `GET /api/backtest/strategies`: C++ backtest strategy class names (dropdown).
-  - `GET /api/file_info`: Single parquet time range and meta.
-  - `GET /api/backtest_duration`: Covered-period summary.
-
-- **Run and cancel**
-  - `POST /api/run_backtest`: Request body includes parquet/symbol, date range, params. Response: `status`, `result`, optional `progress_info`.
-  - `POST /api/backtest/cancel`: Cancels the current run.
-  - The progress bar and result charts consume `progress_info` and `result`.
-
-## State and UI Layers
-
-- **Page-level** (`app/*`): Layout (nav, status bar, main content); data fetching and view selection.
-- **Domain components** (`components/engine/*`, `components/backtest/*`): Receive data and callbacks via props; local interaction and display (tables, charts, forms).
-- **`lib/api.ts` / `lib/ws.ts`**: Encapsulate backend URLs; expose `fetchEngineStatus()`, `connectGateway()`, `subscribeLogs()`, etc. Pages and components call these helpers instead of backend endpoints directly.
-- **Decoupling**: Backend internals can change without UI changes as long as the HTTP and WebSocket contracts remain unchanged.
+* **HTTP REST Requests**: Axios wrappers inside `lib/api.ts` connect to the backend (Port 8085) for connectivity commands (`connect`, `disconnect`), strategy configurations (`init`, `start`, `stop`), and backtest scheduling.
+* **WebSocket Feeds**:
+  * Real-time logs are parsed and held inside the Zustand log store, capping the buffer size locally to prevent memory leaks during long trading sessions.
+  * Resizable split panes use mouse drag handlers and commit the current width/height percentages to `localStorage` under `affinity_strategy_manager_layout` to persist configuration across browser restarts.

@@ -1,87 +1,110 @@
-# Affinity-Core Backtesting Scripts
+# Utility & Crawler Scripts (scripts)
 
-This directory contains utility scripts to list, query, download, and format options and equity data for backtesting.
-
----
-
-### 1. List Available Symbols (`list_available_symbols.py`)
-Lists all symbols currently indexed in the backtest engine database/directories, including their start and end dates.
-* **Requirement**: The FastAPI backend must be running (port `8085`).
-* **Usage**:
-  ```bash
-  python scripts/list_available_symbols.py
-  ```
+This directory contains utility scripts to list, query, download, and format options and equity data for backtesting, as well as configuration indexers.
 
 ---
 
-### 2. Download Option Data (`download_symbol.py`)
-Downloads 5-minute options bar data for a specific ticker and date range from Alpaca and places them directly into the standard daily layout (`data/{SYMBOL}/{YYYY}/{MM}/{YYYY-MM-DD}.parquet`). They are instantly available for backtesting.
-* **Requirement**: Alpaca API credentials configured in the root `.env` file.
-* **Usage**:
-  ```bash
-  # Download a single day
-  python scripts/download_symbol.py -s MSFT --start 2026-06-01
+## 📊 Script Execution Diagrams
 
-  # Download a date range
-  python scripts/download_symbol.py -s NVDA --start 2026-06-01 --end 2026-06-05
-  ```
+### 1. Market Data Crawler Flowchart
+Visualizes how raw option chains are queried, downloaded, and structured for backtesting:
 
----
+```mermaid
+flowchart TD
+    User["Developer Run (CMD/Shell)"] --> Run["download_symbol.py"]
+    Run --> Config["Read Alpaca API Keys (.env)"]
+    Config --> Client["Alpaca REST Client"]
+    
+    Client -->|Query Contracts| AlpacaChains["Alpaca Option Chains Endpoint"]
+    Client -->|Download 5min Bars| AlpacaBars["Alpaca Options Bars Endpoint"]
+    
+    AlpacaChains & AlpacaBars --> Parser["Panda DataFrame Parser"]
+    Parser --> Group["Group by Trade Date (YYYY-MM-DD)"]
+    Group --> Writer["Write Parquet File (zero-copy layout)"]
+    
+    Writer --> DataPath["data/SYMBOL/YYYY/MM/YYYY-MM-DD.parquet"]
+```
 
-### 3. List Downloadable Symbols/Expirations (`list_downloadable_symbols.py`)
-Queries the Alpaca API for all options contracts currently listed for a given symbol, displaying the available expiration range (earliest to furthest dates) and contract counts.
-* **Usage**:
-  ```bash
-  python scripts/list_downloadable_symbols.py -s AAPL
-  ```
+### 2. High-Level Design (HLD)
+Shows the script utilities grouping:
 
----
+```mermaid
+graph TD
+    subgraph DataCrawlers ["Data Crawlers (scripts/)"]
+        Single["download_symbol.py (Single Day / Range)"]
+        Bulk["download_bulk_symbols.py (Multiple Tick Class)"]
+        Prefix["download_prefixed_symbols.py (Ticker Sets)"]
+    end
 
-### 4. List All Option-Eligible Assets (`list_all_alpaca_symbols.py`)
-Lists all active, options-eligible underlying symbols available on Alpaca.
-* **Usage**:
-  * Filter symbols starting with a prefix:
-    ```bash
-    python scripts/list_all_alpaca_symbols.py -f TS
-    ```
-  * Export the complete list of 6,200+ eligible symbols to a text file:
-    ```bash
-    python scripts/list_all_alpaca_symbols.py -o symbols.txt
-    ```
+    subgraph Normalizers ["Data Reformatter Scripts"]
+        SPY["convert_spy_eod.py (Normalized yearly CSVs)"]
+    end
 
----
+    subgraph ConfigUtils ["Config Utilities (scripts/config_utilities/)"]
+        Refs["find_references.py (Usage scanner)"]
+        List["list_projects_config.py (Profile scanner)"]
+        Json["print_project_json.py (Format serializer)"]
+        Search["search_project_configs.py (Config searcher)"]
+    end
+```
 
-### 5. Convert Raw SPY EOD Data (`convert_spy_eod.py`)
-Normalizes the raw yearly `spy_eod_YYYY.parquet` files (2011 to 2023) by parsing the Quote/Expiry timestamps, mapping calls and puts to the standard schema, and outputting daily daily Parquet files.
-* **Usage**:
-  ```bash
-  python scripts/convert_spy_eod.py
-  ```
+### 3. Option Chain Ingestion Sequence
+Details the network call flow to cache options contracts locally:
 
-### 6. Download Bulk Symbols  
-( `download_bulk_symbols.py`)
-Download bulk symbols data for a given date range and limit.
-# Active virtual env and run
-**Usage**:
-  ```bash
-& "backend_orchestrator/.venv/Scripts/Activate.ps1"
-python scripts/download_bulk_symbols.py --start 2025-06-02 --end 2025-06-10 --limit-contracts 1000
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Dev as Developer / CLI
+    participant Script as download_symbol.py
+    participant SDK as Alpaca Python SDK
+    participant API as Alpaca REST API
+    participant Disk as Local Storage
+
+    Dev->>Script: Run with --symbol MSFT --start 2026-06-01
+    activate Script
+    Script->>SDK: Initialize(API_KEY, SECRET_KEY)
+    Script->>SDK: Get option chains (MSFT underlying)
+    SDK->>API: GET /v2/options/contracts?underlying_symbol=MSFT
+    API-->>SDK: Return 800+ contract definitions
+    Script->>SDK: Fetch bar ticks for date range
+    loop For each contract chain
+        SDK->>API: GET /v2/options/bars (Contract symbol, start, end)
+        API-->>SDK: Return bar time series
+    end
+    Script->>Script: Parse quote/expiry columns to standard schema
+    Script->>Disk: Save to data/MSFT/2026/06/2026-06-01.parquet
+    Script-->>Dev: Print download status summary
+    deactivate Script
 ```
 
 ---
 
-### 7. Download Alpaca Options (`download_alpaca_options.py`)
-Comprehensive crawler script to query and download raw option contracts chains from the Alpaca API.
-* **Usage**:
-  ```bash
-  python scripts/download_alpaca_options.py -s MSFT --start 2026-06-01
-  ```
+## 🗂️ Folder Structure
+
+```
+scripts/
+├── config_utilities/        # Configuration scanning and formatting utilities
+│   ├── find_references.py
+│   ├── list_projects_config.py
+│   ├── print_project_json.py
+│   └── search_project_configs.py
+├── README.md                # Documentation folder map
+├── convert_spy_eod.py       # SPY EOD pricing reformatter
+├── download_alpaca_options.py # Comprehensive underlying options crawler
+├── download_bulk_symbols.py # Multi-contract range download utility
+├── download_prefixed_symbols.py # Download ticker listings by prefix
+├── download_symbol.py       # Query single underlying options bar data
+├── list_all_alpaca_symbols.py # Query active options-eligible underlying assets
+├── list_available_symbols.py # Scan local directories for data duration
+├── list_downloadable_symbols.py # Query Alpaca API expiration dates
+├── run_checksum_tests.ps1   # PowerShell checksum tests CI runner
+├── verify_determinism.py    # NFR-03 Determinism validator (Subprocess)
+└── verify_determinism_grpc.py # NFR-03 Determinism validator (gRPC Stream)
+```
 
 ---
 
-### 8. Configuration Utilities (`scripts/config_utilities/`)
-A subfolder containing utility scripts for scanning and indexing project-level configuration schemas:
-* `find_references.py`: Search for config usage references.
-* `list_projects_config.py`: Lists configured project profiles.
-* `print_project_json.py`: Outputs configured environments in JSON format.
-* `search_project_configs.py`: Query config indices matching query keywords.
+## 🔌 API & Integration Contracts
+
+* **Alpaca REST Integration**: Crawler scripts utilize the `alpaca-py` library to query market option chains and bars. Authentication is injected using `APCA_API_KEY_ID` and `APCA_API_SECRET_KEY` environment variables.
+* **Storage Schema**: The final downloaded files are serialized into standardized Parquet columns matching the backtesting engine’s Tick schema requirements.
