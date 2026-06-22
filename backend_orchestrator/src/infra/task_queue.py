@@ -591,7 +591,9 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
             "num_days": len(sorted_dates),
             "duration_seconds": (datetime.utcnow() - started_at).total_seconds(),
             "processed_timesteps": len(pnl_list),
-            "daily_results": daily_results_list
+            "daily_results": daily_results_list,
+            "start_date": job_payload.get("start_date", ""),
+            "end_date": job_payload.get("end_date", "")
         }
 
         # Update database with results
@@ -605,6 +607,12 @@ async def run_backtest_job(ctx, job_payload: dict) -> dict:
                 # Bulk insert RiskSnapshots
                 session.add_all(snapshots)
                 await session.commit()
+
+        # Generate PDF Report immediately
+        try:
+            await generate_report(ctx, job_id)
+        except Exception as report_err:
+            print(f"Failed to generate report for job {job_id}: {report_err}")
 
         # Publish final results to Redis PubSub
         final_payload = {
@@ -685,8 +693,357 @@ async def notify_model_updated(ctx, *args, **kwargs):
     pass
 
 
-async def generate_report(ctx, *args, **kwargs):
-    pass
+async def generate_report(ctx, job_id: str):
+    import re
+    import collections
+    import io
+    from reportlab.lib.pagesizes import letter
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, KeepTogether, PageBreak
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib import colors
+    from reportlab.lib.units import inch
+    from src.infra.db import Strategy
+
+    print(f"[generate_report] Generating PDF strategy report for job: {job_id}")
+    workspace_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+    report_dir = os.path.join(workspace_root, "data", "reports")
+    os.makedirs(report_dir, exist_ok=True)
+    pdf_path = os.path.abspath(os.path.join(report_dir, f"{job_id}.pdf"))
+
+    async with async_session_maker() as session:
+        # Fetch Job & Strategy
+        stmt = (
+            sa.select(BacktestJob, Strategy)
+            .join(Strategy, BacktestJob.strategy_id == Strategy.id)
+            .where(BacktestJob.id == UUID(job_id))
+        )
+        result = await session.execute(stmt)
+        row = result.first()
+        if not row:
+            print(f"[generate_report] Job {job_id} not found.")
+            return None
+        job, strategy = row
+
+        # Fetch Risk Snapshots
+        snapshots_stmt = (
+            sa.select(RiskSnapshot)
+            .where(RiskSnapshot.job_id == UUID(job_id))
+            .order_by(RiskSnapshot.model_id, RiskSnapshot.tick_idx)
+        )
+        snapshots_result = await session.execute(snapshots_stmt)
+        snapshots = snapshots_result.scalars().all()
+
+    # Group snapshots by model_id
+    models_pnl = collections.defaultdict(list)
+    for s in snapshots:
+        models_pnl[s.model_id].append((s.tick_idx, s.pnl))
+
+    # Sort each model's list by tick_idx
+    for m_id in models_pnl:
+        models_pnl[m_id].sort(key=lambda x: x[0])
+
+    # Generate Matplotlib chart
+    chart_bytes = None
+    chart_img_path = os.path.join(report_dir, f"{job_id}_chart.png")
+    if models_pnl:
+        try:
+            import matplotlib
+            matplotlib.use("Agg")
+            import matplotlib.pyplot as plt
+
+            fig, ax = plt.subplots(figsize=(7, 3.5))
+            fig.patch.set_facecolor("#ffffff")
+            ax.set_facecolor("#f8fafc")
+
+            colors_list = ["#0284c7", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"]
+            for idx, (m_id, data) in enumerate(sorted(models_pnl.items())):
+                x = [d[0] for d in data]
+                y = [d[1] for d in data]
+                ax.plot(x, y, label=m_id, color=colors_list[idx % len(colors_list)], linewidth=1.5)
+
+            ax.set_title("P&L Comparison Across Models", fontsize=11, fontweight="bold", color="#1e293b")
+            ax.set_xlabel("Tick Index", fontsize=9, color="#475569")
+            ax.set_ylabel("PnL ($)", fontsize=9, color="#475569")
+            ax.tick_params(colors="#475569", labelsize=8)
+            ax.grid(True, linestyle="--", alpha=0.5, color="#cbd5e1")
+            for spine in ax.spines.values():
+                spine.set_color("#cbd5e1")
+            ax.legend(facecolor="#ffffff", edgecolor="#cbd5e1", fontsize=8)
+            fig.tight_layout()
+
+            img_buf = io.BytesIO()
+            plt.savefig(img_buf, format="png", dpi=300)
+            img_buf.seek(0)
+            chart_bytes = img_buf.getvalue()
+            plt.close()
+
+            with open(chart_img_path, "wb") as f:
+                f.write(chart_bytes)
+        except Exception as chart_err:
+            print(f"[generate_report] Chart generation error: {chart_err}")
+
+    # Build ReportLab Document
+    try:
+        doc = SimpleDocTemplate(
+            pdf_path,
+            pagesize=letter,
+            rightMargin=36,
+            leftMargin=36,
+            topMargin=36,
+            bottomMargin=36
+        )
+        
+        styles = getSampleStyleSheet()
+        
+        PRIMARY_COLOR = colors.HexColor("#0f172a") # Dark Slate
+        LIGHT_BG = colors.HexColor("#f8fafc") # Slate 50
+        BORDER_COLOR = colors.HexColor("#e2e8f0") # Slate 200
+
+        title_style = ParagraphStyle(
+            "ReportTitle",
+            parent=styles["Normal"],
+            fontName="Helvetica-Bold",
+            fontSize=20,
+            textColor=colors.HexColor("#ffffff"),
+            spaceAfter=4
+        )
+        subtitle_style = ParagraphStyle(
+            "ReportSubtitle",
+            parent=styles["Normal"],
+            fontName="Helvetica",
+            fontSize=10,
+            textColor=colors.HexColor("#38bdf8"), # light cyan
+        )
+        h1_style = ParagraphStyle(
+            "SectionHeader",
+            parent=styles["Normal"],
+            fontName="Helvetica-Bold",
+            fontSize=13,
+            textColor=PRIMARY_COLOR,
+            spaceBefore=14,
+            spaceAfter=6
+        )
+        body_style = ParagraphStyle(
+            "BodyTextCustom",
+            parent=styles["Normal"],
+            fontName="Helvetica",
+            fontSize=9,
+            textColor=colors.HexColor("#334155"),
+            leading=12
+        )
+        body_bold = ParagraphStyle(
+            "BodyTextBoldCustom",
+            parent=body_style,
+            fontName="Helvetica-Bold"
+        )
+        th_style = ParagraphStyle(
+            "TableHeaderStyle",
+            parent=styles["Normal"],
+            fontName="Helvetica-Bold",
+            fontSize=9,
+            textColor=colors.HexColor("#ffffff"),
+            alignment=1 # Center
+        )
+        td_style = ParagraphStyle(
+            "TableCellStyle",
+            parent=styles["Normal"],
+            fontName="Helvetica",
+            fontSize=8,
+            textColor=colors.HexColor("#334155"),
+            alignment=1 # Center
+        )
+
+        story = []
+
+        # 1. Header Banner
+        header_content_left = [
+            Paragraph("FACTT PORTFOLIO ANALYTICS", title_style),
+            Paragraph("Deep Hedging & Execution Strategy Backtest Report", subtitle_style)
+        ]
+        header_content_right = [
+            Paragraph(f"<b>Job ID:</b> {job_id}<br/><b>Run Date:</b> {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}", ParagraphStyle("HeaderRight", parent=styles["Normal"], fontName="Helvetica", fontSize=8, textColor=colors.HexColor("#94a3b8"), leading=10, alignment=2))
+        ]
+        
+        header_table = Table([[header_content_left, header_content_right]], colWidths=[4.25*inch, 3.25*inch])
+        header_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, -1), PRIMARY_COLOR),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
+            ('TOPPADDING', (0, 0), (-1, -1), 12),
+            ('LEFTPADDING', (0, 0), (-1, -1), 15),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 15),
+        ]))
+        story.append(header_table)
+        story.append(Spacer(1, 15))
+
+        # Determine start/end date
+        summary = job.summary or {}
+        start_date = summary.get("start_date") or ""
+        end_date = summary.get("end_date") or ""
+        date_pat = re.compile(r'\d{4}-\d{2}-\d{2}|\d{8}')
+        if not start_date and summary.get("daily_results"):
+            dates = []
+            for r in summary["daily_results"]:
+                m = date_pat.search(r.get("file", ""))
+                if m:
+                    dates.append(m.group(0))
+            if dates:
+                dates.sort()
+                start_date = dates[0]
+                end_date = dates[-1]
+
+        # 2. Configuration Metadata Table
+        meta_data = [
+            [
+                Paragraph("<b>Strategy Name:</b>", body_style), Paragraph(strategy.name, body_style),
+                Paragraph("<b>Instrument/Asset:</b>", body_style), Paragraph(strategy.instrument, body_style)
+            ],
+            [
+                Paragraph("<b>Start Date:</b>", body_style), Paragraph(start_date or "N/A", body_style),
+                Paragraph("<b>End Date:</b>", body_style), Paragraph(end_date or "N/A", body_style)
+            ],
+            [
+                Paragraph("<b>Models:</b>", body_style), Paragraph(", ".join(list(models_pnl.keys())) if models_pnl else "baseline", body_style),
+                Paragraph("<b>Status:</b>", body_style), Paragraph(job.status, body_style)
+            ]
+        ]
+        meta_table = Table(meta_data, colWidths=[1.5*inch, 2.25*inch, 1.5*inch, 2.25*inch])
+        meta_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, -1), LIGHT_BG),
+            ('BOX', (0, 0), (-1, -1), 0.5, BORDER_COLOR),
+            ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_COLOR),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+            ('TOPPADDING', (0, 0), (-1, -1), 6),
+            ('LEFTPADDING', (0, 0), (-1, -1), 10),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 10),
+        ]))
+        story.append(Paragraph("Configuration & Metadata", h1_style))
+        story.append(meta_table)
+        story.append(Spacer(1, 10))
+
+        # 3. Performance Metrics Grid
+        final_pnl = summary.get("final_pnl", 0.0)
+        net_pnl = summary.get("net_pnl", 0.0)
+        total_trades = summary.get("total_trades", 0)
+        total_fees = summary.get("total_fees", 0.0)
+        max_dd = summary.get("max_drawdown", 0.0)
+        sharpe = summary.get("daily_sharpe", 0.0)
+
+        def fmt_curr(val):
+            return f"${val:,.2f}"
+
+        metrics_data = [
+            [
+                Paragraph("<b>Net P&L</b>", body_bold),
+                Paragraph("<b>Gross P&L</b>", body_style),
+                Paragraph("<b>Total Fees</b>", body_style)
+            ],
+            [
+                Paragraph(f"<font color={'green' if net_pnl >= 0 else 'red'}><b>{fmt_curr(net_pnl)}</b></font>", body_bold),
+                Paragraph(fmt_curr(final_pnl), body_style),
+                Paragraph(fmt_curr(total_fees), body_style)
+            ],
+            [
+                Paragraph("<b>Sharpe Ratio</b>", body_style),
+                Paragraph("<b>Max Drawdown</b>", body_style),
+                Paragraph("<b>Total Trades</b>", body_style)
+            ],
+            [
+                Paragraph(f"{sharpe:.2f}", body_style),
+                Paragraph(fmt_curr(max_dd), body_style),
+                Paragraph(str(total_trades), body_style)
+            ]
+        ]
+        
+        metrics_table = Table(metrics_data, colWidths=[2.5*inch, 2.5*inch, 2.5*inch])
+        metrics_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), LIGHT_BG),
+            ('BACKGROUND', (0, 2), (-1, 2), LIGHT_BG),
+            ('BOX', (0, 0), (-1, -1), 0.5, BORDER_COLOR),
+            ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_COLOR),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+            ('TOPPADDING', (0, 0), (-1, -1), 6),
+        ]))
+        story.append(Paragraph("Performance Metrics", h1_style))
+        story.append(metrics_table)
+        story.append(Spacer(1, 10))
+
+        # 4. Embedded Chart
+        if os.path.exists(chart_img_path):
+            chart_image = Image(chart_img_path, width=6.5*inch, height=3.25*inch)
+            story.append(Paragraph("P&L Performance Chart", h1_style))
+            story.append(chart_image)
+            story.append(Spacer(1, 10))
+
+        # 5. Daily Breakdown
+        daily_results = summary.get("daily_results", [])
+        if daily_results:
+            story.append(Paragraph("Daily Performance Breakdown", h1_style))
+            
+            table_data = [[
+                Paragraph("Date", th_style),
+                Paragraph("File", th_style),
+                Paragraph("PnL", th_style),
+                Paragraph("Net PnL", th_style),
+                Paragraph("Fees", th_style),
+                Paragraph("Trades", th_style),
+                Paragraph("Rows", th_style)
+            ]]
+            
+            for day in daily_results:
+                day_file = day.get("file", "")
+                m = date_pat.search(day_file)
+                day_date = m.group(0) if m else day.get("date", os.path.basename(day_file).replace(".parquet", ""))
+                
+                table_data.append([
+                    Paragraph(day_date, td_style),
+                    Paragraph(os.path.basename(day_file), td_style),
+                    Paragraph(fmt_curr(day.get("pnl", 0.0)), td_style),
+                    Paragraph(fmt_curr(day.get("net_pnl", 0.0)), td_style),
+                    Paragraph(fmt_curr(day.get("fees", 0.0)), td_style),
+                    Paragraph(str(day.get("trades", 0)), td_style),
+                    Paragraph(str(day.get("rows", 0)), td_style)
+                ])
+            
+            daily_table = Table(table_data, colWidths=[1.1*inch, 1.6*inch, 1.0*inch, 1.0*inch, 0.9*inch, 0.9*inch, 1.0*inch], repeatRows=1)
+            daily_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), PRIMARY_COLOR),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                ('GRID', (0, 0), (-1, -1), 0.5, BORDER_COLOR),
+                ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, LIGHT_BG]),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+                ('TOPPADDING', (0, 0), (-1, -1), 4),
+            ]))
+            story.append(daily_table)
+
+        doc.build(story)
+        print(f"[generate_report] PDF successfully generated at: {pdf_path}")
+    except Exception as pdf_err:
+        print(f"[generate_report] PDF generation error: {pdf_err}")
+    finally:
+        if os.path.exists(chart_img_path):
+            try:
+                os.remove(chart_img_path)
+            except Exception:
+                pass
+
+    # Update BacktestJob with report path
+    try:
+        async with async_session_maker() as session:
+            job_record = await session.get(BacktestJob, UUID(job_id))
+            if job_record:
+                new_summary = dict(job_record.summary or {})
+                new_summary["report_path"] = f"/data/reports/{job_id}.pdf"
+                job_record.summary = new_summary
+                await session.commit()
+    except Exception as db_err:
+        print(f"[generate_report] DB update error: {db_err}")
+
+    return pdf_path
 
 
 class WorkerSettings:

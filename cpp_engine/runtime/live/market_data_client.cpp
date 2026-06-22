@@ -2,6 +2,7 @@
 
 #include "market_data_client.hpp"
 #include "engine_main.hpp"
+#include "../../utilities/thread_affinity.hpp"
 #include <cstdlib>
 #include <zmq.hpp>
 
@@ -17,6 +18,7 @@ MarketDataClient::MarketDataClient(MainEngine* main_engine) : main_engine_(main_
 MarketDataClient::~MarketDataClient() { close(); }
 
 void MarketDataClient::run_sub_thread() {
+    utilities::pin_thread_to_core("ZMQ_SUB_CPU_CORE", "MarketDataClient SUB");
     zmq::context_t ctx(1);
     zmq::socket_t sub(ctx, ZMQ_SUB);
     sub.connect(pub_addr_);

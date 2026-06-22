@@ -4,7 +4,9 @@ from __future__ import annotations
 
 from typing import Any, Dict, List
 
-from fastapi import APIRouter, Body, Query, status
+from fastapi import APIRouter, Body, Query, status, HTTPException
+from fastapi.responses import FileResponse
+import os
 
 from src.utils.files import backtest_duration, inspect_parquet_to_dict, list_files, list_strategies
 from src.services.backtest import BacktestService
@@ -78,3 +80,41 @@ async def api_run_backtest(
 )
 async def api_backtest_cancel() -> Dict[str, Any]:
     return await BacktestService.cancel_backtest()
+
+
+@router.get(
+    "/api/backtest/jobs/{job_id}/report",
+    tags=["Backtest Execution"],
+    summary="Get Backtest PDF Report",
+    description="Retrieve the PDF strategy report for a completed backtest job. If the report doesn't exist yet, it will be generated on the fly.",
+)
+async def api_get_backtest_report(job_id: str):
+    workspace_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+    pdf_path = os.path.abspath(os.path.join(workspace_root, "data", "reports", f"{job_id}.pdf"))
+
+    if not os.path.exists(pdf_path):
+        from src.infra.task_queue import generate_report
+        from src.infra.db import async_session_maker, BacktestJob
+        from uuid import UUID
+
+        async with async_session_maker() as session:
+            job = await session.get(BacktestJob, UUID(job_id))
+            if not job:
+                raise HTTPException(status_code=404, detail="Backtest job not found")
+            if job.status != "COMPLETE":
+                raise HTTPException(status_code=400, detail=f"Backtest job report cannot be generated because job status is {job.status}")
+        
+        try:
+            generated_path = await generate_report(None, job_id)
+            if not generated_path or not os.path.exists(generated_path):
+                raise HTTPException(status_code=500, detail="Failed to generate PDF report")
+        except HTTPException:
+            raise
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error generating report: {str(e)}")
+
+    return FileResponse(
+        path=pdf_path,
+        media_type="application/pdf",
+        filename=f"strategy_report_{job_id}.pdf"
+    )

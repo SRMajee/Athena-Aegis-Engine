@@ -179,7 +179,7 @@ void MainEngine::unsubscribe_chains(const std::string& strategy_name) {
 }
 
 auto MainEngine::get_portfolio(const std::string& portfolio_name) -> utilities::PortfolioData* {
-    return portfolio_structure_->get_portfolio(portfolio_name);
+    return portfolio_structure_->get_or_create_portfolio(portfolio_name);
 }
 
 auto MainEngine::get_all_portfolio_names() const -> std::vector<std::string> {

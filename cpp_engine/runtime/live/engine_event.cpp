@@ -8,6 +8,7 @@
 #include "../../core/engine_option_strategy.hpp"
 #include "../../utilities/event.hpp"
 #include "../../utilities/intent.hpp"
+#include "../../utilities/thread_affinity.hpp"
 #include "engine_main.hpp"
 #include <chrono>
 #include <format>
@@ -439,6 +440,7 @@ void EventEngine::run_strategy(const std::stop_token& st) {
 }
 
 void EventEngine::run(const std::stop_token& st) {
+    utilities::pin_thread_to_core("EXEC_LOOP_CPU_CORE", "EventEngine Run");
     while (!st.stop_requested() && active_) {
         utilities::Event* event_ptr = nullptr;
         {

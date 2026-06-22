@@ -35,10 +35,10 @@ class PortfolioStructure {
     utilities::PortfolioData* get_portfolio(const std::string& portfolio_name);
     std::vector<std::string> get_all_portfolio_names() const;
     const utilities::ContractData* get_contract(const std::string& symbol) const;
+    utilities::PortfolioData* get_or_create_portfolio(const std::string& portfolio_name);
     std::vector<utilities::ContractData> get_all_contracts() const;
 
   protected:
-    utilities::PortfolioData* get_or_create_portfolio(const std::string& portfolio_name);
     void process_contract(const utilities::ContractData& contract, bool is_option);
 
     std::unordered_map<std::string, std::unique_ptr<utilities::PortfolioData>> portfolios_;

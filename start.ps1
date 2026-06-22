@@ -45,14 +45,28 @@ Write-Host ""
 Write-Host "      Waiting 3s for containers to be ready..." -ForegroundColor Gray
 Start-Sleep -Seconds 3
 
-# -- 2. C++ gRPC Engine --------------------------------------------------------
-Write-Host "[2/5] Opening window: C++ gRPC Engine (:50051)..." -ForegroundColor Yellow
+# -- 2. C++ Engine Binaries (Gateway, Market Data, gRPC Engine) -----------------
+Write-Host "[2/5] Opening windows: C++ Engine Helper processes..." -ForegroundColor Yellow
 $CppBuild = Join-Path $Root "cpp_engine\build"
+
+Start-Service `
+    -Title    "AFFINITY - C++ entry_gateway" `
+    -WorkDir  $CppBuild `
+    -Command  "`$env:PATH = 'C:\msys64\mingw64\bin;' + `$env:PATH; .\entry_gateway.exe"
+
+Start-Service `
+    -Title    "AFFINITY - C++ entry_market_data" `
+    -WorkDir  $CppBuild `
+    -Command  "`$env:PATH = 'C:\msys64\mingw64\bin;' + `$env:PATH; .\entry_market_data.exe"
+
+Start-Sleep -Seconds 1
+
+Write-Host "      Opening window: C++ gRPC Engine (:50051)..." -ForegroundColor Yellow
 Start-Service `
     -Title    "AFFINITY - C++ gRPC Engine :50051" `
     -WorkDir  $CppBuild `
     -Command  "`$env:PATH = 'C:\msys64\mingw64\bin;' + `$env:PATH; .\entry_live_grpc.exe"
-Write-Host "      [OK] Window opened" -ForegroundColor Green
+Write-Host "      [OK] Windows opened" -ForegroundColor Green
 
 Start-Sleep -Seconds 2   # let gRPC bind before FastAPI connects
 

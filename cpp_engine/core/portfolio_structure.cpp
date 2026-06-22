@@ -69,10 +69,7 @@ void PortfolioStructure::process_contract(const utilities::ContractData& contrac
                          ? *contract.trading_class
                          : prefix)
                   : portfolio_name_for_underlying(prefix);
-    utilities::PortfolioData* port = get_portfolio(portfolio_name);
-    if (port == nullptr) {
-        return;
-    }
+    utilities::PortfolioData* port = get_or_create_portfolio(portfolio_name);
     if (is_option) {
         port->add_option(contract);
     } else {

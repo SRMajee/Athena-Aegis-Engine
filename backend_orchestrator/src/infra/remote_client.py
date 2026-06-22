@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 from typing import Any, Dict, List
 
+from google.protobuf.json_format import MessageToDict
 import grpc.aio
 
 from src.proto import otrader_engine_pb2 as pb2
@@ -166,10 +168,14 @@ class EngineClient:
     async def get_strategy_holdings(self) -> Dict[str, Any]:
         resp = await self._stub.GetStrategyHoldings(pb2.Empty())
         holdings: Dict[str, Any] = {}
-        for name, json_str in resp.holdings.items():
+        for name, data_str in resp.holdings.items():
             try:
-                holdings[name] = json.loads(json_str) if json_str else {}
-            except json.JSONDecodeError:
+                raw_bytes = data_str.encode('utf-8', errors='surrogateescape') if isinstance(data_str, str) else data_str
+                msg = pb2.StrategyHoldingMsg()
+                msg.ParseFromString(raw_bytes)
+                holdings[name] = MessageToDict(msg, preserving_proto_field_name=True)
+            except Exception as e:
+                logging.getLogger("uvicorn").error(f"Error parsing holding for {name}: {e}")
                 holdings[name] = {}
         return {"holdings": holdings}
 
@@ -249,3 +255,29 @@ class EngineClient:
         except Exception:
             # Connection dropped or stream ended
             return
+
+    async def send_command(self, action: str, payload: dict) -> Dict[str, Any]:
+        """Send manual commands (e.g. order, cancel) via the streaming SendCommand RPC."""
+        import uuid
+        command_id = str(uuid.uuid4())
+
+        async def request_generator():
+            yield pb2.CommandRequest(
+                command_id=command_id,
+                action=action,
+                payload_json=json.dumps(payload),
+            )
+
+        try:
+            resp = await self._stub.SendCommand(request_generator())
+            return {
+                "command_id": resp.command_id,
+                "success": resp.success,
+                "error_message": resp.error_message,
+            }
+        except Exception as e:
+            return {
+                "command_id": command_id,
+                "success": False,
+                "error_message": str(e),
+            }

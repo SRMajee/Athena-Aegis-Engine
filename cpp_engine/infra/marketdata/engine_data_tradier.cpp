@@ -337,7 +337,12 @@ void MarketDataEngine::start_market_data_update() {
         }
     }
     if (tradier_base_url_.empty()) {
-        tradier_base_url_ = kTradierBaseUrl;
+        const char* env_url = getenv("TRADIER_BASE_URL");
+        if (env_url != nullptr) {
+            tradier_base_url_ = env_url;
+        } else {
+            tradier_base_url_ = kTradierBaseUrl;
+        }
     }
     started_ = true;
     poll_thread_ = std::jthread([this](const std::stop_token& st) { poll_market_data_loop(st); });

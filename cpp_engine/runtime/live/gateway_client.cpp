@@ -2,6 +2,7 @@
 
 #include "gateway_client.hpp"
 #include "engine_main.hpp"
+#include "../../utilities/thread_affinity.hpp"
 #include <cstdlib>
 #include <zmq.hpp>
 
@@ -19,6 +20,7 @@ GatewayClient::GatewayClient(MainEngine* main_engine) : main_engine_(main_engine
 GatewayClient::~GatewayClient() { close(); }
 
 void GatewayClient::run_sub_thread() {
+    utilities::pin_thread_to_core("ZMQ_SUB_CPU_CORE", "GatewayClient SUB");
     zmq::context_t ctx(1);
     zmq::socket_t sub(ctx, ZMQ_SUB);
     sub.connect(pub_addr_);

@@ -53,8 +53,10 @@ static bool load_torch_inference_dll() {
 #include "../../strategy/strategy_registry.hpp"
 #include "../../strategy/template.hpp"
 #include "../../utilities/event.hpp"
+#include "../../utilities/thread_affinity.hpp"
 #include "../backtest/engine_backtest.hpp"
 #include "engine_db_pg.hpp"
+#include <nlohmann/json.hpp>
 #include <fstream>
 #include <ctime>
 #include <filesystem>
@@ -257,6 +259,7 @@ auto GrpcLiveEngineService::StreamLogs(::grpc::ServerContext* context,
                                        const ::otrader::Empty* /*request*/,
                                        ::grpc::ServerWriter<::otrader::LogLine>* writer)
     -> ::grpc::Status {
+    utilities::pin_thread_to_core("GRPC_IO_CPU_CORE", "gRPC StreamLogs");
     if ((main_engine_ == nullptr) || (writer == nullptr)) {
         return ::grpc::Status(::grpc::StatusCode::FAILED_PRECONDITION, "main engine is null");
     }
@@ -298,6 +301,7 @@ auto GrpcLiveEngineService::StreamLogs(::grpc::ServerContext* context,
 auto GrpcLiveEngineService::StreamStrategyUpdates(
     ::grpc::ServerContext* context, const ::otrader::Empty* /*request*/,
     ::grpc::ServerWriter<::otrader::StrategyUpdate>* writer) -> ::grpc::Status {
+    utilities::pin_thread_to_core("GRPC_IO_CPU_CORE", "gRPC StreamStrategyUpdates");
     if ((main_engine_ == nullptr) || (writer == nullptr)) {
         return ::grpc::Status(::grpc::StatusCode::FAILED_PRECONDITION, "main engine is null");
     }
@@ -586,6 +590,7 @@ auto GrpcLiveEngineService::StartBacktest(
     ::grpc::ServerContext* context,
     const ::otrader::StreamRequest* request,
     ::grpc::ServerWriter<::otrader::EngineStateUpdate>* writer) -> ::grpc::Status {
+    utilities::pin_thread_to_core("GRPC_IO_CPU_CORE", "gRPC StartBacktest");
 
     if ((request == nullptr) || (writer == nullptr)) {
         return ::grpc::Status(::grpc::StatusCode::INVALID_ARGUMENT, "request or writer is null");
@@ -930,6 +935,7 @@ auto GrpcLiveEngineService::SendCommand(
     ::grpc::ServerContext* /*context*/,
     ::grpc::ServerReader<::otrader::CommandRequest>* reader,
     ::otrader::CommandAck* response) -> ::grpc::Status {
+    utilities::pin_thread_to_core("GRPC_IO_CPU_CORE", "gRPC SendCommand");
 
     if ((reader == nullptr) || (response == nullptr)) {
         return ::grpc::Status(::grpc::StatusCode::INVALID_ARGUMENT, "reader or response is null");
@@ -937,13 +943,67 @@ auto GrpcLiveEngineService::SendCommand(
 
     ::otrader::CommandRequest cmd;
     std::string last_cmd_id;
+    bool all_ok = true;
+    std::string err_msg;
+
     while (reader->Read(&cmd)) {
         last_cmd_id = cmd.command_id();
-        // Placeholder scaffolding for dynamic commands (pause, resume, stop, model swap)
+        std::string action = cmd.action();
+        std::string payload_json = cmd.payload_json();
+
+        try {
+            if (action == "order" || action == "send_order") {
+                nlohmann::json j = nlohmann::json::parse(payload_json);
+                utilities::OrderRequest req;
+                req.symbol = j.value("symbol", "");
+                req.exchange = utilities::from_string_exchange(j.value("exchange", "SMART"));
+                req.direction = utilities::from_string_direction(j.value("direction", "LONG"));
+                req.type = utilities::from_string_ordertype(j.value("type", "LIMIT"));
+                req.volume = j.value("volume", 0.0);
+                req.price = j.value("price", 0.0);
+                req.reference = j.value("reference", "");
+                if (j.contains("trading_class") && !j["trading_class"].is_null()) {
+                    req.trading_class = j.value("trading_class", "");
+                }
+                req.is_combo = j.value("is_combo", false);
+
+                if (main_engine_ != nullptr) {
+                    main_engine_->send_order(req);
+                } else {
+                    all_ok = false;
+                    err_msg = "Main engine is not running";
+                }
+            } else if (action == "cancel" || action == "cancel_order") {
+                nlohmann::json j = nlohmann::json::parse(payload_json);
+                utilities::CancelRequest req;
+                req.orderid = j.value("orderid", "");
+                req.symbol = j.value("symbol", "");
+                req.exchange = utilities::from_string_exchange(j.value("exchange", "LOCAL"));
+                req.is_combo = j.value("is_combo", false);
+
+                if (main_engine_ != nullptr) {
+                    main_engine_->cancel_order(req);
+                } else {
+                    all_ok = false;
+                    err_msg = "Main engine is not running";
+                }
+            } else {
+                std::printf("[gRPC SendCommand] Ignored unknown action: %s\n", action.c_str());
+                std::fflush(stdout);
+            }
+        } catch (const std::exception& e) {
+            all_ok = false;
+            err_msg = std::string("JSON parse error: ") + e.what();
+            std::printf("[gRPC SendCommand] Error processing action %s: %s\n", action.c_str(), e.what());
+            std::fflush(stdout);
+        }
     }
 
     response->set_command_id(last_cmd_id);
-    response->set_success(true);
+    response->set_success(all_ok);
+    if (!all_ok) {
+        response->set_error_message(err_msg);
+    }
     return ::grpc::Status::OK;
 }
 
