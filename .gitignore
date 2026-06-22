@@ -41,5 +41,6 @@ backend_orchestrator/.vscode/
 backend_orchestrator/*.png
 
 # Data Files & Datasets
-data/
+data/*
+!data/README.md
 backend_orchestrator/data/
