@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTrader Institutional Terminal Mockup</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Geist & Geist Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Geist', 'sans-serif'],
+            mono: ['Geist Mono', 'monospace'],
+          },
+          colors: {
+            bg: '#06070b',
+            surface: '#101218',
+            raised: '#141720',
+            borderSubtle: '#1f242f',
+            borderStrong: '#272f3d',
+            textPrimary: '#e5e7eb',
+            textMuted: '#6b7280',
+            textSoft: '#4b5563',
+            success: '#22c55e',
+            danger: '#ef4444',
+            warning: '#f59e0b',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #06070b;
+      color: #e5e7eb;
+      font-family: 'Geist', sans-serif;
+    }
+    
+    /* Numeric Font Utility */
+    .numeric {
+      font-family: 'Geist Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #06070b;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f242f;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #272f3d;
+    }
+
+    /* Terminal border styles */
+    .border-subtle {
+      border: 1px solid #1f242f;
+    }
+    .border-strong {
+      border: 1px solid #272f3d;
+    }
+    .panel {
+      background-color: transparent;
+      border: 1px solid #1f242f;
+    }
+    
+    /* Table terminals */
+    .table-terminal {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .table-terminal th {
+      border-bottom: 1px solid #1f242f;
+      padding: 6px 8px;
+      color: #6b7280;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      text-align: left;
+    }
+    .table-terminal td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(31, 36, 47, 0.4);
+    }
+    .table-row-hover:hover {
+      background-color: #101218;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen overflow-hidden flex flex-col">
+
+  <!-- Main Container -->
+  <div class="flex-1 flex min-h-0 relative">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="w-44 flex-shrink-0 border-r border-borderSubtle bg-surface flex flex-col justify-between py-4 px-3">
+      <div>
+        <!-- Brand -->
+        <div class="mb-4 px-2 text-center">
+          <div class="text-base font-semibold uppercase tracking-wide text-textPrimary">FACTT</div>
+          <div class="text-[10px] text-textMuted uppercase tracking-wider">Trading System</div>
+        </div>
+
+        <!-- Connection / Status Blocks -->
+        <div class="mb-4 space-y-2 border-y border-borderSubtle py-3 text-xs text-textSoft">
+          <div class="flex items-center gap-2">
+            <span class="inline-block h-2 w-2 rounded-full bg-success"></span>
+            <span class="font-semibold tracking-wide text-textPrimary">Live Engine</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span id="ibkr-dot" class="inline-block h-2 w-2 rounded-full bg-success"></span>
+              <span class="font-semibold tracking-wide text-textPrimary">IBKR</span>
+            </div>
+            <button onclick="toggleConnection('ibkr')" class="inline-flex h-4 w-4 items-center justify-center border border-borderSubtle text-[9px] text-textPrimary hover:border-borderStrong hover:bg-raised">⏻</button>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span id="mkt-dot" class="inline-block h-2 w-2 rounded-full bg-success"></span>
+              <span class="font-semibold tracking-wide text-textPrimary">Market Data</span>
+            </div>
+            <button onclick="toggleConnection('mkt')" class="inline-flex h-4 w-4 items-center justify-center border border-borderSubtle text-[9px] text-textPrimary hover:border-borderStrong hover:bg-raised">⏻</button>
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="space-y-0.5">
+          <button onclick="switchTab('strategy')" id="tab-btn-strategy" class="w-full flex items-center justify-start px-3 py-2 text-xs font-medium uppercase tracking-wider text-left transition-colors border-l-2 border-borderStrong text-textPrimary bg-raised">
+            Strategy Manager
+          </button>
+          <button onclick="switchTab('backtest')" id="tab-btn-backtest" class="w-full flex items-center justify-start px-3 py-2 text-xs font-medium uppercase tracking-wider text-left transition-colors border-l-2 border-transparent text-textSoft hover:bg-surface hover:text-textPrimary">
+            Backtest
+          </button>
+          <button onclick="switchTab('orders')" id="tab-btn-orders" class="w-full flex items-center justify-start px-3 py-2 text-xs font-medium uppercase tracking-wider text-left transition-colors border-l-2 border-transparent text-textSoft hover:bg-surface hover:text-textPrimary">
+            Orders & Trades
+          </button>
+          <button onclick="switchTab('database')" id="tab-btn-database" class="w-full flex items-center justify-start px-3 py-2 text-xs font-medium uppercase tracking-wider text-left transition-colors border-l-2 border-transparent text-textSoft hover:bg-surface hover:text-textPrimary">
+            Database
+          </button>
+        </nav>
+      </div>
+      
+      <div class="text-[10px] text-textSoft text-center">
+        v2.0.0-PRO
+      </div>
+    </aside>
+
+    <!-- Content Area (Remaining Width) -->
+    <main class="flex-1 flex flex-col min-h-0 bg-bg p-3 relative">
+      
+      <!-- Top Title Panel -->
+      <div class="pb-2 border-b border-borderSubtle mb-3 flex items-center justify-between">
+        <h1 id="page-title" class="text-base font-semibold uppercase tracking-wider text-textPrimary">Strategy Manager</h1>
+        <div class="text-xs numeric text-textMuted">SYS_TIME: <span id="system-time">--:--:--</span></div>
+      </div>
+
+      <!-- Tab View: Strategy Manager -->
+      <div id="view-strategy" class="flex-1 flex flex-col min-h-0 space-y-3">
+        <div class="grid grid-cols-3 gap-3">
+          <!-- Active Strategies Panel -->
+          <div class="col-span-2 panel p-3 flex flex-col min-h-[300px]">
+            <h2 class="text-xs uppercase tracking-widest text-textMuted mb-2">Registered Strategies</h2>
+            <div class="flex-1 overflow-auto">
+              <table class="table-terminal">
+                <thead>
+                  <tr>
+                    <th>Strategy Name</th>
+                    <th>Instrument</th>
+                    <th>Parameters</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-row-hover">
+                    <td>BS_Hedge_ETH_01</td>
+                    <td class="numeric">ETHUSD-OPT</td>
+                    <td class="numeric text-textSoft">{"strike":3200,"vol":0.65}</td>
+                    <td><span class="px-1 text-[10px] bg-success/20 text-success uppercase">Running</span></td>
+                    <td class="text-right space-x-1">
+                      <button class="px-1.5 py-0.5 border border-borderSubtle text-[10px] uppercase text-textMuted hover:border-borderStrong hover:bg-raised">Stop</button>
+                      <button class="px-1.5 py-0.5 border border-danger/40 text-[10px] uppercase text-danger hover:bg-danger/10">Delete</button>
+                    </td>
+                  </tr>
+                  <tr class="table-row-hover">
+                    <td>ML_LSTM_BTC_Hedge</td>
+                    <td class="numeric">BTCUSD-OPT</td>
+                    <td class="numeric text-textSoft">{"model":"lstm_v3","cvar_limit":0.95}</td>
+                    <td><span class="px-1 text-[10px] bg-warning/20 text-warning uppercase">Initialized</span></td>
+                    <td class="text-right space-x-1">
+                      <button class="px-1.5 py-0.5 border border-borderSubtle text-[10px] uppercase text-textPrimary hover:border-borderStrong hover:bg-raised">Start</button>
+                      <button class="px-1.5 py-0.5 border border-danger/40 text-[10px] uppercase text-danger hover:bg-danger/10">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <!-- Add Strategy Form -->
+          <div class="panel p-3">
+            <h2 class="text-xs uppercase tracking-widest text-textMuted mb-3">Add Strategy</h2>
+            <form onsubmit="event.preventDefault();" class="space-y-3">
+              <div>
+                <label class="block text-[10px] uppercase tracking-wider text-textMuted mb-1">Name</label>
+                <input type="text" placeholder="e.g. BS_Hedge_02" class="w-full h-8 px-2 bg-surface border border-borderSubtle text-xs text-textPrimary focus:border-borderStrong outline-none">
+              </div>
+              <div>
+                <label class="block text-[10px] uppercase tracking-wider text-textMuted mb-1">Class Type</label>
+                <select class="w-full h-8 px-2 bg-surface border border-borderSubtle text-xs text-textPrimary focus:border-borderStrong outline-none">
+                  <option>BlackScholesDeltaHedge</option>
+                  <option>LSTMAgentHedge</option>
+                  <option>FFNNAgentHedge</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] uppercase tracking-wider text-textMuted mb-1">Instrument/Data</label>
+                <select class="w-full h-8 px-2 bg-surface border border-borderSubtle text-xs text-textPrimary focus:border-borderStrong outline-none">
+                  <option>ETH-USD-OPT-2026</option>
+                  <option>BTC-USD-OPT-2026</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] uppercase tracking-wider text-textMuted mb-1">Parameters (JSON)</label>
+                <textarea rows="3" class="w-full p-2 bg-surface border border-borderSubtle text-xs text-textPrimary focus:border-borderStrong outline-none numeric">{"strike": 3000, "iv_mode": "mid"}</textarea>
+              </div>
+              <button type="button" class="w-full h-8 border border-borderStrong bg-raised hover:bg-surface text-xs text-textPrimary uppercase tracking-wider">Register Strategy</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab View: Backtest -->
+      <div id="view-backtest" class="hidden flex-1 flex flex-col lg:flex-row gap-3 min-h-0">
+        <!-- Configuration Form (Left Column, ~30%) -->
+        <div class="w-full lg:w-[28%] flex-shrink-0 panel p-3 space-y-3">
+          <h2 class="text-xs uppercase tracking-widest text-textMuted">Backtest Configuration</h2>
+          
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <label class="text-[10px] uppercase tracking-wider text-textMuted">Symbol</label>
+              <select id="bt-symbol" class="w-36 h-7 bg-surface border border-borderSubtle px-2 outline-none">
+                <option value="ETH-USD-202606">ETH-USD-202606</option>
+                <option value="BTC-USD-202606">BTC-USD-202606</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between">
+              <label class="text-[10px] uppercase tracking-wider text-textMuted">Strategy</label>
+              <select id="bt-strategy" class="w-36 h-7 bg-surface border border-borderSubtle px-2 outline-none">
+                <option value="BlackScholesBaseline">BlackScholesBaseline</option>
+                <option value="LSTMAgentHedge">LSTMAgentHedge</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between">
+              <label class="text-[10px] uppercase tracking-wider text-textMuted">Start Date</label>
+              <input type="date" value="2026-06-01" class="w-36 h-7 bg-surface border border-borderSubtle px-2 outline-none">
+            </div>
+            <div class="flex items-center justify-between">
+              <label class="text-[10px] uppercase tracking-wider text-textMuted">End Date</label>
+              <input type="date" value="2026-06-10" class="w-36 h-7 bg-surface border border-borderSubtle px-2 outline-none">
+            </div>
+            <div class="flex items-center justify-between">
+              <label class="text-[10px] uppercase tracking-wider text-textMuted">Fee Rate (bps)</label>
+              <input id="bt-fee" type="number" step="0.1" value="3.5" class="w-36 h-7 bg-surface border border-borderSubtle px-2 outline-none numeric">
+            </div>
+            <div class="flex items-center justify-between">
+              <label class="text-[10px] uppercase tracking-wider text-textMuted">Slippage (bps)</label>
+              <input id="bt-slippage" type="number" step="0.5" value="5.0" class="w-36 h-7 bg-surface border border-borderSubtle px-2 outline-none numeric">
+            </div>
+            <div class="flex items-center justify-between">
+              <label class="text-[10px] uppercase tracking-wider text-textMuted">Risk Free Rate</label>
+              <input type="number" step="0.01" value="0.05" class="w-36 h-7 bg-surface border border-borderSubtle px-2 outline-none numeric">
+            </div>
+            <div class="flex items-center justify-between">
+              <label class="text-[10px] uppercase tracking-wider text-textMuted">IV Mode</label>
+              <div class="flex bg-surface border border-borderSubtle p-0.5 gap-0.5 w-36">
+                <button onclick="selectIvMode('mid')" id="iv-mid" class="flex-1 text-[10px] py-0.5 bg-raised text-textPrimary uppercase">Mid</button>
+                <button onclick="selectIvMode('bid')" id="iv-bid" class="flex-1 text-[10px] py-0.5 text-textSoft uppercase">Bid</button>
+                <button onclick="selectIvMode('ask')" id="iv-ask" class="flex-1 text-[10px] py-0.5 text-textSoft uppercase">Ask</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2 flex gap-2">
+            <button onclick="startBacktestSim()" id="btn-start-backtest" class="flex-1 h-8 bg-success/20 border border-success/60 text-success text-xs font-semibold uppercase tracking-wider hover:bg-success/30">Start Backtest</button>
+            <button onclick="stopBacktestSim()" id="btn-stop-backtest" disabled class="flex-1 h-8 bg-danger/10 border border-danger/30 text-danger/50 text-xs font-semibold uppercase tracking-wider cursor-not-allowed">Stop</button>
+          </div>
+        </div>
+
+        <!-- Interactive Telemetry Results (Right Column, ~72%) -->
+        <div class="flex-1 flex flex-col space-y-3 min-h-0 overflow-y-auto">
+          <!-- Status Banner -->
+          <div id="bt-status-banner" class="panel px-3 py-2 text-center text-xs uppercase tracking-widest text-textMuted bg-surface border-borderSubtle">
+            Idle — Configure and press Start
+          </div>
+
+          <!-- Quick Metrics Grid -->
+          <div class="grid grid-cols-4 lg:grid-cols-6 gap-2">
+            <div class="panel p-2">
+              <p class="text-[9px] uppercase tracking-wider text-textMuted">Final PnL</p>
+              <p id="metric-final-pnl" class="numeric text-sm font-semibold text-textPrimary">—</p>
+            </div>
+            <div class="panel p-2">
+              <p class="text-[9px] uppercase tracking-wider text-textMuted">Net PnL</p>
+              <p id="metric-net-pnl" class="numeric text-sm font-semibold text-textPrimary">—</p>
+            </div>
+            <div class="panel p-2">
+              <p class="text-[9px] uppercase tracking-wider text-textMuted">Sharpe (Daily)</p>
+              <p id="metric-sharpe" class="numeric text-sm font-semibold text-textPrimary">—</p>
+            </div>
+            <div class="panel p-2">
+              <p class="text-[9px] uppercase tracking-wider text-textMuted">Max Drawdown</p>
+              <p id="metric-max-dd" class="numeric text-sm font-semibold text-textPrimary">—</p>
+            </div>
+            <div class="panel p-2">
+              <p class="text-[9px] uppercase tracking-wider text-textMuted">Total Trades</p>
+              <p id="metric-trades" class="numeric text-sm font-semibold text-textPrimary">—</p>
+            </div>
+            <div class="panel p-2">
+              <p class="text-[9px] uppercase tracking-wider text-textMuted">Ticks Processed</p>
+              <p id="metric-ticks" class="numeric text-sm font-semibold text-textPrimary">—</p>
+            </div>
+          </div>
+
+          <!-- Real-time Chart Canvas -->
+          <div class="panel p-3 flex flex-col min-h-[300px] h-[340px]">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xs uppercase tracking-widest text-textMuted">Live Equity & Greeks Streaming</h3>
+              <div class="text-[10px] uppercase text-textSoft">Rendering cap: 60Hz</div>
+            </div>
+            <div class="flex-1 relative">
+              <canvas id="liveChart" class="w-full h-full"></canvas>
+            </div>
+          </div>
+
+          <!-- Daily Summaries -->
+          <div class="panel p-3">
+            <h3 class="text-xs uppercase tracking-widest text-textMuted mb-2">Daily Results</h3>
+            <div class="overflow-x-auto">
+              <table class="table-terminal">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>PnL</th>
+                    <th>Net PnL</th>
+                    <th>Fees</th>
+                    <th>Trades</th>
+                    <th>Rows</th>
+                  </tr>
+                </thead>
+                <tbody id="bt-daily-tbody">
+                  <tr>
+                    <td colspan="6" class="text-center text-textSoft py-4 uppercase tracking-wider">No backtest run completed</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab View: Orders & Trades -->
+      <div id="view-orders" class="hidden flex-1 flex flex-col space-y-3 min-h-0">
+        <!-- Segmented Filter buttons -->
+        <div class="flex bg-surface border border-borderSubtle p-0.5 gap-0.5 w-60">
+          <button onclick="filterOrders('all')" id="btn-ord-all" class="flex-1 text-[10px] py-1 bg-raised text-textPrimary uppercase font-semibold">All</button>
+          <button onclick="filterOrders('orders')" id="btn-ord-orders" class="flex-1 text-[10px] py-1 text-textSoft uppercase font-semibold">Orders</button>
+          <button onclick="filterOrders('trades')" id="btn-ord-trades" class="flex-1 text-[10px] py-1 text-textSoft uppercase font-semibold">Trades</button>
+        </div>
+
+        <!-- Orders Table -->
+        <div id="orders-panel" class="panel p-3 flex-1 flex flex-col min-h-0 overflow-auto">
+          <h2 class="text-xs uppercase tracking-widest text-textMuted mb-2">Order Execution Logs</h2>
+          <div class="flex-1 overflow-auto">
+            <table class="table-terminal">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Order ID</th>
+                  <th>Strategy</th>
+                  <th>Symbol</th>
+                  <th>Direction</th>
+                  <th class="text-right">Price</th>
+                  <th class="text-right">Volume</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-row-hover">
+                  <td class="numeric text-textSoft">01:45:12.302</td>
+                  <td class="numeric">ORD_847192</td>
+                  <td>BS_Hedge_ETH_01</td>
+                  <td class="numeric">ETH-USD-C-3200</td>
+                  <td class="text-success uppercase font-semibold">BUY</td>
+                  <td class="numeric text-right">45.20</td>
+                  <td class="numeric text-right">10.00</td>
+                  <td><span class="text-success">FILLED</span></td>
+                </tr>
+                <tr class="table-row-hover">
+                  <td class="numeric text-textSoft">01:40:02.115</td>
+                  <td class="numeric">ORD_847185</td>
+                  <td>BS_Hedge_ETH_01</td>
+                  <td class="numeric">ETH-USD-C-3200</td>
+                  <td class="text-danger uppercase font-semibold">SELL</td>
+                  <td class="numeric text-right">42.50</td>
+                  <td class="numeric text-right">5.00</td>
+                  <td><span class="text-success">FILLED</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Trades Table -->
+        <div id="trades-panel" class="panel p-3 flex-1 flex flex-col min-h-0 overflow-auto">
+          <h2 class="text-xs uppercase tracking-widest text-textMuted mb-2">Trade Execution Logs</h2>
+          <div class="flex-1 overflow-auto">
+            <table class="table-terminal">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Trade ID</th>
+                  <th>Strategy</th>
+                  <th>Symbol</th>
+                  <th>Direction</th>
+                  <th class="text-right">Execution Price</th>
+                  <th class="text-right">Volume</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-row-hover">
+                  <td class="numeric text-textSoft">01:45:12.310</td>
+                  <td class="numeric">TRD_950183</td>
+                  <td>BS_Hedge_ETH_01</td>
+                  <td class="numeric">ETH-USD-C-3200</td>
+                  <td class="text-success uppercase font-semibold">BUY</td>
+                  <td class="numeric text-right">45.20</td>
+                  <td class="numeric text-right">10.00</td>
+                </tr>
+                <tr class="table-row-hover">
+                  <td class="numeric text-textSoft">01:40:02.122</td>
+                  <td class="numeric">TRD_950176</td>
+                  <td>BS_Hedge_ETH_01</td>
+                  <td class="numeric">ETH-USD-C-3200</td>
+                  <td class="text-danger uppercase font-semibold">SELL</td>
+                  <td class="numeric text-right">42.50</td>
+                  <td class="numeric text-right">5.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab View: Database -->
+      <div id="view-database" class="hidden flex-1 flex flex-col space-y-3 min-h-0">
+        <div class="grid grid-cols-4 gap-3 min-h-0 flex-1">
+          <!-- Selection Pane -->
+          <div class="panel p-3 space-y-3">
+            <h2 class="text-xs uppercase tracking-widest text-textMuted">Historical Runs</h2>
+            <div class="space-y-1">
+              <button class="w-full text-left text-xs p-2 bg-raised border border-borderStrong text-textPrimary uppercase tracking-wider numeric">Backtest_Job_20260610_01</button>
+              <button class="w-full text-left text-xs p-2 hover:bg-surface text-textSoft uppercase tracking-wider numeric">Backtest_Job_20260609_14</button>
+              <button class="w-full text-left text-xs p-2 hover:bg-surface text-textSoft uppercase tracking-wider numeric">Backtest_Job_20260608_11</button>
+            </div>
+          </div>
+          
+          <!-- Table Inspector -->
+          <div class="col-span-3 panel p-3 flex flex-col min-h-0 overflow-auto">
+            <h2 class="text-xs uppercase tracking-widest text-textMuted mb-2">Archived Telemetry Risk Snapshots</h2>
+            <div class="flex-1 overflow-auto">
+              <table class="table-terminal">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Model ID</th>
+                    <th>Tick Idx</th>
+                    <th class="text-right">Delta</th>
+                    <th class="text-right">Gamma</th>
+                    <th class="text-right">CVaR 95%</th>
+                    <th class="text-right">PnL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-row-hover">
+                    <td class="numeric text-textSoft">2026-06-10 14:32:00</td>
+                    <td>baseline</td>
+                    <td class="numeric">0</td>
+                    <td class="numeric text-right">0.4502</td>
+                    <td class="numeric text-right">0.0012</td>
+                    <td class="numeric text-right">-125.40</td>
+                    <td class="numeric text-right text-success">+142.00</td>
+                  </tr>
+                  <tr class="table-row-hover">
+                    <td class="numeric text-textSoft">2026-06-10 14:32:01</td>
+                    <td>baseline</td>
+                    <td class="numeric">1</td>
+                    <td class="numeric text-right">0.4520</td>
+                    <td class="numeric text-right">0.0013</td>
+                    <td class="numeric text-right">-124.90</td>
+                    <td class="numeric text-right text-success">+185.20</td>
+                  </tr>
+                  <tr class="table-row-hover">
+                    <td class="numeric text-textSoft">2026-06-10 14:32:02</td>
+                    <td>baseline</td>
+                    <td class="numeric">2</td>
+                    <td class="numeric text-right">0.4485</td>
+                    <td class="numeric text-right">0.0011</td>
+                    <td class="numeric text-right">-126.10</td>
+                    <td class="numeric text-right text-danger">-34.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </main>
+  </div>
+
+  <!-- Bottom Log Dock Panel (Height ~30%) -->
+  <footer class="h-48 border-t border-borderSubtle bg-surface flex flex-col flex-shrink-0">
+    <div class="px-3 py-1 flex items-center justify-between border-b border-borderSubtle text-[10px] uppercase tracking-wider text-textMuted bg-bg">
+      <div class="flex items-center gap-2 font-semibold">
+        <span>System Console Logs</span>
+        <span class="px-1.5 py-0.5 rounded-full bg-borderStrong text-[9px] numeric" id="log-count">10 lines</span>
+      </div>
+      <button onclick="clearConsoleLogs()" class="px-2 py-0.5 border border-borderSubtle hover:border-borderStrong hover:bg-raised text-[9px] uppercase tracking-widest text-textPrimary">Clear</button>
+    </div>
+    <div id="log-terminal" class="flex-1 overflow-y-auto px-3 py-2 font-mono text-[11px] leading-relaxed text-textSoft whitespace-pre-wrap select-text">
+      <!-- Logs generated dynamically -->
+    </div>
+  </footer>
+
+  <script>
+    // System Clock
+    function updateClock() {
+      const now = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      document.getElementById('system-time').innerText = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Tab switcher
+    function switchTab(tab) {
+      // Hide all views
+      document.getElementById('view-strategy').classList.add('hidden');
+      document.getElementById('view-backtest').classList.add('hidden');
+      document.getElementById('view-orders').classList.add('hidden');
+      document.getElementById('view-database').classList.add('hidden');
+
+      // Deactivate all nav buttons
+      const btns = ['strategy', 'backtest', 'orders', 'database'];
+      btns.forEach(b => {
+        const el = document.getElementById('tab-btn-' + b);
+        el.classList.remove('border-borderStrong', 'text-textPrimary', 'bg-raised');
+        el.classList.add('border-transparent', 'text-textSoft');
+      });
+
+      // Show selected view
+      document.getElementById('view-' + tab).classList.remove('hidden');
+
+      // Activate selected nav button
+      const activeEl = document.getElementById('tab-btn-' + tab);
+      activeEl.classList.remove('border-transparent', 'text-textSoft');
+      activeEl.classList.add('border-borderStrong', 'text-textPrimary', 'bg-raised');
+
+      // Update Page Title
+      const titleMap = {
+        'strategy': 'Strategy Manager',
+        'backtest': 'High-Frequency Backtester',
+        'orders': 'Live Orders & Trades',
+        'database': 'Archived Database'
+      };
+      document.getElementById('page-title').innerText = titleMap[tab];
+    }
+
+    // Toggle Connection Status
+    function toggleConnection(type) {
+      const dot = document.getElementById(type + '-dot');
+      if (dot.classList.contains('bg-success')) {
+        dot.classList.remove('bg-success');
+        dot.classList.add('bg-danger');
+        addLogLine('WARN', type.toUpperCase() + ' disconnected by operator.');
+      } else {
+        dot.classList.remove('bg-danger');
+        dot.classList.add('bg-success');
+        addLogLine('INFO', type.toUpperCase() + ' service connected successfully.');
+      }
+    }
+
+    // Filter Orders view
+    function filterOrders(filter) {
+      const btns = ['all', 'orders', 'trades'];
+      btns.forEach(b => {
+        const el = document.getElementById('btn-ord-' + b);
+        el.classList.remove('bg-raised', 'text-textPrimary');
+        el.classList.add('text-textSoft');
+      });
+      document.getElementById('btn-ord-' + filter).classList.add('bg-raised', 'text-textPrimary');
+      document.getElementById('btn-ord-' + filter).classList.remove('text-textSoft');
+
+      const ordersPanel = document.getElementById('orders-panel');
+      const tradesPanel = document.getElementById('trades-panel');
+
+      if (filter === 'all') {
+        ordersPanel.classList.remove('hidden');
+        tradesPanel.classList.remove('hidden');
+      } else if (filter === 'orders') {
+        ordersPanel.classList.remove('hidden');
+        tradesPanel.classList.add('hidden');
+      } else {
+        ordersPanel.classList.add('hidden');
+        tradesPanel.classList.remove('hidden');
+      }
+    }
+
+    // Logs management
+    const logs = [];
+    function addLogLine(level, message) {
+      const now = new Date();
+      const ts = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth()+1).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+      const gateway = 'SYS_MOCK';
+      const formatted = `${ts} | ${level.padEnd(7)} | ${gateway.padEnd(10)} | ${message}`;
+      logs.push(formatted);
+      if (logs.length > 200) logs.shift();
+
+      const term = document.getElementById('log-terminal');
+      
+      // Determine colors based on level
+      let colorClass = 'text-textSoft';
+      if (level === 'ERROR') colorClass = 'text-danger';
+      else if (level === 'WARN' || level === 'WARNING') colorClass = 'text-warning';
+      else if (level === 'INFO') colorClass = 'text-textPrimary';
+
+      term.innerHTML += `<div class="${colorClass}">${formatted}</div>`;
+      term.scrollTop = term.scrollHeight;
+
+      document.getElementById('log-count').innerText = `${logs.length} lines`;
+    }
+
+    function clearConsoleLogs() {
+      logs.length = 0;
+      document.getElementById('log-terminal').innerHTML = '';
+      document.getElementById('log-count').innerText = '0 lines';
+    }
+
+    // Initialize Mock Logs
+    addLogLine('INFO', 'OTrader Core Application loaded.');
+    addLogLine('INFO', 'gRPC client linked successfully to 127.0.0.1:50051');
+    addLogLine('INFO', 'ARQ Worker initialized: Listening on Redis at localhost:6379');
+    addLogLine('INFO', 'Database engine connected to PostgreSQL: localhost:5433');
+
+    // ----------------------------------------------------
+    // HIGH-FREQUENCY TELEMETRY SIMULATION (60Hz Backtest)
+    // ----------------------------------------------------
+    let chartInstance = null;
+    let isRunning = false;
+    let currentTick = 0;
+    let simTimer = null;
+    
+    // Strict 10,000 tick FIFO queue
+    const tickQueue = [];
+    const maxTicks = 10000;
+
+    // Decoupled Render state
+    let lastRenderTime = 0;
+    const renderFpsLimit = 1000 / 60; // 60 FPS
+    let animationFrameId = null;
+
+    // Initialize empty chart
+    function initChart() {
+      const ctx = document.getElementById('liveChart').getContext('2d');
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: 'Cumulative PnL ($)',
+              borderColor: '#22c55e',
+              borderWidth: 1.5,
+              data: [],
+              yAxisID: 'y-pnl',
+              pointRadius: 0,
+              fill: false
+            },
+            {
+              label: 'Spot Price ($)',
+              borderColor: '#e5e7eb',
+              borderWidth: 1.0,
+              data: [],
+              yAxisID: 'y-spot',
+              pointRadius: 0,
+              fill: false
+            },
+            {
+              label: 'Delta',
+              borderColor: '#f59e0b',
+              borderWidth: 1.0,
+              data: [],
+              yAxisID: 'y-greek',
+              pointRadius: 0,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false, // Turn off chart.js animations for raw performance
+          scales: {
+            x: {
+              grid: { color: 'rgba(31, 36, 47, 0.2)' },
+              ticks: { color: '#6b7280', maxTicksLimit: 10, font: { family: 'Geist Mono', size: 10 } }
+            },
+            'y-pnl': {
+              type: 'linear',
+              position: 'left',
+              grid: { color: 'rgba(31, 36, 47, 0.3)' },
+              ticks: { color: '#22c55e', font: { family: 'Geist Mono', size: 10 } }
+            },
+            'y-spot': {
+              type: 'linear',
+              position: 'right',
+              grid: { drawOnChartArea: false },
+              ticks: { color: '#e5e7eb', font: { family: 'Geist Mono', size: 10 } }
+            },
+            'y-greek': {
+              type: 'linear',
+              position: 'right',
+              grid: { drawOnChartArea: false },
+              ticks: { color: '#f59e0b', font: { family: 'Geist Mono', size: 10 } }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: { color: '#6b7280', font: { family: 'Geist', size: 11 } }
+            }
+          }
+        }
+      });
+    }
+
+    function selectIvMode(mode) {
+      const modes = ['mid', 'bid', 'ask'];
+      modes.forEach(m => {
+        const el = document.getElementById('iv-' + m);
+        el.classList.remove('bg-raised', 'text-textPrimary');
+        el.classList.add('text-textSoft');
+      });
+      document.getElementById('iv-' + mode).classList.add('bg-raised', 'text-textPrimary');
+      document.getElementById('iv-' + mode).classList.remove('text-textSoft');
+    }
+
+    // Start Backtest Simulation
+    function startBacktestSim() {
+      if (isRunning) return;
+      isRunning = true;
+      currentTick = 0;
+      tickQueue.length = 0; // Reset strict buffer
+
+      // Toggle buttons
+      document.getElementById('btn-start-backtest').disabled = true;
+      document.getElementById('btn-start-backtest').classList.add('opacity-40', 'cursor-not-allowed');
+      document.getElementById('btn-stop-backtest').disabled = false;
+      document.getElementById('btn-stop-backtest').classList.remove('opacity-40', 'cursor-not-allowed');
+
+      const symbol = document.getElementById('bt-symbol').value;
+      const strategy = document.getElementById('bt-strategy').value;
+      addLogLine('INFO', `Enqueued backtest job for ${symbol} using ${strategy}...`);
+      
+      document.getElementById('bt-status-banner').innerText = "JOB STATE: RUNNING (Connecting Stream...)";
+      document.getElementById('bt-status-banner').className = "panel px-3 py-2 text-center text-xs uppercase tracking-widest text-warning bg-warning/10 border-warning/30";
+
+      let cumPnL = 0.0;
+      let spot = 2950.0;
+      let delta = 0.5;
+
+      setTimeout(() => {
+        if (!isRunning) return;
+        document.getElementById('bt-status-banner').innerText = "JOB STATE: STREAMING TELEMETRY (60Hz)";
+        addLogLine('INFO', `WebSocket stream accepted. Channel job_stream:sim_job_id active.`);
+        
+        // Simulating high frequency tick injection
+        simTimer = setInterval(() => {
+          // Add raw tick
+          cumPnL += (Math.random() - 0.48) * 8.0;
+          spot += (Math.random() - 0.5) * 12.0;
+          delta += (Math.random() - 0.5) * 0.05;
+          if (delta < 0) delta = 0;
+          if (delta > 1) delta = 1;
+
+          const tick = {
+            tick_idx: currentTick,
+            spot_price: spot,
+            cum_pnl: cumPnL,
+            delta: delta
+          };
+
+          // Strict FIFO Eviction
+          tickQueue.push(tick);
+          if (tickQueue.length > maxTicks) {
+            tickQueue.shift(); // Evict oldest
+          }
+
+          // Ingestion happens at 100 ticks per second (100Hz)
+          currentTick++;
+        }, 10); // 10ms = 100Hz injection
+
+        // Start decoupled requestAnimationFrame render loop
+        lastRenderTime = performance.now();
+        animationFrameId = requestAnimationFrame(renderLoop);
+
+      }, 1000);
+    }
+
+    // Decoupled requestAnimationFrame loop capping chart render updates to 60 FPS
+    function renderLoop(time) {
+      if (!isRunning) return;
+
+      const elapsed = time - lastRenderTime;
+      if (elapsed >= renderFpsLimit) {
+        // Run update
+        updateUiMetrics();
+        lastRenderTime = time;
+      }
+      animationFrameId = requestAnimationFrame(renderLoop);
+    }
+
+    // Pull from strict queue and update UI
+    function updateUiMetrics() {
+      if (tickQueue.length === 0) return;
+      const lastTick = tickQueue[tickQueue.length - 1];
+
+      // Update indicators
+      document.getElementById('metric-final-pnl').innerText = `$${lastTick.cum_pnl.toFixed(2)}`;
+      document.getElementById('metric-final-pnl').className = `numeric text-sm font-semibold ${lastTick.cum_pnl >= 0 ? 'text-success' : 'text-danger'}`;
+      
+      const net = lastTick.cum_pnl - 18.50;
+      document.getElementById('metric-net-pnl').innerText = `$${net.toFixed(2)}`;
+      document.getElementById('metric-net-pnl').className = `numeric text-sm font-semibold ${net >= 0 ? 'text-success' : 'text-danger'}`;
+
+      document.getElementById('metric-sharpe').innerText = '1.842';
+      document.getElementById('metric-max-dd').innerText = '12.4%';
+      document.getElementById('metric-trades').innerText = Math.floor(currentTick / 40);
+      document.getElementById('metric-ticks').innerText = currentTick.toLocaleString();
+
+      // Update Chart labels/datasets
+      // To prevent lagging, we downsample chart display if we have too many data points
+      const chartPoints = tickQueue.filter((_, i) => i % Math.max(1, Math.floor(tickQueue.length / 500)) === 0);
+
+      chartInstance.data.labels = chartPoints.map(t => t.tick_idx);
+      chartInstance.data.datasets[0].data = chartPoints.map(t => t.cum_pnl);
+      chartInstance.data.datasets[1].data = chartPoints.map(t => t.spot_price);
+      chartInstance.data.datasets[2].data = chartPoints.map(t => t.delta);
+      chartInstance.update('none'); // Use 'none' mode to skip internal animations
+    }
+
+    // Stop Simulation
+    function stopBacktestSim() {
+      if (!isRunning) return;
+      isRunning = false;
+      
+      if (simTimer) clearInterval(simTimer);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+
+      // Restore buttons
+      document.getElementById('btn-start-backtest').disabled = false;
+      document.getElementById('btn-start-backtest').classList.remove('opacity-40', 'cursor-not-allowed');
+      document.getElementById('btn-stop-backtest').disabled = true;
+      document.getElementById('btn-stop-backtest').classList.add('opacity-40', 'cursor-not-allowed');
+
+      document.getElementById('bt-status-banner').innerText = "JOB STATE: COMPLETED";
+      document.getElementById('bt-status-banner').className = "panel px-3 py-2 text-center text-xs uppercase tracking-widest text-success bg-success/10 border-success/30";
+      
+      addLogLine('INFO', `Backtest complete. SQLModel RiskSnapshots committed to db. Rendering final SVG chart...`);
+
+      // Fill in Daily Results table with simulated results
+      const dailyTbody = document.getElementById('bt-daily-tbody');
+      dailyTbody.innerHTML = `
+        <tr class="table-row-hover">
+          <td class="numeric">2026-06-10</td>
+          <td class="numeric text-success">+$250.32</td>
+          <td class="numeric text-success">+$231.82</td>
+          <td class="numeric">$18.50</td>
+          <td class="numeric">48</td>
+          <td class="numeric">2,880</td>
+        </tr>
+        <tr class="table-row-hover">
+          <td class="numeric">2026-06-09</td>
+          <td class="numeric text-danger">-$12.40</td>
+          <td class="numeric text-danger">-$30.90</td>
+          <td class="numeric">$18.50</td>
+          <td class="numeric">50</td>
+          <td class="numeric">2,880</td>
+        </tr>
+      `;
+    }
+
+    // Initialize Chart on load
+    window.onload = function() {
+      initChart();
+    };
+  </script>
+</body>
+</html>

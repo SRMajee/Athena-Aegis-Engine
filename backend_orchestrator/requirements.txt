@@ -1,0 +1,27 @@
+# Core FastAPI Web Server
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+python-dotenv>=1.0.0
+
+# Database & Persistence (Async PostgreSQL & Legacy DB Views)
+sqlmodel>=0.0.16
+asyncpg>=0.29.0
+psycopg2-binary>=2.9.9
+
+# Task Queue & Async Workers
+arq>=0.26.0
+redis>=5.0.0
+
+# gRPC & Communication Layer
+grpcio>=1.60.0
+grpcio-tools>=1.60.0
+protobuf>=4.25.0
+
+# HTTP & WebSockets
+httpx>=0.27.0
+websockets>=12.0
+
+# Math, Analytics, and SVG Rendering
+numpy>=1.26.0
+matplotlib>=3.8.0
+reportlab>=5.0.0

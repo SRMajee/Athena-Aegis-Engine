@@ -1,0 +1,120 @@
+name: Athena Aegis CI
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # --- 1. Python Backend Service Testing ---
+  backend-tests:
+    name: Backend Pytest (Python 3.12)
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: affinity_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          cd backend_orchestrator
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-mock pytest-asyncio
+
+      - name: Run Pytest
+        env:
+          DATABASE_URL: postgresql+asyncpg://postgres:password@localhost:5433/affinity_db
+          REDIS_URL: redis://localhost:6379
+        run: |
+          cd backend_orchestrator
+          python -m pytest -v --rootdir=. tests/
+
+  # --- 2. Next.js Frontend Dashboard Lint & Build ---
+  frontend-build:
+    name: Frontend Linter & Builder
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend_terminal/package-lock.json
+
+      - name: Install NPM Packages
+        run: |
+          cd frontend_terminal
+          npm ci
+
+      - name: Run Linter & Build
+        run: |
+          cd frontend_terminal
+          npm run lint --if-present
+          npm run build
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:8085
+
+  # --- 3. C++ Ingestion Core Compilation ---
+  cpp-build:
+    name: C++ CMake (Linux Runner)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build build-essential libzmq3-dev
+
+      - name: Setup LibTorch (CPU version)
+        run: |
+          wget https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-2.2.0%2Bcpu.zip
+          unzip libtorch-shared-with-deps-2.2.0+cpu.zip -d $HOME
+
+      - name: Configure CMake
+        env:
+          Torch_DIR: ${{ env.HOME }}/libtorch/share/cmake/Torch
+        run: |
+          cd cpp_engine
+          mkdir build
+          cd build
+          cmake -G Ninja -DCMAKE_PREFIX_PATH=$HOME/libtorch ..
+
+      - name: Build C++ Target Binaries
+        run: |
+          cd cpp_engine/build
+          ninja

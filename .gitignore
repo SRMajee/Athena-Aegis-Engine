@@ -1,0 +1,46 @@
+# C++ Build & Binaries
+cpp_engine/build/
+cpp_engine/thirdparty/
+*.exe
+*.o
+*.obj
+*.orig
+*test_parse
+
+# Logs
+*.log
+backend_orchestrator/*.log
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+backend_orchestrator/.venv/
+backend_orchestrator/**/__pycache__/
+.pytest_cache/
+**/.pytest_cache/
+
+
+# Node & Next.js
+node_modules/
+frontend_terminal/node_modules/
+frontend_terminal/.next/
+frontend_terminal/tsconfig.tsbuildinfo
+.next/
+
+# Environment Configurations & Local settings
+.env
+backend_orchestrator/.env
+.vscode/
+backend_orchestrator/.vscode/
+.idea/
+
+# Screenshots & Temporary images
+backend_orchestrator/*.png
+
+# Data Files & Datasets
+data/*
+!data/README.md
+backend_orchestrator/data/
