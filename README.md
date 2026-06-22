@@ -1,6 +1,34 @@
-# Affinity-Core
+# Athena Aegis Engine
 
-**Affinity-Core** is an institutional-grade, multi-model deep hedging and options execution platform. It integrates a low-latency C++ execution engine with a Python/FastAPI backend orchestrator, a PyTorch research lab, and a responsive Next.js frontend terminal.
+**Athena Aegis Engine** is an institutional-grade, multi-model deep hedging and options execution platform. It integrates a low-latency C++ execution engine with a Python/FastAPI backend orchestrator, a PyTorch research lab, and a responsive Next.js frontend terminal.
+
+---
+
+## 🏛️ The Name: Athena Aegis Engine
+
+> *"Wisdom to predict. Protection to endure. Speed to execute."*
+
+The name **Athena Aegis Engine** is not cosmetic — every word is a precise metaphor for a core technical pillar of this platform:
+
+### ⚡ Athena — Intelligence & Strategic Foresight
+In Greek mythology, **Athena** (Minerva in Roman) is the goddess of wisdom, mathematics, and *strategic* warfare — not raw force, but calculated, intelligent action. She is the deity most associated with foresight, invention, and rational decision-making.
+
+In this platform, **Athena** represents the **deep learning layer**: the PyTorch neural networks (LSTM, FFNN, and Minimax Adversarial models) trained against Conditional Value-at-Risk (CVaR) loss functions. Like Athena herself, these models do not react blindly — they are trained on years of historical tick data to *anticipate* options delta movements before they happen, serving as intelligent hedging agents that compete against and surpass the classical Black-Scholes analytical delta.
+
+### 🛡️ Aegis — Protection & Risk Management
+The **Aegis** is the legendary shield of Athena — the ultimate symbol of divine protection. It was said to make its bearer invincible against any threat.
+
+In this platform, **Aegis** represents the **options hedging and risk management layer**: the CVaR-constrained delta hedging engine, the Greek computation pipeline (delta, gamma, theta, vega), and the real-time risk snapshot monitoring. The Aegis is what stands between the portfolio and catastrophic market exposure — just as the mythological Aegis protected its bearer from any harm.
+
+### 🚀 Engine — Low-Latency Execution
+**Engine** is the machine that drives it all. This platform's execution core is written in **C++20**, using lock-free ring buffers, SPSC queues, CPU thread-affinity pinning, object-pool memory management, and zero-copy LibTorch tensor inference — all optimized to process option ticks in under 300 microseconds on the hot path.
+
+### The Full Picture
+| Word | Mythological Meaning | Technical Meaning |
+|---|---|---|
+| **Athena** | Goddess of wisdom, foresight, strategy | Deep learning models (LSTM, FFNN, Minimax) predicting optimal hedge ratios |
+| **Aegis** | Divine protective shield, bearer of invincibility | CVaR risk engine, delta-hedge constraints, Greek surface monitoring |
+| **Engine** | — | C++20 low-latency execution core, sub-300µs tick processing |
 
 ---
 
@@ -105,7 +133,7 @@ sequenceDiagram
 ## 🗂️ Project Repository Structure
 
 ```
-Affinity-Core/
+Athena-Aegis-Engine/
 ├── Otrader/                 # Legacy folder (Cleaned up, moved to cpp_engine)
 ├── cpp_engine/              # C++ Execution Core (Ingestion, gRPC, LibTorch Inference)
 ├── backend_orchestrator/    # Python FastAPI web server, Redis/ARQ task queue, and tests
@@ -173,7 +201,7 @@ Persistent schemas are managed using SQLModel (SQLAlchemy + Pydantic) mapping to
 
 ## 🚀 Getting Started & How to Use
 
-To run the Affinity-Core platform locally, follow the steps below:
+To run the Athena Aegis Engine platform locally, follow the steps below:
 
 ### Prerequisites
 * **Docker Desktop**: Required to spin up PostgreSQL and Redis.
@@ -212,7 +240,7 @@ To stop all running microservices and teardown containers:
 
 ## 🔗 Reference APIs & Git Repositories
 
-Affinity-Core integrates the following external libraries, APIs, and frameworks:
+Athena Aegis Engine integrates the following external libraries, APIs, and frameworks:
 
 ### Git Repositories & SDKs
 * **LibTorch (PyTorch C++ API)**: [pytorch/pytorch](https://github.com/pytorch/pytorch) - Used inside `cpp_engine/runtime` for low-latency neural model evaluation.
@@ -220,9 +248,8 @@ Affinity-Core integrates the following external libraries, APIs, and frameworks:
 * **nlohmann/json**: [nlohmann/json](https://github.com/nlohmann/json) - JSON serializer for strategy settings mapping.
 * **Interactive Brokers C++ API**: [Interactive Brokers TWS API](https://github.com/InteractiveBrokers/twsapi_mac_unix_generic) - Integrated inside the gateway core for live trade orders and tick data streaming.
 * **SQLModel**: [tiangolo/sqlmodel](https://github.com/tiangolo/sqlmodel) - SQLModel ORM integration mapping to PostgreSQL.
-* **OTrader (Legacy Precursor)**: The original legacy repository codebase from which Affinity-Core was refactored, modernized, and restructured to support scalable microservices and clean low-latency separations.
+* **OTrader (Legacy Precursor)**: The original legacy repository codebase from which Athena Aegis Engine was refactored, modernized, and restructured to support scalable microservices and clean low-latency separations.
 
 ### Financial REST / WebSocket APIs
 * **Alpaca Option Chains & Bars**: [Alpaca Market Data API](https://docs.alpaca.markets/docs/about-options) - Utilized by python crawlers inside `scripts/` to seed contracts database and download raw backtest Parquet bars.
 * **IBKR Gateway Interface**: [IBKR TWS API Gateway](https://interactivebrokers.github.io/) - Client broker interface wrapper for executing hedge orders.
-

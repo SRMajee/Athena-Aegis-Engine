@@ -1,6 +1,6 @@
 # Frontend Dashboard Terminal (frontend_terminal)
 
-The **Frontend Dashboard Terminal** is a Next.js (App Router) web interface designed for real-time monitoring and controlling of the Affinity-Core platform. It displays live trading parameters, strategy holdings, execution logs, and historical backtesting chart visualizations.
+The **Frontend Dashboard Terminal** is a Next.js (App Router) web interface designed for real-time monitoring and controlling of the Athena Aegis Engine platform. It displays live trading parameters, strategy holdings, execution logs, and historical backtesting chart visualizations.
 
 ---
 
@@ -124,4 +124,4 @@ frontend_terminal/
 * **HTTP REST Requests**: Axios wrappers inside `lib/api.ts` connect to the backend (Port 8085) for connectivity commands (`connect`, `disconnect`), strategy configurations (`init`, `start`, `stop`), and backtest scheduling.
 * **WebSocket Feeds**:
   * Real-time logs are parsed and held inside the Zustand log store, capping the buffer size locally to prevent memory leaks during long trading sessions.
-  * Resizable split panes use mouse drag handlers and commit the current width/height percentages to `localStorage` under `affinity_strategy_manager_layout` to persist configuration across browser restarts.
+  * Resizable split panes use mouse drag handlers and commit the current width/height percentages to `localStorage` under `athena_aegis_strategy_layout` to persist configuration across browser restarts.

@@ -1,6 +1,6 @@
 # C++ Execution Engine (cpp_engine)
 
-The **C++ Execution Engine** is the core latency-sensitive component of the Affinity-Core platform. It handles tick ingestion, options analytics (Black-Scholes Greeks), neural network inference via LibTorch, and market connectivity (IBKR API via TWS C++ API).
+The **C++ Execution Engine** is the core latency-sensitive component of the Athena Aegis Engine platform. It handles tick ingestion, options analytics (Black-Scholes Greeks), neural network inference via LibTorch, and market connectivity (IBKR API via TWS C++ API).
 
 ---
 
