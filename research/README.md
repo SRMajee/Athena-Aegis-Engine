@@ -90,9 +90,12 @@ sequenceDiagram
 
 ```
 research/
-├── train_adversarial.ipynb  # Minimax adversarial model trainer
-├── train_ffnn.ipynb         # Feed-forward neural network options hedger trainer
-└── train_lstm.ipynb         # LSTM recurrent neural network options hedger trainer
+├── train_adversarial.ipynb     # Minimax adversarial model trainer (V1)
+├── train_ffnn.ipynb            # Feed-forward neural network options hedger trainer (V1)
+├── train_lstm.ipynb            # LSTM recurrent neural network options hedger trainer (V1)
+├── train_adversarial_v2.ipynb  # Upgraded Minimax model trainer with Heston/Jump Diffusion (V2)
+├── train_ffnn_v2.ipynb         # Upgraded FFNN with Residual Blocks and Heston/Jump Diffusion (V2)
+└── train_lstm_v2.ipynb         # Upgraded LSTM with Heston/Jump Diffusion (V2)
 ```
 
 ---
@@ -108,3 +111,12 @@ research/
 * **Loss Metric**: Unlike standard mean-squared error, training minimizes the Conditional Value-at-Risk (CVaR) of the hedging portfolio:
   $$\text{CVaR}_\alpha(X) = \mathbb{E}[-X \mid X \le q_\alpha]$$
   where $X$ is the path hedging P&L including a transaction cost penalty rate.
+
+---
+
+## 🚀 V2 Model Upgrades
+
+The V2 models introduce the following enhancements to research and inference:
+1. **Heston Stochastic Volatility & Merton Jump Diffusion**: Synthetic training paths are generated using stochastic volatility dynamics (mean-reverting variance process) and discrete Poisson jumps (market crashes). This teaches models to hedge Vega risks and tail-risk jump anomalies.
+2. **Residual Blocks (ResNet-style)**: The `FFNNHedgerV2` and `AdversarialHedgerV2` include residual skip connections (`x + relu(fc(x))`) to improve gradient flow and training stability.
+

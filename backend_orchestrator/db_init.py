@@ -82,6 +82,21 @@ async def init_db():
             VALUES ('deep_hedge_adversarial', '/mock/path', 'mock_run', '[1, 5]'::jsonb, 0.0, NOW())
             ON CONFLICT (id) DO NOTHING;
         """))
+        await conn.execute(sa.text("""
+            INSERT INTO model_registry (id, torchscript_path, training_run_id, input_shape, validation_cvar, registered_at)
+            VALUES ('deep_hedge_ffnn_v2', '/mock/path', 'mock_run', '[1, 5]'::jsonb, 0.0, NOW())
+            ON CONFLICT (id) DO NOTHING;
+        """))
+        await conn.execute(sa.text("""
+            INSERT INTO model_registry (id, torchscript_path, training_run_id, input_shape, validation_cvar, registered_at)
+            VALUES ('deep_hedge_lstm_v2', '/mock/path', 'mock_run', '[1, 5]'::jsonb, 0.0, NOW())
+            ON CONFLICT (id) DO NOTHING;
+        """))
+        await conn.execute(sa.text("""
+            INSERT INTO model_registry (id, torchscript_path, training_run_id, input_shape, validation_cvar, registered_at)
+            VALUES ('deep_hedge_adversarial_v2', '/mock/path', 'mock_run', '[1, 5]'::jsonb, 0.0, NOW())
+            ON CONFLICT (id) DO NOTHING;
+        """))
         
     print("Database tables initialized successfully!")
 

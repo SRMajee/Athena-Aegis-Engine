@@ -13,7 +13,7 @@ The name **Athena Aegis Engine** is not cosmetic — every word is a precise met
 ### ⚡ Athena — Intelligence & Strategic Foresight
 In Greek mythology, **Athena** (Minerva in Roman) is the goddess of wisdom, mathematics, and *strategic* warfare — not raw force, but calculated, intelligent action. She is the deity most associated with foresight, invention, and rational decision-making.
 
-In this platform, **Athena** represents the **deep learning layer**: the PyTorch neural networks (LSTM, FFNN, and Minimax Adversarial models) trained against Conditional Value-at-Risk (CVaR) loss functions. Like Athena herself, these models do not react blindly — they are trained on years of historical tick data to *anticipate* options delta movements before they happen, serving as intelligent hedging agents that compete against and surpass the classical Black-Scholes analytical delta.
+In this platform, **Athena** represents the **deep learning layer**: the PyTorch neural networks (LSTM, FFNN, and Minimax Adversarial models, including their **V2 variants** trained under Heston Stochastic Volatility & Merton Jump Diffusion simulations with residual block architectures) trained against Conditional Value-at-Risk (CVaR) loss functions. Like Athena herself, these models do not react blindly — they are trained on years of historical tick data to *anticipate* options delta movements before they happen, serving as intelligent hedging agents that compete against and surpass the classical Black-Scholes analytical delta.
 
 ### 🛡️ Aegis — Protection & Risk Management
 The **Aegis** is the legendary shield of Athena — the ultimate symbol of divine protection. It was said to make its bearer invincible against any threat.
