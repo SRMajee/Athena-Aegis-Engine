@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { api, getApiBase } from "@/lib/api";
 import PageLayout from "@/app/components/PageLayout";
@@ -148,6 +148,7 @@ export default function BacktestPage() {
   const runningUniqueDays = useTradeStore((s) => s.runningUniqueDays);
   const runningDailyPnLs = useTradeStore((s) => s.runningDailyPnLs);
   const runningDailyFees = useTradeStore((s) => s.runningDailyFees);
+  const metrics = useTradeStore((s) => s.metrics);
   const runningDailyTrades = useTradeStore((s) => s.runningDailyTrades);
   const runningDailyTimesteps = useTradeStore((s) => s.runningDailyTimesteps);
   const runningSharpe = useTradeStore((s) => s.runningSharpe);
@@ -404,8 +405,6 @@ export default function BacktestPage() {
     return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   };
 
-  const showValues = summary !== null && statusBarPhase === "completed";
-  const netPnl = summary ? summary.net_pnl : 0;
 
   return (
     <PageLayout title="Option Strategy Backtester">
@@ -863,7 +862,6 @@ export default function BacktestPage() {
 
               {/* Deep Hedging Model Comparison Table */}
               {(() => {
-                const metrics = useTradeStore((s) => s.metrics);
                 const lastMetrics = metrics[metrics.length - 1];
                 const modelResults = lastMetrics?.model_results || [];
                 if (modelResults.length === 0) return null;

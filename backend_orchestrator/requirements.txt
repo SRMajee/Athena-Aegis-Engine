@@ -25,3 +25,6 @@ websockets>=12.0
 numpy>=1.26.0
 matplotlib>=3.8.0
 reportlab>=5.0.0
+
+# Form data parsing / File Uploads
+python-multipart>=0.0.9

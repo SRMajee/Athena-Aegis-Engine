@@ -51,6 +51,28 @@ interface OrderTrade {
   [key: string]: unknown;
 }
 
+interface Holding {
+  underlying?: {
+    quantity?: number;
+    market_price?: number;
+    [key: string]: unknown;
+  };
+  options?: Record<string, {
+    quantity?: number;
+    [key: string]: unknown;
+  }>;
+  summary?: {
+    pnl?: number;
+    delta?: number;
+    gamma?: number;
+    theta?: number;
+    vega?: number;
+    rho?: number;
+  };
+  spot_price?: number;
+  [key: string]: unknown;
+}
+
 // ─── MetricCard ─────────────────────────────────────────────────────────────
 
 function MetricCard({
@@ -269,7 +291,7 @@ export default function StrategyManagerPage() {
   const [pendingSetting, setPendingSetting] = useState<{ key: string; value: string }[]>([]);
 
   // Live holdings (latest snapshot, keyed by strategy name)
-  const [holdings, setHoldings] = useState<Record<string, any>>({});
+  const [holdings, setHoldings] = useState<Record<string, Holding>>({});
 
   // Telemetry history per strategy (capped at MAX_HISTORY points)
   const [history, setHistory] = useState<Record<string, TelemetryPoint[]>>({});
@@ -378,7 +400,7 @@ export default function StrategyManagerPage() {
 
   const fetchHoldings = useCallback(async () => {
     try {
-      const data = await api.get<{ holdings?: Record<string, any> }>('/api/strategies/holdings');
+      const data = await api.get<{ holdings?: Record<string, Holding> }>('/api/strategies/holdings');
       setIsBackendConnected(true);
       if (data.holdings) {
         setHoldings(data.holdings);
@@ -541,7 +563,7 @@ export default function StrategyManagerPage() {
 
   // ── Position summary helper ────────────────────────────────────────────────
 
-  const getPositionSummary = (h: any) => {
+  const getPositionSummary = (h?: Holding | null) => {
     if (!h) return '-';
     const parts: string[] = [];
     if (h.underlying?.quantity) parts.push(`${h.underlying.quantity} STK`);
@@ -747,8 +769,8 @@ export default function StrategyManagerPage() {
                             }`}>{s.status}</span>
                           </td>
                           <td className={`py-1 px-2 numeric-12 text-right text-xs ${
-                            pnl > 0 ? 'text-[color:var(--state-success)]'
-                              : pnl < 0 ? 'text-[color:var(--state-error)]'
+                            (pnl ?? 0) > 0 ? 'text-[color:var(--state-success)]'
+                              : (pnl ?? 0) < 0 ? 'text-[color:var(--state-error)]'
                               : 'text-[color:var(--text-soft)]'
                           }`}>
                             {pnl !== undefined ? pnl.toFixed(2) : '-'}

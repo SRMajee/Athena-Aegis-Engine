@@ -370,7 +370,7 @@ export const useTradeStore = create<TradeStoreState>((set) => ({
 
               let activeModelResult = null;
               if (state.activeModelId && state.activeModelId !== 'black_scholes' && data.model_results) {
-                activeModelResult = data.model_results.find((mr: any) => mr.model_id === state.activeModelId);
+                activeModelResult = data.model_results.find((mr: { model_id: string }) => mr.model_id === state.activeModelId);
               }
 
               const tick: StreamMetrics = {

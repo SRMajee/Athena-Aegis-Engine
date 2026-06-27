@@ -60,14 +60,18 @@ const CustomTooltip = ({
   );
 };
 
+interface RenderDataPoint extends StreamMetrics {
+  [key: string]: unknown;
+}
+
 export default function TelemetryChart() {
-  const [renderData, setRenderData] = useState<any[]>([]);
+  const [renderData, setRenderData] = useState<RenderDataPoint[]>([]);
   const lastMetricsLengthRef = useRef<number>(0);
   const lastMetricsRef = useRef<StreamMetrics[]>([]);
 
   // Find model PnL lines dynamically from the first metrics data frame
   const modelKeys = renderData.length > 0 && renderData[0].model_results
-    ? renderData[0].model_results.map((mr: any) => mr.model_id)
+    ? renderData[0].model_results.map((mr) => mr.model_id)
     : [];
 
   const getModelColor = (id: string) => {
@@ -109,7 +113,7 @@ export default function TelemetryChart() {
           }
           
           const flattened = processed.map(m => {
-            const flatObj: any = { ...m };
+            const flatObj: RenderDataPoint = { ...m };
             if (m.model_results) {
               for (const mr of m.model_results) {
                 flatObj[`pnl_${mr.model_id}`] = mr.cumulative_pnl;

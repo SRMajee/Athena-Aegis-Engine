@@ -44,3 +44,4 @@ backend_orchestrator/*.png
 data/*
 !data/README.md
 backend_orchestrator/data/
+cierrors/*

@@ -98,7 +98,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build build-essential libzmq3-dev
+          sudo apt-get install -y cmake ninja-build build-essential libzmq3-dev protobuf-compiler libprotobuf-dev
 
       - name: Setup LibTorch (CPU version)
         run: |
