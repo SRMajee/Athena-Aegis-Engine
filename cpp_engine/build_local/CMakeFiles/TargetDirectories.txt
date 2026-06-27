@@ -1,0 +1,9 @@
+C:/Users/User/Desktop/Affinity-Core/cpp_engine/build_local/CMakeFiles/lets_be_rational.dir
+C:/Users/User/Desktop/Affinity-Core/cpp_engine/build_local/CMakeFiles/tws_api.dir
+C:/Users/User/Desktop/Affinity-Core/cpp_engine/build_local/CMakeFiles/entry_backtest.dir
+C:/Users/User/Desktop/Affinity-Core/cpp_engine/build_local/CMakeFiles/entry_live_grpc.dir
+C:/Users/User/Desktop/Affinity-Core/cpp_engine/build_local/CMakeFiles/entry_gateway.dir
+C:/Users/User/Desktop/Affinity-Core/cpp_engine/build_local/CMakeFiles/entry_market_data.dir
+C:/Users/User/Desktop/Affinity-Core/cpp_engine/build_local/CMakeFiles/entry_live.dir
+C:/Users/User/Desktop/Affinity-Core/cpp_engine/build_local/CMakeFiles/edit_cache.dir
+C:/Users/User/Desktop/Affinity-Core/cpp_engine/build_local/CMakeFiles/rebuild_cache.dir
