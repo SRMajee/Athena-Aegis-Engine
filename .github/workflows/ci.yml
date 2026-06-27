@@ -95,10 +95,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Setup Apache Arrow APT Repository
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y -V ca-certificates lsb-release wget
+          wget https://packages.apache.org/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+          sudo apt-get install -y -V ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build build-essential libzmq3-dev protobuf-compiler libprotobuf-dev libgrpc++-dev protobuf-compiler-grpc libarrow-dev
+          sudo apt-get install -y cmake ninja-build build-essential libzmq3-dev protobuf-compiler libprotobuf-dev libgrpc++-dev protobuf-compiler-grpc libarrow-dev libparquet-dev
 
       - name: Setup LibTorch (CPU version)
         run: |
